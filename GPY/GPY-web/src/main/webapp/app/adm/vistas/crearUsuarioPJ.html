@@ -1,0 +1,45 @@
+<!-- ===================================================================================== -->
+<!-- Campos Persona Jurídica  -->
+<!-- ===================================================================================== -->
+
+
+<!-- Razón Social -->
+<div class="form-group" ng-class="{ 'has-error' : form.nombre.$error.required
+                                    , 'has-success' : form.nombre.$valid}">
+    <label class="col-md-4 control-label" for="nombre">Razón Social</label>  
+    <div class="col-md-4">
+        <input id="nombre" name="nombre" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052apellido" required title="Debe ingresar la razón social">
+    </div>
+</div>
+
+
+<!-- Tipo de Documento -->
+<div class="form-group" ng-class="{ 'has-error' : form.tipdocmnt.$error.required
+                                    , 'has-success' : form.tipdocmnt.$valid}">
+    <label class="col-md-4 control-label" for="tipdocmnt">Tipo de Documento </label>
+    <div class="col-md-4">
+        <select id="tipdocmnt" name="tipdocmnt" class="form-control" ng-model="persona.a052tipdocmnt"
+                ng-options="tipoDoc as tipoDoc.a015descrpcntipdocmnt for tipoDoc in tiposDoc track by tipoDoc.a015codigo" required>
+            <option value="">Seleccione</option>
+        </select>
+    </div>
+</div>
+
+<!-- Número de Documento-->
+<div class="form-group" ng-class="{ 'has-error' : form.numrdocmnt.$error.required || form.digtchqu.$error.required || form.numrdocmnt.$error.maxlength || form.digtchqu.$error.maxlength 
+                                    , 'has-warning' : form.numrdocmnt.$error.pattern || form.digtchqu.$error.pattern 
+                                    , 'has-success' : form.numrdocmnt.$valid || form.digtchqu.$valid}">
+    <label class="col-md-4 control-label" for="numrdocmnt">Número de Documento de Identificación</label>  
+    <div class="col-md-4">
+        <div class="col-md-6 no_padding">
+            <input id="numrdocmnt" name="numrdocmnt" placeholder="" class="form-control input-md" 
+                   type="text" ng-model="persona.a052numrdocmnt" required ng-pattern="/^[0-9]*$/">
+        </div>
+        <label class="col-md-2 control-label" for="digtchqu">DV</label>
+        <div class="col-md-3 no_padding">
+            <input id="digtchqu" name="digtchqu" placeholder="" class="form-control input-sm" 
+                   type="text" ng-model="persona.a052digtchqu" required ng-pattern="/^[0-9]*$/" ng-maxlength="1">
+        </div>
+    </div>
+    <span class="col-md-3 help-block" ng-show="(!form.numrdocmnt.$pristine || !form.digtchqu.$pristine) && (form.numrdocmnt.$error.required || form.digtchqu.$error.required || form.numrdocmnt.$error.maxlength || form.digtchqu.$error.maxlength || form.numrdocmnt.$error.pattern || form.digtchqu.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números y un dígito de verificación.</span> 
+</div>

@@ -1,0 +1,108 @@
+<!-- ===================================================================================== -->
+<!-- 5 - Políticas -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
+        </div>
+
+
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
+                </div>
+
+                <div class="panel-body">
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                    <form class="form-horizontal">
+                        <fieldset>
+
+                            <!-- Politicas -->
+                            <legend>Politicas</legend>
+
+                            <label> Politicas a las que su proyecto le aporta </label>
+                            <p> Plan/Estrategia/Programa nacional/sectorial/territorial de cambio climático al que le aporta su proyecto</p>
+
+                            <p><i>Aquí va un componente tipo arbol para elegir el plan / programa nacional </i></p>
+                            
+                            
+                            <br/><br/><br/>
+
+
+                            <label> Politica(s) a nivel sectorial / territorial con la(s) que se alinea el proyecto / iniciativa</label>
+                            <p> Sí exiten politicas relacionadas con el proyecto que no están el el listado anterior, por favor regístrela a continuación.</p>
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Politica</th>
+                                    <th>Adjunto</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                <tr>
+                                    <td>Politica pry 1</td>
+                                    <td><a href="#">Adjunto pry 1</a> </td>
+                                    <td></td>    
+                                </tr>
+                                <tr>
+                                    <td>Politica pry 2</td>
+                                    <td><a href="#">Adjunto pry 2</a></td>
+                                    <td></td>
+
+                                </tr> 
+                                <tr>
+                                    <td>politica pry 3</td>
+                                    <td><a href="#">Adjunto pry 3</a></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+                            <!-- Nombre politica -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textarea">Nombre politica</label>
+                                <div class="col-md-4">                     
+                                    <textarea class="form-control" id="textarea" name="textarea"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Adjunto-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="appendedtext">Adjunto</label>
+                                <div class="col-md-5">
+                                    <div class="input-group">
+                                        <input id="appendedtext" name="appendedtext" class="form-control" placeholder="c:\users\pc\documents\preregistro" type="text">
+                                        <span class="input-group-addon">Examinar</span>
+                                    </div>
+                                    <p class="help-block">Por favor adjunte el archivo de la politica a nivel nacional / sectorial / regional</p>
+                                </div>
+                            </div>
+                            <!-- Button -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="singlebutton"></label>
+                                <div class="col-md-4">
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-inverse">cargar documento</button>
+                                </div>
+                            </div>
+
+                            <!-- Guardar -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="button1id"></label>
+                                <div class="col-md-8">
+                                    <button id="button1id" name="button1id" class="btn btn-primary">Registrar Politica</button>
+                                    <button id="button2id" name="button2id" class="btn btn-primary">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

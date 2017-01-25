@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web>
+  <context-root>/GPY-web</context-root>
+    <!--resource-ref>      
+      <res-ref-name>gestorBDLocal</res-ref-name>      
+      <jndi-name>java:jboss/datasources/gestorBDLocal</jndi-name>
+    </resource-ref-->
+</jboss-web>

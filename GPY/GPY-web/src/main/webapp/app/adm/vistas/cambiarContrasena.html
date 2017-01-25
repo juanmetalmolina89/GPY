@@ -1,0 +1,68 @@
+<!-- ===================================================================================== -->
+<!-- Cambiar contraseña -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div style="margin-left:-80px;margin-right:90px; margin-top:-20px" ng-include src="'app/adm/vistas/administracionMenu.html'"></div>
+        </div>
+
+        <div style="margin-left:-100px;margin-top:-20px" class="col-sm-9 col-md-9">
+            <tabs>
+                <pane title="Cambiar Clave">
+                    <div class="tabs_gpy">
+                        <!-- ============================================================-->
+                        <!-- Formulario -->
+                        <!-- ============================================================-->
+                        <form class="form-horizontal"  name="form" >
+                            <fieldset>
+
+                                <!-- Contraseña anterior -->
+                                <div class="form-group" ng-class="{ 'has-error' : form.claveant.$error.required
+                                                                   , 'has-success' : form.claveant.$valid}">
+                                    <label class="col-md-4 control-label" for="claveant">Contraseña anterior</label>  
+                                    <div class="col-md-4">
+                                        <input id="claveant" name="claveant" placeholder="" class="form-control input-md" type="password" ng-model="claves.a041claveant" required>
+
+                                    </div>
+                                </div>
+
+                                <!-- Contraseña nueva -->
+                                <div class="form-group" ng-class="{ 'has-error' : form.clavenueva.$error.required
+                                                                   , 'has-success' : form.clavenueva.$valid}">
+                                    <label class="col-md-4 control-label" for="clavenueva">Contraseña nueva</label>  
+                                    <div class="col-md-4">
+                                        <input id="clavenueva" name="clavenueva" placeholder="" class="form-control input-md" type="password" ng-model="claves.a041clavenueva" required>
+
+                                    </div>
+                                </div>
+
+                                <!-- Confirmar contraseña -->
+                                <div class="form-group" ng-class="{ 'has-error' : form.clavenuevarep.$error.required
+                                                                   , 'has-success' : form.clavenuevarep.$valid}">
+                                    <label class="col-md-4 control-label" for="clavenuevarep">Confirmar contraseña</label>  
+                                    <div class="col-md-4">
+                                        <input id="clavenuevarep" name="clavenuevarep" placeholder="" class="form-control input-md" type="password" ng-model="claves.a041clavenuevarep" required>
+
+                                    </div>
+                                </div>
+
+                                <!-- Botón -->
+                                <div class="form-group text-center">
+                                    <label class="col-md-4 control-label" for="boton"></label>
+                                    <div class="col-md-4">
+                                        <button id="boton" name="boton" class="btn btn-primary" ng-click="cambiarContrasena()">Cambiar contraseña</button>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                        <!-- ============================================================-->
+                        <!-- Formulario -->
+                        <!-- ============================================================-->
+                    </div>
+                </pane>
+            </tabs>
+        </div>
+    </div>
+</div>

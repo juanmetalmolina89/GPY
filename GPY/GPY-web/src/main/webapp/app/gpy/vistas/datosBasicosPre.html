@@ -1,0 +1,186 @@
+<!-- ===================================================================================== -->
+<!-- 1 - Datos Básicos Preregistro -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
+        </div>
+
+
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
+                </div>
+
+                <div class="panel-body" ng-controller="datosBasicosCtrl">
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+
+                    <form class="form-horizontal" name="form">
+                        <fieldset>
+
+                            <!-- Datos Básicos  -->
+                            <legend>Datos Básicos</legend>
+
+                            <!-- Proyecto Asociado -->
+                            <div class="form-group" >
+                                <label class="col-md-4 control-label" for="proytascd">Proyecto Asociado</label>
+                                <div class="col-md-4">
+                                    <select id="proytascd" name="proytascd" class="form-control" ng-model="proyecto.a002proytascd" 
+                                            ng-options="proyectoAsoc as proyectoAsoc.a002nombrproyct for proyectoAsoc in proyectosAsoc track by proyectoAsoc.a002codigo" >
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Nombre Proyecto-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="nombrproyct">Nombre Proyecto</label>  
+                                <div class="col-md-4">
+                                    <input id="nombrproyct" name="nombrproyct" type="text" placeholder="" class="form-control input-md" ng-model="proyecto.a002nombrproyct" required>
+                                </div>
+                            </div>
+
+                            <!-- Ubicación del proyecto -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="ubccn">Ubicación del proyecto</label>
+                                <div class="col-md-4">
+                                    <select id="ubccn" name="ubccn" class="form-control" ng-model="proyecto.a002ubccn" 
+                                            ng-options="ubicacion as ubicacion.a102valor for ubicacion in ubicaciones track by ubicacion.a102codigo" required>
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div> 
+
+                            <!-- Departamento -->
+                            <div class="form-group" >
+                                <label class="col-md-4 control-label" for="departamento">Departamento</label>
+                                <div class="col-md-4">
+                                    <select id="departamento" name="departamento" class="form-control" ng-model="departamentoProySel" required
+                                             ng-options="departamento as departamento.a020nomdepartamento for departamento in departamentos | orderBy:'a020nomdepartamento'" ng-change="cargaMunicipios(departamentoProySel)">
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Municipio -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="municipio">Municipio</label>
+                                <div class="col-md-4">
+                                    <select id="municipio" name="municipio" class="form-control" ng-model="proyecto.a002loclzcn" required
+                                            ng-disabled="!departamentoProySel" ng-options="municipio as municipio.a020nommunicipio for municipio in municipios | orderBy:'a020nommunicipio'">
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Admite socios extrangeros -->
+                            <div class="form-group">
+                                <label class="col-md-12">¿Alguna de las actividades del proyecto distinta a la de conservación del sistema de parques nacionales naturales, admite a socios o accionistas a gobiernos extranjeros, o constituye algún derecho al respecto? (artículo 2.2.2.1.10.3. del decreto 1076 de 2015)? </label>
+                                <div class="col-md-12"> 
+                                    <label class="radio-inline">
+                                        <input type="radio" value="SI" ng-model="proyecto.a002socextrnjr">
+                                        SI
+                                    </label> 
+                                    <label class="radio-inline">
+                                        <input type="radio" value="NO" ng-model="proyecto.a002socextrnjr">
+                                        NO
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Descripción del proyecto / Iniciativa -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="descrpcinproyct">Descripción del proyecto / Iniciativa </label>
+                                <div class="col-md-4">
+                                    <textarea class="form-control" id="descrpcinproyct" name="descrpcinproyct" ng-model="proyecto.a002descrpcinproyct" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Duración prevista total (años)-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="durcnprevst">Duración prevista total (años)</label>  
+                                <div class="col-md-2">
+                                    <input id="durcnprevst" name="durcnprevst" type="text" placeholder="" class="form-control input-md"  ng-model="proyecto.a002durcnprevst" required>
+                                </div>
+                            </div>
+
+                            <!-- Vida útil del proyecto (años)-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="vidautl">Vida útil del proyecto (años)</label>  
+                                <div class="col-md-2">
+                                    <input id="vidautl" name="vidautl" type="text" placeholder="" class="form-control input-md"  ng-model="proyecto.a002vidautl" required>
+
+                                </div>
+                            </div>
+
+                            <!-- numero de CPAs que se proyecta involucra-->
+                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA">
+                                <label class="col-md-4 control-label" for="nrocpas">numero de CPAs que se proyecta involucra</label>  
+                                <div class="col-md-2">
+                                    <input id="nrocpas" name="nrocpas" type="text" placeholder="" class="form-control input-md"  ng-model="proyecto.a002nrocpas" >
+                                </div>
+                            </div>
+
+                            <!-- Potencial estimado de reducción de emisores GEI total (ton CO2 eq/año)-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="a002potnclestmdredccn">Potencial estimado de reducción de emisores GEI total (ton CO2 eq/año)</label>  
+                                <div class="col-md-4">
+                                    <input id="a002potnclestmdredccn" name="a002potnclestmdredccn" type="text" placeholder="" class="form-control input-md" type="text" ng-model="proyecto.a002potnclestmdredccn" required>
+
+                                </div>
+                            </div>
+
+                            <!-- Objetivo general de la iniciativa/Proyecto -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="objtvgenrl">Objetivo general de la iniciativa/Proyecto</label>
+                                <div class="col-md-4">
+                                    <textarea class="form-control" id="objtvgenrl" name="objtvgenrl" ng-model="proyecto.a002objtvgenrl" required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Alcance de la iniciativa / Proyecto -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="idalcance">Alcance de la iniciativa / Proyecto</label>
+                                <div class="col-md-4">
+                                    <select id="idalcance" name="idalcance" class="form-control" ng-model="proyecto.a002idalcance" 
+                                            ng-options="alcance as alcance.a102valor for alcance in alcances track by alcance.a102codigo" required>
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Sector Implementador -->
+                            <div class="form-group" ng-show="tpid == NAMA || tpid == PBDBCRC">
+                                <label class="col-md-4 control-label" for="proySectrImplmntdrList">Sector Implementador</label>
+                                <div class="col-md-4">
+                                    <select id="proySectrImplmntdrList" name="proySectrImplmntdrList" class="form-control" ng-model="multipleList.proySectrImplmntdrList" multiple ng-required='tpid == NAMA || tpid == PBDBCRC'>
+                                        <option ng-repeat="sector in sectores" value="{{sector.a023codigo}}">
+                                            {{sector.a023descsectrimplmntdr}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Guardar -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-8">
+                                    <button id="guardar" name="guardar" class="btn btn-primary" ng-click="guardarProyecto()" ng-disabled="form.$invalid">Guardar Proyecto</button>
+                                    <a ng-click="cancelar()" class="btn btn-primary" role="button">Cancelar</a>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

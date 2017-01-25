@@ -1,0 +1,52 @@
+<!-- ===================================================================================== -->
+<!-- Campos Persona Natural  -->
+<!-- ===================================================================================== -->
+
+
+<!-- Div Izquierdo-->
+<div style="float: left; width: 50%;">
+    <!-- Nombres -->
+    <div ng-class="{ 'has-error' : form.nombre.$error.required
+                                    , 'has-success' : form.nombre.$valid}">
+        <label class="col-md-5 control-label" for="nombre">Nombres</label>  
+        <div style="width:53%" class="col-md-7">
+            <input id="nombre" name="nombre" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052nombre" required title="Debe ingresar un nombre">
+        </div>
+    </div>
+    <br>
+    <!-- Tipo de Documento -->
+    <div style="margin-top:28px" class="form-group" ng-class="{ 'has-error' : form.tipdocmnt.$error.required
+                                    , 'has-success' : form.tipdocmnt.$valid}">
+        <label class="col-md-5 control-label" for="tipdocmnt">Tipo de Documento </label>
+        <div class="col-md-6">
+            <select id="tipdocmnt" name="tipdocmnt" class="form-control" ng-model="persona.a052tipdocmnt"
+                    ng-options="tipoDoc as tipoDoc.a015descrpcntipdocmnt for tipoDoc in tiposDoc track by tipoDoc.a015codigo" required>
+                <option value="">Seleccione</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Div Derecho-->
+<div style="float: right; width: 50%;">
+    <!-- Apellidos-->
+    <div ng-class="{ 'has-error' : form.apellido.$error.required
+                                    , 'has-success' : form.apellido.$valid}">
+        <label class="col-md-5 control-label" for="apellido">Apellidos</label>  
+        <div style="width:53%" class="col-md-6">
+            <input id="apellido" name="apellido" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052apellido" required>
+        </div>
+    </div>   
+    <!-- Número de Documento-->
+    <div style="margin-top:48px" class="form-group" ng-class="{ 'has-error' : form.numrdocmnt.$error.required || form.numrdocmnt.$error.maxlength
+                                    , 'has-warning' : form.numrdocmnt.$error.pattern 
+                                    , 'has-success' : form.numrdocmnt.$valid}">
+        <label class="col-md-5 control-label" for="numrdocmnt">Número de Documento de Identificación</label>  
+        <div class="col-md-6">
+            <input id="numrdocmnt" name="numrdocmnt" placeholder="" class="form-control input-md" 
+                   type="text" ng-model="persona.a052numrdocmnt" required ng-pattern="/^[0-9]*$/">
+
+        </div>
+        <span class="col-md-3 help-block" ng-show="(!form.numrdocmnt.$pristine) && (form.numrdocmnt.$error.required || form.numrdocmnt.$error.maxlength || form.numrdocmnt.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span> 
+    </div>
+</div>

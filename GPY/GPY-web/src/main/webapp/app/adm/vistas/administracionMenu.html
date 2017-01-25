@@ -1,0 +1,29 @@
+<!-- ===================================================================================== -->
+<!-- Menú Gestión Proyectos-->
+<!-- ===================================================================================== -->
+<div class="menu_proy" ng-controller="menuCtrl">
+
+    <div class="panel-group" id="accordion">
+        
+        <!-- Preregistro-->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><span data-toggle="collapse" data-parent="#accordion"><span class="glyphicon glyphicon-modal-window"></span>Administración</span></h4>
+            </div>
+
+            <div id="collapsePre" class="panel-collapse collapse in" >
+
+                <div class="list-group">
+                    <div class="list-group">
+                        <a href="#adm/cuenta" class="list-group-item" ng-class="getClassMenu('/adm/cuenta')" ><span class="glyphicon glyphicon-hand-up"></span>Mi Cuenta</a>
+                        <a href="#adm/crearUsuarios" class="list-group-item" ng-class="getClassMenu('/adm/crearUsuarios')" ><span class="glyphicon glyphicon-user"></span>Crear Usuario</a>
+                        <a href="#adm/cambiarClave" class="list-group-item" ng-class="getClassMenu('/adm/cambiarClave')" ><span class="glyphicon glyphicon-lock"></span>Cambiar Clave</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>      
+<!-- ===================================================================================== -->
+<!-- Fin Menú Gestión Proyectos-->
+<!-- ===================================================================================== -->

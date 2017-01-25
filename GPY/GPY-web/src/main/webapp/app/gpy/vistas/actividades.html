@@ -1,0 +1,190 @@
+<!-- ===================================================================================== -->
+<!-- 4 - Actividades -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
+        </div>
+
+
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
+                </div>
+
+                <div class="panel-body"  ng-controller="actividadCtrl">
+
+                            <!-- Actividades -->
+                            <legend>Actividades</legend>
+
+                <div class="pull-right">
+                    <a ng-click="mostrarForm()" class="btn btn-primary" role="button">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp;Agregar Nueva Actividad</a>
+                </div>
+
+                <form class="form-inline" ng-submit="consultarGrilla(busquedaOE)">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="palabraClave" placeholder="Término de búsqueda" maxlength="30" ng-model="busquedaOE.palabraClave">
+                    </div>
+                    <button type="submit" class="btn btn-default">Buscar</button>
+                </form>
+
+            <!-- Table -->
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Actividad</th>
+                    <th>Tipo Actividad</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <colgroup>
+                    <col class="col-md-4">
+                    <col class="col-md-6">
+                    <col class="col-md-2">
+                </colgroup>
+                                <tr>
+                                    <td>Actividad xxxx</td>
+                                    <td>Realizar actividades de reducción de</br> emisores</td>
+                    <td>
+                        <div class="btn-group">
+                            <!-- ver detalle -->
+                            <a ng-click="mostrarForm(actividad)" class="btn btn-info" role="button" data-toggle="tooltip" data-placement="top" title="Ver Detalle Actividad">
+                                <span class="glyphicon glyphicon-zoom-in"></span></a>
+                            <!-- editar -->
+                            <a ng-click="mostrarForm(actividad)" class="btn btn-warning" role="button" data-toggle="tooltip" data-placement="top" title="Editar Actividad">
+                                <span class="glyphicon glyphicon-edit"></span></a>
+                            <!-- gestionar datos relacionados -->
+                            <!--  <a href="#" class="btn btn-primary" role="button" data-toggle="tooltip" data-placement="top" title="Gestionar XXXXXX"> 
+                                <span class="glyphicon glyphicon-list"></span></a>-->
+                            <!-- Aprobar -->
+                            <!--<button type="button" class="btn btn-success" ng-click="" data-toggle="tooltip" data-placement="top"
+                                    title="Aprobar"><span class="glyphicon glyphicon-ok"></span></button> -->
+                            <!-- eliminar -->
+                            <button type="button" class="btn btn-danger" ng-click="eliminarActividad(actividad)" data-toggle="tooltip" data-placement="top"
+                                    title="Borrar Actividad"><span class="glyphicon glyphicon-remove"></span></button>
+                        </div>
+                    </td> 
+                                </tr>
+
+                <tr ng-repeat="actividad in actividades.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+                    <td>{{actividad.a005descrpcnactvdd}}</td>
+                    <td>{{actividad.a005idtipactvdd}}</td>
+                    <td>
+                        <div class="btn-group">
+                            <!-- ver detalle -->
+                            <a ng-click="mostrarForm(actividad)" class="btn btn-info" role="button" data-toggle="tooltip" data-placement="top" title="Ver Detalle Actividad">
+                                <span class="glyphicon glyphicon-zoom-in"></span></a>
+                            <!-- editar -->
+                            <a ng-click="mostrarForm(actividad)" class="btn btn-warning" role="button" data-toggle="tooltip" data-placement="top" title="Editar Actividad">
+                                <span class="glyphicon glyphicon-edit"></span></a>
+                            <!-- gestionar datos relacionados -->
+                            <!--  <a href="#" class="btn btn-primary" role="button" data-toggle="tooltip" data-placement="top" title="Gestionar XXXXXX"> 
+                                <span class="glyphicon glyphicon-list"></span></a>-->
+                            <!-- Aprobar -->
+                            <!--<button type="button" class="btn btn-success" ng-click="" data-toggle="tooltip" data-placement="top"
+                                    title="Aprobar"><span class="glyphicon glyphicon-ok"></span></button> -->
+                            <!-- eliminar -->
+                            <button type="button" class="btn btn-danger" ng-click="eliminar(actividad)" data-toggle="tooltip" data-placement="top"
+                                    title="Eliminar Actividad"><span class="glyphicon glyphicon-remove"></span></button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="panel-footer text-center">
+                <ul uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;"
+                    first-text="&laquo;" last-text="&raquo;"></ul>
+            </div>
+
+
+
+                            <hr>
+                            
+  	 
+
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                    <form class="form-horizontal">
+                        <fieldset>
+
+                            <div id="formulario" ng-show="muestraForm">
+                                <!-- Descripcion de la activad a desarrollar -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="a005descrpcnactvdd">Descripcion de la activad a desarrollar</label>
+                                    <div class="col-md-5">
+                                    <textarea class="form-control" id="a005descrpcnactvdd" name="a005descrpcnactvdd" ng-model="actividad.a005descrpcnactvdd" required></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Tipo de actividad -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="selectbasic">Tipo de actividad</label>
+                                    <div class="col-md-5">
+                                        <select id="selectbasic" name="selectbasic" class="form-control">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Tipo de actividad para la reduccion de emisiones GEI -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="selectbasic">Tipo de actividad para la reduccion de emisiones GEI</label>
+                                    <div class="col-md-5">
+                                        <select id="selectbasic" name="selectbasic" class="form-control">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Categoría de mitigación (sólo informativo) -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="selectbasic">Categoría de mitigación</label>
+                                    <div class="col-md-5">
+                                        <span>Fuente / Sumidero</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group required">
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="a003fechaInicial">Fecha Inicial</label></div>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control" id="a003fechaInicial" placeholder="Fecha Inicial" maxlength="10" required ng-model="inventarioOE.inventario.a003fechaInicial">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="a003fechaFinal">Fecha Final</label></div>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control" id="a003fechaFinal" placeholder="Fecha Final" maxlength="10" required ng-model="inventarioOE.inventario.a003fechaFinal">
+                                    </div>
+                                </div>
+
+                                <!-- mapa -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="singlebutton">Mapa</label>
+                                    <div class="col-md-4">
+                                        <a ng-click="" class="btn btn-primary" role="button">Seleccionar ubicación</a>
+                                    </div>
+                                </div>
+
+                                <!-- Guardar -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="guardar"></label>
+                                    <div class="col-md-8">
+                                        <button id="guardar" name="guardar" class="btn btn-primary">Registrar Actividad</button>
+                                        <a ng-click="ocultarForm()" class="btn btn-primary" role="button">Cancelar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

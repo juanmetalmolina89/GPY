@@ -1,0 +1,144 @@
+<!-- ===================================================================================== -->
+<!-- 2 - Participantes -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
+        </div>
+
+
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
+                </div>
+
+                <div class="panel-body">
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+
+                    <form class="form-horizontal">
+                        <fieldset>
+
+                            <!-- Participantes -->
+                            <legend>Participantes</legend>
+                            
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Tipo de Documento</th>
+                                    <th>Resp Funciones</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                <tr>
+                                    <td>Carlos Andres</td>
+                                    <td>Suarez Garcia</td>
+                                    <td>CC</td>
+                                    <td>Hacer</td>
+                                    <td></td>    
+                                </tr>
+                                <tr>
+                                    <td>Raul Antonio</td>
+                                    <td>Cardenas Ramirez</td>
+                                    <td>CE</td> 
+                                    <td>Ingresar</td>
+                                    <td></td>
+
+                                </tr> 
+                                <tr>
+                                    <td>Jose del Carmen</td>
+                                    <td>Morales Bernal</td>
+                                    <td>PA</td>
+                                    <td>Diligenciar</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+
+
+                            <!-- Nombre-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Nombre</label>  
+                                <div class="col-md-2">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <!-- Apellidos-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Apellidos</label>  
+                                <div class="col-md-2">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <!-- Tipo de documento -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="selectbasic">Tipo de documento</label>
+                                <div class="col-md-4">
+                                    <select id="selectbasic" name="selectbasic" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Numero de documento-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Numero de documento</label>  
+                                <div class="col-md-2">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <!-- Correo Electronico-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Correo Electronico</label>  
+                                <div class="col-md-2">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <!-- Entidad-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Entidad</label>  
+                                <div class="col-md-2">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <!-- Responsabilidades y/o Funciones -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="selectmultiple">Responsabilidades y/o Funciones</label>
+                                <div class="col-md-4">
+                                    <select id="selectmultiple" name="selectmultiple" class="form-control" multiple="multiple">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Guardar -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="button1id"></label>
+                                <div class="col-md-8">
+                                    <button id="button1id" name="button1id" class="btn btn-primary">Registrar participante </button>
+                                    <button id="button2id" name="button2id" class="btn btn-primary">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,174 @@
+<!-- ===================================================================================== -->
+<!-- Persona Jurídica -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div style="margin-left:-80px;margin-right:90px; margin-top:-20px" ng-include src="'app/adm/vistas/administracionMenu.html'"></div>
+        </div>
+        <div style="margin-left:-100px;margin-top:-20px" class="col-sm-9 col-md-10">
+            <tabs>
+                <pane title="Persona Jurídica">
+                    <div class="tabs_gpy">
+                        <form class="form-horizontal" name="form" >
+                            <fieldset>
+                                <!-- Div Izquierdo-->
+                                <div style="float: left; width: 50%;">
+                                    <!-- Tipo de persona jurídica -->
+                                    <div class="form-group"  ng-class="{ 'has-error' : form.tippersn.$error.required
+                                                                   , 'has-success' : form.tippersn.$valid}">
+                                        <label class="col-md-5 control-label" for="tippersn">Tipo de persona jurídica</label>
+                                        <div class="col-md-6">
+                                            <select id="tippersn" name="tippersn" class="form-control" ng-model="persona.a052idtippersn"  
+                                                    ng-options="tipoPerJuri as tipoPerJuri.a102valor for tipoPerJuri in tiposPerJuri track by tipoPerJuri.a102codigo" required>
+                                                <option value="">Seleccione</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Tipo de Documento -->
+                                    <div class="form-group"  ng-class="{ 'has-error' : form.tipdocmnt.$error.required
+                                                                   , 'has-success' : form.tipdocmnt.$valid}">
+                                        <label class="col-md-5 control-label" for="tipdocmnt">Tipo de Documento</label>
+                                        <div class="col-md-6">
+                                            <select id="tipdocmnt" name="tipdocmnt" class="form-control" ng-model="persona.a052tipdocmnt"
+                                                    ng-options="tipoDoc as tipoDoc.a015descrpcntipdocmnt for tipoDoc in tiposDoc track by tipoDoc.a015codigo" required>
+                                                <option value="">Seleccione</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Código CIIU -->
+                                    <div class="form-group" ng-class="{ 'has-error' : form.codgciiu.$error.required
+                                                                   , 'has-success' : form.codgciiu.$valid}">
+                                        <label class="col-md-5 control-label" for="codgciiu">Código CIIU</label>
+                                        <div class="col-md-6">
+                                            <select id="codgciiu" name="codgciiu" class="form-control" ng-model="persona.a052codgciiu" 
+                                                    ng-options="codigoCIIU as codigoCIIU.a049descripcionciiu for codigoCIIU in codigosCIIU track by codigoCIIU.a049codigociiu" required>
+                                                <option value="">Seleccione</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Pais -->
+                                    <div class="form-group" ng-class="{ 'has-error' : form.pais.$error.required
+                                                                  , 'has-success' : form.pais.$valid}">
+                                        <label class="col-md-5 control-label" for="pais">Pais</label>
+                                        <div class="col-md-6">
+                                            <select id="pais" name="pais" class="form-control" ng-model="paisSel"  required
+                                                    ng-options="pais as pais.a020nompais for pais in paises | orderBy:'a020nompais'" ng-change="cargaDepartamentos(paisSel)">
+                                                <option value="">Seleccione</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Municipio -->
+                                    <div class="form-group" ng-class="{ 'has-error' : form.municipio.$error.required
+                                                                  , 'has-success' : form.municipio.$valid}">
+                                        <label class="col-md-5 control-label" for="municipio">Municipio</label>
+                                        <div class="col-md-6">
+                                            <select id="municipio" name="municipio" class="form-control" ng-model="persona.a052loclzcn" required
+                                                    ng-disabled="!departamentoSel" ng-options="municipio as municipio.a020nommunicipio for municipio in municipios | orderBy:'a020nommunicipio'">
+                                                <option value="">Seleccione</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Celular-->
+                                    <div class="form-group" ng-class="{ 'has-error' : form.celular.$error.required 
+                                                                  , 'has-warning' : form.celular.$error.pattern 
+                                                                  , 'has-success' : form.celular.$valid}">
+                                        <label class="col-md-5 control-label" for="celular">Celular</label>  
+                                        <div class="col-md-6">
+                                            <input id="celular" name="celular" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052celular" required ng-pattern="/^[0-9]*$/">
+                                        </div>
+                                        <span class="col-md-3 help-block" ng-show="(!form.celular.$pristine) && (form.celular.$error.required || form.celular.$error.maxlength || form.celular.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span>
+                                    </div>
+                                    <!-- Correo Electrónico-->
+                                    <div class="form-group"  ng-class="{ 'has-error' : form.correlctrnc.$error.required
+                                                                   , 'has-success' : form.correlctrnc.$valid}">
+                                        <label class="col-md-5 control-label" for="correlctrnc">Correo Electrónico</label>  
+                                        <div class="col-md-6">
+                                            <input id="correlctrnc" name="correlctrnc" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052correlctrnc" required>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Div Derecho-->
+                                <div style="float: right; width: 50%;">
+                                    <!-- Razón social-->
+                                    <div class="form-group"  ng-class="{ 'has-error' : form.nombre.$error.required
+                                                                   , 'has-success' : form.nombre.$valid}">
+                                        <label class="col-md-5 control-label" for="nombre">Razón social</label>  
+                                        <div class="col-md-6">
+                                            <input id="nombre" name="nombre" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052apellido" required>
+                                        </div>
+                                    </div>
+                                    <!-- Número de Documento-->
+                                    <div class="form-group" ng-class="{ 'has-error' : form.numrdocmnt.$error.required || form.digtchqu.$error.required || form.numrdocmnt.$error.maxlength || form.digtchqu.$error.maxlength 
+                                                                    , 'has-warning' : form.numrdocmnt.$error.pattern || form.digtchqu.$error.pattern 
+                                                                    , 'has-success' : form.numrdocmnt.$valid || form.digtchqu.$valid}">
+                                        <label class="col-md-5 control-label" for="numrdocmnt">Número de Documento de Identificación</label>  
+                                        <div class="col-md-6">
+                                            <div style="margin-left:-15px" class="col-md-9 no_padding">
+                                                <input id="numrdocmnt" name="numrdocmnt" placeholder="" class="form-control input-md" 
+                                                       type="text" ng-model="persona.a052numrdocmnt" required ng-pattern="/^[0-9]*$/" ng-disabled="true">
+                                            </div>
+                                            <label style="margin-left:-21px" class="col-md-2 control-label" for="digtchqu">DV</label>
+                                            <div style="margin-right: -25px" class="col-md-4 no_padding">
+                                                <input id="digtchqu" name="digtchqu" placeholder="" class="form-control input-sm" 
+                                                       type="text" ng-model="persona.a052digtchqu" required ng-pattern="/^[0-9]*$/" ng-maxlength="1">
+                                            </div>
+                                        </div>
+                                        <span class="col-md-3 help-block" ng-show="(!form.numrdocmnt.$pristine || !form.digtchqu.$pristine) && (form.numrdocmnt.$error.required || form.digtchqu.$error.required || form.numrdocmnt.$error.maxlength || form.digtchqu.$error.maxlength || form.numrdocmnt.$error.pattern || form.digtchqu.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números y un dígito de verificación.</span> 
+                                    </div>
+                                    <!-- Dirección-->
+                                    <div class="form-group" ng-class="{ 'has-error' : form.direccion.$error.required
+                                                                   , 'has-success' : form.direccion.$valid}">
+                                        <label class="col-md-5 control-label" for="direccion">Dirección de correspondencia</label>  
+                                        <div class="col-md-6">
+                                            <input id="direccion" name="direccion" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052dirccncorrspndnc" required>
+                                        </div>
+                                    </div>
+                                    <!-- Departamento -->
+                                    <div class="form-group" ng-class="{ 'has-error' : form.departamento.$error.required
+                                                                  , 'has-success' : form.departamento.$valid}">
+                                        <label class="col-md-5 control-label" for="departamento">Departamento</label>
+                                        <div class="col-md-6">
+                                            <select id="departamento" name="departamento" class="form-control" ng-model="departamentoSel" required
+                                                    ng-disabled="!paisSel" ng-options="departamento as departamento.a020nomdepartamento for departamento in departamentos | orderBy:'a020nomdepartamento'" ng-change="cargaMunicipios(departamentoSel)">
+                                                <option value="">Seleccione</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Teléfono-->
+                                    <div class="form-group"  ng-class="{ 'has-error' : form.telefono.$error.required 
+                                                                  , 'has-warning' : form.telefono.$error.pattern 
+                                                                  , 'has-success' : form.telefono.$valid}">
+                                        <label class="col-md-5 control-label" for="telefono">Teléfono </label>  
+                                        <div class="col-md-6">
+                                            <input id="telefono" name="telefono" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052telefono" required ng-pattern="/^[0-9]*$/" >
+                                        </div>
+                                        <span class="col-md-3 help-block" ng-show="(!form.telefono.$pristine) && (form.telefono.$error.required || form.telefono.$error.maxlength || form.telefono.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span>
+                                    </div>
+
+                                </div>
+
+                                <!-- Botón -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="guardar"></label>
+                                    <div class="col-md-12 text-center">
+                                        <button id="guardar" name="guardar" class="btn btn-primary" ng-click="actualizarPersona()" ng-disabled="form.$invalid">Actualizar Datos</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </pane>
+                <pane title="Representante Legal">
+                    <div class="tabs_gpy">
+                        <div ng-include src="'app/adm/vistas/representanteLegal.html'" ng-controller="representanteCtrl" ></div>
+                    </div>
+                </pane>
+                <pane title="Contactos">
+                    <div class="tabs_gpy">
+                        <div ng-include src="'app/adm/vistas/contacto.html'" ng-controller="contactoCtrl" ></div>
+                    </div>
+                </pane>
+            </tabs>

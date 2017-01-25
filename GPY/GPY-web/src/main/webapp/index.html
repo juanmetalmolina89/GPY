@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gestor de Proyectos Ambientales - MADS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- css -->
+        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+        <link href="bower_components/angular-growl-v2/build/angular-growl.min.css" rel="stylesheet" />
+        <link href="bower_components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="bower_components/sweetalert/dist/sweetalert.css" rel="stylesheet" />
+        <link href="bower_components/toastr/toastr.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="utilidades/css/estilos.css" />
+        <link rel="stylesheet" type="text/css" href="utilidades/css/menuPrinc.css" />
+        <link rel="stylesheet" type="text/css" href="utilidades/css/menuProy.css" />
+        <link rel="stylesheet" type="text/css" href="utilidades/css/tabsProy.css" />
+        <link rel="icon" href="favicon.ico">
+    </head>
+    <body ng-app='GPYApp'>
+
+        <div class="container-fluid">
+            <!-- ===================================================================================== -->
+            <!-- Encabezado -->
+            <!-- ===================================================================================== -->  
+
+            <div class="row" style="height: 140px">
+                <div class="hidden-xs col-md-1 vertical-align">&nbsp;</div>
+                <div style="width:21%" class="col-xs-1 col-md-2 vertical-align"><a href="http://www.siac.gov.co/" target="_blank"><img class="img-responsive" src="http://capacitacion.siac.ideam.gov.co/SIAC/home/img/plantilla%201/logo.jpg"></a></div>
+                <div style="width:22%; margin-top:-20px" class="col-xs-2 col-md-2 vertical-align"><img class="img-responsive" src="utilidades/img/04-gestor.png"> <!--<a  style="max-width:25%;" href="#home"><h1><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span> Gestor Proyectos Ambientales</h1></a>--></div>
+                <div style="margin-top:40px; width:20%" class="col-xs-2 col-md-3 vertical-align" ><a href="http://www.minambiente.gov.co" target="_blank"><img class="img-responsive" src="utilidades/img/MinAmbientelogo.png"></a></div>
+                <div style="margin-top:20px; width:18%; margin-right:30px" class="col-xs-2 col-md-2 vertical-align"><a href="http://www.minambiente.gov.co" target="_blank"><img class="img-responsive" src="utilidades/img/todosporunpaislogo.png"></a></div>
+                <div class="hidden-xs col-md-1 vertical-align">&nbsp;</div>
+            </div>
+            <!-- ===================================================================================== -->
+            <!-- Se trajo de la página del SIAC (es temporal) -->
+            <!-- ===================================================================================== -->            
+
+            <!--hr style="border-color: #80AA26"-->
+
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">
+                            <span><img height="16px" src="http://capacitacion.siac.ideam.gov.co/SIAC/home/img/plantilla%201/siacmenuico.png"> </span>
+                        </a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="comunCtrl">
+
+                        <form class="navbar-form navbar-left" ng-show="obtenerSesion() !== null">
+                            <a href="#home" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> Gestión de Proyectos</a>
+                            <a ng-show="obtenerSesion().perfil != INVITADO" href="#reportes" class="btn btn-primary" role="button" ><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Reportes</a>
+                            <a ng-show="obtenerSesion().perfil != INVITADO" href="#adm/cuenta" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Administración</a>
+                        </form>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="#">
+                                    <span ng-show="obtenerSesion() != null">
+                                        Bienvenido, {{obtenerSesion().nombre}}
+                                    </span>
+                                </a>
+                            </li>
+                            <li ng-show="obtenerSesion() == null"><a href="#ingresar" ><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Ingresar</a></li>
+                            <li ng-show="obtenerSesion() != null"><a href="#home" ng-click="cerrarSesion()"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Salir</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- ===================================================================================== -->
+            <!-- Contenido -->
+            <!-- ===================================================================================== -->
+
+            <section id="contenido">
+                <div ng-view></div>
+            </section>
+
+            <!--nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="row" ng-controller="mainController">
+                        <a href="#home" class="btn btn-lg btn-primary" ng-class="getClass('/gpy')">Gestión de Proyectos</a>       
+                        <a href="#reportes" class="btn btn-lg btn-default" ng-class="getClass('/reportes')">Reportes</a>          
+                        <a  href="#adm/cuenta"  class= "btn btn-default btn-lg" ng-class="getClass('/adm')"  >Administración</a>       
+                        <a href="#ingresar" class="btn btn-lg btn-default pull-right" ng-class="getClass('/adm')" ><span class="glyphicon glyphicon-log-in"></span> Ingresar al Sistema</a>                           
+                    </div>
+            </nav-->
+
+            <!-- ===================================================================================== -->
+            <!-- Menú Principal -->
+            <!-- ===================================================================================== -->
+            <!--<nav>
+                <div id="menu_principal"  ng-controller="mainController">
+                    <div class="row">
+                        <a  href="#home"     class= "btn btn-lg" ng-class="getClass('/gpy')"   >Gestión de Proyectos</a>
+                        <a  href="#reportes" class= "btn btn-lg" ng-class="getClass('/reportes')" >Reportes</a>
+                        <a  href="#adm/cuenta"  class= "btn btn-lg" ng-class="getClass('/adm')"  >Administración</a>
+                    </div>
+                </div>
+            </nav>-->
+
+
+            <footer class="footer">
+                <div class="container">
+                    <div class="row">
+                        <img class="img-responsive" src="utilidades/img/footer.png">
+                    </div>
+                    <div class="row hidden">
+                        <div class="col-xs-1 col-md-2 vertical-align">&nbsp;</div>
+                        <div class="col-xs-10 col-md-8 vertical-align">
+                            <div class="row">
+                                <div class="hidden-xs col-md-1 vertical-align">&nbsp;</div>
+                                <div class="col-xs-1 col-md-1 vertical-align">
+                                    <a href="https://www.minambiente.gov.co/" target="_blank"><img class="img-responsive" src="utilidades/img/MinAmbientelogo.png"></a>
+                                </div>
+                                <div class="col-xs-1 col-md-1 vertical-align">
+                                    <a href="http://www.ideam.gov.co/" target="_blank"><img class="img-responsive" src="utilidades/img/logo_ideam.png"></a>
+                                </div>
+                                <div class="col-xs-1 col-md-1 vertical-align">
+                                    <a href="http://www.humboldt.org.co/es/" target="_blank"><img class="img-responsive" src="utilidades/img/logo_humboldtf.png"></a>
+                                </div>
+                                <div class="col-xs-1 col-md-1 vertical-align">
+                                    <a href="http://iiap.org.co/" target="_blank"><img class="img-responsive" src="utilidades/img/logo_iiap.png"></a>
+                                </div>
+                                <div class="col-xs-1 col-md-1 vertical-align">
+                                    <a href="http://www.parquesnacionales.gov.co/portal/es/" target="_blank"><img class="img-responsive" src="utilidades/img/Parques_Nacionales.jpg"></a>
+                                </div>
+                                <div class="col-xs-1 col-md-1 vertical-align">
+                                    <a href="http://www.invemar.org.co/" target="_blank"><img class="img-responsive" src="utilidades/img/logo_invemar.png"></a>
+                                </div>
+                                <div class="col-xs-1 col-md-1 vertical-align">
+                                    <a href="http://www.sinchi.org.co/" target="_blank"><img class="img-responsive" src="utilidades/img/logo_sinchi.png"></a>
+                                </div>
+                                <div class="col-xs-1 col-md-1 vertical-align">
+                                    <a href="http://www.anla.gov.co/" target="_blank"><img class="img-responsive" src="utilidades/img/logo_anla.png"></a>
+                                </div>
+                                <div class="hidden-xs col-md-1 vertical-align">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-1 col-md-2 vertical-align">&nbsp;</div>
+                        <div class="col-xs-12 col-md-12 text-center">&nbsp;</div>
+                        <div class="col-xs-12 col-md-12 text-center">
+                            Ministerio de Ambiente y Desarrollo Sostenible de Colombia Dirección electrónica: contacto@siac.gov.co<br>Desarrollado por SIAC
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+
+
+
+            <!-- ===================================================================================== -->
+            <!-- Dependencias -->
+            <!-- ===================================================================================== -->
+            <script src="bower_components/jquery/jquery.min.js"></script>
+            <script src="bower_components/angular/angular.min.js"></script>
+            <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+            <script src="bower_components/angular-route/angular-route.js"></script>
+            <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+            <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+            <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+            <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+            <script src="bower_components/angular-growl-v2/build/angular-growl.min.js"></script>
+            <script src="bower_components/angular-local-storage/angular-local-storage.min.js"></script>
+            <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+            <script src="bower_components/angular-moment/angular-moment.min.js"></script>
+            <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+            <script src="bower_components/angular-translate/angular-translate.min.js"></script>
+            <script src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.min.js"></script>
+            <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+            <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
+            <script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
+            <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+            <script src="bower_components/angular-ui-router-title/angular-ui-router-title.js"></script>
+            <script src="bower_components/jquery.easing/js/jquery.easing.min.js"></script>
+            <script src="bower_components/moment/min/moment-with-locales.min.js"></script>
+            <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
+            <script src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
+            <script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
+            <script src="bower_components/toastr/toastr.min.js"></script>
+            <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+            <script src="app/app.js"></script>
+            <script src="app/config.js"></script>
+            <script src="app/comun/enrutadores/rutas.js"></script>
+            <script src="app/comun/directivas/directivas.js"></script>
+            <script src="app/comun/directivas/menuProy.js"></script>
+
+            <script type="text/javascript" src="app/comun/servicios/comunSrv.js"></script>
+            <script type="text/javascript" src="app/utl/servicios/listadoSrv.js"></script>
+            <script type="text/javascript" src="app/gpy/servicios/datosBasicosSrv.js"></script>
+            <script type="text/javascript" src="app/gpy/servicios/actividadSrv.js"></script> 
+            <script type="text/javascript" src="app/gpy/servicios/infoMDLSrv.js"></script> 
+            <script type="text/javascript" src="app/gpy/servicios/avanceSrv.js"></script>
+            <script type="text/javascript" src="app/adm/servicios/usuarioSrv.js"></script>
+            <script type="text/javascript" src="app/adm/servicios/personaSrv.js"></script>
+            <script type="text/javascript" src="app/adm/servicios/representanteSrv.js"></script> 
+            <script type="text/javascript" src="app/adm/servicios/contactoSrv.js"></script>  
+
+            <script type="text/javascript" src="app/comun/controladores/comunCtrl.js"></script>
+            <script type="text/javascript" src="app/gpy/controladores/gestionProyectosCtrl.js"></script>
+            <script type="text/javascript" src="app/gpy/controladores/datosBasicosCtrl.js"></script>
+            <script type="text/javascript" src="app/gpy/controladores/actividadCtrl.js"></script> 
+            <script type="text/javascript" src="app/gpy/controladores/infoMDLCtrl.js"></script> 
+            <script type="text/javascript" src="app/gpy/controladores/avanceCtrl.js"></script><!-- candidato a quitar -->
+            <script type="text/javascript" src="app/utl/controladores/listadoCtrl.js"></script> <!-- candidato a quitar -->
+            <script type="text/javascript" src="app/adm/controladores/usuarioCtrl.js"></script>
+            <script type="text/javascript" src="app/adm/controladores/personaCtrl.js"></script>
+            <script type="text/javascript" src="app/adm/controladores/representanteCtrl.js"></script> 
+            <script type="text/javascript" src="app/adm/controladores/contactoCtrl.js"></script> 
+
+
+
+
+
+
+
+
+    </body>
+</html>

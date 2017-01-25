@@ -1,0 +1,21 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="styles/vendor.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <style>
+        html, body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+<body onload="ctrlGeo.actualizarExtent(getURLParameters('divipola'))">
+<div id="mapid" class="mapa"></div>
+<script src="scripts/vendor.js"></script>
+<script src="scripts/scripts.js"></script>
+<script src="scripts/geometria.js"></script>
+</body>
+</html>

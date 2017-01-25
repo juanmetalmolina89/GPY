@@ -1,0 +1,90 @@
+<!-- ===================================================================================== -->
+<!-- 10 - Aprobación  -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
+        </div>
+
+
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
+                </div>
+
+                <div class="panel-body">
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                    <form class="form-horizontal">
+                        <fieldset>
+
+                            <!-- Aprobación Preregistro -->
+                            <legend>Aprobación Preregistro</legend>
+
+                            <!-- Multiple Checkboxes (inline) -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="checkboxes"></label>
+                                <div class="col-md-4">
+                                    <label class="checkbox-inline" for="checkboxes-0">
+                                        <input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">
+                                        Aprobado
+                                    </label>
+                                    <label class="checkbox-inline" for="checkboxes-1">
+                                        <input name="checkboxes" id="checkboxes-1" value="2" type="checkbox">
+                                        No aprobado
+                                    </label>
+                                </div>
+                            </div>
+                            <hr>
+                            <label>Informacion eSigna</label>
+                            <!-- Número de radicado-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Número de radicado</label>  
+                                <div class="col-md-4">
+                                    <input id="textinput" name="textinput" placeholder="" class="form-control input-md" type="text">
+
+                                </div>
+                            </div>
+
+                            <!-- Adjunto-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="appendedtext">Adjunto</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input id="appendedtext" name="appendedtext" class="form-control" placeholder="c:\users\pc\documents\proyecto_123_eSigna" type="text">
+                                        <span class="input-group-addon">Examinar</span>
+                                    </div>
+                                    <p> por favor adjuntar el archivo de soporte de radicado eSigna</p>
+                                </div>
+                            </div>
+                            <!-- Cargar documento -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="singlebutton"></label>
+                                <div class="col-md-4">
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-inverse">Cargar documento</button>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <hr>
+                            <!-- Guardar -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="singlebutton"></label>
+                                <div class="col-md-4">
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

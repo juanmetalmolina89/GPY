@@ -1,0 +1,87 @@
+<!-- ===================================================================================== -->
+<!-- 3 - Fuentes -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
+        </div>
+
+
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
+                </div>
+
+                <div class="panel-body">
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <!-- Fuentes de Emisión -->
+                            <legend>Fuentes de Emisión</legend>
+                            
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Fuente de Emisión</th>
+                                    <th>Sub Categoria IPCC</th>
+                                    <td>Acciones</td>
+                                </tr>
+                                <tr>
+                                    <td>Fuente xxxx</td>
+                                    <td>abcd</td>
+                                    <td></td>    
+                                </tr>
+                                <tr>
+                                    <td>Fuente yyyyy</td>
+                                    <td>efghi</td>
+                                    <td></td>
+
+                                </tr> 
+                                <tr>
+                                    <td>Fuente zzzz</td>
+                                    <td>jklm</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+
+                            <!-- Fuente de emisión GEI-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Fuente de emisión GEI</label>  
+                                <div class="col-md-4">
+                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+
+                                </div>
+                            </div>
+
+                            <!-- Sub-Categoría IPCC o partida informativa de la Fuente de emisión -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="selectbasic">Sub-Categoría IPCC o partida informativa de la Fuente de emisión </label>
+                                <div class="col-md-4">
+                                    <select id="selectbasic" name="selectbasic" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Guardar -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="button1id"></label>
+                                <div class="col-md-8">
+                                    <button id="button1id" name="button1id" class="btn btn-primary">Registrar Fuente</button>
+                                    <button id="button2id" name="button2id" class="btn btn-primary">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,120 @@
+<!-- ===================================================================================== -->
+<!-- 8 - MDL etapa 2 Carta de NO Objeción -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
+        </div>
+
+
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
+                </div>
+
+                <div class="panel-body" ng-controller="infoMDLCtrl">
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                    <form class="form-horizontal">
+                        <fieldset>
+
+                            <!-- Etapa 2 Carta de NO Objeción -->
+                            <legend>Etapa 2 Carta de NO Objeción</legend>
+
+
+                            <!-- Escala -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="idescala">Escala</label>
+                                <div class="col-md-4">
+                                    <select id="idescala" name="idescala" class="form-control" ng-model="proyecto.a002idescala" 
+                                            ng-options="escala as escala.a102valor for escala in escalas track by escala.a102codigo" required ng-change="listarMetdMDL()">
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Metodología MDL aplicable -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="idmetdlgmdl">Metodología MDL aplicable</label>
+                                <div class="col-md-4">
+                                    <select id="idmetdlgmdl" name="idmetdlgmdl" class="form-control" ng-model="proyecto.a002idmetdlgmdl" 
+                                            ng-options="metodologiadMDL as metodologiadMDL.a028descmetdlgmdl for metodologiadMDL in metodologiasMDL track by metodologiadMDL.a028codigo" required>
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <label>Solicitud de Carta No Objeción</label>
+                            <br/>
+                            <p> Solicitud de Carta de No Objeción del POA suscrita por el representante legal de la Entidad Coordinadora, o quien haga sus veces (en caso de ser persona jurídica) o la persona natural interesada, con el nombre o razón social, número de identificación, domicilio y nacionalidad. Esto en caso de que este ya haya sido entregado al Ministerio de Ambiente y Desarrollo Sostenible</p>
+                            <!-- Numero de radicado-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Numero de radicado</label>  
+                                <div class="col-md-4">
+                                    <input id="textinput" name="textinput" placeholder="" class="form-control input-md" type="text">
+
+                                </div>
+                            </div>
+
+                            <!-- Adjunto-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="appendedtext">Adjunto</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input id="appendedtext" name="appendedtext" class="form-control" placeholder="c:\users\pc\documents\etapa 1_MDL_MDL_PoA" type="text">
+                                        <span class="input-group-addon">Examinar</span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Cargar documento -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="singlebutton"></label>
+                                <div class="col-md-4">
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-inverse">Cargar documento</button>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <!-- formato de identificación del producto-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="appendedtext">formato de identificación del producto</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input id="appendedtext" name="appendedtext" class="form-control" placeholder="c:\users\pc\documents\etapa 1_MDL_MDL_PoA" type="text">
+                                        <span class="input-group-addon">Examinar</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- Cargar documento -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="singlebutton"></label>
+                                <div class="col-md-4">
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-inverse">Cargar documento</button>
+                                </div>
+                            </div>
+
+                            <!-- Guardar -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="guardar"></label>
+                                <div class="col-md-8">
+                                    <button id="guardar" name="guardar" class="btn btn-primary" ng-click="registrarCartaNObj()">Finalizar registro MDL Carta de no objeción</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<!-- ===================================================================================== -->
+<!-- Menú Gestión Proyectos-->
+<!-- ===================================================================================== -->
+<div class="menu_proy" ng-controller="menuCtrl">
+
+    <div class="panel-group" id="accordion">
+        
+        <!-- Preregistro-->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><span data-toggle="collapse" data-parent="#accordion"><span class="glyphicon glyphicon-erase"></span>Preregistro</span></h4>
+            </div>
+
+            <div id="collapsePre" class="panel-collapse collapse in" >
+
+                <div class="list-group">
+                    <span class="list-group-item"><span class="glyphicon glyphicon-tasks"></span>Información General</span>
+                    <div class="list-group">
+                        <a href="#gpy/datbaspre/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/datbaspre/', estadoProy != NUEVO && estadoProy != PREREGISTRO )"  menu-link="estadoProy == NUEVO || estadoProy == PREREGISTRO "><span class="glyphicon glyphicon-list-alt"></span>Datos básicos</a>
+                        <a href="#gpy/participantespre/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/participantespre/', estadoProy != PREREGISTRO)" menu-link="estadoProy == PREREGISTRO"><span class="glyphicon glyphicon-hand-up"></span>Participantes</a>
+                        <a href="#gpy/fuentespre/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/fuentespre/', estadoProy != PREREGISTRO)" menu-link="estadoProy == PREREGISTRO"><span class="glyphicon glyphicon-oil"></span>Fuentes de Emisión</a>
+                        <a href="#gpy/actividadespre/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/actividadespre/', estadoProy != PREREGISTRO)" menu-link="estadoProy == PREREGISTRO"><span class="glyphicon glyphicon-map-marker"></span>Actividades</a>
+                        <a href="#gpy/politicaspre/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/politicaspre/', estadoProy != PREREGISTRO)" menu-link="estadoProy == PREREGISTRO"><span class="glyphicon glyphicon-briefcase"></span>Políticas</a>
+                        <a href="#gpy/financiacionpre/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/financiacionpre/', estadoProy != PREREGISTRO)" menu-link="estadoProy == PREREGISTRO"><span class="glyphicon glyphicon-usd"></span>Costos y Financiación</a>
+                    </div>
+                    <div id="menu-mdl" ng-show="tpid == MDL || tpid == MDL_POA">
+                        <span class="list-group-item"><span class="glyphicon glyphicon-grain"></span>Información MDL</span>
+                        <div class="list-group">
+                            <a href="#gpy/etapa1pre/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/etapa1/', estadoProy != PREREGISTRO)" menu-link="estadoProy == PREREGISTRO"><span class="glyphicon glyphicon-time"></span>Consideración Temprana</a>
+                            <a href="#gpy/etapa2pre/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/etapa2/', estadoProy != PREREGISTRO)" menu-link="estadoProy == PREREGISTRO"><span class="glyphicon glyphicon-envelope"></span>Carta de No Objeción</a>
+                            <a href="#gpy/etapa3pre/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/etapa3/', estadoProy != PREREGISTRO)" menu-link="estadoProy == PREREGISTRO"><span class="glyphicon glyphicon-check"></span>Autorización Entidad Coordinadora</a>
+                        </div>
+                    </div>
+                        <a href="#gpy/aprobacionpre/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/aprobacion/', estadoProy != PREREGISTRO)" menu-link="estadoProy == PREREGISTRO"><span class="glyphicon glyphicon-saved"></span> Aprobación Preregistro</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Registro -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><span data-toggle="collapse" data-parent="#accordion" ><span class="glyphicon glyphicon-file"></span>Registro</span></h4>
+            </div>
+            <div id="collapseReg" class="panel-collapse collapse in" >
+                <div class="list-group">
+                    <a href="#gpy/datbasreg/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/datbasreg/', estadoProy != REGISTRO)" menu-link="estadoProy == REGISTRO"><span class="glyphicon glyphicon-list-alt"></span>Datos básicos</a>
+                    <a href="#gpy/participantesreg/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/participantesreg/', estadoProy != REGISTRO)" menu-link="estadoProy == REGISTRO"><span class="glyphicon glyphicon-hand-up"></span>Participantes</a>
+                    <a href="#gpy/fuentesreg/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/fuentesreg/', estadoProy != REGISTRO)" menu-link="estadoProy == REGISTRO"><span class="glyphicon glyphicon-oil"></span>Fuentes de Emisión</a>
+                    <a href="#gpy/actividadesreg/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/actividadesreg/', estadoProy != REGISTRO)" menu-link="estadoProy == REGISTRO"><span class="glyphicon glyphicon-map-marker"></span>Actividades</a>
+                    <a href="#gpy/politicasreg/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/politicasreg/', estadoProy != REGISTRO)" menu-link="estadoProy == REGISTRO"><span class="glyphicon glyphicon-briefcase"></span>Políticas</a>
+                    <a href="#gpy/financiacionreg/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/financiacionreg/', estadoProy != REGISTRO)" menu-link="estadoProy == REGISTRO"><span class="glyphicon glyphicon-usd"></span>Costos y Financiación</a>
+                    <a href="#gpy/documentosreg/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/documentosreg/', estadoProy != REGISTRO)" menu-link="estadoProy == REGISTRO"><span class="glyphicon glyphicon-paperclip"></span>Documentos para Aprobación Nacional</a>
+                    <a href="#gpy/aprobacionreg/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/aprobacionreg/', estadoProy != REGISTRO)" menu-link="estadoProy == REGISTRO"><span class="glyphicon glyphicon-saved"></span> Aprobación Registro</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seguimiento -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><span data-toggle="collapse" data-parent="#accordion" ><span class="glyphicon glyphicon-flag"></span>Seguimiento</span></h4>
+            </div>
+            <div id="collapseSeg" class="panel-collapse collapse in" >
+                <div class="list-group">
+                    <a href="#gpy/infogralseg/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/infogralseg/', estadoProy != SEGUIMIENTO)" menu-link="estadoProy == SEGUIMIENTO"><span class="glyphicon glyphicon-blackboard"></span> Información General</a>
+                    <a href="#gpy/avanceseg/{{tpid}}/{{pid}}" class="list-group-item" ng-class="getClassMenu('/gpy/avanceseg/', estadoProy != SEGUIMIENTO)" menu-link="estadoProy == SEGUIMIENTO"><span class="glyphicon glyphicon-stats"></span> Avance</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>      
+<!-- ===================================================================================== -->
+<!-- Fin Menú Gestión Proyectos-->
+<!-- ===================================================================================== -->

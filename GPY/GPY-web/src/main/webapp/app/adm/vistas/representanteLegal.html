@@ -1,0 +1,180 @@
+<!-- ===================================================================================== -->
+<!-- Representante Legal -->
+<!-- ===================================================================================== -->
+﻿<form class="form-horizontal" name="form">
+   <fieldset style="margin-top:-20px">
+        <!-- Tipo de representante -->
+        <div class="form-group" ng-class="{ 'has-error' : form.tiporepresentante.$error.required
+                                          , 'has-success' : form.tiporepresentante.$valid}">
+            <label style="margin-left:-26px" class="col-md-3 control-label" for="tiporepresentante">Tipo de representante</label>
+            <div style="margin-left:-5px" class="col-md-4">
+                <select id="tiporepresentante" name="tiporepresentante" class="form-control" ng-model="representante.a053tiporepresentante" 
+                        ng-options="tipoRepresentante as tipoRepresentante.a102valor for tipoRepresentante in tiposRepresentante track by tipoRepresentante.a102codigo" required>
+                    <option value="">Seleccione</option>
+                </select>
+            </div>
+        </div>
+        <!-- Div Izquierdo-->
+        <div style="float: left; width: 50%;">
+
+            <!-- Nombres-->
+            <div class="form-group" ng-class="{ 'has-error' : form.nombre.$error.required
+                                          , 'has-success' : form.nombre.$valid}">
+                <label class="col-md-5 control-label" for="nombre">Nombres</label>  
+                <div class="col-md-6">
+                    <input id="nombre" name="nombre" placeholder="" class="form-control input-md" type="text" ng-model="representante.a053idrepresentante.a052nombre" required>
+
+                </div>
+            </div>
+            <!-- Tipo de Documento -->
+            <div class="form-group" ng-class="{ 'has-error' : form.tipdocmnt.$error.required
+                                          , 'has-success' : form.tipdocmnt.$valid}">
+                <label class="col-md-5 control-label" for="tipdocmnt">Tipo de Documento</label>
+                <div class="col-md-6">
+                    <select id="tipdocmnt" name="tipdocmnt" class="form-control" ng-model="representante.a053idrepresentante.a052tipdocmnt"
+                            ng-options="tipoDoc as tipoDoc.a015descrpcntipdocmnt for tipoDoc in tiposDocu track by tipoDoc.a015codigo" required>
+                        <option value="1">Select...</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Lugar de Expedición del documento-->
+            <div class="form-group" ng-class="{ 'has-error' : form.lgrexpcndocmnt.$error.required
+                                          , 'has-success' : form.lgrexpcndocmnt.$valid}">
+                <label class="col-md-5 control-label" for="lgrexpcndocmnt">Lugar de expedición del documento</label>  
+                <div class="col-md-6">
+                    <input id="lgrexpcndocmnt" name="lgrexpcndocmnt" placeholder="" class="form-control input-md" type="text" ng-model="representante.a053idrepresentante.a052lgrexpcndocmnt" required>
+
+                </div>
+            </div>
+            <!-- Pais -->
+            <div class="form-group" ng-class="{ 'has-error' : form.pais.$error.required
+                                                                  , 'has-success' : form.pais.$valid}">
+                <label class="col-md-5 control-label" for="pais">Pais</label>
+                <div class="col-md-6">
+                    <select id="pais" name="pais" class="form-control" ng-model="paisRepSel"  required
+                            ng-options="pais as pais.a020nompais for pais in paises | orderBy:'a020nompais'" ng-change="cargaDepartamentos(paisRepSel)">
+                        <option value="">Seleccione</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Municipio -->
+            <div class="form-group" ng-class="{ 'has-error' : form.municipio.$error.required
+                                                                  , 'has-success' : form.municipio.$valid}">
+                <label class="col-md-5 control-label" for="municipio">Municipio</label>
+                <div class="col-md-6">
+                    <select id="municipio" name="municipio" class="form-control" ng-model="representante.a053idrepresentante.a052loclzcn" required
+                            ng-disabled="!departamentoRepSel" ng-options="municipio as municipio.a020nommunicipio for municipio in municipios | orderBy:'a020nommunicipio'">
+                        <option value="">Seleccione</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Celular-->
+            <div class="form-group" ng-class="{ 'has-error' : form.celular.$error.required 
+                                                                  , 'has-warning' : form.celular.$error.pattern 
+                                                                  , 'has-success' : form.celular.$valid}">
+                <label class="col-md-5 control-label" for="celular">Celular</label>  
+                <div class="col-md-6">
+                    <input id="celular" name="celular" placeholder="" class="form-control input-md" type="text" ng-model="representante.a053idrepresentante.a052celular" required ng-pattern="/^[0-9]*$/">
+
+                </div>
+                <span class="col-md-3 help-block" ng-show="(!form.celular.$pristine) && (form.celular.$error.required || form.celular.$error.maxlength || form.celular.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span>
+            </div>
+        </div>
+
+        <!-- Div Derecho-->
+        <div style="float: right; width: 50%;">
+            <!-- Apellidos-->
+            <div class="form-group" ng-class="{ 'has-error' : form.apellido.$error.required
+                                          , 'has-success' : form.apellido.$valid}">
+                <label class="col-md-5 control-label" for="apellido">Apellidos</label>  
+                <div class="col-md-6">
+                    <input id="apellido" name="apellido" placeholder="" class="form-control input-md" type="text" ng-model="representante.a053idrepresentante.a052apellido" required>
+
+                </div>
+            </div>
+            <!-- Número de Documento-->
+            <div class="form-group" ng-class="{ 'has-error' : form.numrdocmnt.$error.required 
+                                                                  , 'has-warning' : form.numrdocmnt.$error.pattern 
+                                                                  , 'has-success' : form.numrdocmnt.$valid}">
+                <label class="col-md-5 control-label" for="numrdocmnt">Número de Documento</label>  
+                <div class="col-md-6">
+                    <input id="numrdocmnt" name="numrdocmnt" placeholder="" class="form-control input-md" type="text" ng-model="representante.a053idrepresentante.a052numrdocmnt" required ng-pattern="/^[0-9]*$/">
+
+                </div>
+                <span class="col-md-3 help-block" ng-show="(!form.numrdocmnt.$pristine) && (form.numrdocmnt.$error.required || form.numrdocmnt.$error.maxlength || form.numrdocmnt.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span>
+            </div>
+            <!-- Dirección de correspondencia-->
+            <div class="form-group" ng-class="{ 'has-error' : form.direccion.$error.required
+                                          , 'has-success' : form.direccion.$valid}">
+                <label class="col-md-5 control-label" for="direccion">Dirección de correspondencia</label>  
+                <div class="col-md-6">
+                    <input id="direccion" name="direccion" placeholder="" class="form-control input-md" type="text" ng-model="representante.a053idrepresentante.a052dirccncorrspndnc" required>
+
+                </div>
+            </div>
+            <!-- Departamento -->
+            <div class="form-group" ng-class="{ 'has-error' : form.departamento.$error.required
+                                                                  , 'has-success' : form.departamento.$valid}">
+                <label class="col-md-5 control-label" for="departamento">Departamento</label>
+                <div class="col-md-6">
+                    <select id="departamento" name="departamento" class="form-control" ng-model="departamentoRepSel" required
+                            ng-disabled="!paisRepSel" ng-options="departamento as departamento.a020nomdepartamento for departamento in departamentos | orderBy:'a020nomdepartamento'" ng-change="cargaMunicipios(departamentoRepSel)">
+                        <option value="">Seleccione</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Teléfono-->
+            <div class="form-group" ng-class="{ 'has-error' : form.telefono.$error.required 
+                                                                  , 'has-warning' : form.telefono.$error.pattern 
+                                                                  , 'has-success' : form.telefono.$valid}">
+                <label class="col-md-5 control-label" for="telefono">Teléfono </label>  
+                <div class="col-md-6">
+                    <input id="telefono" name="telefono" placeholder="" class="form-control input-md" type="text" ng-model="representante.a053idrepresentante.a052telefono" required ng-pattern="/^[0-9]*$/">
+
+                </div>
+                <span class="col-md-3 help-block" ng-show="(!form.telefono.$pristine) && (form.telefono.$error.required || form.telefono.$error.maxlength || form.telefono.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span>
+            </div>
+            <!-- Correo Electrónico-->
+            <div class="form-group" ng-class="{ 'has-error' : form.correlctrnc.$error.required || form.correlctrnc.$error.email
+                                          , 'has-success' : form.correlctrnc.$valid}">
+                <label class="col-md-5 control-label" for="correlctrnc">Correo Electrónico</label>  
+                <div class="col-md-6">
+                    <input id="correlctrnc" name="correlctrnc" placeholder="" class="form-control input-md" type="email" ng-model="representante.a053idrepresentante.a052correlctrnc" required>
+
+                </div>
+            </div>
+        
+        </div>
+        
+            <!-- Poder-->
+
+        <!-- Poder-->
+        <div id="poder" ng-show="representante.a053tiporepresentante.a102codigo === APODERADO"> 
+            <div class="form-group" ng-class="{ 'has-error' : poder.adjunto === '' 
+                                                                  , 'has-success' : poder.adjunto !== ''}">
+                <label class="col-md-4 control-label" for="adjunto">Poder</label>
+                <div class="col-md-6">
+                    <input type="file" class="form-control" id="adjunto" name="adjunto" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'"
+                           ng-model="poder.adjunto">
+                </div>
+                <!--
+                <div class="col-md-9">
+                    <input type="file" class="form-control" id="adjunto" name="adjunto" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'"
+                           ng-model="adjunto">
+                    <button type="button" class="btn btn-default" ng-click="consultarInventarioAdjunto()">
+                        <span class="glyphicon glyphicon-download-alt"></span>Descargar
+                    </button>
+                </div>-->
+            </div>
+        </div>
+
+        <!-- Botón -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="guardar"></label>
+            <div class="col-md-12 text-center">
+                <button id="guardar" name="guardar" class="btn btn-primary" ng-click="guardarRepLegal()" ng-disabled="(representante.a053tiporepresentante.a102codigo === APODERADO && poder.adjunto === '') || form.$invalid">Guardar Datos</button>
+            </div>
+        </div>
+
+    </fieldset>
+</form>

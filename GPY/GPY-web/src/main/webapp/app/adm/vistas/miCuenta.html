@@ -1,0 +1,6 @@
+<!-- ===================================================================================== -->
+<!-- Mi Cuenta -->
+<!-- ===================================================================================== -->
+<div style="margin-top: -20px; height: 20px" ng-show="persona.a052idtippersn === 0">Cargando...</div>
+<div ng-show="persona.a052idtippersn.a102codigo !== undefined && persona.a052idtippersn.a102codigo === NATURAL" ng-include src="'app/adm/vistas/personaNatural.html'"></div>
+<div ng-show="persona.a052idtippersn.a102codigo !== undefined && persona.a052idtippersn.a102codigo !== NATURAL" ng-include src="'app/adm/vistas/personaJuridica.html'"></div>

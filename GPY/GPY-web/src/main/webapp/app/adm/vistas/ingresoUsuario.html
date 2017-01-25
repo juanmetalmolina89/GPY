@@ -1,0 +1,55 @@
+<!-- ===================================================================================== -->
+<!-- Ingreso Usuario -->
+<!-- ===================================================================================== -->
+<div class="container">
+    <div class="col-sm-1 col-md-1"></div>
+    <div class="col-sm-10 col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Ingresar al Sistema</h3>
+            </div>
+            <div class="panel-body">
+
+
+                <form class="form-horizontal" name="ingresarForm">
+                    <fieldset>
+
+                        <!-- Usuario -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="usuario">Nombre de Usuario</label>  
+                            <div class="col-md-4">
+                                <input id="usuario" name="usuario" type="text" placeholder="Nombre de usuario" class="form-control input-md" ng-model="usuario.username" required>
+                                <!--<span class="help-block">Ingrese el nombre de usuario asignado.</span>-->  
+                            </div>
+                        </div>
+
+                        <!-- Password input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="clave">Contraseña</label>
+                            <div class="col-md-4">
+                                <input id="clave" name="clave" type="password" placeholder="Contraseña" class="form-control input-md" ng-model="usuario.clave" required>
+                                <!--<span class="help-block">Ingrese su contraseña de ingreso.</span>-->
+                            </div>
+                        </div>
+
+                        <!-- Botón -->
+                        <div class="form-group text-center">
+                            <label class="col-md-4 control-label" for="boton"></label>
+                            <div class="col-md-4">
+                                <button id="boton" name="boton" class="btn btn-primary" ng-disabled="ingresarForm.$invalid" ng-click="validarUsuario()" >Ingresar</button>
+                            </div>
+                            <label class="col-md-2 control-label"><a ng-click="infoAutoridadesModal()" style="cursor:pointer">Solicitar usuario</a></label>
+                            <label class="col-md-2 control-label"><a ng-click="invitado()" style="cursor:pointer">Ingresar como Invitado</a></label>
+                            <label class="col-md-1 control-label"></label>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-1 col-md-1"></div>
+    </div>
+</div>
+
+
+

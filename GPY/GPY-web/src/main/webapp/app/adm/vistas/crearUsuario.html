@@ -1,0 +1,77 @@
+<!-- ===================================================================================== -->
+<!-- Crear Usuario -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div style="margin-left:-80px;margin-right:90px; margin-top:-20px" ng-include src="'app/adm/vistas/administracionMenu.html'"></div>
+        </div>
+
+        <div style="margin-left:-100px;margin-top:-20px" class="col-sm-9 col-md-10">
+
+           <tabs>
+                <pane title="Crear Usuario">
+                    <div class="tabs_gpy">
+                        <form class="form-horizontal" name="form" >
+                            <fieldset>
+
+
+                                <!-- Tipo de Persona -->
+                                <div class="form-group" ng-class="{ 'has-error' : form.tippersn.$error.required
+                                                                    , 'has-success' : form.tippersn.$valid}">
+                                    <label style="margin-left:-30px" class="col-md-3 control-label" for="tippersn">Tipo de Persona</label>
+                                    <div class="col-md-4">
+                                        <select id="tippersn" name="tippersn" class="form-control" ng-model="persona.a052idtippersn" ng-change="listarTipoDocumento()"
+                                                ng-options="tipoPersona as tipoPersona.a102valor for tipoPersona in tiposPersona track by tipoPersona.a102codigo" required>
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div ng-show="persona.a052idtippersn.a102codigo !== JURIDICA" ng-include src="'app/adm/vistas/crearUsuarioPN.html'"></div>
+                                <div ng-show="persona.a052idtippersn.a102codigo === JURIDICA" ng-include src="'app/adm/vistas/crearUsuarioPJ.html'"></div>
+
+                                <!-- ¿Pertenece a una autoridad ambiental? -->
+                                <div>
+                                    <div class="form-group" >
+                                        <label class="col-md-4 control-label" for="terminos"></label>
+                                        <div class="col-md-5">
+                                            <input id="terminos" name="terminos" type="checkbox" ng-model="terminos" ng-click="muestraAA()" >
+                                            <span class="pointer" ng-click="muestraAA()"> El usuario pertenece a una Autoridad Ambiental </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- autoridad ambiental a la que pertenece -->
+                                <div class="form-group" ng-show="perteneceAA" ng-class="{ 'has-error' : form.idEntidad.$error.required
+                                                                                            , 'has-success' : !form.idEntidad.$pristine && form.idEntidad.$valid}">
+                                    <label class="col-md-4 control-label" for="idEntidad">Autoridad Ambiental</label>
+                                    <div class="col-md-4">
+                                        <select id="idEntidad" name="idEntidad" class="form-control" ng-model="persona.a052identidad"
+                                                ng-options="autoridad as autoridad.a001nombre for autoridad in autoridades track by autoridad.a001codigo" >
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <!-- Botón -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="boton"></label>  
+                                    <div class="col-md-4">
+                                        <button id="boton" name="boton" class="btn btn-primary" ng-click="registrarUsuario()">Crear Usuario</button>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+
+
+                    </div>
+                </pane>
+            </tabs>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,93 @@
+/* 
+    Created on : 06-oct-2016, 20:41:25
+    Author     : Yeimmy Lee
+*/
+body {
+	margin:10px;
+}
+
+footer {
+	text-align: center;
+}
+
+
+#logo{
+	float: left;
+	/*height: 200px;*/
+	/*padding-left: 40px;*/
+        /*margin-top: -160px;*/
+        /*padding-left: 25%;*/
+}
+
+#bienvenida_usuario {
+	/*float: right;*/
+	padding: 20px;
+	border-left: 1px solid gainsboro;
+	/*margin: -160px 20px 20px;*/
+}
+
+#menu_principal {
+	clear: both;
+	text-align: center;
+        margin: 30px 0px;
+}
+
+#menu_principal a {
+	width: 300px;
+}
+
+#contenido {
+	min-height: 600px;
+	
+}
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+#logo a {
+	text-decoration: none;
+	color: #787878;
+}
+
+#logo a span {
+	text-decoration: none;
+	color: #787878;
+}
+
+.gest_proy .panel-heading {
+	height: 40px;
+}
+
+.menu_proy .list-group-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.menu_proy .panel-heading  {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.menu_proy .panel-title a:hover {
+    text-decoration: none;      
+}
+
+.panel {
+   margin-bottom: 0px;
+}
+
+.tabs_gpy {
+
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+
+.gest_proy .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+	background-color: #f5f5f5;
+}
+
+
+
+

@@ -53,55 +53,29 @@
                                     <textarea class="form-control" id="tecnlgcontmpld" name="tecnlgcontmpld" ng-model="proyecto.a002tecnlgcontmpld" required></textarea>
                                 </div>
                             </div>
-                            <hr>
-                            <label> Solicitud de Consideración Temprana del Proyecto</label>
-                            <br/><p> Solicitud de Consideración Temprana del proyecto MDL suscrita por el representante legal o quien haga sus veces (en caso de ser persona jurídica) o la persona natural interesada, con el nombre o razón social, número de identificación, domicilio y nacionalidad. Esto en caso de que este ya haya sido entregado al Ministerio de Ambiente y Desarrollo Sostenible)</p>
-                            <!-- Número de radicado-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="textinput">Número de radicado</label>  
-                                <div class="col-md-4">
-                                    <input id="textinput" name="textinput" placeholder="" class="form-control input-md" type="text">
 
-                                </div>
-                            </div>
 
-                            <!-- Adjunto-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="appendedtext">Adjunto</label>
-                                <div class="col-md-4">
-                                    <div class="input-group">
-                                        <input id="appendedtext" name="appendedtext" class="form-control" placeholder="c:\users\pc\documents\etapa 1_MDL_MDL_PoA" type="text">
-                                        <span class="input-group-addon">Examinar</span>
-                                    </div>
 
-                                </div>
-                            </div>
-                            
-                            <!-- Cargar documento -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="singlebutton"></label>
-                                <div class="col-md-4">
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-inverse">Cargar documento</button>
-                                </div>
-                            </div>
-                            <hr>
-
+                            <!-- Adjuntos -->                            
+                            <!-- Solicitud de Consideracion Temprana -->
                             <!-- Formato Form de Prior Consideration de la  CMNUCC-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="appendedtext">Formato Form de Prior Consideration de la  CMNUCC</label>
-                                <div class="col-md-4">
-                                    <div class="input-group">
-                                        <input id="appendedtext" name="appendedtext" class="form-control" placeholder="c:\users\pc\documents\etapa 1_MDL_MDL_PoA" type="text">
-                                        <span class="input-group-addon">Examinar</span>
+                            <div class="div_adjuntos" ng-repeat="adjunto in adjuntos">
+                                <label> {{adjunto.a025nombradjnt}}</label>
+                                <br/><p> {{adjunto.a025descrpcnadjnt}}</p>
+                                <!-- Número de radicado-->
+                                <div class="form-group" ng-show="adjunto.a025aplicpcnadjnt == 'SI'">
+                                    <label class="col-md-4 control-label" for="radicado">Número de radicado</label>  
+                                    <div class="col-md-4">
+                                        <input id="radicado" name="radicado" placeholder="" class="form-control input-md" type="text" ng-model="adjunto.radicado">
                                     </div>
-
                                 </div>
-                            </div>
-                            <!-- Cargar documento -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="singlebutton"></label>
-                                <div class="col-md-4">
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-inverse">Cargar documento</button>
+
+                                <!-- Adjunto-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="appendedtext">Adjunto</label>
+                                    <div class="col-md-6">
+                                        <input type="file" class="form-control" id="{{adjunto.a025codigo}}" name="{{adjunto.a025codigo}}" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'" ng-model="adjunto.adjunto">
+                                    </div>
                                 </div>
                             </div>
 

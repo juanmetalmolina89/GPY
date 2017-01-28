@@ -5,7 +5,6 @@
     <entry key="className">oracle.jdbc.driver.OracleDriver</entry>
     <!--entry key="url">jdbc:oracle:thin:@172.17.3.90:1521:XE</entry-->
     <entry key="url">jdbc:oracle:thin:@localhost:1521:XE</entry>
-    <!--entry key="user">GESTOR</entry-->
     <entry key="user">GESTORGPY</entry>
     <entry key="password">gestor123</entry>
 </properties>

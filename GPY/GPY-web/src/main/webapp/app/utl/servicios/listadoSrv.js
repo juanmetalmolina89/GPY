@@ -48,15 +48,7 @@ angular.module('listado.services')
                 datos.listarMetdMDL = function (OE) {
                     return $http.post(urlBase +'/listarMetdMDL', OE);
                 };
-
-                datos.listarActividades = function (OE) {
-                    return $http.post(urlBase +'/listarActividades', OE);
-                };
                 
-                
-                /**************************************************************/
-                /* DUMMY */
-
                 datos.listarTipoActividadReduccion = function (OE) {
                     return $http.post(urlBase +'/listarTipoActividadReduccion', OE);
                 };

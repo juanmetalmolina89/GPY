@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('GPYApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngResource', 'angular-jwt', 'angular-storage', 'ngFileUpload'
-				, 'usuario.services', 'comun.services',  'listado.services', 'persona.services', 'representante.services', 'contacto.services', 'datosBasicos.services', 'actividad.services', 'infoMDL.services', 'avance.services'
+				, 'usuario.services', 'comun.services',  'listado.services', 'persona.services', 'representante.services', 'contacto.services', 'datosBasicos.services', 'actividad.services', 'infoMDL.services', 'avance.services', 'grilla.services'
 				, 'usuario.controllers', 'comun.controllers', 'listado.controllers', 'persona.controllers','representante.controllers','contacto.controllers','datosBasicos.controllers','actividad.controllers','infoMDL.controllers','avance.controllers'
 				, 'GPYApp.directives'
 				]);
@@ -21,6 +21,7 @@ angular.module('datosBasicos.services'           , []);
 angular.module('actividad.services'              , []);
 angular.module('infoMDL.services'                , []);
 angular.module('avance.services'                 , []);
+angular.module('grilla.services'                 , []);
 
 
 /* Controllers */

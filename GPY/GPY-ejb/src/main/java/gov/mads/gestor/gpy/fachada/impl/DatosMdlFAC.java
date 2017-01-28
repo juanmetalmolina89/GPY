@@ -11,6 +11,7 @@ import gov.mads.gestor.gpy.vista.ActualizarAdjuntoOE;
 import gov.mads.gestor.gpy.vista.ActualizarCartaNObjOE;
 import gov.mads.gestor.gpy.vista.ActualizarConsideracOE;
 import gov.mads.gestor.gpy.vista.ConsultarAdjuntoOE;
+import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarCartaNObjOE;
 import gov.mads.gestor.gpy.vista.ConsultarConsideracOE;
 import gov.mads.gestor.gpy.vista.ConsultarSoportePorIdOE;
@@ -69,14 +70,14 @@ public class DatosMdlFAC implements IDatosMdlFAC {
                 Integer codigoProyecto = Integer.parseInt(camposAdjuntoOE.get("idProyecto").get(0).getBodyAsString());
                 
                 Date fechaAdjunto = (camposAdjuntoOE.get("fechaAdjunto") == null) ? null : Date.valueOf(camposAdjuntoOE.get("fechaAdjunto").get(0).getBodyAsString());
-                String numrradcd = (camposAdjuntoOE.get("numrradcd").get(0).getBodyAsString());
+                String numrradcd = (camposAdjuntoOE.get("numrradcd") == null) ? null : (camposAdjuntoOE.get("numrradcd").get(0).getBodyAsString());
                 Integer idAdjnt = Integer.parseInt(camposAdjuntoOE.get("idAdjnt").get(0).getBodyAsString());
                 Integer idUsuario = Integer.parseInt(camposAdjuntoOE.get("idUsuario").get(0).getBodyAsString());
                 String rutaAdjuntoParametrica = obtenerRutaAdjuntoParametrica(idUsuario);
                 String nombreArchivo ="";
                 String nombreArchivoServ = "";
                 String md5 = "";
-                File Adjunto = almacenarArchivo(camposAdjuntoOE, (rutaAdjuntoParametrica + File.separator +numrradcd), idAdjnt);
+                File Adjunto = almacenarArchivo(camposAdjuntoOE, (rutaAdjuntoParametrica + File.separator +codigoProyecto), codigoProyecto);
                 InputStream lecturaAdjunto = new FileInputStream(Adjunto);
                 md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(lecturaAdjunto); 
                 nombreArchivo = Adjunto.getName();
@@ -110,27 +111,15 @@ public class DatosMdlFAC implements IDatosMdlFAC {
             return objetoSalida;
         }
 
-        public File consultarAdjunto(ConsultarAdjuntoOE OE) {
+        public ObjetoSalida consultarAdjunto(ConsultarAdjuntoOE OE) {
             ObjetoSalida objetoSalida = datosMdlDAO.consultarAdjunto(OE);
-            File adjunto =  null;
-             if (objetoSalida.esRespuestaOperacionCorrecta()){
-                String nombreAdjunto = "";
-                String rutaAdjunto = obtenerRutaAdjuntoParametrica(1);
-                String numrrdcd = "";
-                for (HashMap<String, Object> item : objetoSalida.getRespuesta()) {
-                    
-                    numrrdcd = item.get("a008numrradcd").toString();
-                    nombreAdjunto = item.get("a026nomarchivo").toString();
-                    //rutaAdjunto = item.get("A014RUTAADJUNTO").toString();
-                }
-                adjunto = new File(rutaAdjunto + File.separator + "Adjunto" + File.separator + numrrdcd + File.separator + OE.getA002codigo() + File.separator + nombreAdjunto);
-            }
-            return adjunto;
+            
+            return objetoSalida;
         }
         
-        private String darNombreArchivo(MultivaluedMap<String, String> header) {
+        private String darNombreArchivo(MultivaluedMap<String, String> cabecera) {
 
-            String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
+            String[] contentDisposition = cabecera.getFirst("Content-Disposition").split(";");
 
             for (String filename : contentDisposition) {
                     if ((filename.trim().startsWith("filename"))) {
@@ -152,9 +141,7 @@ public class DatosMdlFAC implements IDatosMdlFAC {
             listaOE.setIdUsuario(idUsuario);
             listaOE.setCategoria("RUTAADJUNTO");
             ObjetoSalida objetoSalidaParametrica = fachadaListados.listarParametrico(listaOE);
-            if (!objetoSalidaParametrica.esRespuestaOperacionCorrecta()) {
-                ErrorClass.getParametrics(objetoSalidaParametrica, "RUTAARCHIVO", DatosMdlFAC.class);
-            }    
+
             return objetoSalidaParametrica.getRespuesta().get(0).get("a102valor").toString();
         }
 
@@ -166,7 +153,7 @@ public class DatosMdlFAC implements IDatosMdlFAC {
             File archivoS = null;
             try (InputStream lecturaAdjunto = camposAdjuntoOE.get("file").get(0).getBody(InputStream.class, null)){
 
-                    File carpetaAdjunto = new File(rutaAdjuntoParametrica + File.separator + "Adjunto" +File.separator + idrepresentante);
+                    File carpetaAdjunto = new File(rutaAdjuntoParametrica + File.separator + idrepresentante);
                     MultivaluedMap<String, String> header = camposAdjuntoOE.get("file").get(0).getHeaders();
                     String nombreArchivo = darNombreArchivo(header);
                     if (!carpetaAdjunto.exists())
@@ -218,7 +205,7 @@ public class DatosMdlFAC implements IDatosMdlFAC {
                 String nombreArchivo ="";
                 String nombreArchivoServ = "";
                 String md5 = "";
-                File Adjunto = almacenarArchivo(camposAdjuntoOE, (rutaAdjuntoParametrica + File.separator +numrradcd), idAdjnt);
+                File Adjunto = almacenarArchivo(camposAdjuntoOE, (rutaAdjuntoParametrica + File.separator +codigoProyecto), codigoProyecto);
                 InputStream lecturaAdjunto = new FileInputStream(Adjunto);
                 md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(lecturaAdjunto); 
                 nombreArchivo = Adjunto.getName();
@@ -252,5 +239,24 @@ public class DatosMdlFAC implements IDatosMdlFAC {
 
             return objetoSalida;
 
+        }
+
+        
+        public File consultarAdjuntoPorID(ConsultarAdjuntoPorIdOE OE) {
+            ObjetoSalida objetoSalida = datosMdlDAO.consultarAdjuntoPorID(OE);
+            File adjunto =  null;
+             if (objetoSalida.esRespuestaOperacionCorrecta()){
+                String nombreAdjunto = "";
+                String rutaAdjunto = obtenerRutaAdjuntoParametrica(1);
+                String numrrdcd = "";
+                for (HashMap<String, Object> item : objetoSalida.getRespuesta()) {
+                    
+                    numrrdcd = item.get("a008numrradcd").toString();
+                    nombreAdjunto = item.get("a026nomarchivo").toString();
+                    //rutaAdjunto = item.get("A014RUTAADJUNTO").toString();
+                }
+                adjunto = new File(rutaAdjunto + File.separator + OE.getA002codigo() + File.separator + OE.getA002codigo() + File.separator + nombreAdjunto);
+            }
+            return adjunto;
         }
 }

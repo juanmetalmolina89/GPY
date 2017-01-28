@@ -18,6 +18,7 @@ import gov.mads.gestor.gpy.fachada.impl.DatosMdlFAC;
 import gov.mads.gestor.gpy.vista.ActualizarCartaNObjOE;
 import gov.mads.gestor.gpy.vista.ActualizarConsideracOE;
 import gov.mads.gestor.gpy.vista.ConsultarAdjuntoOE;
+import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarCartaNObjOE;
 import gov.mads.gestor.gpy.vista.ConsultarConsideracOE;
 import gov.mads.gestor.gpy.vista.ConsultarSoportePorIdOE;
@@ -91,14 +92,16 @@ public class DatosMdlSERV {
         
         @POST
 	@Path("/consultarAdjunto")
-	@Consumes({MediaType.APPLICATION_JSON})
-	@Produces("application/pdf")
-	@JWT
+	//@Consumes({MediaType.APPLICATION_JSON})
+	//@Produces("application/pdf")
+	@Consumes(MediaType.APPLICATION_JSON)
+        @Produces({ MediaType.APPLICATION_JSON})
+        @JWT
 	public Response consultarAdjunto(ConsultarAdjuntoOE objetoEntrada) {
-		/*DatosMdlFAC fac = new DatosMdlFAC();
+		DatosMdlFAC fac = new DatosMdlFAC();
 		ObjetoSalida os = fac.consultarAdjunto(objetoEntrada);
-		return API.retornarRespuesta(os);*/
-            try {
+		return API.retornarRespuesta(os);//*/
+            /*try {
                     DatosMdlFAC fac = new DatosMdlFAC();
                     File adjunto = fac.consultarAdjunto(objetoEntrada);
                     if (adjunto != null && adjunto.exists()) {
@@ -111,7 +114,7 @@ public class DatosMdlSERV {
                     }
                 }catch(Exception ex){
                         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-                }
+                }*/
 	}
         
         @POST
@@ -157,4 +160,29 @@ public class DatosMdlSERV {
                ObjetoSalida objetoSalida = fac.actualizarAdjunto(OE);
                return API.retornarRespuesta(objetoSalida);
         }
+        
+        @POST
+	@Path("/consultarAdjuntoPorId")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces("application/pdf")
+	@JWT
+	public Response consultarAdjuntoPorId(ConsultarAdjuntoPorIdOE objetoEntrada) {
+		/*DatosMdlFAC fac = new DatosMdlFAC();
+		ObjetoSalida os = fac.consultarAdjunto(objetoEntrada);
+		return API.retornarRespuesta(os);*/
+            try {
+                    DatosMdlFAC fac = new DatosMdlFAC();
+                    File adjunto = fac.consultarAdjuntoPorID(objetoEntrada);
+                    if (adjunto != null && adjunto.exists()) {
+                        Response.ResponseBuilder response = Response.ok(adjunto);
+                        response.header("Content-Disposition", "attachment; filename=" + adjunto.getName());
+                        return response.build();
+                    }
+                    else {
+                        return Response.status(Response.Status.FORBIDDEN).build();
+                    }
+                }catch(Exception ex){
+                        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                }
+	}
 }

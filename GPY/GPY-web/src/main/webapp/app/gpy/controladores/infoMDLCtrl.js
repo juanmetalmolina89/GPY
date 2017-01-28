@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('infoMDL.controllers', ['ngSanitize'])
-        .controller('infoMDLCtrl', ['$scope', '$routeParams', '$location', 'infoMDLSrv', 'comunSrv', 'listadoSrv', 'avanceSrv', 'infoProyecto', function ($scope, $routeParams, $location, infoMDLSrv, comunSrv, listadoSrv, avanceSrv, infoProyecto) {
+        .controller('infoMDLCtrl', ['$scope', '$routeParams', '$location', 'infoMDLSrv', 'comunSrv', 'listadoSrv', 'avanceSrv', 'adjuntosMDLSrv', 'infoProyecto', function ($scope, $routeParams, $location, infoMDLSrv, comunSrv, listadoSrv, avanceSrv, adjuntosMDLSrv, infoProyecto) {
 
                 /**************************************************************/
                 /* Manejo sesión */
@@ -39,7 +39,7 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                             .then(function (response) {
                                 comunSrv.mensajeSalida(response);
                                 //guardar adjuntos
-
+                                $scope.guardarAdjuntos();
                                 //registrar avance
                                 avanceSrv.registrarAvance({"idUsuario": $scope.idUsuario, "a002codigo": $scope.proyecto.a002codigo, "a057idpantalla": $scope.pantalla})
                                         .then(function (response) {
@@ -62,6 +62,7 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                             .then(function (response) {
                                 comunSrv.mensajeSalida(response);
                                 //guardar adjuntos
+                                $scope.guardarAdjuntos();
 
                                 //registrar avance
                                 avanceSrv.registrarAvance({"idUsuario": $scope.idUsuario, "a002codigo": $scope.proyecto.a002codigo, "a057idpantalla": $scope.pantalla})
@@ -77,6 +78,7 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
 
                 $scope.registrarAutorizacionEntCoord = function () {
                     //guardar adjuntos
+                    $scope.guardarAdjuntos();
 
                     //registrar avance
                     avanceSrv.registrarAvance({"idUsuario": $scope.idUsuario, "a002codigo": $scope.proyecto.a002codigo, "a057idpantalla": $scope.pantalla})
@@ -115,19 +117,21 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
 
                 $scope.listarMetdMDL = function () {
                     //para poder listar las metodologías MDL debe conocer la escala y el sector
-                    console.log("a002idescala " + $scope.proyecto.a002idescala.a102codigo);
-                    console.log("a028idsectoralscope " + $scope.proyecto.a002idsectoralscope.a102codigo);
-                    if (($scope.proyecto.a002idescala.a102codigo != undefined || $scope.proyecto.a002idescala.a102codigo != null) && ($scope.proyecto.a002idsectoralscope.a102codigo != undefined || $scope.proyecto.a002idsectoralscope.a102codigo)) {
-                        $scope.OE = new Object();
-                        $scope.OE.idUsuario = $scope.idUsuario;
-                        $scope.OE.a028idescl = $scope.proyecto.a002idescala.a102codigo;
-                        $scope.OE.a028idsectoralscope = $scope.proyecto.a002idsectoralscope.a102codigo;
-                        listadoSrv.listarMetdMDL($scope.OE)
-                                .then(function (response) {
-                                    $scope.metodologiasMDL = response.data.respuesta;
-                                }, function (error) {
-                                    comunSrv.mensajeSalida(error);
-                                });
+                    //primero valida que existan los objetos
+                    if (($scope.proyecto.a002idescala != undefined || $scope.proyecto.a002idescala != null) && ($scope.proyecto.a002idsectoralscope != undefined || $scope.proyecto.a002idsectoralscope)) {
+                        //luego valida que existan los id dentro de los objetos
+                        if (($scope.proyecto.a002idescala.a102codigo != undefined || $scope.proyecto.a002idescala.a102codigo != null) && ($scope.proyecto.a002idsectoralscope.a102codigo != undefined || $scope.proyecto.a002idsectoralscope.a102codigo)) {
+                            $scope.OE = new Object();
+                            $scope.OE.idUsuario = $scope.idUsuario;
+                            $scope.OE.a028idescl = $scope.proyecto.a002idescala.a102codigo;
+                            $scope.OE.a028idsectoralscope = $scope.proyecto.a002idsectoralscope.a102codigo;
+                            listadoSrv.listarMetdMDL($scope.OE)
+                                    .then(function (response) {
+                                        $scope.metodologiasMDL = response.data.respuesta;
+                                    }, function (error) {
+                                        comunSrv.mensajeSalida(error);
+                                    });
+                        }
                     }
                 };
 
@@ -145,10 +149,28 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                             });
                 };
 
+                $scope.guardarAdjuntos = function () {
+
+                    angular.forEach($scope.adjuntos, function (value, key) {
+                        $scope.registrarAdjunto(value);
+
+                    });
+                };
+
+                $scope.registrarAdjunto = function (adjunto) {
+
+                    adjuntosMDLSrv.registrarAdjunto(adjunto.adjunto, $scope.idUsuario, $scope.pid, adjunto.radicado, adjunto.a025codigo)
+                            .then(function (response) {
+                                comunSrv.mensajeSalida(response);
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
+
                 /**************************************************************/
                 /* Inicializar formulario */
                 $scope.proyecto = infoProyecto.proyecto;
-                
+
                 if ($location.path().substr(0, '/gpy/etapa1pre/'.length) === '/gpy/etapa1pre/') {
                     //etapa 1
                     $scope.pantalla = MDLETP1PRE;

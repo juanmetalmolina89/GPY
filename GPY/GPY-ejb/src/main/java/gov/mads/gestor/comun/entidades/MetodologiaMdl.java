@@ -36,9 +36,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "MetodologiaMdl.findAll", query = "SELECT m FROM MetodologiaMdl m")})
 public class MetodologiaMdl implements Serializable {
 
-    @OneToMany(mappedBy = "a002idmetdlgmdl")
-    private Collection<Proyecto> proyectoCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -74,6 +71,9 @@ public class MetodologiaMdl implements Serializable {
     private Lista a028idescl;
 //    @OneToMany(mappedBy = "a002idmetdlgmdl")
 //    private List<Proyecto> proyectoList;
+    @JoinColumn(name = "A028IDSECTORALSCOPE", referencedColumnName = "A102CODIGO")
+    @ManyToOne(optional = false)
+    private Lista a028idsectoralscope;
 
     public MetodologiaMdl() {
     }
@@ -171,6 +171,14 @@ public class MetodologiaMdl implements Serializable {
 //        this.proyectoList = proyectoList;
 //    }
 
+    public Lista getA028idsectoralscope() {
+        return a028idsectoralscope;
+    }
+
+    public void setA028idsectoralscope(Lista a028idsectoralscope) {
+        this.a028idsectoralscope = a028idsectoralscope;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -194,16 +202,6 @@ public class MetodologiaMdl implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.MetodologiaMdl[ a028codigo=" + a028codigo + " ]";
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<Proyecto> getProyectoCollection() {
-        return proyectoCollection;
-    }
-
-    public void setProyectoCollection(Collection<Proyecto> proyectoCollection) {
-        this.proyectoCollection = proyectoCollection;
     }
     
 }

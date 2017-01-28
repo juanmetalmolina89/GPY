@@ -91,3 +91,11 @@ footer {
 
 
 
+
+.derecha {text-align:right;}
+
+.div_adjuntos {
+    background: whitesmoke;
+    border: solid 5px white;
+    padding: 5px;
+}

@@ -14,20 +14,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author juanmetalmolina
  */
 @XmlRootElement
-
-public class ListarActividadesOE extends ObjetoEntrada{
-   @XmlElement
-   private Integer a005codigo;
-   @XmlElement
-   private Integer a005idproyecto;
-
-    public Integer getA005codigo() {
-        return a005codigo;
-    }
-
-    public void setA005codigo(Integer a005codigo) {
-        this.a005codigo = a005codigo;
-    }
+public class ListarActividadesPorFiltroOE extends ObjetoEntrada{
+    @XmlElement
+    private Integer a005idproyecto;
+    @XmlElement
+    private String filtro;
 
     public Integer getA005idproyecto() {
         return a005idproyecto;
@@ -36,5 +27,12 @@ public class ListarActividadesOE extends ObjetoEntrada{
     public void setA005idproyecto(Integer a005idproyecto) {
         this.a005idproyecto = a005idproyecto;
     }
-   
+
+    public String getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(String filtro) {
+        this.filtro = filtro;
+    }
 }

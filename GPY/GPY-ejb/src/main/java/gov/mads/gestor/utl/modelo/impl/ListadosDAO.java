@@ -353,7 +353,7 @@ public class ListadosDAO extends GenericoDAO {
             SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_ListarTipoActividad", objetoEntrada.getIdUsuario());
             List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
             parametros.add(new SentenciaParametroDAO("p_A022IDTIPPROYCT", objetoEntrada.getA022idtipproyct(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-            parametros.add(new SentenciaParametroDAO("p_A022IDTIPPROYCTMDL", objetoEntrada.getA022idtipproyctmdl(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+           // parametros.add(new SentenciaParametroDAO("p_A022IDTIPPROYCTMDL", objetoEntrada.getA022idtipproyctmdl(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             
             sentencia.setParametros(parametros);
             objetoSalida = this.ejecutar(sentencia, objetoSalida);
@@ -619,7 +619,7 @@ public class ListadosDAO extends GenericoDAO {
 
             SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_ListarActividadesReduc", objetoEntrada.getIdUsuario());
             List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
-            
+            parametros.add(new SentenciaParametroDAO("p_A058TIPPROYCT", objetoEntrada.getA058tipproyct(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             sentencia.setParametros(parametros);
             objetoSalida = this.ejecutar(sentencia, objetoSalida);
             ErrorClass.getMessage(objetoSalida,ListadosDAO.class);

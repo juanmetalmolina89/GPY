@@ -1,5 +1,4 @@
 package gov.mads.gestor.gpy.fachada.impl;
-import com.fasterxml.jackson.databind.ser.std.FileSerializer;
 import gov.mads.gestor.comun.entidades.Actividad;
 import gov.mads.gestor.comun.entidades.Archivo;
 import gov.mads.gestor.comun.vista.CodError;
@@ -41,7 +40,7 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
  * @author Ivan Chacon
  */
 public class ActividadFAC implements IActividadFAC { 
-        private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ActividadFAC.class ); 
+        private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger( ActividadFAC.class ); 
 	private final ActividadDAO actividadDAO = new ActividadDAO();
 
 	public ObjetoSalida registrarActividad(RegistrarActividadOE objetoEntrada) {
@@ -161,7 +160,7 @@ public class ActividadFAC implements IActividadFAC {
                     nombreAdjunto = item.get("a026nomarchivo").toString();
                     //rutaAdjunto = item.get("A014RUTAADJUNTO").toString();
                 }
-                soporte = new File(rutaAdjunto + File.separator+ "Soporte" + File.separator + OE.getA005codigo() + File.separator + nombreAdjunto);
+                soporte = new File(rutaAdjunto + File.separator + OE.getA005codigo() + File.separator + nombreAdjunto);
             }
             return soporte;
         }
@@ -214,7 +213,7 @@ public class ActividadFAC implements IActividadFAC {
             return null;
         }
         //
-        private String darNombreArchivo(MultivaluedMap<String, String> header) {
+        private String getFileName(MultivaluedMap<String, String> header) {
 
             String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
 
@@ -230,16 +229,14 @@ public class ActividadFAC implements IActividadFAC {
             return "unknown";
         }
 
-        private String obtenerRutaAdjuntoParametrica(Integer idUsuario){
+        private String obtenerRutaAdjuntoParametrica(Integer idUsuario) {
 
             IListadosFAC fachadaListados = new ListadosFAC();
             ListarParametricoOE listaOE = new ListarParametricoOE();
             listaOE.setIdUsuario(idUsuario);
-            listaOE.setCategoria("RUTAARCHIVO");
+            listaOE.setCategoria("RUTAADJUNTO");
             ObjetoSalida objetoSalidaParametrica = fachadaListados.listarParametrico(listaOE);
-            if (!objetoSalidaParametrica.esRespuestaOperacionCorrecta()) {
-                ErrorClass.getParametrics(objetoSalidaParametrica, "RUTAARCHIVO", ActividadFAC.class);
-            }
+
             return objetoSalidaParametrica.getRespuesta().get(0).get("a102valor").toString();
         }
         
@@ -247,9 +244,9 @@ public class ActividadFAC implements IActividadFAC {
             File archivoS = null;
             try (InputStream lecturaAdjunto = camposAdjuntoOE.get("file").get(0).getBody(InputStream.class, null)){
 
-                    File carpetaAdjunto = new File(rutaAdjuntoParametrica + File.separator+ "Soporte" +File.separator + idrepresentante);
+                    File carpetaAdjunto = new File(rutaAdjuntoParametrica + File.separator + idrepresentante);
                     MultivaluedMap<String, String> header = camposAdjuntoOE.get("file").get(0).getHeaders();
-                    String nombreArchivo = darNombreArchivo(header);
+                    String nombreArchivo = getFileName(header);
                     if (!carpetaAdjunto.exists())
                         carpetaAdjunto.mkdirs();
                     else if (carpetaAdjunto.isDirectory())

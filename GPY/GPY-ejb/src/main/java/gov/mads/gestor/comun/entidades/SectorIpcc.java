@@ -35,11 +35,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "SectorIpcc.findAll", query = "SELECT s FROM SectorIpcc s")})
 public class SectorIpcc implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a046idsector")
-    private Collection<CategoriaIpcc> categoriaIpccCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a005idsectoripcc")
-    private Collection<Actividad> actividadCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -71,6 +66,8 @@ public class SectorIpcc implements Serializable {
 //    private List<CategoriaIpcc> categoriaIpccList;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a005idsectoripcc")
 //    private List<Actividad> actividadList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a043idsectoripcc")
+//    private List<SubgrupoIpcc> subgrupoIpccList;
 
     public SectorIpcc() {
     }
@@ -162,6 +159,16 @@ public class SectorIpcc implements Serializable {
 //        this.actividadList = actividadList;
 //    }
 
+//    @XmlTransient
+//    @JsonIgnore
+//    public List<SubgrupoIpcc> getSubgrupoIpccList() {
+//        return subgrupoIpccList;
+//    }
+//
+//    public void setSubgrupoIpccList(List<SubgrupoIpcc> subgrupoIpccList) {
+//        this.subgrupoIpccList = subgrupoIpccList;
+//    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -185,26 +192,6 @@ public class SectorIpcc implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.SectorIpcc[ a045codigo=" + a045codigo + " ]";
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<CategoriaIpcc> getCategoriaIpccCollection() {
-        return categoriaIpccCollection;
-    }
-
-    public void setCategoriaIpccCollection(Collection<CategoriaIpcc> categoriaIpccCollection) {
-        this.categoriaIpccCollection = categoriaIpccCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<Actividad> getActividadCollection() {
-        return actividadCollection;
-    }
-
-    public void setActividadCollection(Collection<Actividad> actividadCollection) {
-        this.actividadCollection = actividadCollection;
     }
     
 }

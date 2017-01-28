@@ -7,6 +7,8 @@ angular.module('datosBasicos.services')
         .factory('datosBasicosSrv', ['$http', function ($http) {
 
                 var urlBase = urlBackEnd + 'datosbasicos';
+                var urlGrilla = urlBackEnd + 'grilla';
+                
                 var datos = {};
 
                 datos.listarProyectos = function (OE) {
@@ -33,6 +35,13 @@ angular.module('datosBasicos.services')
                     return $http.post(urlBase + '/consultarProyectoAsociado', OE);
                 };
 
+                datos.listarProyectosUsuario = function (OE) {
+                    return $http.post(urlGrilla + '/listarProyecto', OE);
+                };
+                
+                datos.listarProyectosFiltro = function (OE) {
+                    return $http.post(urlGrilla + '/listarProyectoPorClave', OE);
+                };
                 return datos;
             }])
         .factory('infoProyecto', function () {

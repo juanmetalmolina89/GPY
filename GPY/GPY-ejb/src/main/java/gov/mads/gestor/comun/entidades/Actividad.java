@@ -38,17 +38,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Actividad.findAll", query = "SELECT a FROM Actividad a")})
 public class Actividad implements Serializable {
 
-    @Column(name = "A005FECHAINICIO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date a005fechainicio;
-    @Column(name = "A005FECHAFINAL")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date a005fechafinal;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a011idactvdd")
-    private Collection<Indicador> indicadorCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a042idactvdd")
-    private Collection<ActividadGeometria> actividadGeometriaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -101,6 +90,19 @@ public class Actividad implements Serializable {
     private SectorIpcc a005idsectoripcc;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a042idactvdd")
 //    private List<ActividadGeometria> actividadGeometriaList;
+    
+    
+    @JoinColumn(name = "A005IDTIPACTVDREDUC", referencedColumnName = "A058CODIGO")
+    @ManyToOne
+    private TipoActivReduccion a005idtipactvdreduc;
+
+    @Column(name = "A005FECHAINICIO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date a005fechainicio;
+    @Column(name = "A005FECHAFINAL")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date a005fechafinal;
+    
 
     public Actividad() {
     }
@@ -275,31 +277,6 @@ public class Actividad implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "gov.mads.gestor.comun.entidades.Actividad[ a005codigo=" + a005codigo + " ]";
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<Indicador> getIndicadorCollection() {
-        return indicadorCollection;
-    }
-
-    public void setIndicadorCollection(Collection<Indicador> indicadorCollection) {
-        this.indicadorCollection = indicadorCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<ActividadGeometria> getActividadGeometriaCollection() {
-        return actividadGeometriaCollection;
-    }
-
-    public void setActividadGeometriaCollection(Collection<ActividadGeometria> actividadGeometriaCollection) {
-        this.actividadGeometriaCollection = actividadGeometriaCollection;
-    }
-
     public Date getA005fechainicio() {
         return a005fechainicio;
     }
@@ -314,6 +291,19 @@ public class Actividad implements Serializable {
 
     public void setA005fechafinal(Date a005fechafinal) {
         this.a005fechafinal = a005fechafinal;
+    }
+
+    public TipoActivReduccion getA005idtipactvdreduc() {
+        return a005idtipactvdreduc;
+    }
+
+    public void setA005idtipactvdreduc(TipoActivReduccion a005idtipactvdreduc) {
+        this.a005idtipactvdreduc = a005idtipactvdreduc;
+    }
+
+    @Override
+    public String toString() {
+        return "gov.mads.gestor.comun.entidades.Actividad[ a005codigo=" + a005codigo + " ]";
     }
     
 }

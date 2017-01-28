@@ -12,6 +12,8 @@ import gov.mads.gestor.gpy.vista.ListarProyectoOE;
 
 import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.gpy.fachada.impl.GrillaFAC;
+import gov.mads.gestor.gpy.vista.ListarActividadesOE;
+import gov.mads.gestor.gpy.vista.ListarActividadesPorFiltroOE;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -49,4 +51,29 @@ public class GrillaSERV {
         ObjetoSalida objetoSalida = fac.listarProyectoFiltrado(OE);
         return API.retornarRespuesta(objetoSalida);
     }
+    
+    @POST
+    @Path("/listarActividades")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @JWT
+    public Response listarActividades(ListarActividadesOE OE) {
+
+        GrillaFAC fac = new GrillaFAC();
+        ObjetoSalida objetoSalida = fac.listarActividades(OE);
+        return API.retornarRespuesta(objetoSalida);
+    }
+    
+    @POST
+    @Path("/listarActividadPorClave")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @JWT
+    public Response listarActividadesFiltrado(ListarActividadesPorFiltroOE OE) {
+
+        GrillaFAC fac = new GrillaFAC();
+        ObjetoSalida objetoSalida = fac.listarActividadesFiltrado(OE);
+        return API.retornarRespuesta(objetoSalida);
+    }
+    
 }

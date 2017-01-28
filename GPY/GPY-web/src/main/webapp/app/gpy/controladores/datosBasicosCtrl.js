@@ -119,7 +119,8 @@ angular.module('datosBasicos.controllers', ['ngSanitize'])
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.a002tipproyct = $scope.tpid;
-                    
+                    $scope.OE.a002codigo = $scope.pid;
+
                     datosBasicosSrv.consultarProyectoAsociado($scope.OE)
                             .then(function (response) {
                                 $scope.proyectos = response.data.respuesta;

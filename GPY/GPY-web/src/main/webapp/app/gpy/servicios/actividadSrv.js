@@ -25,18 +25,36 @@ angular.module('actividad.services')
                     return $http.post(urlBase + '/eliminarActividad', OE);
                 };
 
-                datos.registrarSoporte = function (OE) {
-                    return $http.post(urlBase + '/registrarSoporte', OE);
-                };
-
-                datos.actualizarSoporte = function (OE) {
-                    return $http.post(urlBase + '/actualizarSoporte', OE);
-                };
-
                 datos.consultarSoportePorId = function (OE) {
                     return $http.post(urlBase + '/consultarSoportePorId', OE);
                 };
 
+                datos.consultarGeografia = function (OE) {
+                    return $http.post(urlBase + '/consultarGeografia', OE);
+                };
+
                 return datos;
+            }])
+
+        .service('soporteActividadSrv', ['Upload', function (Upload) {
+
+                var urlBase = urlBackEnd + 'actividad';
+
+                this.registrarSoporte = function (idActividad, adjunto, idUsuario) {
+                    return Upload.upload({
+                        method: 'POST',
+                        url: urlBase + '/registrarSoporte',
+                        data: {file: adjunto, 'idActividad': idActividad, 'idUsuario': idUsuario}
+                    });
+                };
+
+                this.actualizarSoporte = function (idSoporte, adjunto, idUsuario) {
+                    return Upload.upload({
+                        method: 'POST',
+                        url: urlBase + '/actualizarSoporte',
+                        data: {file: adjunto, 'idSoporte': idSoporte, 'idUsuario': idUsuario}
+                    });
+                };
+
             }]);
 

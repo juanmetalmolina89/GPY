@@ -4,11 +4,13 @@ import gov.mads.gestor.comun.modelo.SentenciaDAO;
 import gov.mads.gestor.comun.modelo.SentenciaParametroDAO;
 import gov.mads.gestor.comun.modelo.SentenciaTipoParametroDAO;
 import gov.mads.gestor.comun.vista.CodError;
+import gov.mads.gestor.comun.vista.ErrorClass;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.gpy.vista.ActualizarAdjuntoOE;
 import gov.mads.gestor.gpy.vista.ActualizarCartaNObjOE;
 import gov.mads.gestor.gpy.vista.ActualizarConsideracOE;
 import gov.mads.gestor.gpy.vista.ConsultarAdjuntoOE;
+import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarCartaNObjOE;
 import gov.mads.gestor.gpy.vista.ConsultarConsideracOE;
 import gov.mads.gestor.gpy.vista.ListarAdjuntosOE;
@@ -41,9 +43,11 @@ public class DatosMdlDAO extends GenericoDAO {
 			//parametros.add(new SentenciaParametroDAO("p_A003IDARCHIV_2", objetoEntrada.getPolitica().getA003idarchiv_2(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
 			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		}
 
 		return objetoSalida;
@@ -61,9 +65,11 @@ public class DatosMdlDAO extends GenericoDAO {
 			parametros.add(new SentenciaParametroDAO("p_A002IDMETDLGMDL", objetoEntrada.getProyecto().getA002idmetdlgmdl().getA028codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
 			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		}
 
 		return objetoSalida;
@@ -78,9 +84,11 @@ public class DatosMdlDAO extends GenericoDAO {
 			parametros.add(new SentenciaParametroDAO("p_A002CODIGO", objetoEntrada.getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
 			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		}
 
 		return objetoSalida;
@@ -96,9 +104,11 @@ public class DatosMdlDAO extends GenericoDAO {
 			parametros.add(new SentenciaParametroDAO("p_A002CODIGO", objetoEntrada.getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
 			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		}
 
 		return objetoSalida;
@@ -121,11 +131,13 @@ public class DatosMdlDAO extends GenericoDAO {
                     parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getProyadjunto().getA008idarchv().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                     sentencia.setParametros(parametros);
                     objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                    ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 
                 } catch (Exception e) {
 
                     objetoSalida.setCodError(CodError.ERROR_INTERNO);
                     objetoSalida.setMsgError(e.getMessage());
+                    ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
                 }
 
                 return objetoSalida;
@@ -145,6 +157,7 @@ public class DatosMdlDAO extends GenericoDAO {
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
 			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		}
 
 		return objetoSalida;
@@ -161,9 +174,11 @@ public class DatosMdlDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A025IDPANTALLA", objetoEntrada.getA0025idpantalla(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
 			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		}
 
 		return objetoSalida;
@@ -183,9 +198,11 @@ public class DatosMdlDAO extends GenericoDAO {
 			parametros.add(new SentenciaParametroDAO("p_A002TECNLGCONTMPLD", objetoEntrada.getProyecto().getA002tecnlgcontmpld(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                         sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
 			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		}
 
 		return objetoSalida;
@@ -203,9 +220,11 @@ public class DatosMdlDAO extends GenericoDAO {
 			parametros.add(new SentenciaParametroDAO("p_A002IDMETDLGMDL", objetoEntrada.getProyecto().getA002idmetdlgmdl().getA028codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
 			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
 		}
 
 		return objetoSalida;
@@ -230,14 +249,37 @@ public class DatosMdlDAO extends GenericoDAO {
                     parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getProyadjunto().getA008idarchv().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                     sentencia.setParametros(parametros);
                     objetoSalida = this.ejecutar(sentencia, objetoSalida);
-
+                    ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
                 } catch (Exception e) {
 
                     objetoSalida.setCodError(CodError.ERROR_INTERNO);
                     objetoSalida.setMsgError(e.getMessage());
+                    ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
                 }
 
                 return objetoSalida;
 
         }
+        
+        public ObjetoSalida consultarAdjuntoPorID(ConsultarAdjuntoPorIdOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_DATOSMDL.Pr_ListarAdjuntos", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_A008IDADJNT", objetoEntrada.getA008idadjunto(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A002CODIGO", objetoEntrada.getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+
 }

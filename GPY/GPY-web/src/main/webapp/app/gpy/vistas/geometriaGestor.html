@@ -1,0 +1,25 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" ng-click="cargarGeometria()">Abrir Mapa</button>
+
+<!-- Modal -->
+<div class="modal fade" id="geometria" tabindex="-1" role="dialog" aria-labelledby="geometriaLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="geometriaLabel">Ingresar Geometria</h4>
+            </div>
+            <div class="modal-body">
+                <!--<input type="text" id="url" ng-model="urlGeo">-->
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe id="ctrlGeo" name="ctrlGeo" ng-src="{{urlGeo}}" allowfullscreen type="text/html" class="embed-responsive-item"
+                            sandbox="allow-same-origin allow-scripts allow-modals allow-popups"></iframe>
+                    <!--http://www.dyn-web.com/tutorials/iframes/refs/iframe.php-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="obtenerGeometria()">Seleccionar ubicación (geometría)</button>
+            </div>
+        </div>
+    </div>
+</div>

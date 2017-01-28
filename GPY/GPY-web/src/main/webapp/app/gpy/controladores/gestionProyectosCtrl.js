@@ -5,12 +5,16 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
     /**************************************************************/
     /* Manejo sesión */
     $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
+
     $scope.idUsuario = $scope.sesion.sub;
 
     /**************************************************************/
     /* Variables */
     $scope.tipoProyectoSel = 0;
     $scope.tiposProyecto = [];
+    $scope.listEstadosProyecto = [];
+    $scope.listaAutoridadAmb = [];
+
     $scope.tpid = $routeParams.tpid;
     $scope.pid = $routeParams.pid;
     $scope.tp = new Object();
@@ -146,7 +150,7 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
         }
     };
 
-    $scope.listarTipoProyectos = function () {
+    $scope.listarTiposProyectos = function () {
         $scope.OE = new Object();
         $scope.OE.idUsuario = $scope.idUsuario;
         $scope.OE.categoria = TIPOPROYECTO;
@@ -162,13 +166,35 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
                 }, function (error) {
                     comunSrv.mensajeSalida(error);
                 });
-
+    };
+    $scope.listarEstadosProyectos = function () {
+        $scope.OE = new Object();
+        $scope.OE.idUsuario = $scope.idUsuario;
+        $scope.OE.categoria = "ESTADOPROYECTO";
+        listadoSrv.listarParametros($scope.OE)
+                .then(function (response) {
+                    $scope.listEstadosProyecto = response.data.respuesta;
+                }, function (error) {
+                    comunSrv.mensajeSalida(error);
+                });
+    };
+    $scope.listarAutoridadAmbiental = function () {
+        $scope.OE = new Object();
+        $scope.OE.idUsuario = $scope.idUsuario;
+        listadoSrv.listarAutoridades($scope.OE)
+                .then(function (response) {
+                    $scope.listaAutoridadAmb = response.data.respuesta;
+                }, function (error) {
+                    comunSrv.mensajeSalida(error);
+                });
     };
 
     /**************************************************************/
     /* Inicializar formulario */
     //se listan los tiposde proyecto para la ventana modal
-    $scope.listarTipoProyectos();
+    $scope.listarTiposProyectos();
+    $scope.listarEstadosProyectos();
+    $scope.listarAutoridadAmbiental();
 
     //si no han seleccionado el tipo de proyectos está en el listado de proyectos
     if ($scope.tpid == undefined) {
@@ -183,7 +209,64 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
         $scope.estadoProy = NUEVO;
     }
 
+    $scope.listaproyectos = [];
 
+    $scope.listarTodosLosProyectosUsuario = function () {
+        $scope.OE = new Object();
+        $scope.OE.idUsuario = $scope.idUsuario;
+        $scope.OE.a041codigo = $scope.idUsuario;
+        datosBasicosSrv.listarProyectosUsuario($scope.OE)
+                .then(function (response) {
+                    $scope.listaproyectos = response.data.respuesta;
+                }, function (error) {
+                    comunSrv.mensajeSalida(error);
+                });
+    };
+    $scope.listarTodosLosProyectosUsuario();
+
+    $scope.verdalleproy = function (proyecto) {
+        $scope.tpid = proyecto.a002tipproyct;
+        console.log('url redireccion: >>>> /gpy/datbaspre/' + proyecto.a002tipproyct + '/' + proyecto.a002codigo);
+        $location.path('/gpy/datbaspre/' + proyecto.a002tipproyct + '/' + proyecto.a002codigo);
+        $scope.consultarProyectoPorId(proyecto.a002codigo);
+    };
+
+    $scope.filtroproyecto = {};
+
+    $scope.filtrarProyectos = function () {
+
+        if ($scope.filtroproyecto.palabra) {
+            $scope.filtroproyecto.filtro = $scope.filtroproyecto.palabra;
+        }
+        if ($scope.filtroproyecto.autoridad) {
+            $scope.filtroproyecto.filtro = $scope.filtroproyecto.autoridad.a001nombre;
+        }
+        if ($scope.filtroproyecto.tipoproy) {
+            $scope.filtroproyecto.filtro = $scope.filtroproyecto.tipoproy.a102valorcorto;
+        }
+        if ($scope.filtroproyecto.estadoproy) {
+            $scope.filtroproyecto.filtro = $scope.filtroproyecto.estadoproy.a102valor;
+        }
+
+        if ($scope.filtroproyecto.filtro) {
+            $scope.OE = new Object();
+            $scope.OE.idUsuario = $scope.idUsuario;
+            $scope.OE.idUsuario = $scope.idUsuario;
+            $scope.OE.filtro = $scope.filtroproyecto.filtro;
+            console.log(JSON.stringify($scope.filtroproyecto));
+
+            datosBasicosSrv.listarProyectosFiltro($scope.OE)
+                    .then(function (response) {
+                        $scope.listaproyectos = response.data.respuesta;
+                        $scope.filtroproyecto = {};
+                    }, function (error) {
+                        comunSrv.mensajeSalida(error);
+                    });
+        } else {
+            $scope.listarTodosLosProyectosUsuario();
+        }
+
+    };
 
 
 

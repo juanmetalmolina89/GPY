@@ -29,26 +29,6 @@ public class ErrorClass {
            
     }
     
-   public static void getParametrics(ObjetoSalida objetoSalida, String tipo,Class defined){
-        try {
-            logger = Logger.getLogger( defined );
-        
-            if(objetoSalida.esRespuestaOperacionCorrecta()){
-                logger.info(objetoSalida.getMsgError());
-            }else{
-                if(tipo.equals("RUTAARCHIVO")){
-                    logger.error("RUTAARCHIVO: No se encuentra parametrizada la ruta del archivo "+objetoSalida.getMsgError(),new Throwable());
-                } 
-                else{
-                    if(tipo.equals("RUTAADJUNTO")){
-                        logger.error("RUTAADJUNTO: No se encuentra parametrizada la ruta del adjunto "+objetoSalida.getMsgError(),new Throwable());
-                    } 
-                }
-            }
-        }catch(Exception ex){
-            logger.fatal(objetoSalida.getMsgError() + " " + ex.getMessage() );
-        }
-           
-    } 
+    
     
 }

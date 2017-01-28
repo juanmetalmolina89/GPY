@@ -35,20 +35,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Archivo.findAll", query = "SELECT a FROM Archivo a")})
 public class Archivo implements Serializable {
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "A026NOMARCHIVO")
-    private String a026nomarchivo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a008idarchv")
-    private Collection<ProyAdjunto> proyAdjuntoCollection;
-    @OneToMany(mappedBy = "a053idarchivo")
-    private Collection<RepLegal> repLegalCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a005idsoporte")
-    private Collection<Actividad> actividadCollection;
-    @OneToMany(mappedBy = "a003idarchiv")
-    private Collection<Politica> politicaCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -64,7 +50,11 @@ public class Archivo implements Serializable {
     @Size(min = 1, max = 300)
     @Column(name = "A026HASHARCHIVO")
     private String a026hasharchivo;
-    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "A026NOMARCHIVO")
+    private String a026nomarchivo;    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -124,6 +114,22 @@ public class Archivo implements Serializable {
 
     public void setA026descrpcnarchiv(String a026descrpcnarchiv) {
         this.a026descrpcnarchiv = a026descrpcnarchiv;
+    }
+
+    public String getA026hasharchivo() {
+        return a026hasharchivo;
+    }
+
+    public void setA026hasharchivo(String a026hasharchivo) {
+        this.a026hasharchivo = a026hasharchivo;
+    }
+
+    public String getA026nomarchivo() {
+        return a026nomarchivo;
+    }
+
+    public void setA026nomarchivo(String a026nomarchivo) {
+        this.a026nomarchivo = a026nomarchivo;
     }
 
     public String getA026rutarchiv() {
@@ -237,62 +243,6 @@ public class Archivo implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.Archivo[ a026codigo=" + a026codigo + " ]";
-    }
-
-    public String getA026hasharchivo() {
-        return a026hasharchivo;
-    }
-
-    public void setA026hasharchivo(String a026hasharchivo) {
-        this.a026hasharchivo = a026hasharchivo;
-    }
-
-    public String getA026nomarchivo() {
-        return a026nomarchivo;
-    }
-
-    public void setA026nomarchivo(String a026nomarchivo) {
-        this.a026nomarchivo = a026nomarchivo;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<ProyAdjunto> getProyAdjuntoCollection() {
-        return proyAdjuntoCollection;
-    }
-
-    public void setProyAdjuntoCollection(Collection<ProyAdjunto> proyAdjuntoCollection) {
-        this.proyAdjuntoCollection = proyAdjuntoCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<RepLegal> getRepLegalCollection() {
-        return repLegalCollection;
-    }
-
-    public void setRepLegalCollection(Collection<RepLegal> repLegalCollection) {
-        this.repLegalCollection = repLegalCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<Actividad> getActividadCollection() {
-        return actividadCollection;
-    }
-
-    public void setActividadCollection(Collection<Actividad> actividadCollection) {
-        this.actividadCollection = actividadCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<Politica> getPoliticaCollection() {
-        return politicaCollection;
-    }
-
-    public void setPoliticaCollection(Collection<Politica> politicaCollection) {
-        this.politicaCollection = politicaCollection;
     }
     
 }

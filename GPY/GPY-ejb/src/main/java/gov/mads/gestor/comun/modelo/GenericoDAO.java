@@ -79,10 +79,8 @@ public class GenericoDAO {
                                 registro.put(infoResultado.getColumnName(i).toLowerCase(), (clob == null) ? datos.getObject(i) : theString);
                             }
                             else {
-                                registro.put(infoResultado.getColumnName(i).toLowerCase(), datos.getObject(i));
+                                registro.put(infoResultado.getColumnName(i).toLowerCase(), datos.getObject(i));                                
                             }
-                        
-                            
                         }
                         respuesta.add(registro);
                     }

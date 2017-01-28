@@ -6,6 +6,7 @@
 package gov.mads.gestor.utl.vista;
 
 import gov.mads.gestor.comun.vista.ObjetoEntrada;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -14,5 +15,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class ListarTipoActividadReducOE extends ObjetoEntrada{
-    
+   @XmlElement
+   private Integer a058tipproyct;
+
+    public Integer getA058tipproyct() {
+        return a058tipproyct;
+    }
+
+    public void setA058tipproyct(Integer a058tipproyct) {
+        this.a058tipproyct = a058tipproyct;
+    }
 }

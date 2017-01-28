@@ -37,9 +37,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "CategoriaIpcc.findAll", query = "SELECT c FROM CategoriaIpcc c")})
 public class CategoriaIpcc implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a047idcatipcc")
-    private Collection<SubcategoriaIpcc> subcategoriaIpccCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -72,6 +69,12 @@ public class CategoriaIpcc implements Serializable {
     private SectorIpcc a046idsector;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a047idcatipcc")
 //    private List<SubcategoriaIpcc> subcategoriaIpccList;
+    @JoinColumn(name = "A046IDSUBGRUPOIPCC", referencedColumnName = "A043CODIGO")
+    @ManyToOne(optional = false)
+    private SubgrupoIpcc a046idsubgrupoipcc;
+    @JoinColumn(name = "A046IDTIPOPROYECTOMDL", referencedColumnName = "A102CODIGO")
+    @ManyToOne(optional = false)
+    private Lista a046idtipoproyectomdl;
 
     public CategoriaIpcc() {
     }
@@ -161,6 +164,22 @@ public class CategoriaIpcc implements Serializable {
 //        this.subcategoriaIpccList = subcategoriaIpccList;
 //    }
 
+    public SubgrupoIpcc getA046idsubgrupoipcc() {
+        return a046idsubgrupoipcc;
+    }
+
+    public void setA046idsubgrupoipcc(SubgrupoIpcc a046idsubgrupoipcc) {
+        this.a046idsubgrupoipcc = a046idsubgrupoipcc;
+    }
+
+    public Lista getA046idtipoproyectomdl() {
+        return a046idtipoproyectomdl;
+    }
+
+    public void setA046idtipoproyectomdl(Lista a046idtipoproyectomdl) {
+        this.a046idtipoproyectomdl = a046idtipoproyectomdl;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -184,16 +203,6 @@ public class CategoriaIpcc implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.CategoriaIpcc[ a046codigo=" + a046codigo + " ]";
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<SubcategoriaIpcc> getSubcategoriaIpccCollection() {
-        return subcategoriaIpccCollection;
-    }
-
-    public void setSubcategoriaIpccCollection(Collection<SubcategoriaIpcc> subcategoriaIpccCollection) {
-        this.subcategoriaIpccCollection = subcategoriaIpccCollection;
     }
     
 }

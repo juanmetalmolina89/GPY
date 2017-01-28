@@ -55,6 +55,9 @@ public class TipoActividad implements Serializable {
     @NotNull
     @Column(name = "A022ESTADOREGISTRO")
     private Character a022estadoregistro;
+    @NotNull
+    @Column(name = "A022ACTESPECIAL")
+    private Character a022actespecial;
     @Column(name = "A022FECHACREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date a022fechacreacion;
@@ -171,6 +174,16 @@ public class TipoActividad implements Serializable {
 //    public void setActividadList(List<Actividad> actividadList) {
 //        this.actividadList = actividadList;
 //    }
+
+    public Character getA022actespecial() {
+        return a022actespecial;
+    }
+
+    public void setA022actespecial(Character a022actespecial) {
+        this.a022actespecial = a022actespecial;
+    }
+    
+    
 
     @Override
     public int hashCode() {

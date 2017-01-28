@@ -36,13 +36,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Politica.findAll", query = "SELECT p FROM Politica p")})
 public class Politica implements Serializable {
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a007idpolitica")
-//    private List<ProyPolitica> proyPoliticaList;
-
-    @Size(max = 40)
-    @Column(name = "A003NONIVEL4")
-    private String a003nonivel4;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -271,23 +264,5 @@ public class Politica implements Serializable {
     public String toString() {
         return "gov.mads.gestor.comun.entidades.Politica[ a003codigo=" + a003codigo + " ]";
     }
-
-    public String getA003nonivel4() {
-        return a003nonivel4;
-    }
-
-    public void setA003nonivel4(String a003nonivel4) {
-        this.a003nonivel4 = a003nonivel4;
-    }
-
-//    @XmlTransient
-//    @JsonIgnore
-//    public List<ProyPolitica> getProyPoliticaList() {
-//        return proyPoliticaList;
-//    }
-//
-//    public void setProyPoliticaList(List<ProyPolitica> proyPoliticaList) {
-//        this.proyPoliticaList = proyPoliticaList;
-//    }
     
 }

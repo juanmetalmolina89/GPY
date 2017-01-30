@@ -175,12 +175,13 @@ public class ActividadFAC implements IActividadFAC {
                 Map<String, List<InputPart>> camposAdjuntoOE = OE.getFormDataMap();
                 //todo: Cuadrar con Yeimmy como me proporciona el codigo del representante
                 Integer codigoSoporte = Integer.parseInt(camposAdjuntoOE.get("idSoporte").get(0).getBodyAsString());
+                Integer Actividad = Integer.parseInt(camposAdjuntoOE.get("idActividad").get(0).getBodyAsString());
                 //todo: Cuadrar con Yeimmy como proporciona el codgio del idUsuario
                 Integer idUsuario = Integer.parseInt(camposAdjuntoOE.get("idUsuario").get(0).getBodyAsString());
                 String rutaAdjuntoParametrica = obtenerRutaAdjuntoParametrica(idUsuario);
                 String nombreArchivo ="";
                 String nombreArchivoServ = "";
-                File Soporte = almacenarArchivo(camposAdjuntoOE, rutaAdjuntoParametrica, codigoSoporte);
+                File Soporte = almacenarArchivo(camposAdjuntoOE, rutaAdjuntoParametrica, Actividad);
                 InputStream lecturaAdjunto = new FileInputStream(Soporte);
                 String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(lecturaAdjunto); 
                 nombreArchivo = Soporte.getName();

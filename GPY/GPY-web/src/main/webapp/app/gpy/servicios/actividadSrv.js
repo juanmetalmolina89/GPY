@@ -26,7 +26,7 @@ angular.module('actividad.services')
                 };
 
                 datos.consultarSoportePorId = function (OE) {
-                    return $http.post(urlBase + '/consultarSoportePorId', OE);
+                    return $http.post(urlBase + '/consultarSoportePorId', OE, {responseType: 'arraybuffer'});
                 };
 
                 datos.consultarGeografia = function (OE) {
@@ -48,11 +48,11 @@ angular.module('actividad.services')
                     });
                 };
 
-                this.actualizarSoporte = function (idSoporte, adjunto, idUsuario) {
+                this.actualizarSoporte = function (idSoporte, idActividad, adjunto, idUsuario) {
                     return Upload.upload({
                         method: 'POST',
                         url: urlBase + '/actualizarSoporte',
-                        data: {file: adjunto, 'idSoporte': idSoporte, 'idUsuario': idUsuario}
+                        data: {file: adjunto, 'idSoporte': idSoporte , 'idActividad': idActividad, 'idUsuario': idUsuario}
                     });
                 };
 

@@ -103,7 +103,7 @@
                                 </div>
 
                                 <!-- Categoría de mitigación (sólo informativo) -->
-                                <div class="form-group">
+                                <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA">
                                     <label class="col-md-4 control-label" for="catMitgcn">Categoría de mitigación</label>
                                     <div class="col-md-5">
                                     <input id="catMitgcn" name="catMitgcn" placeholder="" class="form-control input-md" type="text" ng-model="categoriaMitigacion" ng-disabled="true">
@@ -128,12 +128,12 @@
                                         </select>  
                                     </div>
                                 </div>
-
+                                
                                 <!-- fecha inicio (pendiente definir obj calendar) -->
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="fechainicio">Fecha Inicial</label>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control" id="fechainicio" placeholder="aaaa-mm-dd" maxlength="10" required ng-model="actividad.a005fechainicio">
+                                        <input type="date" class="form-control" id="fechainicio" placeholder="aaaa-mm-dd" maxlength="10" required ng-model="actividad.a005fechainicio">
                                     </div>
                                 </div>
 
@@ -141,7 +141,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="fechafinal">Fecha Final</label>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control" id="fechafinal" placeholder="aaaa-mm-dd" maxlength="10" required ng-model="actividad.a005fechafinal">
+                                        <input type="date" class="form-control" id="fechafinal" placeholder="aaaa-mm-dd" maxlength="10" required ng-model="actividad.a005fechafinal">
                                     </div>
                                 </div>
 
@@ -159,13 +159,14 @@
                                     <label class="col-md-4 control-label" for="adjunto">Archivo de soporte</label>
                                     <div class="col-md-6" ng-show="!muestraCampoSoporte">
                                         {{actividad.a005idsoporte.a026nomarchivo}} 
-                                        <a ng-click="consultarSoporte()" class="btn btn-primary" role="button">Ver soporte</a>
+                                        <a ng-click="consultarSoportePorId()" class="btn btn-primary" role="button">Ver soporte</a>
                                         <a ng-click="mostrarCampoSoporte()" class="btn btn-primary" role="button" >Actualizar soporte</a>
                                     </div>
                                     <div class="col-md-6" ng-show="muestraCampoSoporte">
                                         <a ng-click="ocultarCampoSoporte()" class="btn btn-primary" role="button" >Cancelar</a>
                                     </div>
                                 </div>
+                                
                                 <!-- Actualizar -->
                                 <div class="form-group" ng-show="muestraCampoSoporte">
                                     <div class="col-md-4"></div>

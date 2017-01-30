@@ -19,7 +19,6 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 $scope.actividad = new Object();
                 $scope.actividad.a005idproyecto = {"a002codigo": $scope.pid};
                 $scope.actividad.a005idsoporte = {"a026codigo": '', "a026nomarchivo": ''};
-                $scope.geometria = {"a042idproyecto": $scope.pid, "a042nrositio": 1, "a042geometriaSitio": '', "a042geometriaIntersecc": ''};
                 $scope.soporte = {'adjunto': ''};
 
                 $scope.actividades = [];
@@ -30,6 +29,11 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 $scope.muestraForm = false;
                 $scope.muestraListTpActRed = false;
                 $scope.muestraCampoSoporte = false;
+
+                //geometria
+                $scope.geometria = '';
+                $scope.a042geometriasitio = '';
+                $scope.a042geometriaintersec = '';
 
                 //grilla
                 $scope.busquedaOE = {'palabraClave': ''};
@@ -43,92 +47,76 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 /* Métodos */
 
                 $scope.guardarActividad = function () {
+                    console.log("geometria: " + $scope.a042geometriasitio);
+                    //valida que exista o haya elegido un adjunto
+                    if ($scope.actividad.a005idsoporte.a026codigo != '' || $scope.soporte.adjunto != '') {
+                        //Valida que haya elegido geometria
+                        if ($scope.a042geometriasitio != '') {
 
-                    //@todo Aquí validar geometria
-                    if (true) {
-                        //valida que exista o haya elegido un adjunto
-                        if ($scope.actividad.a005idsoporte.a026codigo != '' || $scope.soporte.adjunto != '') {
                             //Empieza a armar el objeto de entrada
                             $scope.OE = new Object();
                             $scope.OE.idUsuario = $scope.idUsuario;
                             $scope.OE.actividad = $scope.actividad;
                             $scope.OE.actividad.a005idtipactvdd = {"a022codigo": $scope.actividad.a005idtipactvdd.a022codigo}; //Sólo necesito el id (si envío el obj completo voy a tener problemas con el valor tipproyctmdl que se trae para mostrarse, pero no pertenece a la entidad como tal.                    
                             $scope.OE.geometria = $scope.geometria;
-
-                            //@todo esto es sólo para poder continuar con las pruebas
-                            $scope.OE.geometria = {"a042idproyecto": {"a002codigo": 1}, "a042nrositio": 1};
-                            $scope.OE.a042geometriasitio = {"type": "Feature",
-                                "properties": {},
-                                "geometry": {
-                                    "type": "Polygon",
-                                    "coordinates": [
-                                        [
-                                            [-73.2843017578125, 2.9759559359447683],
-                                            [-72.9547119140625, 2.213194532293419],
-                                            [-71.4166259765625, 2.7784514150468644],
-                                            [-71.202392578125, 2.180259769681356],
-                                            [-70.675048828125, 2.8442900428132867],
-                                            [-72.432861328125, 3.5298694189563014],
-                                            [-73.2843017578125, 2.9759559359447683]
-                                        ]
-                                    ]
-                                }
-                            };
-                            $scope.OE.a042geometriaintersec = {
-                                "Prueba": {"codigo": 1, "nombre": "Juan", "apellido": "Molina"}
-                            };
-                            //@todo fin esto es sólo para poder continuar con las pruebs
+                            $scope.OE.a042geometriasitio = $scope.a042geometriasitio;
+                            $scope.OE.a042geometriaintersec = $scope.a042geometriaintersec;
 
                             //Si ya existe lo actualiza, de lo contrario lo registra
                             if ($scope.actividad.a005codigo !== undefined && $scope.actividad.a005codigo !== null && $scope.actividad.a005codigo !== '') {
 
                                 actividadSrv.actualizarActividad($scope.OE).then(function (response) {
+                                    //Oculta formulario
+                                    $scope.muestraForm = false;
                                     //Si el usuario actualizó el archivo se llama el método para actualizarlo
                                     if ($scope.muestraCampoSoporte == true && $scope.soporte.adjunto != '') {
                                         $scope.actualizarSoporte();
+                                        $scope.muestraCampoSoporte = false;
                                     }
-                                    //Oculta formulario y actualiza el listado
-                                    $scope.muestraForm = false;
-                                    $scope.listarActividadPorClave();
                                     comunSrv.mensajeSalida(response);
                                     //Registra avance
                                     avanceSrv.registrarAvance({"idUsuario": $scope.idUsuario, "a002codigo": $scope.proyecto.a002codigo, "a057idpantalla": $scope.pantalla})
                                             .then(function (response) {
-                                                comunSrv.mensajeSalida(response);
+                                                //comunSrv.mensajeSalida(response);
                                             }, function (error) {
                                                 comunSrv.mensajeSalida(error);
                                             });
+                                    //recarga la lista de actividades
+                                    $scope.listarActividadPorClave();
                                 }, function (error) {
                                     comunSrv.mensajeSalida(error);
                                 });
                             } else {
                                 //Si el registro es nuevo, llama al método para registrarlo                                
                                 actividadSrv.registrarActividad($scope.OE).then(function (response) {
-                                    //actualiza el id actividad con el valor devuelto
-                                    $scope.actividad.a005codigo = response.data.respuesta[0].a005codigo;
-                                    $scope.registrarSoporte();
-                                    //Oculta formulario y actualiza el listado
+                                    //Oculta formulario
                                     $scope.muestraForm = false;
+                                    //actualiza el id actividad y el id de la geometría con el valor devuelto
+                                    $scope.actividad.a005codigo = response.data.respuesta[0].a005codigo;
+                                    $scope.geometria.a042codigo = response.data.respuesta[1].a042codigo;
+                                    //guarda el archivo adjunto
+                                    $scope.registrarSoporte();
                                     comunSrv.mensajeSalida(response);
                                     //Registra avance
                                     avanceSrv.registrarAvance({"idUsuario": $scope.idUsuario, "a002codigo": $scope.proyecto.a002codigo, "a057idpantalla": $scope.pantalla})
                                             .then(function (response) {
-                                                comunSrv.mensajeSalida(response);
+                                                //comunSrv.mensajeSalida(response);
                                             }, function (error) {
                                                 comunSrv.mensajeSalida(error);
                                             });
+                                    //recarga la lista de actividades
                                     $scope.listarActividadPorClave();
                                 }, function (error) {
                                     comunSrv.mensajeSalida(error);
                                 });
                             }
 
-                        } else { //else validación adjunto
-                            comunSrv.mensaje("Debe adjuntar un soporte de la actividad a realizar.", "error");
+                        } else { //else validación geometría
+                            comunSrv.mensaje("Debe seleccionar una geometría.", "error");
                         }
 
-                    } else { //else validación geometría
-                        comunSrv.mensaje("Debe seleccionar una geometría.", "error");
+                    } else { //else validación adjunto
+                        comunSrv.mensaje("Debe adjuntar un soporte de la actividad a realizar.", "error");
                     }
                 };
 
@@ -136,7 +124,8 @@ angular.module('actividad.controllers', ['ngSanitize'])
 
                     soporteActividadSrv.registrarSoporte($scope.actividad.a005codigo, $scope.soporte.adjunto, $scope.idUsuario)
                             .then(function (response) {
-                                comunSrv.mensajeSalida(response);
+                                $scope.listarActividadPorClave();
+                                //comunSrv.mensajeSalida(response);
                             }, function (error) {
                                 comunSrv.mensajeSalida(error);
                             });
@@ -144,12 +133,30 @@ angular.module('actividad.controllers', ['ngSanitize'])
 
                 $scope.actualizarSoporte = function () {
 
-                    soporteActividadSrv.actualizarSoporte($scope.actividad.a005idsoporte.a026codigo, $scope.soporte.adjunto, $scope.idUsuario)
+                    soporteActividadSrv.actualizarSoporte($scope.actividad.a005idsoporte.a026codigo, $scope.actividad.a005codigo, $scope.soporte.adjunto, $scope.idUsuario)
                             .then(function (response) {
-                                comunSrv.mensajeSalida(response);
+                                $scope.listarActividadPorClave();
+                                //comunSrv.mensajeSalida(response);
                             }, function (error) {
                                 comunSrv.mensajeSalida(error);
                             });
+                };
+
+                $scope.consultarSoportePorId = function () {
+
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.a005codigo = $scope.actividad.a005codigo;
+                    $scope.OE.a026codigo = $scope.actividad.a005idsoporte.a026codigo;
+                    $scope.OE.a005idproyecto = $scope.pid;
+
+                    actividadSrv.consultarSoportePorId($scope.OE).then(function (response) {
+                        //Se llama método de utilería que descarga del archivo
+                        comunSrv.descargarArchivo(response);
+                        //comunSrv.mensajeSalida(response);
+                    }, function (error) {
+                        comunSrv.mensajeSalida(error);
+                    });
                 };
 
                 $scope.eliminarActividad = function (act) {
@@ -183,12 +190,12 @@ angular.module('actividad.controllers', ['ngSanitize'])
                     if (act != undefined && act != null) {
                         $scope.actividad.a005codigo = act.a005codigo;
                         $scope.actividad.a005descrpcnactvdd = act.a005descrpcnactvdd;
-                        $scope.actividad.a005fechainicio = act.a005fechainicio;
-                        $scope.actividad.a005fechafinal = act.a005fechafinal;
+                        $scope.actividad.a005fechainicio = new Date(act.a005fechainicio);
+                        $scope.actividad.a005fechafinal = new Date(act.a005fechafinal);
                         $scope.actividad.a005idtipactvdd = {"a022codigo": act.a005idtipactvdd};
                         $scope.actividad.a005idtipactvdreduc = {"a58codigo": act.a005idtipactvdreduc};
                         $scope.actividad.a005idsoporte = {"a026codigo": act.a005idsoporte, "a026nomarchivo": act.a026nomarchivo};
-                        //$scope.consultarGeometria();
+                        $scope.consultarGeometria();
                     } else {
                         $scope.actividad = new Object();
                         $scope.actividad.a005idproyecto = {"a002codigo": $scope.pid};
@@ -211,18 +218,20 @@ angular.module('actividad.controllers', ['ngSanitize'])
 
                 $scope.actualizaCategoriaMitigacion = function () {
 
-                    angular.forEach($scope.tiposActividades, function (value, key) {
-                        if ($scope.actividad.a005idtipactvdd.a022codigo === value.a022codigo) {
-                            $scope.actividad.a005idtipactvdd = value;
-                            $scope.categoriaMitigacion = value.tipproyctmdl;
-                        }
-                    });
+                    if ($scope.actividad.a005idtipactvdd != undefined) {
+                        angular.forEach($scope.tiposActividades, function (value, key) {
+                            if ($scope.actividad.a005idtipactvdd.a022codigo === value.a022codigo) {
+                                $scope.actividad.a005idtipactvdd = value;
+                                $scope.categoriaMitigacion = value.tipproyctmdl;
+                            }
+                        });
 
-                    //Si la actividad seleccionada es la actividad "especial", se debe mostrar el listado de actividades de reducción
-                    if ($scope.actividad.a005idtipactvdd.a022actespecial == 'S') {
-                        $scope.muestraListTpActRed = true;
-                    } else {
-                        $scope.muestraListTpActRed = false;
+                        //Si la actividad seleccionada es la actividad "especial", se debe mostrar el listado de actividades de reducción
+                        if ($scope.actividad.a005idtipactvdd.a022actespecial == 'S') {
+                            $scope.muestraListTpActRed = true;
+                        } else {
+                            $scope.muestraListTpActRed = false;
+                        }
                     }
                 };
 
@@ -277,8 +286,8 @@ angular.module('actividad.controllers', ['ngSanitize'])
                         if (ctrlGeo) {
                             $scope.OE = new Object();
                             $scope.OE.idUsuario = $scope.idUsuario;
-                            $scope.OE.a042idproyecto = $scope.pid;
-                            $scope.OE.a042idactividad = 1; //$scope.actividad.a005codigo;
+                            //$scope.OE.a042idproyecto = $scope.pid;
+                            $scope.OE.a042idactividad = $scope.actividad.a005codigo;
 
                             actividadSrv.consultarGeografia($scope.OE)
                                     .then(function (response) {
@@ -298,7 +307,7 @@ angular.module('actividad.controllers', ['ngSanitize'])
                                             };
                                         } else {
 
-                                            geometria = JSON.parse(response.data.respuesta[0].a042geometriaSitio);
+                                            geometria = JSON.parse(response.data.respuesta[0].a042geometria_sitio);
                                         }
 
                                         setTimeout(function () {
@@ -311,7 +320,7 @@ angular.module('actividad.controllers', ['ngSanitize'])
                         }
                     } catch (e) {
                         comunSrv.mensaje('No se puede cargar la geometría de la actividad, intente de nuevo<br><br>' + e.message, 'error');
-                        $scope.geometria.a042geometriaSitio = e.message;
+                        $scope.a042geometriasitio = e.message;
                     }
                 };
 
@@ -321,30 +330,43 @@ angular.module('actividad.controllers', ['ngSanitize'])
 
                         var ctrlGeo = document.getElementById('ctrlGeo');
                         if (ctrlGeo) {
-                            $scope.geometria.a042geometriaSitio = (ctrlGeo.contentWindow || ctrlGeo.contentDocument).obtenerGeometria();
+                            $scope.a042geometriasitio = (ctrlGeo.contentWindow || ctrlGeo.contentDocument).obtenerGeometria();
                             $('#geometria').modal('hide');
                         }
                     } catch (e) {
 
                         comunSrv.mensaje('No se puede seleccionar la geometría de la actividad, intente de nuevo<br><br>' + e.message, 'error');
-                        $scope.geometria.a042geometriaSitio = e.message;
+                        $scope.a042geometriasitio = e.message;
                     }
                 };
 
                 $scope.consultarGeometria = function () {
 
-                    $scope.geometria.a042geometriaSitio = '';
+                    //Se inicializan los objetos
+                    $scope.inicializarObjetosGeografia();
+
+                    //Se empieza a armar el objeto de entrada para consultar la geografía
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
-                    $scope.OE.a042idproyecto = $scope.pid;
+                    //$scope.OE.a042idproyecto = $scope.pid;
                     $scope.OE.a042idactividad = $scope.actividad.a005codigo;
-                    actividadSrv.consultarGeografia($scope.OE)
-                            .then(function (response) {
-                                $scope.geometria.a042geometriaSitio = JSON.parse(response.data.respuesta[0].a042geometriaSitio);
-                                //comunSrv.mensajeSalida(response);
-                            }, function (error) {
-                                comunSrv.mensajeSalida(error);
-                            });
+                    actividadSrv.consultarGeografia($scope.OE).then(function (response) {
+                        $scope.geometria.a042codigo = response.data.respuesta[0].a042codigo;
+                        $scope.geometria.a042idproyecto = {"a002codigo": $scope.pid}; //response.data.respuesta[0].a042idproyecto;
+                        $scope.geometria.a042idactvdd = $scope.actividad.a005codigo; //response.data.respuesta[0].a042idactvdd;
+                        $scope.geometria.a042nrositio = response.data.respuesta[0].a042nrositio;
+                        $scope.a042geometria_intersecc = JSON.parse(response.data.respuesta[0].a042geometria_intersecc);
+                        $scope.a042geometriasitio = JSON.parse(response.data.respuesta[0].a042geometria_sitio);
+                        //comunSrv.mensajeSalida(response);
+                    }, function (error) {
+                        comunSrv.mensajeSalida(error);
+                    });
+                };
+
+                $scope.inicializarObjetosGeografia = function () {
+                    $scope.geometria = {"a042idproyecto": {"a002codigo": $scope.pid}, "a042nrositio": 1 /*, "a042geometriaSitio": '', "a042geometriaIntersecc": ''*/};
+                    $scope.a042geometriasitio = '';
+                    $scope.a042geometriaintersec = {"Prueba": {"codigo": 1, "nombre": "nombre", "apellido": "apellido"}}; //@todo pendiente que definan qué debe ir en este campo
                 };
 
                 /**************************************************************/
@@ -358,6 +380,7 @@ angular.module('actividad.controllers', ['ngSanitize'])
                     $scope.pantalla = ACTIVIDADESREG;
                 }
 
+                $scope.inicializarObjetosGeografia();
                 $scope.listarActividadPorClave();
                 $scope.listarTipoActividades();
                 $scope.listarTipoActividadReduccion();

@@ -41,8 +41,8 @@ public class ConexionDS implements IRemoteConnection{
         try{
             
             Context ctx = new InitialContext();
-            OracleDataSource ods  = (OracleDataSource)ctx.lookup("java:/GPYOracleDS");
-            if( ods != null ) instancia = ods.getConnection();
+            DataSource ds = (DataSource)ctx.lookup("java:/GPYLOracleDS");
+            if( ds != null ) instancia = ds.getConnection();
         }
         catch(Exception ex){
             ex.printStackTrace();

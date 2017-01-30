@@ -51,9 +51,9 @@ public class FinanciacionDAO extends GenericoDAO {
 			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_FINANCIACION.Pr_ActualizarFinanc", objetoEntrada.getIdUsuario());
 			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
 			parametros.add(new SentenciaParametroDAO("p_A004IDPROYECTO", objetoEntrada.getProyFteFinanc().getA004idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A002COSTSESTMDTOTL", objetoEntrada.getProyecto().getA002costsestmdtotl().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A002COSTSESTMDFORMLCN", objetoEntrada.getProyecto().getA002costsestmdformlcn().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A002COSTTONLDRDCR", objetoEntrada.getProyecto().getA002costtonldrdcr().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			parametros.add(new SentenciaParametroDAO("p_A002COSTSESTMDTOTL", objetoEntrada.getProyecto().getA002costsestmdtotl().longValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			parametros.add(new SentenciaParametroDAO("p_A002COSTSESTMDFORMLCN", objetoEntrada.getProyecto().getA002costsestmdformlcn().longValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			parametros.add(new SentenciaParametroDAO("p_A002COSTTONLDRDCR", objetoEntrada.getProyecto().getA002costtonldrdcr().longValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,FinanciacionDAO.class);
@@ -74,10 +74,10 @@ public class FinanciacionDAO extends GenericoDAO {
 			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_FINANCIACION.Pr_RegistrarCostosProyecto", objetoEntrada.getIdUsuario());
 			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
 			parametros.add(new SentenciaParametroDAO("p_A002CODIGO", objetoEntrada.getProyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A002COSTSESTMDTOTL", objetoEntrada.getProyecto().getA002costsestmdtotl().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("P_A002COSTSESTMDFORMLCN", objetoEntrada.getProyecto().getA002costsestmdformlcn().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("P_A002COSTTONLDRDCR", objetoEntrada.getProyecto().getA002costtonldrdcr().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-                        parametros.add(new SentenciaParametroDAO("P_A002TRM", objetoEntrada.getProyecto().getA002trm().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			parametros.add(new SentenciaParametroDAO("p_A002COSTSESTMDTOTL", objetoEntrada.getProyecto().getA002costsestmdtotl().longValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			parametros.add(new SentenciaParametroDAO("P_A002COSTSESTMDFORMLCN", objetoEntrada.getProyecto().getA002costsestmdformlcn().longValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			parametros.add(new SentenciaParametroDAO("P_A002COSTTONLDRDCR", objetoEntrada.getProyecto().getA002costtonldrdcr().longValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("P_A002TRM", objetoEntrada.getProyecto().getA002trm().longValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("P_A002BUSQUDFINNCCN", objetoEntrada.getProyecto().getA002busqudfinnccn(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
 			sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutarX(sentencia, objetoSalida);

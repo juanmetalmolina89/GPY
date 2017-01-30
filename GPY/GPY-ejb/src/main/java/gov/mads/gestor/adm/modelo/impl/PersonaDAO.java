@@ -114,8 +114,10 @@ public class PersonaDAO extends GenericoDAO {
             parametros.add(new SentenciaParametroDAO("p_A052CELULAR", objetoEntrada.getPersona().getA052celular(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A052CORRELCTRNC", objetoEntrada.getPersona().getA052correlctrnc(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A052TELEFONO", objetoEntrada.getPersona().getA052telefono(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-            parametros.add(new SentenciaParametroDAO("p_A052CODGCIIU", objetoEntrada.getPersona().getA052codgciiu().getA049codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-            parametros.add(new SentenciaParametroDAO("p_A052IDENTIDAD", objetoEntrada.getPersona().getA052identidad().getA001codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+            Integer codigociiu = (objetoEntrada.getPersona().getA052codgciiu() == null) ? null : objetoEntrada.getPersona().getA052codgciiu().getA049codigo();
+            parametros.add(new SentenciaParametroDAO("p_A052CODGCIIU", codigociiu, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+            Integer a052identidad = (objetoEntrada.getPersona().getA052identidad() == null) ?  null : objetoEntrada.getPersona().getA052identidad().getA001codigo(); 
+            parametros.add(new SentenciaParametroDAO("p_A052IDENTIDAD", a052identidad, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             String digtchqu = (objetoEntrada.getPersona().getA052digtchqu() == null) ? null : objetoEntrada.getPersona().getA052digtchqu().toString();
             parametros.add(new SentenciaParametroDAO("p_A052DIGTCHQU", digtchqu, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             

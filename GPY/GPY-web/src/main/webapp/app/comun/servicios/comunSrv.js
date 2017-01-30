@@ -49,8 +49,8 @@ angular.module('comun.services')
 
                 this.obtenerSesion = function () {
 //                    return {'nombre': 'Nombre de Prueba', 'sub': USUARIOIDTEMP, 'idpersona': PERSONAIDTEMP, 'username': USERNAMETEMP, 'perfil': PERFILTEMP};
-                    
-                    
+
+
                     if (!isDebug) {
                         var sesion = null;
                         var token = store.get('token') || null;
@@ -75,8 +75,55 @@ angular.module('comun.services')
                     $location.path('/ingresar');
                 };
 
+                this.descargarArchivo = function (response) {
 
+                    var headers = response.headers();
+                    var contentDisposition = headers['content-disposition'];
+                    var filename = this.obtenerNombreArchivo(contentDisposition);
+                    var contentType = headers['content-type'];
 
+                    var linkElement = document.createElement('a');
+                    try {
+                        var file = new Blob([response.data], {type: contentType});
+                        var fileURL = URL.createObjectURL(file);
+
+                        linkElement.setAttribute('href', fileURL);
+                        linkElement.setAttribute("download", filename);
+
+                        var clickEvent = new MouseEvent("click", {
+                            "view": window,
+                            "bubbles": true,
+                            "cancelable": false
+                        });
+                        linkElement.dispatchEvent(clickEvent);
+                    } catch (ex) {
+                        console.log(ex);
+                    }
+                    
+                                        
+//                        //Otra opción es armar el archivo y mostrarlo en un objeto del navegador pero esto sólo funciona para PDF. (se deja el código por si deciden usarlo.                         
+//                        //Así se arma el archivo
+//                        var headers = response.headers();
+//                        var contentDisposition = headers['content-disposition'];
+//                        var filename = getFileNameFromHttpResponse(contentDisposition);
+//                        var contentType = headers['content-type'];
+//                        var file = new Blob([response.data], {type: contentType});
+//                        var fileURL = URL.createObjectURL(file);
+//                        return $sce.trustAsResourceUrl(fileURL);
+//                        
+//                        //En el controlador se recibiría así
+//                        $scope.pdf = $sce.trustAsResourceUrl(fileURL);
+//
+//                        //En la vista se pondrí así
+//                        <object data="{{content}}" type="application/pdf"></object>                   
+                    
+                    
+                };
+
+                this.obtenerNombreArchivo = function (contentDispositionHeader) {                
+                    var result = contentDispositionHeader.split(';')[1].trim().split('=')[1];
+                    return result.replace(/"/g, '');
+                };
 
             }]);
 

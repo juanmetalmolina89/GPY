@@ -4,8 +4,8 @@
 'use strict';
 
 angular.module('GPYApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngResource', 'angular-jwt', 'angular-storage', 'ngFileUpload'
-				, 'usuario.services', 'comun.services',  'listado.services', 'persona.services', 'representante.services', 'contacto.services', 'datosBasicos.services', 'actividad.services', 'infoMDL.services', 'avance.services', 'grilla.services'
-				, 'usuario.controllers', 'comun.controllers', 'listado.controllers', 'persona.controllers','representante.controllers','contacto.controllers','datosBasicos.controllers','actividad.controllers','infoMDL.controllers','avance.controllers'
+				, 'usuario.services', 'comun.services',  'listado.services', 'persona.services', 'representante.services', 'contacto.services', 'datosBasicos.services', 'actividad.services', 'infoMDL.services', 'avance.services', 'grilla.services','financiacion.services', 'participante.services'
+				, 'usuario.controllers', 'comun.controllers', 'listado.controllers', 'persona.controllers','representante.controllers','contacto.controllers','datosBasicos.controllers','actividad.controllers','infoMDL.controllers','avance.controllers','financiacion.controllers', 'participante.controllers' 
 				, 'GPYApp.directives'
 				]);
                                 
@@ -22,6 +22,8 @@ angular.module('actividad.services'              , []);
 angular.module('infoMDL.services'                , []);
 angular.module('avance.services'                 , []);
 angular.module('grilla.services'                 , []);
+angular.module('financiacion.services'           , []);
+angular.module('participante.services'           , []);
 
 
 /* Controllers */
@@ -35,7 +37,8 @@ angular.module('datosBasicos.controllers'        , []);
 angular.module('actividad.controllers'           , []);
 angular.module('infoMDL.controllers'             , []);
 angular.module('avance.controllers'              , []);
-
+angular.module('financiacion.controllers'        , []);
+angular.module('participante.controllers'        , []);
 
 /* Directives */
 angular.module('GPYApp.directives'               , []);

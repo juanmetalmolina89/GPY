@@ -14,12 +14,13 @@
                     <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body"  ng-controller="participanteCtrl">
                     <!-- ============================================================-->
                     <!-- Formulario -->
                     <!-- ============================================================-->
 
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" ng-show="muestraForm">
+					
                         <fieldset>
 
                             <!-- Participantes -->
@@ -33,55 +34,29 @@
                                     <th>Resp Funciones</th>
                                     <th>Acciones</th>
                                 </tr>
-                                <tr>
-                                    <td>Carlos Andres</td>
-                                    <td>Suarez Garcia</td>
-                                    <td>CC</td>
-                                    <td>Hacer</td>
-                                    <td></td>    
+                                <tr ng-repeat="filaParticipante in participantes">
+                                    <td>{{filaParticipante.a052nombre}}</td>
+                                    <td>{{filaParticipante.a052apellido}}</td>
+                                    <td>{{filaParticipante.a052tipdocmnt}}</td>
+                                    <td>{{filaParticipante.a051responsabilidad}}</td>
+                                    <td>
+										<button type="button" class="btn btn-primary" 
+											ng-click="mostrarForm(filaParticipante)" data-toggle="tooltip" data-placement="top"
+                                            title="Modificar participante"><span class="glyphicon glyphicon-edit"></span></button>
+										<button type="button" class="btn btn-primary" 
+											ng-click="eliminar(filaParticipante)" data-toggle="tooltip" data-placement="top"
+                                            title="Eliminar participante"><span class="glyphicon glyphicon-remove"></span></button>
+									</td>    
                                 </tr>
-                                <tr>
-                                    <td>Raul Antonio</td>
-                                    <td>Cardenas Ramirez</td>
-                                    <td>CE</td> 
-                                    <td>Ingresar</td>
-                                    <td></td>
-
-                                </tr> 
-                                <tr>
-                                    <td>Jose del Carmen</td>
-                                    <td>Morales Bernal</td>
-                                    <td>PA</td>
-                                    <td>Diligenciar</td>
-                                    <td></td>
-                                </tr>
+                                
                             </table>
 
-
-
-                            <!-- Nombre-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="textinput">Nombre</label>  
-                                <div class="col-md-2">
-                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-
-                                </div>
-                            </div>
-
-                            <!-- Apellidos-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="textinput">Apellidos</label>  
-                                <div class="col-md-2">
-                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-
-                                </div>
-                            </div>
 
                             <!-- Tipo de documento -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="selectbasic">Tipo de documento</label>
                                 <div class="col-md-4">
-                                    <select id="selectbasic" name="selectbasic" class="form-control">
+                                    <select id="selectbasic" name="selectbasic" class="form-control" ng-model="participante.persona.a015codigo"  ng-options="tipoDocumento.a015codigo as tipoDocumento.a015descrpcntipdocmnt for tipoDocumento in tiposDocumento">
                                     </select>
                                 </div>
                             </div>
@@ -90,7 +65,23 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="textinput">Numero de documento</label>  
                                 <div class="col-md-2">
-                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+                                    <input type="text" id="a052numrdocmnt" name="a052numrdocmnt" ng-model="participante.persona.a052numrdocmnt"  placeholder="" required class="form-control input-md" ng-blur='consultarPersonaPorDocumento(participante.persona.a052numrdocmnt)'>
+                                </div>
+                            </div>
+
+                            <!-- Nombre-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Nombre</label>  
+                                <div class="col-md-2">
+                                    <input  type="text" id="a052nombre" name="a052nombre" ng-model="participante.persona.a052nombre" ng-disabled="model.isDisabled" placeholder="" required class="form-control input-md">
+                                </div>
+                            </div>
+
+                            <!-- Apellidos-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="textinput">Apellidos</label>  
+                                <div class="col-md-2">
+                                    <input type="text" id="a052apellido" name="a052apellido" ng-model="participante.persona.a052apellido" ng-disabled="model.isDisabled" required class="form-control input-md">
 
                                 </div>
                             </div>
@@ -99,26 +90,16 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="textinput">Correo Electronico</label>  
                                 <div class="col-md-2">
-                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
+                                    <input type="email" id="a052correlctrnc" name="a052correlctrnc"  ng-model="participante.persona.a052correlctrnc" ng-disabled="model.isDisabled" placeholder="" required class="form-control input-md">
 
                                 </div>
-                            </div>
-
-                            <!-- Entidad-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="textinput">Entidad</label>  
-                                <div class="col-md-2">
-                                    <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-
-                                </div>
-                            </div>
+                            </div>                           
 
                             <!-- Responsabilidades y/o Funciones -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="selectmultiple">Responsabilidades y/o Funciones</label>
                                 <div class="col-md-4">
-                                    <select id="selectmultiple" name="selectmultiple" class="form-control" multiple="multiple">
-                                    </select>
+									<textarea rows = "6" cols = "100"  class="form-control" id="a051responsabilidad" name="a051responsabilidad" ng-model="participante.a051responsabilidad" placeholder="" required></textarea>
                                 </div>
                             </div>
 
@@ -126,8 +107,8 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="button1id"></label>
                                 <div class="col-md-8">
-                                    <button id="button1id" name="button1id" class="btn btn-primary">Registrar participante </button>
-                                    <button id="button2id" name="button2id" class="btn btn-primary">Cancelar</button>
+                                    <button id="button1id" name="button1id" class="btn btn-primary" ng-click="guardar()" >Registrar participante </button>
+                                    <button id="button2id" name="button2id" class="btn btn-primary" ng-click="cancelar()" >Cancelar</button>
                                 </div>
                             </div>
 

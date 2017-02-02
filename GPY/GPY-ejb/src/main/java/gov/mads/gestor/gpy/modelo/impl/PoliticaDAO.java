@@ -10,11 +10,13 @@ import gov.mads.gestor.gpy.vista.ActualizarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasProyectoOE;
+import gov.mads.gestor.gpy.vista.RegistrarAdjuntoPoliticaOE;
 import oracle.jdbc.OracleTypes;
 import java.util.ArrayList;
 import java.util.List;
 
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaOE;
+import gov.mads.gestor.gpy.vista.RegistrarSoporteOE;
 
 /**
  *
@@ -49,10 +51,11 @@ public class PoliticaDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A003NOMNIVEL2", objetoEntrada.getProypolitica().getA007idpolitica().getA003nomnivel2(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                         parametros.add(new SentenciaParametroDAO("p_A003NIVEL3", objetoEntrada.getProypolitica().getA007idpolitica().getA003nivel3(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A003NOMNIVEL3", objetoEntrada.getProypolitica().getA007idpolitica().getA003nomnivel3(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-			parametros.add(new SentenciaParametroDAO("p_A003NONIVEL4", objetoEntrada.getProypolitica().getA007idpolitica().getA003nomnivel4(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-			parametros.add(new SentenciaParametroDAO("p_A026DESCRPCNARCHIV", objetoEntrada.getPolitica().getA003idarchiv().getA026descrpcnarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-                        parametros.add(new SentenciaParametroDAO("p_A026NOMARCHIVO", objetoEntrada.getPolitica().getA003idarchiv().getA026nomarchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-			parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getPolitica().getA003idarchiv().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+			parametros.add(new SentenciaParametroDAO("p_A003NOMNIVEL4", objetoEntrada.getProypolitica().getA007idpolitica().getA003nomnivel4(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+			parametros.add(new SentenciaParametroDAO("P_A026CODIGO", objetoEntrada.getPolitica().getA003idarchiv().getA026codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        //parametros.add(new SentenciaParametroDAO("p_A026DESCRPCNARCHIV", objetoEntrada.getPolitica().getA003idarchiv().getA026descrpcnarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                        //parametros.add(new SentenciaParametroDAO("p_A026NOMARCHIVO", objetoEntrada.getPolitica().getA003idarchiv().getA026nomarchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+			//parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getPolitica().getA003idarchiv().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                         sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
@@ -99,10 +102,10 @@ public class PoliticaDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A003NIVEL3", objetoEntrada.getProypolitica().getA007idpolitica().getA003nivel3(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A003NOMNIVEL3", objetoEntrada.getProypolitica().getA007idpolitica().getA003nomnivel3(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
 			parametros.add(new SentenciaParametroDAO("p_A003NIVEL4", objetoEntrada.getProypolitica().getA007idpolitica().getA003nivel4(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-                        parametros.add(new SentenciaParametroDAO("p_A003NONIVEL4", objetoEntrada.getProypolitica().getA007idpolitica().getA003nomnivel4(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-			parametros.add(new SentenciaParametroDAO("p_A026DESCRPCNARCHIV", objetoEntrada.getPolitica().getA003idarchiv().getA026descrpcnarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-                        parametros.add(new SentenciaParametroDAO("p_A026NOMARCHIVO", objetoEntrada.getPolitica().getA003idarchiv().getA026nomarchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-			parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getPolitica().getA003idarchiv().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                        parametros.add(new SentenciaParametroDAO("p_A003NOMNIVEL4", objetoEntrada.getProypolitica().getA007idpolitica().getA003nomnivel4(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+			//parametros.add(new SentenciaParametroDAO("p_A026DESCRPCNARCHIV", objetoEntrada.getPolitica().getA003idarchiv().getA026descrpcnarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                        //parametros.add(new SentenciaParametroDAO("p_A026NOMARCHIVO", objetoEntrada.getPolitica().getA003idarchiv().getA026nomarchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+			//parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getPolitica().getA003idarchiv().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                         
                         objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
@@ -155,4 +158,31 @@ public class PoliticaDAO extends GenericoDAO {
 		return objetoSalida;
 
 	}
+        
+        public ObjetoSalida registrarSoporte(RegistrarAdjuntoPoliticaOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+
+                try {
+
+                    SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_POLITICA.Pr_RegistrarArchivoPolitica", objetoEntrada.getIdUsuario());
+                    List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+                    //parametros.add(new SentenciaParametroDAO("p_A003CODIGO", objetoEntrada.getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A026DESCRPCNARCHIV", objetoEntrada.getAdjuntarArchivo().getA026descrpcnarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                    parametros.add(new SentenciaParametroDAO("p_A026NOMARCHIVO", objetoEntrada.getAdjuntarArchivo().getA026rutarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                    parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getAdjuntarArchivo().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                    sentencia.setParametros(parametros);
+                    objetoSalida = this.ejecutarX(sentencia, objetoSalida);
+                    ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+                } catch (Exception e) {
+
+                    objetoSalida.setCodError(CodError.ERROR_INTERNO);
+                    objetoSalida.setMsgError(e.getMessage());
+                    ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+                }
+
+                return objetoSalida;
+
+	}
+
 }

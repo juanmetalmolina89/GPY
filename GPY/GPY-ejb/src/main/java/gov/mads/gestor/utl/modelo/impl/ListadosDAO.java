@@ -508,7 +508,7 @@ public class ListadosDAO extends GenericoDAO {
 
         try {
 
-            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_ListarProgramas", objetoEntrada.getIdUsuario());
+            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_Listar_arbolPol_nvl_1", objetoEntrada.getIdUsuario());
             List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
             sentencia.setParametros(parametros);
             objetoSalida = this.ejecutar(sentencia, objetoSalida);
@@ -529,7 +529,7 @@ public class ListadosDAO extends GenericoDAO {
 
         try {
 
-            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_ListarPlanes", objetoEntrada.getIdUsuario());
+            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_Listar_arbolPol_nvl_2", objetoEntrada.getIdUsuario());
             List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
             parametros.add(new SentenciaParametroDAO("p_A003NIVEL1", objetoEntrada.getA003nivel1(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             sentencia.setParametros(parametros);
@@ -573,7 +573,7 @@ public class ListadosDAO extends GenericoDAO {
 
         try {
 
-            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_ListarPoliticas", objetoEntrada.getIdUsuario());
+            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_Listar_arbolPol_nvl_3", objetoEntrada.getIdUsuario());
             List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
             parametros.add(new SentenciaParametroDAO("p_A003NIVEL3", objetoEntrada.getA003nivel3(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             sentencia.setParametros(parametros);

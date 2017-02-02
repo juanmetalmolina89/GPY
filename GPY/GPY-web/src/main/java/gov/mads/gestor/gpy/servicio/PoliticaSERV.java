@@ -19,6 +19,7 @@ import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasProyectoOE;
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaOE;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 /**
  * REST Web Service
  *
@@ -81,4 +82,16 @@ public class PoliticaSERV {
 		ObjetoSalida os = fac.listarPoliticasProyecto(objetoEntrada);
 		return API.retornarRespuesta(os);
 	}
+        
+        @POST
+        @Path("/registrarAdjuntarPolitica")
+        @Consumes(MediaType.MULTIPART_FORM_DATA)
+        @Produces({ MediaType.APPLICATION_JSON})
+        @JWT
+        public Response registrarAdjuntarPolitica (MultipartFormDataInput OE) {
+               PoliticaFAC fac = new PoliticaFAC();
+               ObjetoSalida objetoSalida = fac.registrarAdjunto(OE);
+               return API.retornarRespuesta(objetoSalida);
+        }
+
 }

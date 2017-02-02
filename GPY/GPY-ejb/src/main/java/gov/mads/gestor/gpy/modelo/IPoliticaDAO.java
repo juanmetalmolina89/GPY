@@ -4,6 +4,7 @@ import gov.mads.gestor.gpy.vista.ActualizarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasProyectoOE;
+import gov.mads.gestor.gpy.vista.RegistrarAdjuntoOE;
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaOE;
 
 /**
@@ -18,5 +19,5 @@ public interface IPoliticaDAO {
         ObjetoSalida actualizarPolitica(ActualizarPoliticaOE OE);
         ObjetoSalida eliminarPolitica(EliminarPoliticaOE OE);
         ObjetoSalida listarPoliticasProyecto(ListarPoliticasProyectoOE OE);
-
+        ObjetoSalida registrarAdjunto(RegistrarAdjuntoOE OE);
 }

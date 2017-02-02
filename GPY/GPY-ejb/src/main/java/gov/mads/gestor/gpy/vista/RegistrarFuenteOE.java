@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Ivan Chacon
 */
 @XmlRootElement
-public class RegistarFuenteOE extends ObjetoEntrada {
+public class RegistrarFuenteOE extends ObjetoEntrada {
 
 	@XmlElement
 	private Fuente fuente;

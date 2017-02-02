@@ -5,6 +5,7 @@ import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasProyectoOE;
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaOE;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 /**
  *
@@ -18,5 +19,5 @@ public interface IPoliticaFAC {
         public ObjetoSalida actualizarPolitica(ActualizarPoliticaOE OE);
         public ObjetoSalida eliminarPolitica(EliminarPoliticaOE OE);
         public ObjetoSalida listarPoliticasProyecto(ListarPoliticasProyectoOE OE);
-
+        public ObjetoSalida registrarAdjunto(MultipartFormDataInput OE);
 }

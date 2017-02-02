@@ -175,7 +175,7 @@ public class ActividadDAO extends GenericoDAO {
                     parametros.add(new SentenciaParametroDAO("p_A005CODIGO", objetoEntrada.getA005codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     parametros.add(new SentenciaParametroDAO("p_A026DESCRPCNARCHIV", objetoEntrada.getSoporte().getA026descrpcnarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                     parametros.add(new SentenciaParametroDAO("p_A026NOMARCHIVO", objetoEntrada.getSoporte().getA026rutarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-                    parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getSoporte().getA026rutarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                    parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getSoporte().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                     sentencia.setParametros(parametros);
                     objetoSalida = this.ejecutar(sentencia, objetoSalida);
                     ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
@@ -201,7 +201,7 @@ public class ActividadDAO extends GenericoDAO {
                     parametros.add(new SentenciaParametroDAO("p_A026CODIGO", objetoEntrada.getSoporte().getA026codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     parametros.add(new SentenciaParametroDAO("p_A026DESCRPCNARCHIV", objetoEntrada.getSoporte().getA026descrpcnarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                     parametros.add(new SentenciaParametroDAO("p_A026NOMARCHIVO", objetoEntrada.getSoporte().getA026rutarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-                    parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getSoporte().getA026rutarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                    parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getSoporte().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                     sentencia.setParametros(parametros);
                     objetoSalida = this.ejecutar(sentencia, objetoSalida);
                     ErrorClass.getMessage(objetoSalida,ActividadDAO.class);

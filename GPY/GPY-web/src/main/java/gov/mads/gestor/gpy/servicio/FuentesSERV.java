@@ -14,10 +14,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import gov.mads.gestor.gpy.fachada.impl.FuentesFAC;
-import gov.mads.gestor.gpy.vista.RegistarFuenteOE;
+import gov.mads.gestor.gpy.vista.RegistrarFuenteOE;
 import gov.mads.gestor.gpy.vista.ActualizarFuenteOE;
 import gov.mads.gestor.gpy.vista.ConsultarFuentePorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarFuenteOE;
+import gov.mads.gestor.gpy.vista.ListarFuentesProyectoOE;
 /**
  * REST Web Service
  *
@@ -31,9 +32,9 @@ public class FuentesSERV {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@JWT
-	public Response registarFuente(RegistarFuenteOE objetoEntrada) {
+	public Response registrarFuente(RegistrarFuenteOE objetoEntrada) {
 		FuentesFAC fac = new FuentesFAC();
-		ObjetoSalida os = fac.registarFuente(objetoEntrada);
+		ObjetoSalida os = fac.registrarFuente(objetoEntrada);
 		return API.retornarRespuesta(os);
 	}
 
@@ -67,6 +68,17 @@ public class FuentesSERV {
 	public Response consultarFuente(ConsultarFuentePorIdOE objetoEntrada) {
 		FuentesFAC fac = new FuentesFAC();
 		ObjetoSalida os = fac.consultarFuentePorId(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/listarFuenteProyecto")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response listarFuentesPorProyecto(ListarFuentesProyectoOE objetoEntrada) {
+		FuentesFAC fac = new FuentesFAC();
+		ObjetoSalida os = fac.listarFuentesPorProyecto(objetoEntrada);
 		return API.retornarRespuesta(os);
 	}
 }

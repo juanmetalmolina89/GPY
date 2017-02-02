@@ -52,7 +52,26 @@ angular.module('listado.services')
                 datos.listarTipoActividadReduccion = function (OE) {
                     return $http.post(urlBase +'/listarTipoActividadReduccion', OE);
                 };
-
+				
+				datos.listarSectorIPCC = function (OE) {
+                    return $http.post(urlBase +'/listarSectorIPCC', OE);
+                };
+								
+				datos.listarSubgrupoIPCC = function (OE) {
+                    return $http.post(urlBase +'/listarSubgrupoIPCC', OE);
+                };
+				
+				datos.listarCategoriaIPCC = function (OE) {
+                    return $http.post(urlBase +'/listarCategoriaIPCC', OE);
+                };
+				
+				datos.listarSubcategoriaIPCC = function (OE) {
+                    return $http.post(urlBase +'/listarSubcategoriaIPCC', OE);
+                };
+				datos.listarDesagregacionIPCC = function (OE) {
+                    return $http.post(urlBase +'/listarDesagregacionIPCC', OE);
+                };
+				
                 return datos;
 
             }]);

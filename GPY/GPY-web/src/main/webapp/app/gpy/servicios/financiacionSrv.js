@@ -8,7 +8,20 @@ angular.module('financiacion.services')
 
 	    var urlBase = urlBackEnd+'financiacion';
 	    var datos = {};
-
+                        
+            datos.guardarInformacion = function (OE) {
+	        return $http.post(urlBase + '/registrarCostosProyecto', OE);
+	    };
+            
+            datos.cargarCostos = function (OE) {
+	        return $http.post(urlBase + '/listarCostosProyecto', OE);
+	    };
+            
+             datos.cargarFuentes = function (OE) {
+	        return $http.post(urlBase + '/listarFtesFinanc', OE);
+	    };
+            
+            
 	    datos.listar = function () {
 	        return $http.get(urlBase);
 	    };
@@ -17,9 +30,7 @@ angular.module('financiacion.services')
 	        return $http.get(urlBase + '/' + id);
 	    };
 
-	    datos.insertar = function (financiacion) {
-	        return $http.post(urlBase, financiacion);
-	    };
+	    
 
 	    datos.actualizar = function (financiacion) {
 	        return $http.put(urlBase + '/' + financiacion.id, financiacion);

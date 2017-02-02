@@ -4,7 +4,7 @@
 var ambiente = 'local';//local, desarrollo, pruebas, produccion
 
 var urlServidor = getUrlServidor();
-var urlPuerto = urlServidor + ":8088/";
+var urlPuerto = urlServidor + ":8080/";
 var urlPrincipal = urlPuerto + "GPY-web/";
 var urlBackEnd = urlPrincipal + "servicios/";
 
@@ -13,7 +13,7 @@ function getUrlServidor() {
     if (ambiente === 'local') {
         return 'http://127.0.0.1';
     } else if (ambiente === 'desarrollo') {
-        return 'http://172.17.3.90';
+        return 'http://172.16.3.90';
     }
 }
 

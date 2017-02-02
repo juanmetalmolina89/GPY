@@ -40,13 +40,13 @@
                                     <td>{{filaParticipante.a052tipdocmnt}}</td>
                                     <td>{{filaParticipante.a051responsabilidad}}</td>
                                     <td>
-										<button type="button" class="btn btn-primary" 
-											ng-click="mostrarForm(filaParticipante)" data-toggle="tooltip" data-placement="top"
+                                        <button type="button" class="btn btn-primary" 
+                                            ng-click="mostrarForm(filaParticipante)" data-toggle="tooltip" data-placement="top"
                                             title="Modificar participante"><span class="glyphicon glyphicon-edit"></span></button>
-										<button type="button" class="btn btn-primary" 
-											ng-click="eliminar(filaParticipante)" data-toggle="tooltip" data-placement="top"
+                                        <button type="button" class="btn btn-primary" 
+                                            ng-click="eliminar(filaParticipante)" data-toggle="tooltip" data-placement="top"
                                             title="Eliminar participante"><span class="glyphicon glyphicon-remove"></span></button>
-									</td>    
+                                    </td>    
                                 </tr>
                                 
                             </table>
@@ -107,7 +107,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="button1id"></label>
                                 <div class="col-md-8">
-                                    <button id="button1id" name="button1id" class="btn btn-primary" ng-click="guardar()" >Registrar participante </button>
+                                    <button id="button1id" name="button1id" class="btn btn-primary" ng-click="guardar()" ng-disabled="form.$invalid">Guardar participante</button>
                                     <button id="button2id" name="button2id" class="btn btn-primary" ng-click="cancelar()" >Cancelar</button>
                                 </div>
                             </div>

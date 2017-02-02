@@ -142,7 +142,54 @@ angular.module('listado.controllers', ['ngSanitize'])
                             });
                 };
 
+				$scope.listarSectorIPCC = function () {
+                    listadoSrv.listarSectorIPCC()
+                            .then(function (response) {
+                                $scope.listaSectorIPCC = response.data.respuesta;
+                            }, function (error) {
+                                $scope.mensaje = error.data.respuesta;
+                                console.log($scope.mensaje);
+                            });
+                };
 
+				$scope.listarSubgrupoIPCC = function () {
+                    listadoSrv.listarSubgrupoIPCC()
+                            .then(function (response) {
+                                $scope.listaSubgrupoIPCC = response.data.respuesta;
+                            }, function (error) {
+                                $scope.mensaje = error.data.respuesta;
+                                console.log($scope.mensaje);
+                            });
+                };
+
+				$scope.listarCategoriaIPCC = function () {
+                    listadoSrv.listarCategoriaIPCC()
+                            .then(function (response) {
+                                $scope.listaCategoriaIPCC = response.data.respuesta;
+                            }, function (error) {
+                                $scope.mensaje = error.data.respuesta;
+                                console.log($scope.mensaje);
+                            });
+                };
+
+				$scope.listarSubcategoriaIPCC = function () {
+                    listadoSrv.listarSubcategoriaIPCC()
+                            .then(function (response) {
+                                $scope.listaSubcategoriaIPCC = response.data.respuesta;
+                            }, function (error) {
+                                $scope.mensaje = error.data.respuesta;
+                                console.log($scope.mensaje);
+                            });
+                };				
+				$scope.listarDesagregacionIPCC = function () {
+                    listadoSrv.listarDesagregacionIPCC()
+                            .then(function (response) {
+                                $scope.listaDesagregacionIPCC = response.data.respuesta;
+                            }, function (error) {
+                                $scope.mensaje = error.data.respuesta;
+                                console.log($scope.mensaje);
+                            });
+                };
 
             }]);
 

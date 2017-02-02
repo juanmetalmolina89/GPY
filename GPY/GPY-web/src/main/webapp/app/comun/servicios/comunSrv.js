@@ -31,6 +31,31 @@ angular.module('comun.services')
                     //toastr[tipo](mensaje.msgError, 'Gestor de Proyectos Ambientales');
                     toastr[tipo](mensaje, 'Gestor de Proyectos Ambientales');
                 };
+                
+                this.mensajeInfo = function (mensaje) {
+
+                    //$log.log(mensaje.msgError);
+                    $log.log(mensaje);
+                    //toastr[tipo](mensaje.msgError, 'Gestor de Proyectos Ambientales');
+                    toastr["warning"](mensaje, 'Gestor de Proyectos Ambientales');
+                };
+                
+                this.mensajeError = function (mensaje) {
+
+                    //$log.log(mensaje.msgError);
+                    $log.log(mensaje);
+                    //toastr[tipo](mensaje.msgError, 'Gestor de Proyectos Ambientales');
+                    toastr["error"](mensaje, 'Gestor de Proyectos Ambientales');
+                };
+                
+                this.mensajeOk = function (mensaje) {
+
+                    //$log.log(mensaje.msgError);
+                    $log.log(mensaje);
+                    //toastr[tipo](mensaje.msgError, 'Gestor de Proyectos Ambientales');
+                    toastr["success"](mensaje, 'Gestor de Proyectos Ambientales');
+                };
+
 
                 this.mensajeSalida = function (respuesta) {
 

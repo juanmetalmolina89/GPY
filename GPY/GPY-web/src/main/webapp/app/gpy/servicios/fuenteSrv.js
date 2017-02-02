@@ -1,32 +1,28 @@
 /* 
- * Autor: Yeimmy Lee
+ * Autor: Fernando Camargo
  */
 'use strict';
 
 angular.module('fuente.services')
-	    .factory('fuenteSrv', ['$http', function($http) {
+	    .factory('fuenteSrv', ['$http', function($http) { 
 
-	    var urlBase = urlBackEnd+'fuente';
+	    var urlBase = urlBackEnd+'fuentes';
 	    var datos = {};
 
-	    datos.listar = function () {
-	        return $http.get(urlBase);
+	    datos.listar = function (OE) {
+	        return $http.post(urlBase + '/listarFuenteProyecto', OE);
 	    };
 
-	    datos.consultarPorId = function (id) {
-	        return $http.get(urlBase + '/' + id);
+	    datos.insertar = function (OE) {
+	        return $http.post(urlBase + '/registrarFuente', OE);
 	    };
 
-	    datos.insertar = function (fuente) {
-	        return $http.post(urlBase, fuente);
+	    datos.actualizar = function (OE) {
+	        return $http.post(urlBase + '/actualizarFuente', OE);
 	    };
 
-	    datos.actualizar = function (fuente) {
-	        return $http.put(urlBase + '/' + fuente.id, fuente);
-	    };
-
-	    datos.borrar = function (id) {
-	        return $http.delete(urlBase + '/' + id);
+	    datos.borrar = function (OE) {
+	        return $http.post(urlBase + '/eliminarFuente', OE);
 	    };
 
 	    return datos;

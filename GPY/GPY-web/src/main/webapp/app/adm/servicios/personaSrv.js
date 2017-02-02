@@ -21,7 +21,11 @@ angular.module('persona.services')
                 datos.actualizarPersona = function (OE) {
                     return $http.post(urlBase + '/actualizarPersona', OE);
                 };              
-                
+               
+				datos.registrarPersona = function (OE) {
+                    return $http.post(urlBase + '/registrarPersona', OE);
+                };
+				                
 
                 /**************************************************************/
                 /** DUMMY */

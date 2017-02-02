@@ -4,57 +4,309 @@
 'use strict';
 
 angular.module('fuente.controllers', ['ngSanitize'])
-        .controller('fuenteCtrl', ['$scope', 'fuenteSrv', function ($scope, fuenteSrv) {
+    .controller('fuenteCtrl', ['$scope', 'fuenteSrv', '$routeParams', 'listadoSrv', '$q' , function ($scope, fuenteSrv, $routeParams, listadoSrv, $q) {
 
-                $scope.mensaje;
-                $scope.fuentes = [];
-                $scope.fuente = [];
+        $scope.mensaje;
+        $scope.fuentes = [];
+        $scope.fuente = [];
 
-                $scope.listar = function () {
-                    fuenteSrv.listar()
+        $scope.sectores = [];
+        $scope.subgrupos = [];
+        $scope.categorias = [];
+        $scope.subcategorias = [];
+        $scope.desagregaciones = []; 
+
+        $scope.fuente = new Object();
+        $scope.fuente.a038idproyecto = $scope.pid;
+
+        $scope.fuente.a045codigo = ""; // sector
+        $scope.fuente.a043codigo = ""; // subGrupo
+        $scope.fuente.a046codigo = ""; // categoría
+        $scope.fuente.a047codigo = ""; // subCategoría
+        $scope.fuente.a048codigo = ""; // desagregación, aunque también debe venir el en objeto de la lista como a038iddesgrcatipcc			
+
+
+        $scope.muestraForm = true;
+
+
+        $scope.listar = function () {
+            $scope.OE = new Object();
+            $scope.OE.idUsuario = $scope.idUsuario;
+            $scope.OE.a038idproyecto = $scope.pid;
+
+            fuenteSrv.listar($scope.OE)
+                    .then(function (response) {
+                        $scope.fuentes = response.data.respuesta;
+                    }, function (error) {
+                        $scope.mensaje = error.data.respuesta;
+                        console.log($scope.mensaje);
+                    });
+        }; 
+
+
+        $scope.eliminar = function (estaFuente) {  
+            $scope.OE = new Object();
+            $scope.OE.idUsuario = $scope.idUsuario;            
+            $scope.OE.fuente={"a038codigo":estaFuente.a038codigo}
+            fuenteSrv.borrar($scope.OE)
+                    .then(function (response) {
+                        $scope.mensaje = 'Borrado con éxito.';
+                        console.log($scope.mensaje);
+                        $scope.listar();
+                        $scope.listarSectorIPCC();
+                        
+                    }, function (error) {
+                        $scope.mensaje = error.data.respuesta;
+                        console.log($scope.mensaje);
+                    });
+        };
+
+        // manejo del formulario
+        // viene con parámetro cuando se invoca desde el botón de actualizar de la grilla
+        $scope.mostrarForm = function (estaFuente) {				
+
+           if (estaFuente != undefined && estaFuente != null) 
+           {
+                // TODO: poner los campos definitivos
+                    $scope.fuente.a038idproyecto = $scope.pid;
+                    $scope.fuente.a038codigo = estaFuente.a038codigo; // id del registro de la fuente, cuando viene de edición
+                    $scope.fuente.a038nombrfunt = estaFuente.a038nombrfunt;
+                    $scope.fuente.a038iddesgrcatipcc = estaFuente.a038iddesgrcatipcc;
+                    $scope.fuente.a038factoremision = estaFuente.a038factoremision;
+                    
+                    // puebla automaticamente los sectores y posiciona el que estaba almacenado
+                    $scope.listarSectorIPCC()
+                        .then(function () {
+                            $scope.fuente.a045codigo = estaFuente.a045codigo;
+                                        
+                            // puebla jerarquicamente los subgrupos correspondientes y asocia el que estaba almacenado 
+                            $scope.listarSubgrupoIPCC()
+                                .then(function () {
+                                    $scope.fuente.a043codigo = estaFuente.a043codigo;
+
+                                    // puebla jerarquicamente las categorías correspondientes y asocia la que estaba almacenadq
+                                    $scope.listarCategoriaIPCC()
+                                        .then(function () {
+                                            $scope.fuente.a046codigo = estaFuente.a046codigo;
+
+                                            // puebla jerarquicamente las subcategorías correspondientes y asocia la que estaba almacenadq
+                                            $scope.listarSubcategoriaIPCC()
+                                                .then(function () {
+                                                    $scope.fuente.a047codigo = estaFuente.a047codigo;
+
+                                                    // puebla jerarquicamente las subcategorías correspondientes y asocia la que estaba almacenadq
+                                                    $scope.listarDesagregacionIPCC()
+                                                        .then(function () {
+                                                            $scope.fuente.a048codigo = estaFuente.a048codigo;
+
+                                                        });
+
+                                                });
+
+                                        });
+
+                                });
+                            
+                        });
+
+                     
+             } 
+             else 
+             {
+                 $scope.fuente = new Object();
+                 $scope.fuente.a038idproyecto = $scope.pid;
+                 $scope.fuente.a038nombrfunt = "";
+                 $scope.fuente.a038iddesgrcatipcc = "";
+                 $scope.fuente.a038factoremision = "";						
+            }
+
+        };
+
+        $scope.guardar = function () {
+            if($scope.fuente.a038factoremision !== undefined && $scope.fuente.a038factoremision !== null)
+            {
+
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.a002codigo = $scope.pid; // aqui se llama es a002codigo y no a038idproyecto
+                    $scope.OE.fuente = new Object();					
+                    $scope.OE.fuente.a038nombrfunt = $scope.fuente.a038nombrfunt;
+                    $scope.OE.fuente.a038iddesgrcatipcc = {"a048codigo":$scope.fuente.a048codigo};
+                    $scope.OE.fuente.a038factoremision = parseFloat($scope.fuente.a038factoremision);
+                    
+                    if($scope.fuente.a038codigo !== undefined && $scope.fuente.a038codigo !== null)
+                    {
+                        // es un update {"idUsuario":1,"fuente":{"a038nombrfunt":"Fuente","a038iddesgrcatipcc":{"a048codigo":1},"a038factoremision":100,"a038codigo":1},"a002codigo":1}
+                        $scope.OE.fuente.a038codigo = $scope.fuente.a038codigo;
+                        fuenteSrv.actualizar($scope.OE)
                             .then(function (response) {
-                                $scope.fuente = response.data.respuesta;
+                                    $scope.mensaje = 'fuente actualizada con éxito.';
+                                    $scope.fuente=[];
+                                    $scope.listar();
+                                    console.log($scope.mensaje);
                             }, function (error) {
-                                $scope.mensaje = error.data.respuesta;
-                                console.log($scope.mensaje);
+                                    $scope.mensaje = error.data.respuesta;
+                                    console.log($scope.mensaje);
                             });
-                };
+                    }
+                    else
+                    {
+                        // es un insert	// {"idUsuario":1,"fuente":{"a038nombrfunt":"Fuente","a038iddesgrcatipcc":{"a048codigo":1},"a038factoremision":100,"a038codigo":1},"a002codigo":1}					
+                        fuenteSrv.insertar($scope.OE)
+                                .then(function (response) {
+                                        $scope.mensaje = 'fuente insertada con éxito.';
+                                        $scope.fuente=[];
+                                        $scope.listar();
+                                        console.log($scope.mensaje);
+                                }, function (error) {
+                                        $scope.mensaje = error.data.respuesta;
+                                        console.log($scope.mensaje);
+                                });
+                    }
+            }
+            else
+            {
+                return;
+            }
+        };
 
-                $scope.actualizar = function () {
 
-                    fuenteSrv.actualizar($scope.fuente)
-                            .then(function (response) {
-                                $scope.mensaje = 'Actualizado con éxito.';
-                                console.log($scope.mensaje);
-                            }, function (error) {
-                                $scope.mensaje = error.data.respuesta;
-                                console.log($scope.mensaje);
-                            });
-                };
+        // poblar combo de sector de IPCC
+        $scope.listarSectorIPCC = function () {
+            var def = $q.defer();
+            
+            $scope.OE = {};
+            $scope.OE.idUsuario = $scope.idUsuario;
 
-                $scope.insertar = function () {
+            $scope.subgrupos = [];
+            $scope.categorias = [];
+            $scope.subcategorias = [];
+            $scope.desagregaciones = []; 
 
-                    fuenteSrv.insertar($scope.fuente)
-                            .then(function (response) {
-                                $scope.mensaje = 'Insertado con éxito.';
-                                console.log($scope.mensaje);
-                            }, function (error) {
-                                $scope.mensaje = error.data.respuesta;
-                                console.log($scope.mensaje);
-                            });
-                };
+            $scope.fuente.a045codigo = ""; // sector
+            $scope.fuente.a043codigo = ""; // subGrupo
+            $scope.fuente.a046codigo = ""; // categoría
+            $scope.fuente.a047codigo = ""; // subCategoría
+            $scope.fuente.a048codigo = ""; // desagregación, aunque también debe venir el en objeto de la lista como a038iddesgrcatipcc			
 
-                $scope.borrar = function () {
-                    fuenteSrv.borrar($scope.fuente.id)
-                            .then(function (response) {
-                                $scope.mensaje = 'Borrado con éxito.';
-                                console.log($scope.mensaje);
-                            }, function (error) {
-                                $scope.mensaje = error.data.respuesta;
-                                console.log($scope.mensaje);
-                            });
-                };
+            //$scope.OE.a048idsubcatipcc = 1 // para mostrar datos. en teoría debe ir en null cuando lo modifiquen
+            //{"idUsuario":1}
+            listadoSrv.listarSectorIPCC($scope.OE)
+                    .then(function (response) {
+                        $scope.sectores = response.data.respuesta;
+                        def.resolve( true );
+                     }, function (error) {
+                        $scope.mensaje = error.data.respuesta;
+                        console.log($scope.mensaje);
+                        def.reject( 'error' );
+                    });
+            return def.promise;
+        };
 
-            }]);
+        // poblar combo de subgrupo IPCC
+        $scope.listarSubgrupoIPCC = function () {
+            var def = $q.defer();
+            $scope.OE = {};
+            $scope.OE.idUsuario = $scope.idUsuario;
+
+            $scope.fuente.a043codigo = ""; // subGrupo
+            $scope.fuente.a046codigo = ""; // categoría
+            $scope.fuente.a047codigo = ""; // subCategoría
+            $scope.fuente.a048codigo = ""; // desagregación, aunque también debe venir el en objeto de la lista como a038iddesgrcatipcc			
+
+            $scope.categorias = [];
+            $scope.subcategorias = [];
+            $scope.desagregaciones = []; 
+
+            $scope.OE.a043idsectoripcc = $scope.fuente.a045codigo // el sector actual.
+            //{  "idUsuario":1,"a043idsectoripcc":1}
+            listadoSrv.listarSubgrupoIPCC($scope.OE)
+                    .then(function (response) {
+                        $scope.subgrupos = response.data.respuesta;
+                        def.resolve( true );
+                    }, function (error) {
+                        $scope.mensaje = error.data.respuesta;
+                        console.log($scope.mensaje);
+                        def.reject( 'error' );
+                    });
+            return def.promise;
+        };
+
+        // poblar combo de categoría IPCC
+        $scope.listarCategoriaIPCC = function () {
+            var def = $q.defer();
+            $scope.OE = {};
+            $scope.OE.idUsuario = $scope.idUsuario;
+
+            $scope.fuente.a046codigo = ""; // categoría
+            $scope.fuente.a047codigo = ""; // subCategoría
+            $scope.fuente.a048codigo = ""; // desagregación, aunque también debe venir el en objeto de la lista como a038iddesgrcatipcc			
+
+            $scope.subcategorias = [];
+            $scope.desagregaciones = []; 
+
+            $scope.OE.a046idsector = $scope.fuente.a043codigo // el subgrupo actual. confirmar el nombre como se recibe
+            //{"idUsuario":1,"a046idsector":1} ... eso esta bien? no deberia ser el subgrupo?
+            listadoSrv.listarCategoriaIPCC($scope.OE)
+                    .then(function (response) {
+                        $scope.categorias = response.data.respuesta;
+                        def.resolve( true );
+                    }, function (error) {
+                        $scope.mensaje = error.data.respuesta;
+                        console.log($scope.mensaje);
+                        def.reject( 'error' );
+                    });
+            return def.promise;                    
+        };
+
+        // poblar combo de IPCC
+        $scope.listarSubcategoriaIPCC = function () {
+            var def = $q.defer();
+            $scope.OE = {};
+            $scope.OE.idUsuario = $scope.idUsuario;
+
+            $scope.fuente.a047codigo = ""; // subCategoría
+            $scope.fuente.a048codigo = ""; // desagregación, aunque también debe venir el en objeto de la lista como a038iddesgrcatipcc			
+
+            $scope.desagregaciones = []; 
+
+            $scope.OE.a047idcatipcc = $scope.fuente.a046codigo // La categoría actual.
+            // {"idUsuario":1,"a047idcatipcc":1}
+            listadoSrv.listarSubcategoriaIPCC($scope.OE)
+                    .then(function (response) {
+                        $scope.subcategorias = response.data.respuesta;
+                        def.resolve( true );
+                    }, function (error) {
+                        $scope.mensaje = error.data.respuesta;
+                        console.log($scope.mensaje);
+                        def.reject( 'error' );
+                    });
+            return def.promise;                    
+        };		
+
+        // poblar combo de desagregación de IPCC
+        $scope.listarDesagregacionIPCC = function () {
+            var def = $q.defer();
+            $scope.OE = {};
+            $scope.OE.idUsuario = $scope.idUsuario;
+                                $scope.OE.a048idsubcatipcc = $scope.fuente.a047codigo // la subcategoría actual
+                                //{"idUsuario":1,"a048idsubcatipcc":1}
+            listadoSrv.listarDesagregacionIPCC($scope.OE)
+                    .then(function (response) {
+                        $scope.desagregaciones = response.data.respuesta;
+                        def.resolve( true );
+                    }, function (error) {
+                        $scope.mensaje = error.data.respuesta;
+                        console.log($scope.mensaje);
+                        def.reject( 'error' );
+                    });
+            return def.promise;                    
+        };
+
+
+        $scope.listar();
+        $scope.listarSectorIPCC();
+
+    }]);
 
 

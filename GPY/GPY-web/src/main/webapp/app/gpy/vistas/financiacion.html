@@ -1,125 +1,129 @@
 <!-- ===================================================================================== -->
 <!-- 6 - Financiación -->
 <!-- ===================================================================================== -->
-﻿<div class="container gest_proy">
+﻿<div class="container gest_proy" >
     <div class="row">
         <div class="col-sm-3 col-md-3">
             <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
         </div>
-
-
         <div class="col-sm-9 col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body" ng-controller="financiacionCtrl">
                     <!-- ============================================================-->
                     <!-- Formulario -->
                     <!-- ============================================================-->
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" id="formregcostfuentproy" name="formregcostfuentproy" novalidate>
                         <fieldset>
                             <!-- Financiación -->
                             <legend>Financiación</legend>
 
 
                             <!-- Costos estimados totales de la iniciativa-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="textinput">Costos estimados totales de la iniciativa</label>  
+                            <div class="form-group" ng-class="{'has-error': !formregcostfuentproy.txtvaltotfinc.$valid && formEnviado}">
+                                <label class="col-md-4 control-label" for="txtvaltotfinc"><font style="color: #a94442">*</font> Costos estimados totales de la iniciativa</label>  
                                 <div class="col-md-4">
-                                    <input id="textinput" name="textinput" placeholder="" class="form-control input-md" type="text">
-
+                                    <input id="txtvaltotfinc" name="txtvaltotfinc" required
+                                           placeholder="$"  ng-model="financiacion.a002costsestmdtotl" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
                                 </div>
+                                <span class="control-label"
+                                      ng-show="formregcostfuentproy.txtvaltotfinc.$error.required && formEnviado">{{campoObligatorio}}</span>
                             </div>
 
                             <!-- Costos estimados de la formulación de iniciativa-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="textinput">Costos estimados de la formulación de iniciativa</label>  
+                            <div class="form-group" ng-class="{'has-error': !formregcostfuentproy.txtvalestformproy.$valid && formEnviado}">
+                                <label class="col-md-4 control-label" for="txtvalestformproy"><font style="color: #a94442">*</font> Costos estimados de la formulación de iniciativa</label>  
                                 <div class="col-md-4">
-                                    <input id="textinput" name="textinput" placeholder="" class="form-control input-md" type="text">
-
+                                    <input id="txtvalestformproy" name="txtvalestformproy" required
+                                           placeholder="$"  ng-model="financiacion.a002costsestmdformlcn" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
                                 </div>
+                                <span class="control-label"
+                                      ng-show="formregcostfuentproy.txtvalestformproy.$error.required && formEnviado">{{campoObligatorio}}</span>
                             </div>
 
                             <!-- Costo estimado por tonelado de CO2- eq a reducir (COP)-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="textinput">Costo estimado por tonelado de CO2- eq a reducir (COP)</label>  
+                            <div class="form-group" ng-class="{'has-error': !formregcostfuentproy.txtvalestformproy.$valid && formEnviado}">
+                                <label class="col-md-4 control-label" for="txtcosttonformproy"><font style="color: #a94442">*</font> Costo estimado por tonelado de CO2- eq a reducir (COP)</label>  
                                 <div class="col-md-4">
-                                    <input id="textinput" name="textinput" placeholder="" class="form-control input-md" type="text">
-
+                                    <input id="txtcosttonformproy" name="txtvalestformproy" required
+                                           placeholder="$"  ng-model="financiacion.a002costtonldrdcr" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
                                 </div>
+                                <span class="control-label"
+                                      ng-show="formregcostfuentproy.txtvalestformproy.$error.required && formEnviado">{{campoObligatorio}}</span>
+                            </div>
+                            
+                            <!--tasa de cambio-->
+                            <div class="form-group" ng-class="{'has-error': !formregcostfuentproy.txttasacformproy.$valid && formEnviado}">
+                                <label class="col-md-4 control-label" for="txtcosttonformproy"><font style="color: #a94442">*</font> Tasa de Cambio del día</label>  
+                                <div class="col-md-4">
+                                    <input id="txttasacformproy" name="txttasacformproy" required
+                                           ng-model="financiacion.a002trm" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
+                                </div>
+                                <span class="control-label"
+                                      ng-show="formregcostfuentproy.txttasacformproy.$error.required && formEnviado">{{campoObligatorio}}</span>
                             </div>
 
                             <!-- ¿Se encuentra en búsqueda de financiación? -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="radios">¿Se encuentra en búsqueda de financiación?</label>
+                            <div class="form-group" ng-class="{'has-error': !formregcostfuentproy.radiobusfincostproy.$valid && formEnviado}">
+                                <label class="col-md-4 control-label" for="radios"><font style="color: #a94442">*</font> ¿Se encuentra en búsqueda de financiación?</label>
                                 <div class="col-md-4"> 
-                                    <label class="radio-inline" for="radios-0">
-                                        <input name="radios" id="radios-0" value="1" checked="checked" type="radio">
+                                    <label class="radio-inline" for="radios">
+                                        <input name="radiobusfincostproy" id="radios-0" value="SI"  type="radio" ng-model="financiacion.a002busqudfinnccn" required>
                                         SI
                                     </label> 
-                                    <label class="radio-inline" for="radios-1">
-                                        <input name="radios" id="radios-1" value="2" type="radio">
+                                    <label class="radio-inline" for="radios2">
+                                        <input name="radiobusfincostproy" id="radios-1" value="NO" type="radio" checked="checked" ng-model="financiacion.a002busqudfinnccn" required>
                                         NO
                                     </label>
                                 </div>
+                                <span class="control-label"
+                                      ng-show="formregcostfuentproy.radiobusfincostproy.$error.required && formEnviado">{{campoObligatorio}}</span>
                             </div>
 
                             <!-- Posibles fuentes de financiación identificadas -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="checkboxes">Posibles fuentes de financiación identificadas</label>
+                            <div class="form-group" ng-class="{'has-error': formEnviado && valselectFuente}">
+                                <label class="col-md-4 control-label"><font style="color: #a94442">*</font> Posibles fuentes de financiación identificadas</label>
                                 <div class="col-md-4">
-                                    <div class="checkbox">
+                                    <div class="checkbox"  ng-repeat="fuente in listfuentesfinanc">
                                         <label for="checkboxes-0">
-                                            <input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">
-                                            Nacionales públicas
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label for="checkboxes-1">
-                                            <input name="checkboxes" id="checkboxes-1" value="2" type="checkbox">
-                                            Nacionales privadas
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label for="checkboxes-2">
-                                            <input name="checkboxes" id="checkboxes-2" value="3" type="checkbox">
-                                            Internacionales públicas
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label for="checkboxes-3">
-                                            <input name="checkboxes" id="checkboxes-3" value="4" type="checkbox">
-                                            Internacionales privadas
+                                            <input name="checkboxes" id="checkboxes-0" ng-model="fuente.a102valorcorto" ng-value="{{fuente.a102codigo}}" type="checkbox">{{fuente.a102valor}}
                                         </label>
                                     </div>
                                 </div>
+                                <span class="control-label"
+                                      ng-show="formEnviado && valselectFuente">{{campoObligatorio}}</span>
                             </div>
 
                             <!-- Guardar -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="button1id"></label>
                                 <div class="col-md-8">
-                                    <button id="button1id" name="button1id" class="btn btn-primary">Registrar Financiación</button>
+                                    <button id="button1id" name="button1id" class="btn btn-primary" ng-click="guardar(formregcostfuentproy)">Registrar Financiación</button>
                                     <button id="button2id" name="button2id" class="btn btn-primary">Cancelar</button>
                                 </div>
                             </div>
-                            
+
                         </fieldset>
                     </form>
                     <!-- ============================================================-->
                     <!-- Formulario -->
                     <!-- ============================================================-->
-                    
-                    
+
+
                     <!-- ============================================================-->
                     <!-- Si estamos en registro, debe mostrar el  -->
                     <!-- formulario de instrumentos de financiación -->
                     <!-- ============================================================-->
                     <div ng-show="false" ng-include src="'app/gpy/vistas/instrumentoFinanciacion.html'"></div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>

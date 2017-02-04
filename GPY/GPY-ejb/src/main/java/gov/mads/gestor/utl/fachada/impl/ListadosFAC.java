@@ -22,14 +22,14 @@ import gov.mads.gestor.utl.fachada.IListadosFAC;
 import gov.mads.gestor.utl.vista.ListarCategoriaIPCCOE;
 import gov.mads.gestor.utl.vista.ListarCodigoCIIUOE;
 import gov.mads.gestor.utl.vista.ListarDesagregacionIPCCOE;
-import gov.mads.gestor.utl.vista.ListarEstrategiasOE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv3OE;
 import gov.mads.gestor.utl.vista.ListarFtesFinancOE;
 import gov.mads.gestor.utl.vista.ListarMetdMDLOE;
 import gov.mads.gestor.utl.vista.ListarParametricoOE;
 import gov.mads.gestor.utl.vista.ListarParticipanteOE;
-import gov.mads.gestor.utl.vista.ListarPlanesOE;
-import gov.mads.gestor.utl.vista.ListarPoliticasOE;
-import gov.mads.gestor.utl.vista.ListarProgramasOE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv2OE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv4OE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv1OE;
 import gov.mads.gestor.utl.vista.ListarSectorIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubCategoriaIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubGrupoIPCCOE;
@@ -135,20 +135,20 @@ public class ListadosFAC implements IListadosFAC {
         return UtlListadosDAO.listarParticipante(OE);
     }
 
-    public ObjetoSalida listarPoliticas(ListarPoliticasOE OE) {
-        return UtlListadosDAO.listarPoliticas(OE);
+    public ObjetoSalida listarArbolPolNv4(ListarArbolPolNv4OE OE) {
+        return UtlListadosDAO.listarArbolPolNv4(OE);
     }
 
-    public ObjetoSalida listarPlanes(ListarPlanesOE OE) {
-        return UtlListadosDAO.listarPlanes(OE);
+    public ObjetoSalida listarArbolPolNv2(ListarArbolPolNv2OE OE) {
+        return UtlListadosDAO.listarArbolPolNv2(OE);
     }
 
-    public ObjetoSalida listarEstrategias(ListarEstrategiasOE OE) {
-        return UtlListadosDAO.listarEstrategias(OE);
+    public ObjetoSalida listarArbolPolNv3(ListarArbolPolNv3OE OE) {
+        return UtlListadosDAO.listarArbolPolNv3(OE);
     }
 
-    public ObjetoSalida listarProgramas(ListarProgramasOE OE) {
-        return UtlListadosDAO.listarProgramas(OE);
+    public ObjetoSalida listarArbolPolNv1(ListarArbolPolNv1OE OE) {
+        return UtlListadosDAO.listarArbolPolNv1(OE);
     }
 
     public ObjetoSalida listarFuentesFinanciacion(ListarFtesFinancOE OE) {

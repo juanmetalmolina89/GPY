@@ -7,14 +7,13 @@ angular.module('financiacion.controllers', ['ngSanitize'])
         .controller('financiacionCtrl', ['$scope', '$routeParams', '$location', '$rootScope', 'financiacionSrv', 'comunSrv', 'listadoSrv', 'avanceSrv', 'infoProyecto',
             function ($scope, $routeParams, $location, $rootScope, financiacionSrv, comunSrv, listadoSrv, avanceSrv, infoProyecto) {
 
-                alert("controller");
                 $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
                 $scope.idUsuario = $scope.sesion.sub;
 
                 $scope.tpid = $routeParams.tpid;
                 $scope.pid = $routeParams.pid;
-                
-                console.log("idproy "+$scope.pid);
+
+                //console.log("idproy " + $scope.pid);
                 $scope.campoObligatorio = 'Campo obligatorio';
 
 
@@ -32,7 +31,7 @@ angular.module('financiacion.controllers', ['ngSanitize'])
                 $scope.objparametrows = {};
                 $scope.financiacion = {};
                 $scope.financiacion.a002codigo = $scope.pid;
-
+                $scope.editar = false;
                 $scope.cargarInfoProyecto = function () {
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
@@ -40,13 +39,16 @@ angular.module('financiacion.controllers', ['ngSanitize'])
                     financiacionSrv.cargarCostos($scope.OE)
                             .then(function (response) {
                                 $scope.costos = response.data.respuesta[0];
+
+                                //console.log(JSON.stringify($scope.costos));
                                 if ($scope.costos.a002costsestmdformlcn && $scope.costos.a002busqudfinnccn && $scope.costos.a002costtonldrdcr && $scope.costos.a002costsestmdtotl && $scope.costos.a002trm) {
                                     $scope.financiacion.a002costsestmdformlcn = $scope.costos.a002costsestmdformlcn;
                                     $scope.financiacion.a002busqudfinnccn = $scope.costos.a002busqudfinnccn;
                                     $scope.financiacion.a002costtonldrdcr = $scope.costos.a002costtonldrdcr;
                                     $scope.financiacion.a002costsestmdtotl = $scope.costos.a002costsestmdtotl;
                                     $scope.financiacion.a002trm = $scope.costos.a002trm;
-                                    
+                                    $scope.financiacion.a002codigo = $scope.costos.a002codigo;
+                                    $scope.editar = true;
                                 } else {
                                     $scope.financiacion = {};
                                 }
@@ -63,10 +65,10 @@ angular.module('financiacion.controllers', ['ngSanitize'])
                     $scope.OE.a004idproyecto = $scope.pid;
                     financiacionSrv.cargarFuentes($scope.OE)
                             .then(function (response) {
-                                console.log(JSON.stringify(response));
+                                $scope.listafuentesConfig = [];
                                 $scope.listafuentesConfig = response.data.respuesta;
                                 $scope.listarFuentesFinanciacion();
-                                console.log(">>>>>" + JSON.stringify($scope.listafuentesConfig));
+                                //console.log(">>>>>" + JSON.stringify($scope.listafuentesConfig));
                             }, function (error) {
                                 comunSrv.mensajeSalida(error);
                             });
@@ -84,7 +86,7 @@ angular.module('financiacion.controllers', ['ngSanitize'])
                     listadoSrv.listarParametros($scope.OE)
                             .then(function (response) {
                                 $scope.listemp = response.data.respuesta;
-                                console.log("----------------- " + JSON.stringify($scope.listemp));
+                                //console.log("----------------- " + JSON.stringify($scope.listemp));
                                 if ($scope.listafuentesConfig && $scope.listafuentesConfig.length > 0) {
                                     for (var i = 0; i < $scope.listemp.length; i++) {
                                         $scope.objtemp = $scope.listemp[i];
@@ -109,10 +111,7 @@ angular.module('financiacion.controllers', ['ngSanitize'])
                                         $scope.listfuentesfinanc.push($scope.objtemp);
                                     }
                                 }
-
-
-                                console.log("************ " + JSON.stringify($scope.listfuentesfinanc));
-
+                                //console.log("************ " + JSON.stringify($scope.listfuentesfinanc));
                                 $scope.listemp = [];
                                 $scope.objtemp = {};
                             }, function (error) {
@@ -122,10 +121,10 @@ angular.module('financiacion.controllers', ['ngSanitize'])
 
                 $scope.a004idproyecto = {};
                 $scope.guardar = function (form) {
-                    console.log("guardardoi info...");
+                    //console.log("guardardoi info...");
                     if (form.$valid) {
                         for (var i = 0; i < $scope.listfuentesfinanc.length; i++) {
-                            if ($scope.listfuentesfinanc[i].a102valorcorto !== null) {
+                            if ($scope.listfuentesfinanc[i].a102valorcorto !== null && $scope.listfuentesfinanc[i].a102valorcorto === true) {
                                 $scope.object = {};
 
                                 $scope.a004idproyecto = {};
@@ -139,21 +138,39 @@ angular.module('financiacion.controllers', ['ngSanitize'])
                                 $scope.listfuentesfinancSelected.push($scope.object);
                             }
                         }
+                        $scope.financiacion.a002codigo = $scope.pid;
                         $scope.financiacion.proyFteFinancList = $scope.listfuentesfinancSelected;
                         $scope.objparametrows.idUsuario = $scope.idUsuario;
                         $scope.objparametrows.proyecto = $scope.financiacion;
 
-
-                        console.log(JSON.stringify($scope.objparametrows));
-
                         financiacionSrv.guardarInformacion($scope.objparametrows)
-                                .then(function (response) {
-                                    console.log(JSON.stringify(response));
-                                    comunSrv.mensajeOk("La información se guardo exitosamente!!!");
-                                    $scope.limpiar();
-                                }, function (error) {
-                                    comunSrv.mensajeError(error.data.msgError);
-                                });
+                                    .then(function (response) {
+                                        //console.log(JSON.stringify(response));
+                                        comunSrv.mensajeOk("La información se guardo exitosamente!!!");
+                                        //$scope.limpiar();
+                                    }, function (error) {
+                                        comunSrv.mensajeError(error.data.msgError);
+                                    });
+                                    
+                        if ($scope.editar) {
+                            if ($scope.listafuentesConfig && $scope.listafuentesConfig.length > 0) {
+                                for (var i = 0; i < $scope.listemp.length; i++) {
+                                    $scope.fuentedel = {};
+                                    $scope.fuentedel.idUsuario =$scope.idUsuario ;
+                                    $scope.fuentedel.a004idproyecto = $scope.pid;
+                                    $scope.fuentedel.a004idftefinanc =  $scope.listemp[i].a004codigo;
+                                    
+                                    financiacionSrv.eliminarFuenteFinanciacion($scope.fuentedel)
+                                    .then(function (response) {
+                                        //borrado
+                                    }, function (error) {
+                                        comunSrv.mensajeError(error.data.msgError);
+                                    });
+                                }
+                            }
+                        }
+                        
+
                     } else {
                         $scope.formEnviado = true;
                         comunSrv.mensajeInfo("Ingrese la información marcada como obligatoria *");

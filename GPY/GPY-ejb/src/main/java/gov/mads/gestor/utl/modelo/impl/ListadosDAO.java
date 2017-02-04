@@ -24,15 +24,15 @@ import gov.mads.gestor.utl.vista.ListarUbicacionProyectoOE;
 import gov.mads.gestor.utl.vista.ListarPaisesOE;
 import gov.mads.gestor.utl.vista.ListarDepartamentoOE;
 import gov.mads.gestor.utl.vista.ListarDesagregacionIPCCOE;
-import gov.mads.gestor.utl.vista.ListarEstrategiasOE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv3OE;
 import gov.mads.gestor.utl.vista.ListarFtesFinancOE;
 import gov.mads.gestor.utl.vista.ListarMetdMDLOE;
 import gov.mads.gestor.utl.vista.ListarMunicipioOE;
 import gov.mads.gestor.utl.vista.ListarParametricoOE;
 import gov.mads.gestor.utl.vista.ListarParticipanteOE;
-import gov.mads.gestor.utl.vista.ListarPlanesOE;
-import gov.mads.gestor.utl.vista.ListarPoliticasOE;
-import gov.mads.gestor.utl.vista.ListarProgramasOE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv2OE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv4OE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv1OE;
 import gov.mads.gestor.utl.vista.ListarSectorIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubCategoriaIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubGrupoIPCCOE;
@@ -502,7 +502,7 @@ public class ListadosDAO extends GenericoDAO {
         return objetoSalida;
     }
     
-    public ObjetoSalida listarProgramas(ListarProgramasOE objetoEntrada) {
+    public ObjetoSalida listarArbolPolNv1(ListarArbolPolNv1OE objetoEntrada) {
         
         ObjetoSalida objetoSalida = new ObjetoSalida();
 
@@ -523,7 +523,7 @@ public class ListadosDAO extends GenericoDAO {
         return objetoSalida;
     }
     
-    public ObjetoSalida listarPlanes(ListarPlanesOE objetoEntrada) {
+    public ObjetoSalida listarArbolPolNv2(ListarArbolPolNv2OE objetoEntrada) {
         
         ObjetoSalida objetoSalida = new ObjetoSalida();
 
@@ -545,13 +545,13 @@ public class ListadosDAO extends GenericoDAO {
         return objetoSalida;
     }
     
-    public ObjetoSalida listarEstrategias(ListarEstrategiasOE objetoEntrada) {
+    public ObjetoSalida listarArbolPolNv3(ListarArbolPolNv3OE objetoEntrada) {
         
         ObjetoSalida objetoSalida = new ObjetoSalida();
 
         try {
 
-            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_ListarEstrategias", objetoEntrada.getIdUsuario());
+            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_Listar_arbolPol_nvl_3", objetoEntrada.getIdUsuario());
             List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
             parametros.add(new SentenciaParametroDAO("p_A003NIVEL2", objetoEntrada.getA003nivel2(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             sentencia.setParametros(parametros);
@@ -567,13 +567,13 @@ public class ListadosDAO extends GenericoDAO {
         return objetoSalida;
     }
     
-    public ObjetoSalida listarPoliticas(ListarPoliticasOE objetoEntrada) {
+    public ObjetoSalida listarArbolPolNv4(ListarArbolPolNv4OE objetoEntrada) {
         
         ObjetoSalida objetoSalida = new ObjetoSalida();
 
         try {
 
-            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_Listar_arbolPol_nvl_3", objetoEntrada.getIdUsuario());
+            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_Listar_arbolPol_nvl_4", objetoEntrada.getIdUsuario());
             List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
             parametros.add(new SentenciaParametroDAO("p_A003NIVEL3", objetoEntrada.getA003nivel3(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             sentencia.setParametros(parametros);

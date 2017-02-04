@@ -17,8 +17,12 @@ angular.module('financiacion.services')
 	        return $http.post(urlBase + '/listarCostosProyecto', OE);
 	    };
             
-             datos.cargarFuentes = function (OE) {
+            datos.cargarFuentes = function (OE) {
 	        return $http.post(urlBase + '/listarFtesFinanc', OE);
+	    };
+            
+            datos.eliminarFuenteFinanciacion = function (OE) {
+	        return $http.post(urlBase + '/eliminarFtesFinanc', OE);
 	    };
             
             

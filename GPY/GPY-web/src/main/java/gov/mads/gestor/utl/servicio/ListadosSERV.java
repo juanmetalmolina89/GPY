@@ -27,13 +27,13 @@ import gov.mads.gestor.utl.vista.ListarCategoriaIPCCOE;
 import gov.mads.gestor.utl.vista.ListarCodigoCIIUOE;
 import gov.mads.gestor.utl.vista.ListarDepartamentoOE;
 import gov.mads.gestor.utl.vista.ListarDesagregacionIPCCOE;
-import gov.mads.gestor.utl.vista.ListarEstrategiasOE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv3OE;
 import gov.mads.gestor.utl.vista.ListarFtesFinancOE;
 import gov.mads.gestor.utl.vista.ListarMetdMDLOE;
 import gov.mads.gestor.utl.vista.ListarMunicipioOE;
-import gov.mads.gestor.utl.vista.ListarPlanesOE;
-import gov.mads.gestor.utl.vista.ListarPoliticasOE;
-import gov.mads.gestor.utl.vista.ListarProgramasOE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv2OE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv4OE;
+import gov.mads.gestor.utl.vista.ListarArbolPolNv1OE;
 import gov.mads.gestor.utl.vista.ListarSectorIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubCategoriaIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubGrupoIPCCOE;
@@ -284,46 +284,46 @@ public class ListadosSERV {
     }
     
     @POST
-    @Path("/listarProgramas")
+    @Path("/listarArbolPolNv1")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
     @JWT
-    public Response listarProgramas(ListarProgramasOE OE) {
+    public Response listarArbolPolNv1(ListarArbolPolNv1OE OE) {
         ListadosFAC fac = new ListadosFAC();
-        ObjetoSalida objetoSalida = fac.listarProgramas(OE);
+        ObjetoSalida objetoSalida = fac.listarArbolPolNv1(OE);
         return API.retornarRespuesta(objetoSalida);
     }
     
     @POST
-    @Path("/listarPlanes")
+    @Path("/listarArbolPolNv2")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
     @JWT
-    public Response listarPlanes(ListarPlanesOE OE) {
+    public Response listarArbolPolNv2(ListarArbolPolNv2OE OE) {
         ListadosFAC fac = new ListadosFAC();
-        ObjetoSalida objetoSalida = fac.listarPlanes(OE);
+        ObjetoSalida objetoSalida = fac.listarArbolPolNv2(OE);
         return API.retornarRespuesta(objetoSalida);
     }
     
     @POST
-    @Path("/listarEstrategias")
+    @Path("/listarArbolPolNv3")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
     @JWT
-    public Response listarEstrategias(ListarEstrategiasOE OE) {
+    public Response listarArbolPolNv3(ListarArbolPolNv3OE OE) {
         ListadosFAC fac = new ListadosFAC();
-        ObjetoSalida objetoSalida = fac.listarEstrategias(OE);
+        ObjetoSalida objetoSalida = fac.listarArbolPolNv3(OE);
         return API.retornarRespuesta(objetoSalida);
     }
     
     @POST
-    @Path("/listarPoliticas")
+    @Path("/listarArbolPolNv4")
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
     @JWT
-    public Response listarPoliticas(ListarPoliticasOE OE) {
+    public Response listarArbolPolNv4(ListarArbolPolNv4OE OE) {
         ListadosFAC fac = new ListadosFAC();
-        ObjetoSalida objetoSalida = fac.listarPoliticas(OE);
+        ObjetoSalida objetoSalida = fac.listarArbolPolNv4(OE);
         return API.retornarRespuesta(objetoSalida);
     }
         

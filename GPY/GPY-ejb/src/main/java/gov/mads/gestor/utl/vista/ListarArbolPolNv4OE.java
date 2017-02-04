@@ -14,15 +14,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author juanmetalmolina
  */
 @XmlRootElement
-public class ListarPlanesOE extends ObjetoEntrada{
+public class ListarArbolPolNv4OE extends ObjetoEntrada{
     @XmlElement
-    private Integer a003nivel1;
+    private Integer a003nivel3;
 
-    public Integer getA003nivel1() {
-        return a003nivel1;
+    public Integer getA003nivel3() {
+        return a003nivel3;
     }
 
-    public void setA003nivel1(Integer a003nivel1) {
-        this.a003nivel1 = a003nivel1;
+    public void setA003nivel3(Integer a003nivel3) {
+        this.a003nivel3 = a003nivel3;
     }
 }

@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author juanmetalmolina
  */
 @XmlRootElement
-public class ListarEstrategiasOE extends ObjetoEntrada{
+public class ListarArbolPolNv3OE extends ObjetoEntrada{
     @XmlElement
     private Integer a003nivel2;
 

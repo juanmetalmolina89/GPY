@@ -62,7 +62,7 @@ public class DatosBasicosDAO extends GenericoDAO{
             parametros.add(new SentenciaParametroDAO("p_A002BUSQUDFINNCCN", objetoEntrada.getProyecto().getA002busqudfinnccn(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A002PLANPRGRMNACNL", objetoEntrada.getProyecto().getA002planprgrmnacnl(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A002OBJTVGENRL", objetoEntrada.getProyecto().getA002objtvgenrl(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-            parametros.add(new SentenciaParametroDAO("p_A002POTNCLESTMDREDCCN", objetoEntrada.getProyecto().getA002potnclestmdredccn(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+            parametros.add(new SentenciaParametroDAO("p_A002POTNCLESTMDREDCCN", objetoEntrada.getProyecto().getA002potnclestmdredccn().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             parametros.add(new SentenciaParametroDAO("p_A002NOMBRPROYCTINGLS", objetoEntrada.getProyecto().getA002nombrproyctingls(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A002TECNLGCONTMPLD", objetoEntrada.getProyecto().getA002tecnlgcontmpld(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             Integer a002idescala = (objetoEntrada.getProyecto().getA002idescala() == null) ? null: objetoEntrada.getProyecto().getA002idescala().getA102codigo();
@@ -192,7 +192,7 @@ public class DatosBasicosDAO extends GenericoDAO{
             parametros.add(new SentenciaParametroDAO("p_A002BUSQUDFINNCCN", objetoEntrada.getProyecto().getA002busqudfinnccn(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A002PLANPRGRMNACNL", objetoEntrada.getProyecto().getA002planprgrmnacnl(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A002OBJTVGENRL", objetoEntrada.getProyecto().getA002objtvgenrl(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-            parametros.add(new SentenciaParametroDAO("p_A002POTNCLESTMDREDCCN", objetoEntrada.getProyecto().getA002potnclestmdredccn(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+            parametros.add(new SentenciaParametroDAO("p_A002POTNCLESTMDREDCCN", objetoEntrada.getProyecto().getA002potnclestmdredccn().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             parametros.add(new SentenciaParametroDAO("p_A002NOMBRPROYCTINGLS", objetoEntrada.getProyecto().getA002nombrproyctingls(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A002TECNLGCONTMPLD", objetoEntrada.getProyecto().getA002tecnlgcontmpld(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             Integer a002idescala = (objetoEntrada.getProyecto().getA002idescala() == null) ? null: objetoEntrada.getProyecto().getA002idescala().getA102codigo();

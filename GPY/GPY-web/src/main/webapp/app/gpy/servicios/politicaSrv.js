@@ -6,11 +6,11 @@
 angular.module('politica.services')
 	    .factory('politicaSrv', ['$http', function($http) {
 
-	    var urlBase = urlBackEnd+'politica';
+	    var urlBase = urlBackEnd + 'politica';
 	    var datos = {};
 
-	    datos.listar = function () {
-	        return $http.get(urlBase);
+	    datos.listar = function (OE) {
+	        return $http.post(urlBase+'/listarPoliticaProyecto', OE);
 	    };
 
 	    datos.consultarPorId = function (id) {

@@ -63,7 +63,7 @@ public class ReporteAnioFuente implements Serializable {
     private Integer a010usuariomodificacion;
     @JoinColumn(name = "A010IDFUENTE", referencedColumnName = "A039CODIGO")
     @ManyToOne(optional = false)
-    private ObjetivoEspecifico a010idfuente;
+    private Fuente a010idfuente;
     @JoinColumn(name = "A010IDESCALA", referencedColumnName = "A102CODIGO")
     @ManyToOne(optional = false)
     private Lista a010idescala;
@@ -146,11 +146,11 @@ public class ReporteAnioFuente implements Serializable {
         this.a010usuariomodificacion = a010usuariomodificacion;
     }
 
-    public ObjetivoEspecifico getA010idfuente() {
+    public Fuente getA010idfuente() {
         return a010idfuente;
     }
 
-    public void setA010idfuente(ObjetivoEspecifico a010idfuente) {
+    public void setA010idfuente(Fuente a010idfuente) {
         this.a010idfuente = a010idfuente;
     }
 

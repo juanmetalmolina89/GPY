@@ -34,7 +34,8 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.proyecto = $scope.proyecto;
-
+                    $scope.OE.proyecto.a002codigo = $scope.pid;
+                    delete $scope.OE.proyecto.coddivipola; // para no tener que alterar todos los SP
                     infoMDLSrv.registrarConsiderac($scope.OE)
                             .then(function (response) {
                                 comunSrv.mensajeSalida(response);

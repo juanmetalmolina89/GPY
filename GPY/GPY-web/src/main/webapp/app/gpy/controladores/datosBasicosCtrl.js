@@ -12,6 +12,15 @@ angular.module('datosBasicos.controllers', ['ngSanitize'])
                 $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
                 $scope.idUsuario = $scope.sesion.sub;
 
+                /*ficasa 20170211: verificsr esto. al parecer va en contravíacon el caso001 que permite a un invitado entrar en modo consulta */
+                /*                  se ha puesto inactivo a nivel de formulario*/
+                /*
+                if ($scope.sesion.perfil == INVITADO) {
+                    comunSrv.mensaje("Está intentando ingresar a una opción no permitida", "info");
+                    $location.path('/gpy');
+                }
+                */
+
                 /**************************************************************/
                 /* Variables */
                 $scope.tpid = $routeParams.tpid;//@todo preguntar por el funcionamiento de estos dos
@@ -23,7 +32,7 @@ angular.module('datosBasicos.controllers', ['ngSanitize'])
                 $scope.ubicaciones = [];
                 $scope.sectores = [];
                 $scope.proyectosAsoc = [];
-                $scope.multipleList = {'proySectrImplmntdrList': {}};
+                $scope.multipleList = {'proySectrImplmntdrList': ''};
 
 
                 /**************************************************************/
@@ -33,6 +42,7 @@ angular.module('datosBasicos.controllers', ['ngSanitize'])
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.proyecto = $scope.proyecto;
+                    delete $scope.OE.proyecto.coddivipola; // para no tener que alterar todos los SP
                     $scope.OE.proyecto.a002idusr = {"a041codigo": $scope.idUsuario};
 
                     $scope.proyecto.proySectrImplmntdrList = [];
@@ -162,7 +172,7 @@ angular.module('datosBasicos.controllers', ['ngSanitize'])
                 /* DIVIPOLA */
                 $scope.departamentos = [];
                 $scope.municipios = [];
-                $scope.departamentoProySel = new Object();
+                $scope.departamentoProySel = "";
 
                 $scope.cargaDepartamentos = function (pais) {
                     if (pais !== undefined) {

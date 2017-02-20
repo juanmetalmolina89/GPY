@@ -19,6 +19,7 @@ import gov.mads.gestor.comun.modelo.SentenciaTipoParametroDAO;
 import gov.mads.gestor.comun.vista.CodError;
 import gov.mads.gestor.comun.vista.ErrorClass;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
+import gov.mads.gestor.comun.vista.UsuarioVitalOE;
 import oracle.jdbc.OracleTypes;
 
 import java.util.ArrayList;
@@ -203,5 +204,29 @@ public class UsuarioDAO extends GenericoDAO {
 
         return objetoSalida;
     }
+    
+    public ObjetoSalida validarUsuarioVital(UsuarioVitalOE objetoEntrada) {
+
+        ObjetoSalida objetoSalida = new ObjetoSalida();
+
+        try {
+
+            SentenciaDAO sentencia = new SentenciaDAO("PK_ADM_USUARIO.Pr_ValidarUsuario", 1);
+            List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+            parametros.add(new SentenciaParametroDAO("p_A041USERNAME", objetoEntrada.datosConexion.aliasUsuarioDestino, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+            parametros.add(new SentenciaParametroDAO("p_A041CLAVE", objetoEntrada.datosConexion.aliasUsuarioOrigen, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+            sentencia.setParametros(parametros);
+            objetoSalida = this.ejecutar(sentencia, objetoSalida);
+            ErrorClass.getMessage(objetoSalida,UsuarioDAO.class);
+        } catch (Exception e) {
+
+            objetoSalida.setCodError(CodError.ERROR_INTERNO);
+            objetoSalida.setMsgError(e.getMessage());
+            ErrorClass.getMessage(objetoSalida,UsuarioDAO.class);
+        }
+
+        return objetoSalida;
+    }
+    
 } 
 

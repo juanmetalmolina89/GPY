@@ -24,8 +24,8 @@
                                 <select class="form-control campotextable control-label"
                                         id="seltipoproy" name="seltipoproy" style="width: 240px"
                                         ng-model="filtroproyecto.autoridad"
-                                        ng-options="item as item.a001nombre for item in listaAutoridadAmb track by item.a001nombre">
-                                    <option value="" selected>Seleccione</option>
+                                        ng-options="item as item.a001sigla for item in listaAutoridadAmb track by item.a001sigla">
+                                    <option value="" selected>Todas</option>
                                 </select>
                             </div>
                             <div class="col-xs-3 col-sm-3">
@@ -34,7 +34,7 @@
                                         id="seltipoproy" name="seltipoproy" style="width: 240px"
                                         ng-model="filtroproyecto.tipoproy"
                                         ng-options="item as item.a102valorcorto for item in tiposProyecto track by item.a102valorcorto">
-                                    <option value="" selected>Seleccione</option>
+                                    <option value="" selected>Todos</option>
                                 </select>
                             </div>
                             <div class="col-xs-3 col-sm-3">
@@ -43,7 +43,7 @@
                                         id="seltipoproy" name="seltipoproy" style="width: 240px"
                                         ng-model="filtroproyecto.estadoproy"
                                         ng-options="item as item.a102valor for item in listEstadosProyecto track by item.a102valor">
-                                    <option value="" selected>Seleccione</option>
+                                    <option value="" selected>Todos</option>
                                 </select>
                             </div>
                         </div>
@@ -74,9 +74,9 @@
                                     </tr> 
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="proyecto in listaproyectos| filter:search"> 
+                                    <tr ng-repeat="proyecto in listaproyectos.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))"> 
                                         <th scope="row">{{$index + 1}}</th>
-                                        <td>???</td>
+                                        <td>{{proyecto.a001sigla}}</td>
                                         <td>{{proyecto.tipoproyecto}}</td>
                                         <td>{{proyecto.a002descrpcinproyct}}</td>
                                         <td>{{proyecto.estadoproyecto}}</td>
@@ -92,7 +92,12 @@
                                     </tr> 
                                 </tbody>
                             </table>
+                            <div class="panel-footer text-center">
+                                <ul uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    first-text="&laquo;" last-text="&raquo;"></ul>
+                            </div>
                         </div>
+                        
                         <div class="row derecha">
                             <a class="btn btn-primary btn-lg "  ng-click="eligeTipoProyModal()" >Adicionar Nuevo Proyecto</a>
                         </div>

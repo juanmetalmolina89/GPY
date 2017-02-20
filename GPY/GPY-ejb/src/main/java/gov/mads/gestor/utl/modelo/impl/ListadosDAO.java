@@ -33,6 +33,7 @@ import gov.mads.gestor.utl.vista.ListarParticipanteOE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv2OE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv4OE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv1OE;
+import gov.mads.gestor.utl.vista.ListarPoliticaOE;
 import gov.mads.gestor.utl.vista.ListarSectorIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubCategoriaIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubGrupoIPCCOE;
@@ -642,6 +643,27 @@ public class ListadosDAO extends GenericoDAO {
             SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_ListarSubgrupoIPCC", objetoEntrada.getIdUsuario());
             List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
             parametros.add(new SentenciaParametroDAO("p_A043IDSECTORIPCC", objetoEntrada.getA043idsectoripcc(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+            sentencia.setParametros(parametros);
+            objetoSalida = this.ejecutar(sentencia, objetoSalida);
+            ErrorClass.getMessage(objetoSalida,ListadosDAO.class);
+        } catch (Exception e) {
+
+            objetoSalida.setCodError(CodError.ERROR_INTERNO);
+            objetoSalida.setMsgError(e.getMessage());
+            ErrorClass.getMessage(objetoSalida,ListadosDAO.class);
+        }
+
+        return objetoSalida;
+    }
+    
+    public ObjetoSalida listarPoliticas(ListarPoliticaOE objetoEntrada) {
+
+        ObjetoSalida objetoSalida = new ObjetoSalida();
+
+        try {
+
+            SentenciaDAO sentencia = new SentenciaDAO("PK_UTL_LISTADOS.Pr_ListarPoliticas", objetoEntrada.getIdUsuario());
+            List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
             sentencia.setParametros(parametros);
             objetoSalida = this.ejecutar(sentencia, objetoSalida);
             ErrorClass.getMessage(objetoSalida,ListadosDAO.class);

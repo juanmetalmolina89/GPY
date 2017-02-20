@@ -4,21 +4,37 @@
 'use strict';
 
 angular.module('politica.controllers', ['ngSanitize'])
-        .controller('politicaCtrl', ['$scope', 'politicaSrv', function ($scope, politicaSrv) {
+        .controller('politicaCtrl', ['$scope', '$routeParams', 'comunSrv', 'listadoSrv','politicaSrv', function ($scope, $routeParams, comunSrv, listadoSrv, politicaSrv) {
 
+                console.log("Controller de politicas!!");
+        
+                $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
+                $scope.idUsuario = $scope.sesion.sub;
+
+                $scope.tpid = $routeParams.tpid;
+                $scope.pid = $routeParams.pid;
+                $scope.campoObligatorio = 'Campo obligatorio';
+                
                 $scope.mensaje;
-                $scope.politicas = [];
+                $scope.listaPoliticas = [];
                 $scope.politica = [];
 
-                $scope.listar = function () {
-                    politicaSrv.listar()
+                $scope.cargarConfiguracion = function () {
+
+                    $scope.objeto = {};
+                    $scope.objeto.idUsuario = $scope.idUsuario;
+                    $scope.objeto.idpoliticaproyecto = $scope.pid;
+                    
+                    politicaSrv.listar($scope.objeto)
                             .then(function (response) {
-                                $scope.politica = response.data.respuesta;
+                                console.log(">>>>>>>>>>>"+JSON.stringify(response));
+                                $scope.listaPoliticas = response.data.respuesta;
                             }, function (error) {
                                 $scope.mensaje = error.data.respuesta;
                                 console.log($scope.mensaje);
                             });
                 };
+                $scope.cargarConfiguracion();
 
                 $scope.actualizar = function () {
 

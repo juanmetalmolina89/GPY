@@ -5,8 +5,11 @@ import gov.mads.gestor.gpy.modelo.impl.FuentesDAO;
 import gov.mads.gestor.gpy.vista.RegistrarFuenteOE;
 import gov.mads.gestor.gpy.vista.ActualizarFuenteOE;
 import gov.mads.gestor.gpy.vista.ConsultarFuentePorIdOE;
+import gov.mads.gestor.gpy.vista.EliminarEscenarioBaseOE;
 import gov.mads.gestor.gpy.vista.EliminarFuenteOE;
+import gov.mads.gestor.gpy.vista.ListarEscenarioBaseOE;
 import gov.mads.gestor.gpy.vista.ListarFuentesProyectoOE;
+import gov.mads.gestor.gpy.vista.RegistrarEscenarioBaseOE;
 
 /**
  *
@@ -35,5 +38,17 @@ public class FuentesFAC implements IFuentesFAC {
         
         public ObjetoSalida listarFuentesPorProyecto(ListarFuentesProyectoOE OE) {
                 return fuentesDAO.listarFuentesPorProyecto(OE);
+        }
+
+        public ObjetoSalida registrarEscenarioBase(RegistrarEscenarioBaseOE OE) {
+                return fuentesDAO.registrarEscenarioBase(OE);
+        }
+
+        public ObjetoSalida eliminarEscenarioBase(EliminarEscenarioBaseOE OE) {
+                return fuentesDAO.eliminarEscenarioBase(OE);
+        }
+
+        public ObjetoSalida listarEscenarioBase(ListarEscenarioBaseOE OE) {
+                return fuentesDAO.listarEscenarioBase(OE);
         }
 }

@@ -6,6 +6,7 @@ import gov.mads.gestor.adm.vista.RegistrarUsuarioOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioOE;
 import gov.mads.gestor.adm.vista.CambiarContrasenaOE;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
+import gov.mads.gestor.comun.vista.UsuarioVitalOE;
 /**
  *
  * @author juanmetalmolina
@@ -18,4 +19,5 @@ public interface IUsuarioDAO {
     ObjetoSalida listarUsuario(EliminarUsuarioOE OE);
     ObjetoSalida validarUsuario(ValidarUsuarioOE OE);
     ObjetoSalida cambiarContrasena(CambiarContrasenaOE OE);
+    ObjetoSalida validarUsuarioVital(UsuarioVitalOE OE);
 } 

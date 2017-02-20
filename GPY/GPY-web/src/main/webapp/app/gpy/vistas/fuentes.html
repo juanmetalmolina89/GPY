@@ -1,6 +1,7 @@
 <!-- ===================================================================================== -->
 <!-- 3 - Fuentes -->
 <!-- ===================================================================================== -->
+
 ﻿<div class="container gest_proy">
     <div class="row">
         <div class="col-sm-3 col-md-3">
@@ -20,11 +21,11 @@
                     <!-- ============================================================-->
 
                     <form class="form-horizontal" ng-show="muestraForm" name="frmFuentes">
-                        <fieldset>
+                        <fieldset ng-disabled="sesion.perfil == INVITADO">
                             <!-- Fuentes de Emisión -->
                             <legend>Fuentes de Emisión</legend>
                             
-                            <table class="table table-bordered">
+                            <table class="table table-striped table-bordered">
                                 <tr>
                                     <th>Fuente de Emisión</th>
                                     <th>Sub Categoria IPCC</th>

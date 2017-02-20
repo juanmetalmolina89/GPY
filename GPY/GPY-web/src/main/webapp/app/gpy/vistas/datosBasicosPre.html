@@ -20,7 +20,7 @@
                     <!-- ============================================================-->
 
                     <form class="form-horizontal" name="form">
-                        <fieldset>
+                        <fieldset ng-disabled="sesion.perfil == INVITADO">
 
                             <!-- Datos Básicos  -->
                             <legend>Datos Básicos</legend>
@@ -42,6 +42,7 @@
                                 <div class="col-md-4">
                                     <input id="nombrproyct" name="nombrproyct" type="text" placeholder="" class="form-control input-md" ng-model="proyecto.a002nombrproyct" required>
                                 </div>
+                                <span class="control-label" ng-show="form.nombrproyct.$error.required"><strong>Requerido</strong></span>
                             </div>
 
                             <!-- Ubicación del proyecto -->
@@ -53,6 +54,7 @@
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>
+                                <span class="control-label" ng-show="form.ubccn.$error.required"><strong>Requerido</strong></span>
                             </div> 
 
                             <!-- Departamento -->
@@ -64,6 +66,7 @@
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>
+                                <span class="control-label" ng-show="form.departamento.$error.required"><strong>Requerido</strong></span>
                             </div>
 
                             <!-- Municipio -->
@@ -75,6 +78,7 @@
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>
+                                <span class="control-label" ng-show="form.municipio.$error.required"><strong>Requerido</strong></span>
                             </div>
 
                             <!-- Admite socios extrangeros -->
@@ -98,40 +102,47 @@
                                 <div class="col-md-4">
                                     <textarea class="form-control" id="descrpcinproyct" name="descrpcinproyct" ng-model="proyecto.a002descrpcinproyct" required></textarea>
                                 </div>
+                                <span class="control-label" ng-show="form.descrpcinproyct.$error.required"><strong>Requerido</strong></span>
                             </div>
 
                             <!-- Duración prevista total (años)-->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="durcnprevst">Duración prevista total (años)</label>  
                                 <div class="col-md-2">
-                                    <input id="durcnprevst" name="durcnprevst" type="text" placeholder="" class="form-control input-md"  ng-model="proyecto.a002durcnprevst" required>
+                                    <input id="durcnprevst" name="durcnprevst" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002durcnprevst" required>
                                 </div>
+                                <span class="control-label" ng-show="form.durcnprevst.$error.required"><strong>Requerido</strong></span>
+                                <span class="control-label" ng-show="form.durcnprevst.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
                             </div>
 
                             <!-- Vida útil del proyecto (años)-->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="vidautl">Vida útil del proyecto (años)</label>  
                                 <div class="col-md-2">
-                                    <input id="vidautl" name="vidautl" type="text" placeholder="" class="form-control input-md"  ng-model="proyecto.a002vidautl" required>
-
+                                    <input id="vidautl" name="vidautl" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002vidautl" required>
                                 </div>
+                                <span class="control-label" ng-show="form.vidautl.$error.required"><strong>Requerido</strong></span>
+                                <span class="control-label" ng-show="form.vidautl.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
                             </div>
 
                             <!-- numero de CPAs que se proyecta involucra-->
                             <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA">
                                 <label class="col-md-4 control-label" for="nrocpas">numero de CPAs que se proyecta involucra</label>  
                                 <div class="col-md-2">
-                                    <input id="nrocpas" name="nrocpas" type="text" placeholder="" class="form-control input-md"  ng-model="proyecto.a002nrocpas" >
+                                    <input id="nrocpas" name="nrocpas" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002nrocpas" >
                                 </div>
+                                <span class="control-label" ng-show="form.nrocpas.$error.required"><strong>Requerido</strong></span>
+                                <span class="control-label" ng-show="form.nrocpas.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
                             </div>
 
                             <!-- Potencial estimado de reducción de emisores GEI total (ton CO2 eq/año)-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="a002potnclestmdredccn">Potencial estimado de reducción de emisores GEI total (ton CO2 eq/año)</label>  
+                                <label class="col-md-4 control-label" for="potnclestmdredccn">Potencial estimado de reducción de emisores GEI total (ton CO2 eq/año)</label>  
                                 <div class="col-md-4">
-                                    <input id="a002potnclestmdredccn" name="a002potnclestmdredccn" type="text" placeholder="" class="form-control input-md" type="text" ng-model="proyecto.a002potnclestmdredccn" required>
-
+                                    <input id="potnclestmdredccn" name="potnclestmdredccn" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" type="text" ng-model="proyecto.a002potnclestmdredccn" required>
                                 </div>
+                                <span class="control-label" ng-show="form.potnclestmdredccn.$error.required"><strong>Requerido</strong></span>
+                                <span class="control-label" ng-show="form.potnclestmdredccn.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
                             </div>
 
                             <!-- Objetivo general de la iniciativa/Proyecto -->
@@ -140,6 +151,7 @@
                                 <div class="col-md-4">
                                     <textarea class="form-control" id="objtvgenrl" name="objtvgenrl" ng-model="proyecto.a002objtvgenrl" required></textarea>
                                 </div>
+                                <span class="control-label" ng-show="form.objtvgenrl.$error.required"><strong>Requerido</strong></span>
                             </div>
 
                             <!-- Alcance de la iniciativa / Proyecto -->
@@ -151,6 +163,7 @@
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>
+                                <span class="control-label" ng-show="form.idalcance.$error.required"><strong>Requerido</strong></span>
                             </div>
 
                             <!-- Sector Implementador -->
@@ -163,6 +176,7 @@
                                         </option>
                                     </select>
                                 </div>
+                                <span class="control-label" ng-show="form.proySectrImplmntdrList.$error.required"><strong>Requerido</strong></span>
                             </div>
 
                             <!-- Guardar -->

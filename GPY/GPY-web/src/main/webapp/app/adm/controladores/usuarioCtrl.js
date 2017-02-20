@@ -4,12 +4,17 @@
 'use strict';
 
 angular.module('usuario.controllers', ['ngSanitize'])
-        .controller('crearUsuarioCtrl', ['$scope', '$location', 'usuarioSrv', 'listadoSrv', 'comunSrv', function ($scope, $location, usuarioSrv, listadoSrv, comunSrv) {
+        .controller('crearUsuarioCtrl', ['$scope', '$location', 'usuarioSrv', 'listadoSrv', 'comunSrv', '$filter', function ($scope, $location, usuarioSrv, listadoSrv, comunSrv, $filter) {
 
                 /**************************************************************/
                 /* Manejo sesión */
                 $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
                 $scope.idUsuario = $scope.sesion.sub;
+
+                if ($scope.sesion.perfil == INVITADO || $scope.sesion.perfil == PUBLICADOR || $scope.sesion.perfil == GESTPROY ) {
+                    comunSrv.mensaje("Está intentando ingresar a una opción no permitida", "info");
+                    $location.path('/gpy');
+                }
 
                 /**************************************************************/
                 /* Variables */
@@ -19,10 +24,23 @@ angular.module('usuario.controllers', ['ngSanitize'])
                 $scope.tiposDoc = [];
                 $scope.tiposPersona = [];
                 $scope.autoridades = [];
-                $scope.perteneceAA = false;
                 $scope.NATURAL = NATURAL;
                 $scope.JURIDICA = JURIDICA;
-
+                               
+                if($scope.sesion.perfil == ADMINAA)
+                {
+                    $scope.perteneceAA = true;
+                    $scope.terminos = true;                    
+                    $scope.bloqueado = true;
+                }
+                else
+                {
+                    $scope.perteneceAA = false;
+                    $scope.terminos = false;  
+                    $scope.bloqueado = false;
+                }
+                
+               
                 /**************************************************************/
                 /* Métodos */
                 $scope.registrarUsuario = function () {
@@ -42,10 +60,12 @@ angular.module('usuario.controllers', ['ngSanitize'])
 
                     usuarioSrv.registrarUsuario($scope.OE)
                             .then(function (response) {
-                                comunSrv.mensajeSalida(response);
+                                response.data.msgError += ". Puede ingresar con el usuario " + $scope.usuario.a041username +" y la clave " + $scope.usuario.a041clave 
+                                comunSrv.mensajeSalida(response );
                                 $scope.usuario = new Object();
                                 $scope.persona = new Object();
                             }, function (error) {
+                                error.data += ". Este usuario ya se encuentra registrado en la base de datos"
                                 comunSrv.mensajeSalida(error);
                             });
                 };
@@ -88,6 +108,12 @@ angular.module('usuario.controllers', ['ngSanitize'])
                     listadoSrv.listarAutoridades($scope.OE)
                             .then(function (response) {
                                 $scope.autoridades = response.data.respuesta;
+                                if($scope.sesion.perfil == ADMINAA)
+                                {    
+                                    $scope.filtro = $filter("filter")( $scope.autoridades, {'a001codigo':parseInt($scope.sesion.autoridadambiental)},true);
+                                    $scope.persona.a052identidad = $scope.filtro[0];
+                                }
+                                    
                             }, function (error) {
                                 comunSrv.mensajeSalida(error);
                             });
@@ -160,12 +186,17 @@ angular.module('usuario.controllers', ['ngSanitize'])
 
             }])
 
-        .controller('cambiarContrasenaCtrl', ['$scope', 'usuarioSrv', 'comunSrv', function ($scope, usuarioSrv, comunSrv) {
+        .controller('cambiarContrasenaCtrl', ['$scope', '$location', 'usuarioSrv', 'comunSrv', function ($scope, $location, usuarioSrv, comunSrv) {
 
                 /**************************************************************/
                 /* Manejo sesión */
                 $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
                 $scope.idUsuario = $scope.sesion.sub;
+
+                if ($scope.sesion.perfil == INVITADO) {
+                    comunSrv.mensaje("Está intentando ingresar a una opción no permitida", "info");
+                    $location.path('/gpy');
+                }
 
                 /**************************************************************/
                 /* Variables */

@@ -25,6 +25,7 @@ import gov.mads.gestor.utl.vista.ListarParticipanteOE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv2OE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv4OE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv1OE;
+import gov.mads.gestor.utl.vista.ListarPoliticaOE;
 import gov.mads.gestor.utl.vista.ListarSectorIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubGrupoIPCCOE;
 import gov.mads.gestor.utl.vista.ListarTipoActividadOE;
@@ -62,4 +63,5 @@ public interface IListadosDAO {
     ObjetoSalida listarFuentesFinanciacion(ListarFtesFinancOE OE);
     ObjetoSalida listarTipoActividadReduccion(ListarTipoActividadReducOE OE);
     ObjetoSalida listarSubgrupoIPCC(ListarSubGrupoIPCCOE OE);
+    ObjetoSalida listarPoliticas(ListarPoliticaOE OE);
 }

@@ -23,7 +23,7 @@
                                                                    , 'has-success' : form.nombre.$valid}">
                                         <label class="col-md-5 control-label" for="nombre">Nombres</label>  
                                         <div class="col-md-6">
-                                            <input id="nombre" name="nombre" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052nombre" required>
+                                            <input id="nombre" name="nombre" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052nombre" required tabindex=1 >
                                         </div>
                                     </div>
                                     <!-- Tipo de Documento -->
@@ -32,7 +32,7 @@
                                         <label class="col-md-5 control-label" for="tipdocmnt">Tipo de Documento</label>
                                         <div class="col-md-6">
                                             <select id="tipdocmnt" name="tipdocmnt" class="form-control" ng-model="persona.a052tipdocmnt" 
-                                                    ng-options="tipoDoc as tipoDoc.a015descrpcntipdocmnt for tipoDoc in tiposDoc track by tipoDoc.a015codigo" required>
+                                                    ng-options="tipoDoc as tipoDoc.a015descrpcntipdocmnt for tipoDoc in tiposDoc track by tipoDoc.a015codigo" required tabindex=3 >
                                                 <option value="">Seleccione</option>
                                             </select>
                                         </div>
@@ -42,7 +42,7 @@
                                                                   , 'has-success' : form.lgrexpcndocmnt.$valid}">
                                         <label class="col-md-5 control-label" for="lgrexpcndocmnt">Lugar de expedición del documento</label>  
                                         <div class="col-md-6">
-                                            <input id="lgrexpcndocmnt" name="lgrexpcndocmnt" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052lgrexpcndocmnt" required>
+                                            <input id="lgrexpcndocmnt" name="lgrexpcndocmnt" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052lgrexpcndocmnt" required tabindex=5 >
                                         </div>
                                     </div>
                                     <!-- Pais -->
@@ -50,7 +50,7 @@
                                                                   , 'has-success' : form.pais.$valid}">
                                         <label class="col-md-5 control-label" for="pais">Pais</label>
                                         <div class="col-md-6">
-                                            <select id="pais" name="pais" class="form-control" ng-model="paisSel"  required
+                                            <select id="pais" name="pais" class="form-control" ng-model="paisSel"  required tabindex=7 
                                                     ng-options="pais as pais.a020nompais for pais in paises | orderBy:'a020nompais'" ng-change="cargaDepartamentos(paisSel)">
                                                 <option value="">Seleccione</option>
                                             </select>
@@ -61,7 +61,7 @@
                                                                   , 'has-success' : form.municipio.$valid}">
                                         <label class="col-md-5 control-label" for="municipio">Municipio</label>
                                         <div class="col-md-6">
-                                            <select id="municipio" name="municipio" class="form-control" ng-model="persona.a052loclzcn" required
+                                            <select id="municipio" name="municipio" class="form-control" ng-model="persona.a052loclzcn" required tabindex=9
                                                     ng-disabled="!departamentoSel" ng-options="municipio as municipio.a020nommunicipio for municipio in municipios | orderBy:'a020nommunicipio'">
                                                 <option value="">Seleccione</option>
                                             </select>
@@ -73,7 +73,7 @@
                                                                   , 'has-success' : form.celular.$valid}">
                                         <label class="col-md-5 control-label" for="celular">Celular</label>  
                                         <div class="col-md-6">
-                                            <input id="celular" name="celular" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052celular" required ng-pattern="/^[0-9]*$/">
+                                            <input id="celular" name="celular" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052celular" required tabindex=11  ng-pattern="/^[0-9]*$/">
                                         </div>
                                         <span class="col-md-3 help-block" ng-show="(!form.celular.$pristine) && (form.celular.$error.required || form.celular.$error.maxlength || form.celular.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span>
                                     </div>
@@ -86,7 +86,7 @@
                                                                   , 'has-success' : form.apellidos.$valid}">
                                         <label class="col-md-5 control-label" for="apellidos">Apellidos</label>  
                                         <div class="col-md-6">
-                                            <input id="apellidos" name="apellidos" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052apellido" required>
+                                            <input id="apellidos" name="apellidos" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052apellido" required tabindex=2 >
                                         </div>
                                     </div>
                                     <!-- Número de Documento-->
@@ -95,7 +95,7 @@
                                                                   , 'has-success' : form.numrdocmnt.$valid}">
                                         <label class="col-md-5 control-label" for="numrdocmnt">Número de Documento</label>  
                                         <div class="col-md-6">
-                                            <input id="numrdocmnt" name="numrdocmnt" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052numrdocmnt" required  ng-pattern="/^[0-9]*$/" ng-disabled="true">
+                                            <input id="numrdocmnt" name="numrdocmnt" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052numrdocmnt" required  ng-pattern="/^[0-9]*$/" ng-disabled="true" tabindex=4 >
                                         </div>
                                         <span class="col-md-3 help-block" ng-show="(!form.numrdocmnt.$pristine) && (form.numrdocmnt.$error.required || form.numrdocmnt.$error.maxlength || form.numrdocmnt.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span>
                                     </div>
@@ -104,7 +104,7 @@
                                                                   , 'has-success' : form.dirccncorrspndnc.$valid}">
                                         <label class="col-md-5 control-label" for="dirccncorrspndnc">Dirección de correspondencia</label>  
                                         <div class="col-md-6">
-                                            <input id="dirccncorrspndnc" name="dirccncorrspndnc" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052dirccncorrspndnc" required>
+                                            <input id="dirccncorrspndnc" name="dirccncorrspndnc" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052dirccncorrspndnc" required tabindex=6>
                                         </div>
                                     </div>
                                     <!-- Departamento -->
@@ -112,7 +112,7 @@
                                                                   , 'has-success' : form.departamento.$valid}">
                                         <label class="col-md-5 control-label" for="departamento">Departamento</label>
                                         <div class="col-md-6">
-                                            <select id="departamento" name="departamento" class="form-control" ng-model="departamentoSel" required
+                                            <select id="departamento" name="departamento" class="form-control" ng-model="departamentoSel" required tabindex=8 
                                                     ng-disabled="!paisSel" ng-options="departamento as departamento.a020nomdepartamento for departamento in departamentos | orderBy:'a020nomdepartamento'" ng-change="cargaMunicipios(departamentoSel)">
                                                 <option value="">Seleccione</option>
                                             </select>
@@ -124,7 +124,7 @@
                                                                   , 'has-success' : form.telefono.$valid}">
                                         <label class="col-md-5 control-label" for="telefono">Teléfono</label>  
                                         <div class="col-md-6">
-                                            <input id="telefono" name="telefono" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052telefono" required ng-pattern="/^[0-9]*$/">
+                                            <input id="telefono" name="telefono" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052telefono" required tabindex=10  ng-pattern="/^[0-9]*$/">
                                         </div>
                                         <span class="col-md-3 help-block" ng-show="(!form.telefono.$pristine) && (form.telefono.$error.required || form.telefono.$error.maxlength || form.telefono.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span>
                                     </div>
@@ -133,7 +133,7 @@
                                                                   , 'has-success' : form.correlctrnc.$valid}">
                                         <label class="col-md-5 control-label" for="correlctrnc">Correo Electrónico</label>  
                                         <div class="col-md-6">
-                                            <input id="correlctrnc" name="correlctrnc" placeholder="" class="form-control input-md" type="email" ng-model="persona.a052correlctrnc" required>
+                                            <input id="correlctrnc" name="correlctrnc" placeholder="" class="form-control input-md" type="email" ng-model="persona.a052correlctrnc" required tabindex=12 >
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +142,7 @@
                                 <div class="form-group text-center">
                                     <label class="col-md-4 control-label" for="guardar"></label>
                                     <div class="col-md-12">
-                                        <button id="guardar" name="guardar" class="btn btn-primary" ng-click="actualizarPersona()" ng-disabled="form.$invalid">Actualizar Datos</button>
+                                        <button id="guardar" name="guardar" class="btn btn-primary" ng-click="actualizarPersona()" tabindex=13 ng-disabled="form.$invalid">Actualizar Datos</button>
                                     </div>
                                 </div>
                             </fieldset>

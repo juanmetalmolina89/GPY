@@ -126,7 +126,8 @@ public class JWTFiltro implements ContainerRequestFilter, ContainerResponseFilte
                 String Nombre = (row.get("a052nombre") == null) ? "" : row.get("a052nombre").toString();
                 jwtUsuario.setNombre(Nombre + " " + row.get("a052apellido").toString());
                 jwtUsuario.setPerfil(row.get("a041idclasusr").toString());
-                //jwtUsuario.setCar(row.get("A002AUTORIDADAMBIENTAL").toString());
+                String codigoAutoridad = (row.get("a001codigo") == null) ? "" : row.get("a001codigo").toString(); 
+                jwtUsuario.setCar(codigoAutoridad);
                 jwtUsuario.setPrimeraVez(row.get("a041primringrs").toString());
             }
         } catch (Exception e) {
@@ -170,7 +171,7 @@ public class JWTFiltro implements ContainerRequestFilter, ContainerResponseFilte
         claims.setClaim("username", jwtUsuario.getUserName()); // the subject/principal is whom the token is about
         claims.setClaim("nombre", jwtUsuario.getNombre());
         claims.setClaim("perfil", jwtUsuario.getPerfil());
-        claims.setClaim("car", jwtUsuario.getCar());
+        claims.setClaim("autoridadambiental", jwtUsuario.getCar());
         claims.setClaim("primeravez", jwtUsuario.getPrimeraVez());
         claims.setExpirationTimeMinutesInTheFuture(jwtUsuario.getMinExpiracion()); // token will expire (10 minutes from now)
         claims.setClaim("tiemposesion", jwtUsuario.getTiempoSesion());

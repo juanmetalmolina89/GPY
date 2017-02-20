@@ -46,9 +46,9 @@
                                       ng-show="formregcostfuentproy.txtvalestformproy.$error.required && formEnviado">{{campoObligatorio}}</span>
                             </div>
 
-                            <!-- Costo estimado por tonelado de CO2- eq a reducir (COP)-->
+                            <!-- Costo estimado por tonelada de CO2- eq a reducir (COP)-->
                             <div class="form-group" ng-class="{'has-error': !formregcostfuentproy.txtvalestformproy.$valid && formEnviado}">
-                                <label class="col-md-4 control-label" for="txtcosttonformproy"><font style="color: #a94442">*</font> Costo estimado por tonelado de CO2- eq a reducir (COP)</label>  
+                                <label class="col-md-4 control-label" for="txtcosttonformproy"><font style="color: #a94442">*</font> Costo estimado por tonelada de CO2- eq a reducir (COP)</label>  
                                 <div class="col-md-4">
                                     <input id="txtcosttonformproy" name="txtvalestformproy" required
                                            placeholder="$"  ng-model="financiacion.a002costtonldrdcr" maxlength="15" format="number"
@@ -63,7 +63,7 @@
                                 <label class="col-md-4 control-label" for="txtcosttonformproy"><font style="color: #a94442">*</font> Tasa de Cambio del día</label>  
                                 <div class="col-md-4">
                                     <input id="txttasacformproy" name="txttasacformproy" required
-                                           ng-model="financiacion.a002trm" maxlength="15" format="number"
+                                           ng-model="financiacion.a002trm" maxlength="4" format="number"
                                            class="form-control input-md" type="text">
                                 </div>
                                 <span class="control-label"

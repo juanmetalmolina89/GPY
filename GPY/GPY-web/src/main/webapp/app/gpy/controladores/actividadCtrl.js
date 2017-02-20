@@ -281,12 +281,12 @@ angular.module('actividad.controllers', ['ngSanitize'])
 
                     $('#geometria').modal('show');
                     try {
-                        $scope.urlGeo = './geometria/index.html?divipola=' + $scope.proyecto.a002loclzcn.a020codigo + '&idModulo=' + IDMODULO + '&idSistema=' + IDSISTEMA;
+                        $scope.urlGeo = './geometria/index.html?divipola=' + $scope.proyecto.coddivipola + '&idModulo=' + IDMODULO + '&idSistema=' + IDSISTEMA;
                         var ctrlGeo = document.getElementById('ctrlGeo');
                         if (ctrlGeo) {
                             $scope.OE = new Object();
                             $scope.OE.idUsuario = $scope.idUsuario;
-                            //$scope.OE.a042idproyecto = $scope.pid;
+                            $scope.OE.a042idproyecto = $scope.pid;
                             $scope.OE.a042idactividad = $scope.actividad.a005codigo;
 
                             actividadSrv.consultarGeografia($scope.OE)

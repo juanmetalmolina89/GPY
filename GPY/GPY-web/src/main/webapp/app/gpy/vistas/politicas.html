@@ -14,12 +14,12 @@
                     <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body"  ng-controller="politicaCtrl">
                     <!-- ============================================================-->
                     <!-- Formulario -->
                     <!-- ============================================================-->
                     <form class="form-horizontal">
-                        <fieldset>
+                        <fieldset ng-disabled="sesion.perfil == INVITADO">
 
                             <!-- Politicas -->
                             <legend>Politicas</legend>

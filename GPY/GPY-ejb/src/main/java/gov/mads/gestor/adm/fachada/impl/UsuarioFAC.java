@@ -13,6 +13,8 @@ import gov.mads.gestor.adm.vista.CambiarContrasenaOE;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.adm.fachada.IUsuarioFAC;
 import gov.mads.gestor.adm.vista.ListarUsuarioOE;
+import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOE;
+import gov.mads.gestor.comun.vista.UsuarioVitalOE;
 /**
  *
  * @author juanmetalmolina
@@ -48,6 +50,20 @@ public class UsuarioFAC implements IUsuarioFAC {
     public ObjetoSalida listarUsuario(ListarUsuarioOE OE) {
 
         return AdmUsuarioDAO.listarUsuario(OE);
+    }
+
+
+    public ObjetoSalida validarUsuarioVital(UsuarioVitalOE OE) {
+        
+        return AdmUsuarioDAO.validarUsuarioVital(OE);
+    }
+
+    public ObjetoSalida validarUsuarioVital(ValidarUsuarioVitalOE OE) {
+        ValidarUsuarioOE OEE = new ValidarUsuarioOE();
+        OEE.setUsername(OE.username);
+        OEE.setClave(OE.clave);
+        OEE.setIdUsuario(0);
+        return AdmUsuarioDAO.validarUsuario(OEE);
     }
 }
 

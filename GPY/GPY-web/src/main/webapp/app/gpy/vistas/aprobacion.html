@@ -14,67 +14,67 @@
                     <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
                 </div>
 
-                <div class="panel-body">
+                <div class="panel-body" ng-controller="aprobarpreregCtrl">
                     <!-- ============================================================-->
                     <!-- Formulario -->
                     <!-- ============================================================-->
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" id="formpreaprobacion" name="formpreaprobacion" novalidate>
                         <fieldset>
 
                             <!-- Aprobación Preregistro -->
                             <legend>Aprobación Preregistro</legend>
 
                             <!-- Multiple Checkboxes (inline) -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="checkboxes"></label>
-                                <div class="col-md-4">
-                                    <label class="checkbox-inline" for="checkboxes-0">
-                                        <input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">
-                                        Aprobado
+                            <div class="form-group" ng-class="{'has-error': formEnviado}">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-4" ng-class="{'has-error': !regdocumento.numrradcd.$valid && formEnviado}">
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="aprobarPreReg.a002codigo"
+                                               required value="{{estadoAprobado.a102valor}}" name="checkboxes0" id="checkboxes0">
+                                        {{estadoAprobado.a102valor}}
                                     </label>
-                                    <label class="checkbox-inline" for="checkboxes-1">
-                                        <input name="checkboxes" id="checkboxes-1" value="2" type="checkbox">
-                                        No aprobado
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="aprobarPreReg.a002codigo"
+                                               required value="{{estadoRechazado.a102valor}}" name="checkboxes0" id="checkboxes0">
+                                        {{estadoRechazado.a102valor}}
                                     </label>
                                 </div>
+                                 <span class="control-label"
+                                      ng-show="formEnviado">{{campoObligatorio}}</span>
                             </div>
                             <hr>
                             <label>Informacion eSigna</label>
                             <!-- Número de radicado-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="textinput">Número de radicado</label>  
+                            <div class="form-group" ng-class="{'has-error': !regdocumento.numrradcd.$valid && formEnviado}">
+                                <label class="col-md-4 control-label" for="txtnumradicado"><font style="color: #a94442">*</font> Número de radicado</label>  
                                 <div class="col-md-4">
-                                    <input id="textinput" name="textinput" placeholder="" class="form-control input-md" type="text">
-
+                                    <input id="txtnumradicado" name="txtnumradicado" required ng-pattern="/^[0-9]{0,15}$/"
+                                           ng-model="regdocumento.numrradcd" maxlength="15"
+                                           class="form-control input-md" type="text">
                                 </div>
+                                <span class="control-label"
+                                      ng-show="formpreaprobacion.txtnumradicado.$error.required && formEnviado">{{campoObligatorio}}</span>
                             </div>
 
                             <!-- Adjunto-->
-                            <div class="form-group">
+                            <div class="form-group" ng-class="{'has-error': !formpreaprobacion.txtadjuntoapruba.$valid && formEnviado}">
                                 <label class="col-md-4 control-label" for="appendedtext">Adjunto</label>
                                 <div class="col-md-4">
                                     <div class="input-group">
-                                        <input id="appendedtext" name="appendedtext" class="form-control" placeholder="c:\users\pc\documents\proyecto_123_eSigna" type="text">
-                                        <span class="input-group-addon">Examinar</span>
+                                        <input type="file" class="form-control" id="txtadjuntoapruba" name="txtadjuntoapruba" required
+                                               placeholder="Adjunto" ngf-select="" ngf-accept="'application/pdf'" ng-model="regdocumento.file">
                                     </div>
                                     <p> por favor adjuntar el archivo de soporte de radicado eSigna</p>
                                 </div>
+                                <span class="control-label"
+                                      ng-show="formpreaprobacion.txtadjuntoapruba.$error.required && formEnviado">{{campoObligatorio}}</span>
                             </div>
-                            <!-- Cargar documento -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="singlebutton"></label>
-                                <div class="col-md-4">
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-inverse">Cargar documento</button>
-                                </div>
-                            </div>
-                            <br/>
-
                             <hr>
                             <!-- Guardar -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="singlebutton"></label>
                                 <div class="col-md-4">
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Guardar</button>
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="guardar(formpreaprobacion)">Guardar</button>
                                 </div>
                             </div>
 

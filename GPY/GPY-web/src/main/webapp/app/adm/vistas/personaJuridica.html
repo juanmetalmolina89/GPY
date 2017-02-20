@@ -20,7 +20,7 @@
                                         <label class="col-md-5 control-label" for="tippersn">Tipo de persona jurídica</label>
                                         <div class="col-md-6">
                                             <select id="tippersn" name="tippersn" class="form-control" ng-model="persona.a052idtippersn"  
-                                                    ng-options="tipoPerJuri as tipoPerJuri.a102valor for tipoPerJuri in tiposPerJuri track by tipoPerJuri.a102codigo" required>
+                                                    ng-options="tipoPerJuri as tipoPerJuri.a102valor for tipoPerJuri in tiposPerJuri track by tipoPerJuri.a102codigo" required tabindex=1 >
                                                 <option value="">Seleccione</option>
                                             </select>
                                         </div>
@@ -31,7 +31,7 @@
                                         <label class="col-md-5 control-label" for="tipdocmnt">Tipo de Documento</label>
                                         <div class="col-md-6">
                                             <select id="tipdocmnt" name="tipdocmnt" class="form-control" ng-model="persona.a052tipdocmnt"
-                                                    ng-options="tipoDoc as tipoDoc.a015descrpcntipdocmnt for tipoDoc in tiposDoc track by tipoDoc.a015codigo" required>
+                                                    ng-options="tipoDoc as tipoDoc.a015descrpcntipdocmnt for tipoDoc in tiposDoc track by tipoDoc.a015codigo" required tabindex=3 >
                                                 <option value="">Seleccione</option>
                                             </select>
                                         </div>
@@ -42,7 +42,7 @@
                                         <label class="col-md-5 control-label" for="codgciiu">Código CIIU</label>
                                         <div class="col-md-6">
                                             <select id="codgciiu" name="codgciiu" class="form-control" ng-model="persona.a052codgciiu" 
-                                                    ng-options="codigoCIIU as codigoCIIU.a049descripcionciiu for codigoCIIU in codigosCIIU track by codigoCIIU.a049codigociiu" required>
+                                                    ng-options="codigoCIIU as codigoCIIU.a049descripcionciiu for codigoCIIU in codigosCIIU track by codigoCIIU.a049codigociiu" required tabindex=5 >
                                                 <option value="">Seleccione</option>
                                             </select>
                                         </div>
@@ -52,7 +52,7 @@
                                                                   , 'has-success' : form.pais.$valid}">
                                         <label class="col-md-5 control-label" for="pais">Pais</label>
                                         <div class="col-md-6">
-                                            <select id="pais" name="pais" class="form-control" ng-model="paisSel"  required
+                                            <select id="pais" name="pais" class="form-control" ng-model="paisSel"  required tabindex=7
                                                     ng-options="pais as pais.a020nompais for pais in paises | orderBy:'a020nompais'" ng-change="cargaDepartamentos(paisSel)">
                                                 <option value="">Seleccione</option>
                                             </select>
@@ -63,7 +63,7 @@
                                                                   , 'has-success' : form.municipio.$valid}">
                                         <label class="col-md-5 control-label" for="municipio">Municipio</label>
                                         <div class="col-md-6">
-                                            <select id="municipio" name="municipio" class="form-control" ng-model="persona.a052loclzcn" required
+                                            <select id="municipio" name="municipio" class="form-control" ng-model="persona.a052loclzcn" required tabindex=9 
                                                     ng-disabled="!departamentoSel" ng-options="municipio as municipio.a020nommunicipio for municipio in municipios | orderBy:'a020nommunicipio'">
                                                 <option value="">Seleccione</option>
                                             </select>
@@ -75,7 +75,7 @@
                                                                   , 'has-success' : form.celular.$valid}">
                                         <label class="col-md-5 control-label" for="celular">Celular</label>  
                                         <div class="col-md-6">
-                                            <input id="celular" name="celular" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052celular" required ng-pattern="/^[0-9]*$/">
+                                            <input id="celular" name="celular" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052celular" required tabindex=11  ng-pattern="/^[0-9]*$/">
                                         </div>
                                         <span class="col-md-3 help-block" ng-show="(!form.celular.$pristine) && (form.celular.$error.required || form.celular.$error.maxlength || form.celular.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span>
                                     </div>
@@ -84,7 +84,7 @@
                                                                    , 'has-success' : form.correlctrnc.$valid}">
                                         <label class="col-md-5 control-label" for="correlctrnc">Correo Electrónico</label>  
                                         <div class="col-md-6">
-                                            <input id="correlctrnc" name="correlctrnc" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052correlctrnc" required>
+                                            <input id="correlctrnc" name="correlctrnc" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052correlctrnc" required tabindex=13 >
                                         </div>
                                     </div>
 
@@ -97,7 +97,7 @@
                                                                    , 'has-success' : form.nombre.$valid}">
                                         <label class="col-md-5 control-label" for="nombre">Razón social</label>  
                                         <div class="col-md-6">
-                                            <input id="nombre" name="nombre" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052apellido" required>
+                                            <input id="nombre" name="nombre" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052apellido" required tabindex=2 >
                                         </div>
                                     </div>
                                     <!-- Número de Documento-->
@@ -108,12 +108,12 @@
                                         <div class="col-md-6">
                                             <div style="margin-left:-15px" class="col-md-9 no_padding">
                                                 <input id="numrdocmnt" name="numrdocmnt" placeholder="" class="form-control input-md" 
-                                                       type="text" ng-model="persona.a052numrdocmnt" required ng-pattern="/^[0-9]*$/" ng-disabled="true">
+                                                       type="text" ng-model="persona.a052numrdocmnt" required  ng-pattern="/^[0-9]*$/" ng-disabled="true">
                                             </div>
                                             <label style="margin-left:-21px" class="col-md-2 control-label" for="digtchqu">DV</label>
                                             <div style="margin-right: -25px" class="col-md-4 no_padding">
                                                 <input id="digtchqu" name="digtchqu" placeholder="" class="form-control input-sm" 
-                                                       type="text" ng-model="persona.a052digtchqu" required ng-pattern="/^[0-9]*$/" ng-maxlength="1">
+                                                       type="text" ng-model="persona.a052digtchqu" required tabindex=4  ng-pattern="/^[0-9]*$/" ng-maxlength="1">
                                             </div>
                                         </div>
                                         <span class="col-md-3 help-block" ng-show="(!form.numrdocmnt.$pristine || !form.digtchqu.$pristine) && (form.numrdocmnt.$error.required || form.digtchqu.$error.required || form.numrdocmnt.$error.maxlength || form.digtchqu.$error.maxlength || form.numrdocmnt.$error.pattern || form.digtchqu.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números y un dígito de verificación.</span> 
@@ -123,7 +123,7 @@
                                                                    , 'has-success' : form.direccion.$valid}">
                                         <label class="col-md-5 control-label" for="direccion">Dirección de correspondencia</label>  
                                         <div class="col-md-6">
-                                            <input id="direccion" name="direccion" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052dirccncorrspndnc" required>
+                                            <input id="direccion" name="direccion" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052dirccncorrspndnc" required tabindex=6>
                                         </div>
                                     </div>
                                     <!-- Departamento -->
@@ -131,7 +131,7 @@
                                                                   , 'has-success' : form.departamento.$valid}">
                                         <label class="col-md-5 control-label" for="departamento">Departamento</label>
                                         <div class="col-md-6">
-                                            <select id="departamento" name="departamento" class="form-control" ng-model="departamentoSel" required
+                                            <select id="departamento" name="departamento" class="form-control" ng-model="departamentoSel" required tabindex=8
                                                     ng-disabled="!paisSel" ng-options="departamento as departamento.a020nomdepartamento for departamento in departamentos | orderBy:'a020nomdepartamento'" ng-change="cargaMunicipios(departamentoSel)">
                                                 <option value="">Seleccione</option>
                                             </select>
@@ -143,7 +143,7 @@
                                                                   , 'has-success' : form.telefono.$valid}">
                                         <label class="col-md-5 control-label" for="telefono">Teléfono </label>  
                                         <div class="col-md-6">
-                                            <input id="telefono" name="telefono" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052telefono" required ng-pattern="/^[0-9]*$/" >
+                                            <input id="telefono" name="telefono" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052telefono" required tabindex=10 ng-pattern="/^[0-9]*$/" >
                                         </div>
                                         <span class="col-md-3 help-block" ng-show="(!form.telefono.$pristine) && (form.telefono.$error.required || form.telefono.$error.maxlength || form.telefono.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span>
                                     </div>
@@ -154,7 +154,7 @@
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="guardar"></label>
                                     <div class="col-md-12 text-center">
-                                        <button id="guardar" name="guardar" class="btn btn-primary" ng-click="actualizarPersona()" ng-disabled="form.$invalid">Actualizar Datos</button>
+                                        <button id="guardar" name="guardar" class="btn btn-primary" ng-click="actualizarPersona()" tabindex=14 ng-disabled="form.$invalid">Actualizar Datos</button>
                                     </div>
                                 </div>
                             </fieldset>

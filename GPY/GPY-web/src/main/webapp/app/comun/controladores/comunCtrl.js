@@ -27,6 +27,16 @@ angular.module('comun.controllers', ['ngSanitize'])
             }])
         .controller('menuCtrl', function ($scope, $location) {
 
+            /**************************************************************/
+            /* Variables */
+            $scope.FUNCMADS = FUNCMADS;
+            $scope.ADMINAA = ADMINAA;
+            $scope.GESTPROY = GESTPROY;
+            $scope.PUBLICADOR = PUBLICADOR;
+            $scope.INVITADO = INVITADO;
+
+            /**************************************************************/
+            /* Métodos */
             $scope.getClassMenu = function (ruta, deshabilitar) {
                 if (deshabilitar !== undefined && deshabilitar !== null && deshabilitar === true)
                     return 'disabled';

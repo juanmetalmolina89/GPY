@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 import oracle.jdbc.pool.OracleDataSource;
 //@Stateless
 //@Remote(IRemoteConnection.class)
-public class ConexionDS implements IRemoteConnection{
+public class ConexionDS { //implements IRemoteConnection{
 
     private static final Logger logger = Logger.getLogger( Conexion.class ); 
     private static Connection instancia = null;
@@ -41,8 +41,8 @@ public class ConexionDS implements IRemoteConnection{
         try{
             
             Context ctx = new InitialContext();
-            DataSource ds = (DataSource)ctx.lookup("java:/GPYOracleDS");
-            if( ds != null ) instancia = ds.getConnection();
+            DataSource ods  = (DataSource)ctx.lookup("java:/GPYLOracleDS");
+            if( ods != null ) instancia = ods.getConnection();
         }
         catch(Exception ex){
             ex.printStackTrace();

@@ -30,6 +30,7 @@ import gov.mads.gestor.utl.vista.ListarParticipanteOE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv2OE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv4OE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv1OE;
+import gov.mads.gestor.utl.vista.ListarPoliticaOE;
 import gov.mads.gestor.utl.vista.ListarSectorIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubCategoriaIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubGrupoIPCCOE;
@@ -161,6 +162,10 @@ public class ListadosFAC implements IListadosFAC {
 
     public ObjetoSalida listarSubgrupoIPCC(ListarSubGrupoIPCCOE OE) {
         return UtlListadosDAO.listarSubgrupoIPCC(OE);
+    }
+
+    public ObjetoSalida listarPoliticas(ListarPoliticaOE OE) {
+        return UtlListadosDAO.listarPoliticas(OE);
     }
     
 }

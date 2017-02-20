@@ -17,9 +17,12 @@ import gov.mads.gestor.gpy.fachada.impl.FinanciacionFAC;
 import gov.mads.gestor.gpy.vista.RegistrarFtesFinancOE;
 import gov.mads.gestor.gpy.vista.ActualizarFinancOE;
 import gov.mads.gestor.gpy.vista.EliminarFtesFinancOE;
+import gov.mads.gestor.gpy.vista.EliminarInstrmntFinnccnPOE;
 import gov.mads.gestor.gpy.vista.ListarCostosProyectoOE;
 import gov.mads.gestor.gpy.vista.ListarFtesFinancOE;
+import gov.mads.gestor.gpy.vista.ListarInstrmntFinnccnPOE;
 import gov.mads.gestor.gpy.vista.RegistrarCostosProyectoOE;
+import gov.mads.gestor.gpy.vista.RegistrarInstrmntFinnccnPOE;
 /**
  * REST Web Service
  *
@@ -91,6 +94,39 @@ public class FinanciacionSERV {
 	public Response eliminarFtesFinanc(EliminarFtesFinancOE objetoEntrada) {
 		FinanciacionFAC fac = new FinanciacionFAC();
 		ObjetoSalida os = fac.eliminarFtesFinanc(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/registrarInstrmntFinnccnP")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response registrarInstrmntFinnccnP(RegistrarInstrmntFinnccnPOE objetoEntrada) {
+		FinanciacionFAC fac = new FinanciacionFAC();
+		ObjetoSalida os = fac.registrarInstrmntFinnccnP(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/listarInstrmntFinnccnP")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response listarInstrmntFinnccnP(ListarInstrmntFinnccnPOE objetoEntrada) {
+		FinanciacionFAC fac = new FinanciacionFAC();
+		ObjetoSalida os = fac.listarInstrmntFinnccnP(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/eliminarInstrmntFinnccnP")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response eliminarInstrmntFinnccnP(EliminarInstrmntFinnccnPOE objetoEntrada) {
+		FinanciacionFAC fac = new FinanciacionFAC();
+		ObjetoSalida os = fac.eliminarInstrmntFinnccnP(objetoEntrada);
 		return API.retornarRespuesta(os);
 	}
 }

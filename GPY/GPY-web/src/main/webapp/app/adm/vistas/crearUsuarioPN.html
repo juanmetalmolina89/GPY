@@ -10,7 +10,7 @@
                                     , 'has-success' : form.nombre.$valid}">
         <label class="col-md-5 control-label" for="nombre">Nombres</label>  
         <div style="width:53%" class="col-md-7">
-            <input id="nombre" name="nombre" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052nombre" required title="Debe ingresar un nombre">
+            <input id="nombre" name="nombre" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052nombre" required title="Debe ingresar un nombre"  tabindex=2>
         </div>
     </div>
     <br>
@@ -20,7 +20,7 @@
         <label class="col-md-5 control-label" for="tipdocmnt">Tipo de Documento </label>
         <div class="col-md-6">
             <select id="tipdocmnt" name="tipdocmnt" class="form-control" ng-model="persona.a052tipdocmnt"
-                    ng-options="tipoDoc as tipoDoc.a015descrpcntipdocmnt for tipoDoc in tiposDoc track by tipoDoc.a015codigo" required>
+                    ng-options="tipoDoc as tipoDoc.a015descrpcntipdocmnt for tipoDoc in tiposDoc track by tipoDoc.a015codigo" required  tabindex=4 >
                 <option value="">Seleccione</option>
             </select>
         </div>
@@ -34,7 +34,7 @@
                                     , 'has-success' : form.apellido.$valid}">
         <label class="col-md-5 control-label" for="apellido">Apellidos</label>  
         <div style="width:53%" class="col-md-6">
-            <input id="apellido" name="apellido" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052apellido" required>
+            <input id="apellido" name="apellido" placeholder="" class="form-control input-md" type="text" ng-model="persona.a052apellido" required tabindex=3 >
         </div>
     </div>   
     <!-- Número de Documento-->
@@ -44,7 +44,7 @@
         <label class="col-md-5 control-label" for="numrdocmnt">Número de Documento de Identificación</label>  
         <div class="col-md-6">
             <input id="numrdocmnt" name="numrdocmnt" placeholder="" class="form-control input-md" 
-                   type="text" ng-model="persona.a052numrdocmnt" required ng-pattern="/^[0-9]*$/">
+                   type="text" ng-model="persona.a052numrdocmnt" required ng-pattern="/^[0-9]*$/"  tabindex=5 >
 
         </div>
         <span class="col-md-3 help-block" ng-show="(!form.numrdocmnt.$pristine) && (form.numrdocmnt.$error.required || form.numrdocmnt.$error.maxlength || form.numrdocmnt.$error.pattern)" ><span class="glyphicon glyphicon-remove"></span> Sólo números.</span> 

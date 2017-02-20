@@ -1,6 +1,6 @@
 var app = angular.module('GPYApp');
 
-app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams, $uibModal, $rootScope, comunSrv, listadoSrv, datosBasicosSrv, infoProyecto) {
+app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams, $uibModal, $rootScope, $filter, comunSrv, listadoSrv, datosBasicosSrv, infoProyecto) {
 
     /**************************************************************/
     /* Manejo sesión */
@@ -22,7 +22,13 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
     $scope.proyectos = [];
     $scope.proyecto = new Object();
     $scope.proyecto.a002tipproyct = {"a102codigo": $scope.tpid};
-
+    $scope.listaproyectos = [];
+    $scope.filtroproyecto = {};
+    $scope.filtroproyecto.palabra = "";
+    $scope.filtroproyecto.tipoproy = "";
+    $scope.filtroproyecto.autoridad = "";
+    $scope.filtroproyecto.estadoproy = "";
+    
     //dejar disponibles las constantes en la vista
     $scope.INVITADO = INVITADO;
     $scope.NUEVO = NUEVO;
@@ -35,6 +41,10 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
     $scope.PBDBCRC = PBDBCRC;
     $scope.CPA = CPA;
 
+    $scope.totalItems = 0;
+    $scope.currentPage = 1;
+    $scope.itemsPerPage = 10;
+    $scope.maxSize = 10;
     /**************************************************************/
     /* Métodos */
 
@@ -66,6 +76,7 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
                     $scope.proyecto.a002nrocpas = response.data.respuesta[0].a002nrocpas;
                     $scope.proyecto.a002objtvgenrl = response.data.respuesta[0].a002objtvgenrl;
                     $scope.proyecto.a002socextrnjr = response.data.respuesta[0].a002socextrnjr;
+                    $scope.proyecto.coddivipola = response.data.respuesta[0].coddivipola;
                     $scope.proyecto.a002proytascd = {
                         "a002codigo": response.data.respuesta[0].a002proytascd
                     };
@@ -184,6 +195,11 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
         listadoSrv.listarAutoridades($scope.OE)
                 .then(function (response) {
                     $scope.listaAutoridadAmb = response.data.respuesta;
+                    if ($scope.sesion.perfil == PUBLICADOR)
+                    {
+                        $scope.listaAutoridadAmb = $filter("filter")( $scope.listaAutoridadAmb, {'a001codigo':parseInt($scope.sesion.autoridadambiental)},true);
+                       
+                    }
                 }, function (error) {
                     comunSrv.mensajeSalida(error);
                 });
@@ -209,7 +225,6 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
         $scope.estadoProy = NUEVO;
     }
 
-    $scope.listaproyectos = [];
 
     $scope.listarTodosLosProyectosUsuario = function () {
         $scope.OE = new Object();
@@ -218,6 +233,8 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
         datosBasicosSrv.listarProyectosUsuario($scope.OE)
                 .then(function (response) {
                     $scope.listaproyectos = response.data.respuesta;
+                    $scope.proyectos = response.data.respuesta;
+                    $scope.totalItems = $scope.proyectos.length;
                 }, function (error) {
                     comunSrv.mensajeSalida(error);
                 });
@@ -231,23 +248,38 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
         $scope.consultarProyectoPorId(proyecto.a002codigo);
     };
 
-    $scope.filtroproyecto = {};
-
     $scope.filtrarProyectos = function () {
-
+        $scope.filtroproyecto.resultados = $scope.proyectos;
+        $numFiltros = 0;
         if ($scope.filtroproyecto.palabra) {
-            $scope.filtroproyecto.filtro = $scope.filtroproyecto.palabra;
+            //$scope.filtroproyecto.filtro = $scope.filtroproyecto.palabra;
+            $scope.filtroproyecto.resultados = $filter('filter')($scope.filtroproyecto.resultados , {'a002descrpcinproyct':$scope.filtroproyecto.palabra});
+            $numFiltros++;
         }
         if ($scope.filtroproyecto.autoridad) {
-            $scope.filtroproyecto.filtro = $scope.filtroproyecto.autoridad.a001nombre;
+            //$scope.filtroproyecto.filtro = $scope.filtroproyecto.autoridad.a001nombre;
+            $scope.filtroproyecto.resultados = $filter('filter')($scope.filtroproyecto.resultados , {'a001sigla':$scope.filtroproyecto.autoridad.a001sigla}, true);
+             $numFiltros++;
         }
         if ($scope.filtroproyecto.tipoproy) {
-            $scope.filtroproyecto.filtro = $scope.filtroproyecto.tipoproy.a102valorcorto;
+            //$scope.filtroproyecto.filtro = $scope.filtroproyecto.tipoproy.a102valorcorto;
+            $scope.filtroproyecto.resultados = $filter('filter')($scope.filtroproyecto.resultados , {'tipoproyecto':$scope.filtroproyecto.tipoproy.a102valorcorto},true);
+             $numFiltros++;
         }
         if ($scope.filtroproyecto.estadoproy) {
-            $scope.filtroproyecto.filtro = $scope.filtroproyecto.estadoproy.a102valor;
+            //$scope.filtroproyecto.filtro = $scope.filtroproyecto.estadoproy.a102valor;
+             $scope.filtroproyecto.resultados = $filter('filter')($scope.filtroproyecto.resultados , {'estadoproyecto':$scope.filtroproyecto.estadoproy.a102valor},true);
+              $numFiltros++;
         }
-
+        
+         //if ($scope.filtroproyecto.resultados.length !== $scope.listaproyectos.length) {
+         if( $numFiltros !== 0) {
+             $scope.listaproyectos = $scope.filtroproyecto.resultados;
+             $scope.totalItems = $scope.listaproyectos.length;
+         } else {
+            $scope.listarTodosLosProyectosUsuario();
+        }
+        /*
         if ($scope.filtroproyecto.filtro) {
             $scope.OE = new Object();
             $scope.OE.idUsuario = $scope.idUsuario;
@@ -265,7 +297,7 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
         } else {
             $scope.listarTodosLosProyectosUsuario();
         }
-
+        */
     };
 
 

@@ -28,6 +28,7 @@ import gov.mads.gestor.utl.vista.ListarParticipanteOE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv2OE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv4OE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv1OE;
+import gov.mads.gestor.utl.vista.ListarPoliticaOE;
 import gov.mads.gestor.utl.vista.ListarSectorIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubCategoriaIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubGrupoIPCCOE;
@@ -66,4 +67,5 @@ public interface IListadosFAC {
     public ObjetoSalida listarFuentesFinanciacion(ListarFtesFinancOE OE);
     public ObjetoSalida listarTipoActividadReduccion(ListarTipoActividadReducOE OE);
     public ObjetoSalida listarSubgrupoIPCC(ListarSubGrupoIPCCOE OE);
+    public ObjetoSalida listarPoliticas(ListarPoliticaOE OE);
 }

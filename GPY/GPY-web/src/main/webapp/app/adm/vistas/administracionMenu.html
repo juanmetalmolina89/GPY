@@ -16,7 +16,7 @@
                 <div class="list-group">
                     <div class="list-group">
                         <a href="#adm/cuenta" class="list-group-item" ng-class="getClassMenu('/adm/cuenta')" ><span class="glyphicon glyphicon-hand-up"></span>Mi Cuenta</a>
-                        <a href="#adm/crearUsuarios" class="list-group-item" ng-class="getClassMenu('/adm/crearUsuarios')" ><span class="glyphicon glyphicon-user"></span>Crear Usuario</a>
+                        <a href="#adm/crearUsuarios" ng-show="sesion.perfil == FUNCMADS || sesion.perfil == ADMINAA" class="list-group-item" ng-class="getClassMenu('/adm/crearUsuarios')" ><span class="glyphicon glyphicon-user"></span>Crear Usuario</a>
                         <a href="#adm/cambiarClave" class="list-group-item" ng-class="getClassMenu('/adm/cambiarClave')" ><span class="glyphicon glyphicon-lock"></span>Cambiar Clave</a>
                     </div>
                 </div>

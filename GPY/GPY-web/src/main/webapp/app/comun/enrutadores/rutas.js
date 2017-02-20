@@ -70,11 +70,11 @@ angular.module('GPYApp').config(['$routeProvider', '$httpProvider', '$locationPr
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/participantesreg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
+			templateUrl	: 'app/gpy/vistas/participantesReg.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/fuentesreg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
+			templateUrl	: 'app/gpy/vistas/fuentesReg.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/actividadesreg/:tpid/:pid', {

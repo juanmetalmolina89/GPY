@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('fuente.controllers', ['ngSanitize'])
-    .controller('fuenteCtrl', ['$scope', 'fuenteSrv', '$routeParams', 'listadoSrv', '$q' , function ($scope, fuenteSrv, $routeParams, listadoSrv, $q) {
+    .controller('fuenteCtrl', ['$scope', 'fuenteSrv', '$routeParams', 'listadoSrv', '$q', '$filter' , '$http' , function ($scope, fuenteSrv, $routeParams, listadoSrv, $q, $filter, $http) {
 
         $scope.mensaje;
         $scope.fuentes = [];
@@ -27,9 +27,32 @@ angular.module('fuente.controllers', ['ngSanitize'])
 
 
         $scope.muestraForm = true;
+        $scope.muestraFormFuentes = false;           
+        $scope.muestraFormReportes = false;
 
-
+        $scope.cancelar = function () {            
+            $scope.muestraFormFuentes = false;           
+            $scope.muestraFormReportes = false;            
+        };
+        
+        //**************************************
+        // manejo de fuentes
+        //**************************************        
+        
         $scope.listar = function () {
+            
+            // FICASA 20170217: prueba para el redirect con vital:
+                    var urlBase = 'http://127.0.0.1:8088/GPY-web/servicios/usuario/redireccionarVital';
+                    var datosBody = "<root><datosSeguridad><token>xxxxxxx</token><mac>xxxxxxx</mac></datosSeguridad><datosConexion><aliasUsuarioOrigen>88888888</aliasUsuarioOrigen><aliasUsuarioDestino>GPY88888888</aliasUsuarioDestino><autoridadAmbiental>xxxx</autoridadAmbiental><sistemaOrigen>xxxx</sistemaOrigen><sistemaDestino>xxxx</sistemaDestino><codigoOperacion>xxxxx</codigoOperacion></datosConexion><datosOperacion>...</datosOperacion></root>";
+                
+                    $http({ 
+                        method: 'POST',
+                        url: urlBase,
+                        data: datosBody,
+                        headers: { "Content-Type": 'application/xml',"Access-Control-Allow-Origin": "http://127.0.0.1:8088"}
+                    });
+            // fin prueba
+                
             $scope.OE = new Object();
             $scope.OE.idUsuario = $scope.idUsuario;
             $scope.OE.a038idproyecto = $scope.pid;
@@ -42,7 +65,6 @@ angular.module('fuente.controllers', ['ngSanitize'])
                         console.log($scope.mensaje);
                     });
         }; 
-
 
         $scope.eliminar = function (estaFuente) {  
             $scope.OE = new Object();
@@ -61,10 +83,14 @@ angular.module('fuente.controllers', ['ngSanitize'])
                     });
         };
 
+
         // manejo del formulario
         // viene con parámetro cuando se invoca desde el botón de actualizar de la grilla
-        $scope.mostrarForm = function (estaFuente) {				
-
+        $scope.mostrarForm = function (estaFuente) {	
+            
+           $scope.muestraFormFuentes = true;
+           $scope.muestraFormReportes = false;
+           
            if (estaFuente != undefined && estaFuente != null) 
            {
                 // TODO: poner los campos definitivos
@@ -171,6 +197,77 @@ angular.module('fuente.controllers', ['ngSanitize'])
         };
 
 
+        //**************************************
+        // Reportes de Escenario Base
+        //**************************************
+        
+        $scope.listarEscenarioBase = function (estaFuente) {  
+            $scope.fuente = estaFuente;
+            $scope.OE = new Object();
+            // pinta la grilla
+            
+            // hace invisible el formulario de fuentes
+            $scope.muestraFormFuentes = false;
+            
+            $scope.OE = new Object();
+            $scope.OE.idUsuario = $scope.idUsuario;
+            $scope.OE.a010idfuentes = estaFuente.a038codigo;
+
+            fuenteSrv.listarEscenarioBase($scope.OE)
+                    .then(function (response) {
+                        $scope.reportes = response.data.respuesta;
+                    }, function (error) {
+                        $scope.mensaje = error.data.respuesta;
+                        console.log($scope.mensaje);
+                    });
+                    
+            // hace visible el formulario formReportes
+            $scope.muestraFormReportes = true;
+                        
+            
+        };
+        
+        
+        $scope.eliminarEscenarioBase = function (esteEscenario) {  
+            $scope.OE = new Object();
+            $scope.OE.idUsuario  = $scope.idUsuario;            
+            $scope.OE.a010codigo = esteEscenario.a010codigo;
+            fuenteSrv.borrarEscenarioBase($scope.OE)
+                    .then(function (response) {
+                        $scope.mensaje = 'Borrado con éxito.';
+                        console.log($scope.mensaje);
+                        $scope.listarEscenarioBase($scope.fuente);                        
+                    }, function (error) {
+                        $scope.mensaje = error.data.respuesta;
+                        console.log($scope.mensaje);
+                    });
+        };
+        
+        $scope.insertarEscenarioBase = function () {
+            $scope.OE = new Object();
+            $scope.OE.idUsuario = $scope.idUsuario;            
+            $scope.OE.reporteaniofuente = new Object();
+            $scope.OE.reporteaniofuente.a010reprtanfunt = $filter('date')($scope.reporte.a010reprtanfunt, 'yyyy-MM-dd');  //dateFilter($scope.reporte.a010reprtanfuntdate, 'yyyy-MM-dd');
+            $scope.OE.reporteaniofuente.a010valremsn=$scope.reporte.a010valremsn;
+            $scope.OE.reporteaniofuente.a010idfuente={"a038codigo":$scope.fuente.a038codigo};        
+
+            fuenteSrv.insertarEscenarioBase($scope.OE)
+                .then(function (response) {
+                        $scope.mensaje = 'reporte insertado con éxito.';
+                        $scope.escenarioBase=[];
+                        $scope.listarEscenarioBase($scope.fuente);
+                        console.log($scope.mensaje);
+                }, function (error) {
+                        $scope.mensaje = error.data.respuesta;
+                        console.log($scope.mensaje);
+                });
+        };
+        
+        //**************************************
+        // Poblar listas desplegables
+        //**************************************
+        
+        
         // poblar combo de sector de IPCC
         $scope.listarSectorIPCC = function () {
             var def = $q.defer();
@@ -289,8 +386,8 @@ angular.module('fuente.controllers', ['ngSanitize'])
             var def = $q.defer();
             $scope.OE = {};
             $scope.OE.idUsuario = $scope.idUsuario;
-                                $scope.OE.a048idsubcatipcc = $scope.fuente.a047codigo // la subcategoría actual
-                                //{"idUsuario":1,"a048idsubcatipcc":1}
+            $scope.OE.a048idsubcatipcc = $scope.fuente.a047codigo // la subcategoría actual
+            //{"idUsuario":1,"a048idsubcatipcc":1}
             listadoSrv.listarDesagregacionIPCC($scope.OE)
                     .then(function (response) {
                         $scope.desagregaciones = response.data.respuesta;

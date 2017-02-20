@@ -4,12 +4,17 @@
 'use strict';
 
 angular.module('persona.controllers', ['ngSanitize'])
-        .controller('miCuentaCtrl', ['$scope', 'personaSrv', 'listadoSrv', 'comunSrv', function ($scope, personaSrv, listadoSrv, comunSrv) {
+        .controller('miCuentaCtrl', ['$scope', '$location', 'personaSrv', 'listadoSrv', 'comunSrv', function ($scope, $location, personaSrv, listadoSrv, comunSrv) {
 
                 /**************************************************************/
                 /* Manejo sesión */
                 $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
                 $scope.idUsuario = $scope.sesion.sub;
+
+                if ($scope.sesion.perfil == INVITADO) {
+                    comunSrv.mensaje("Está intentando ingresar a una opción no permitida", "info");
+                    $location.path('/gpy');
+                }
 
                 /**************************************************************/
                 /* Variables */

@@ -25,6 +25,20 @@ angular.module('fuente.services')
 	        return $http.post(urlBase + '/eliminarFuente', OE);
 	    };
 
+            //escenarios base:
+            
+	    datos.listarEscenarioBase = function (OE) {
+	        return $http.post(urlBase + '/listarEscenarioBase', OE);
+	    };
+
+	    datos.insertarEscenarioBase = function (OE) {
+	        return $http.post(urlBase + '/registrarEscenarioBase', OE);
+	    };
+
+	    datos.borrarEscenarioBase = function (OE) {
+	        return $http.post(urlBase + '/eliminarEscenarioBase', OE);
+	    };
+            
 	    return datos;
 	}]);
 

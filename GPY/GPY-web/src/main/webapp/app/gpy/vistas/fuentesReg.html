@@ -1,0 +1,205 @@
+<!-- ===================================================================================== -->
+<!-- 3 - Fuentes -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
+        </div>
+
+
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
+                </div>
+
+                <div class="panel-body" ng-controller="fuenteCtrl">
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+
+                    <form class="form-horizontal" ng-show="muestraForm" name="frmFuentes">
+                        <fieldset ng-disabled="sesion.perfil == INVITADO">
+                            <!-- Fuentes de Emisión -->
+                            <legend>Fuentes de Emisión</legend>
+                            
+                            <table class="table table-striped  table-bordered">
+                                <tr>
+                                    <th>Fuente de Emisión</th>
+                                    <th>Sub Categoria IPCC</th>
+                                    <th>Factor de emisión</th>
+                                    <td>Acciones</td>
+                                </tr>
+                                <tr  ng-repeat="filaFuente in fuentes">
+                                    <td>{{filaFuente.a038nombrfunt}}</td>
+                                    <td>{{filaFuente.a048nombre}}</td>
+                                    <td>{{filaFuente.a038factoremision}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" 
+                                            ng-click="mostrarForm(filaFuente)" data-toggle="tooltip" data-placement="top"
+                                            title="Modificar participante"><span class="glyphicon glyphicon-edit"></span></button>
+                                        <button type="button" class="btn btn-primary" 
+                                            ng-click="eliminar(filaFuente)" data-toggle="tooltip" data-placement="top"
+                                            title="Eliminar participante"><span class="glyphicon glyphicon-remove"></span></button>
+                                        <button type="button" class="btn btn-primary" 
+                                            ng-click="listarEscenarioBase(filaFuente)" data-toggle="tooltip" data-placement="top"
+                                            title="reporte"><span class="glyphicon glyphicon-search"></span></button>    
+                                    </td>
+                                </tr>                                
+                            </table>
+                            
+                             <!-- Guardar -->
+                            <div class="form-group">
+                                
+                                <div class="col-md-8">
+                                    <button id="button5id" name="button5id" class="btn btn-primary" ng-click="mostrarForm()">Agregar fuente</button>
+                                </div>
+                                <label class="col-md-4 control-label" for="button1id"></label>
+                            </div>
+ 
+                            <!-- ============================================================-->
+                            <!-- Formulario fuentes de emisiones -->
+                            <!-- ============================================================-->                            
+                            <div id="formFuentes" name="formFuentes"  ng-show="muestraFormFuentes" >
+                                
+                                <!-- Fuente de emisión GEI--> 
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="textinput">Fuente de emisión GEI</label>  
+                                    <div class="col-md-4">
+                                        <input id="a038nombrfunt" name="a038nombrfunt" type="text" ng-model="fuente.a038nombrfunt"  placeholder="" required   class="form-control input-md">
+                                    </div> 
+                                </div>
+
+                                <!-- Sector IPCC  -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="selectbasic">Sector IPCC</label>
+                                    <div class="col-md-4">
+                                        <select id="selectbasic" name="selectbasic" class="form-control" ng-model="fuente.a045codigo" ng-change="listarSubgrupoIPCC()" ng-options="sector.a045codigo as sector.a045nombre for sector in sectores">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- subgrupo IPCC  -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="selectbasic">Sub-grupo IPCC</label>
+                                    <div class="col-md-4">
+                                        <select id="selectbasic" name="selectbasic" class="form-control" ng-model="fuente.a043codigo" ng-change="listarCategoriaIPCC()" ng-options="subgrupo.a043codigo as subgrupo.a043nombre for subgrupo in subgrupos">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Categoría IPCC -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="selectbasic">Categoría IPCC</label>
+                                    <div class="col-md-4">
+                                        <select id="selectbasic" name="selectbasic" class="form-control" ng-model="fuente.a046codigo" ng-change="listarSubcategoriaIPCC()" ng-options="categoria.a046codigo as categoria.a046nombre for categoria in categorias">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Sub-Categoría IPCC o partida informativa de la Fuente de emisión -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="selectbasic">Sub-Categoría IPCC o partida informativa de la Fuente de emisión </label>
+                                    <div class="col-md-4">
+                                        <select id="selectbasic" name="selectbasic" class="form-control" ng-model="fuente.a047codigo" ng-change="listarDesagregacionIPCC()" ng-options="subcategoria.a047codigo as subcategoria.a047nombre for subcategoria in subcategorias">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- desagregación IPCC o partida informativa de la Fuente de emisión -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="selectbasic">Desagregación de la categoría IPCC</label>
+                                    <div class="col-md-4">
+                                        <select id="selectbasic" name="selectbasic" class="form-control" ng-model="fuente.a048codigo"  ng-options="desagregacion.a048codigo as desagregacion.a048nombre for desagregacion in desagregaciones">
+                                        </select>
+                                    </div>
+                                </div>							
+
+                                <!-- factor de emisión GEI-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="textinput">Factor de emisión/remoción</label>  
+                                    <div class="col-md-4">
+                                        <input id="a038factoremision" name="a038factoremision" type="text" ng-model="fuente.a038factoremision" ng-pattern="/^[0-9]+([.][0-9]{1,2})?$/"  placeholder="" required   class="form-control input-md">
+                                    </div>
+                                    <span class="control-label" ng-show="frmFuentes.a038factoremision.$error.pattern"><strong>Formato incorrecto</strong></span>
+                                </div>
+
+                                <!-- Guardar -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="button1id"></label>
+                                    <div class="col-md-8">
+                                        <button id="button1id" name="button1id" class="btn btn-primary" ng-click="guardar()" ng-disabled="frmFuentes.$invalid">Guardar Fuente</button>
+                                        <button id="button2id" name="button2id" class="btn btn-primary" ng-click="cancelar()" >Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>    
+                            
+                        </fieldset>
+                    </form>
+
+
+                        <!-- ============================================================-->
+                        <!-- Formulario reporte de emisiones -->
+                        <!-- ============================================================-->                    
+                        <form class="form-horizontal" name="formReportes" ng-show="muestraFormReportes" >
+                            <fieldset>
+                                <legend>Escenario base de las fuentes de emisión</legend>                    
+                                <div style="text-align:center;">
+
+                                    <table class="table table-bordered" style="width:60%;text-align:center;margin-left:auto;margin-right:auto;">
+                                        <tr>
+                                            <th>Fecha reporte</th>
+                                            <th>Valor</th>
+                                            <td>Acciones</td>
+                                        </tr>
+                                        <tr  ng-repeat="filaReporte in reportes">
+                                            <td >{{filaReporte.a010reprtanfunt | date: 'dd-MM-yyyy' }}</td>
+                                            <td>{{filaReporte.a010valremsn}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" 
+                                                    ng-click="eliminarEscenarioBase(filaReporte)" data-toggle="tooltip" data-placement="top"
+                                                    title="Eliminar reporte"><span class="glyphicon glyphicon-remove"></span></button>                                                                          
+                                            </td>
+                                        </tr>                                
+                                    </table>
+                                </div>
+                                <div id="divFormReportes" >
+
+                                    <!-- fecha reporte -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="fecha">Fecha</label>
+                                        <div class="col-md-5">
+                                            <input id="a010reprtanfunt" name="a010reprtanfunt" type="date" ng-model="reporte.a010reprtanfunt" placeholder="" required class="form-control" >
+                                        </div>
+                                        <span class="control-label" ng-show="formFuentes.a010reprtanfunt.$error.required"><strong>Requerido</strong></span>
+                                    </div>
+
+                                    <!-- factor de emisión GEI-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="textinput">Valor emisión/remoción</label>  
+                                        <div class="col-md-4">
+                                            <input id="a010valremsn" name="a010valremsn" type="text" ng-model="reporte.a010valremsn" ng-pattern="/^[0-9]+([.][0-9]{1,2})?$/"  placeholder="" required class="form-control input-md">
+                                        </div>
+                                        <span class="control-label" ng-show="formFuentes.a010valremsn.$error.pattern"><strong>Formato incorrecto</strong></span>
+                                        <span class="control-label" ng-show="formFuentes.a010valremsn.$error.required"><strong>Requerido</strong></span>
+                                    </div>
+
+                                     <!-- Guardar -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="button1id"></label>
+                                        <div class="col-md-8">
+                                            <button id="button3id" name="button3id" class="btn btn-primary" ng-click="insertarEscenarioBase()" ng-disabled="frmReportes.$invalid">Agregar</button>
+                                            <button id="button4id" name="button4id" class="btn btn-primary" ng-click="cancelar()" >Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>                            
+                    
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

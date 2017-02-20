@@ -110,8 +110,8 @@ public class GenericoDAO {
 
     public Connection conectar() throws Exception {
 
-        //return Conexion.obtenerInstancia().obtenerConexion();
-        return ConexionDS.obtenerConexion();
+        return Conexion.obtenerInstancia().obtenerConexion();
+        //return ConexionDS.obtenerConexion();
         //return ConexionDS.obtenerInstancia();
     }
 
@@ -189,7 +189,7 @@ public class GenericoDAO {
             objetoSalida.setMsgError(e.toString());
             ErrorClass.getMessage(objetoSalida,GenericoDAO.class);
         } finally {
-            ConexionDS.desconectar(con);
+            ConexionDS.desconectar(con);           
             //Conexion.desconectar(con);
         }
 

@@ -17,8 +17,11 @@ import gov.mads.gestor.gpy.fachada.impl.FuentesFAC;
 import gov.mads.gestor.gpy.vista.RegistrarFuenteOE;
 import gov.mads.gestor.gpy.vista.ActualizarFuenteOE;
 import gov.mads.gestor.gpy.vista.ConsultarFuentePorIdOE;
+import gov.mads.gestor.gpy.vista.EliminarEscenarioBaseOE;
 import gov.mads.gestor.gpy.vista.EliminarFuenteOE;
+import gov.mads.gestor.gpy.vista.ListarEscenarioBaseOE;
 import gov.mads.gestor.gpy.vista.ListarFuentesProyectoOE;
+import gov.mads.gestor.gpy.vista.RegistrarEscenarioBaseOE;
 /**
  * REST Web Service
  *
@@ -79,6 +82,39 @@ public class FuentesSERV {
 	public Response listarFuentesPorProyecto(ListarFuentesProyectoOE objetoEntrada) {
 		FuentesFAC fac = new FuentesFAC();
 		ObjetoSalida os = fac.listarFuentesPorProyecto(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/registrarEscenarioBase")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response registrarEscenarioBase(RegistrarEscenarioBaseOE objetoEntrada) {
+		FuentesFAC fac = new FuentesFAC();
+		ObjetoSalida os = fac.registrarEscenarioBase(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/eliminarEscenarioBase")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response eliminarEscenarioBase(EliminarEscenarioBaseOE objetoEntrada) {
+		FuentesFAC fac = new FuentesFAC();
+		ObjetoSalida os = fac.eliminarEscenarioBase(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/listarEscenarioBase")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response listarEscenarioBase(ListarEscenarioBaseOE objetoEntrada) {
+		FuentesFAC fac = new FuentesFAC();
+		ObjetoSalida os = fac.listarEscenarioBase(objetoEntrada);
 		return API.retornarRespuesta(os);
 	}
 }

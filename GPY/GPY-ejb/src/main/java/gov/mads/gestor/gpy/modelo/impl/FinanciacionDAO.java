@@ -13,9 +13,12 @@ import java.util.List;
 import gov.mads.gestor.gpy.vista.RegistrarFtesFinancOE;
 import gov.mads.gestor.gpy.vista.ActualizarFinancOE;
 import gov.mads.gestor.gpy.vista.EliminarFtesFinancOE;
+import gov.mads.gestor.gpy.vista.EliminarInstrmntFinnccnPOE;
 import gov.mads.gestor.gpy.vista.ListarCostosProyectoOE;
 import gov.mads.gestor.gpy.vista.ListarFtesFinancOE;
+import gov.mads.gestor.gpy.vista.ListarInstrmntFinnccnPOE;
 import gov.mads.gestor.gpy.vista.RegistrarCostosProyectoOE;
+import gov.mads.gestor.gpy.vista.RegistrarInstrmntFinnccnPOE;
 
 /**
  *
@@ -141,6 +144,68 @@ public class FinanciacionDAO extends GenericoDAO {
 			parametros.add(new SentenciaParametroDAO("P_A004IDPROYECTO", objetoEntrada.getA004idproyecto(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("P_A004IDFUNTFINNCCN", objetoEntrada.getA004idftefinanc(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,FinanciacionDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,FinanciacionDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+        
+        public ObjetoSalida registrarInstrmntFinnccnP(RegistrarInstrmntFinnccnPOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+                        SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_FINANCIACION.Pr_RegistrarInstrmnt_FinnccnP", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_A009IDTIPINSTRMNTF", objetoEntrada.getInstrumentofinanciacion().getA009idtipinstrmntf().getA102codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			parametros.add(new SentenciaParametroDAO("p_A009IDPROYECTO", objetoEntrada.getInstrumentofinanciacion().getA009idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			parametros.add(new SentenciaParametroDAO("p_A009PORFINNCCNESTMD", objetoEntrada.getInstrumentofinanciacion().getA009porfinnccnestmd().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,FinanciacionDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,FinanciacionDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+        
+        public ObjetoSalida listarInstrmntFinnccnP(ListarInstrmntFinnccnPOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_FINANCIACION.Pr_ListarInstrmnt_FinnccnP", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_A009IDPROYECTO", objetoEntrada.getA009idproyecto(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,FinanciacionDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,FinanciacionDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+        
+        public ObjetoSalida eliminarInstrmntFinnccnP(EliminarInstrmntFinnccnPOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_FINANCIACION.Pr_EliminarInstrmnt_FinnccnP", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_A009CODIGO", objetoEntrada.getA009codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,FinanciacionDAO.class);
 		} catch (Exception e) {

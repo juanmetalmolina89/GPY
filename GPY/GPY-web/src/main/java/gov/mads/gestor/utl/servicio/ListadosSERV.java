@@ -34,6 +34,7 @@ import gov.mads.gestor.utl.vista.ListarMunicipioOE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv2OE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv4OE;
 import gov.mads.gestor.utl.vista.ListarArbolPolNv1OE;
+import gov.mads.gestor.utl.vista.ListarPoliticaOE;
 import gov.mads.gestor.utl.vista.ListarSectorIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubCategoriaIPCCOE;
 import gov.mads.gestor.utl.vista.ListarSubGrupoIPCCOE;
@@ -346,6 +347,17 @@ public class ListadosSERV {
     public Response listarTipoActividadReduccion(ListarTipoActividadReducOE OE) {
         ListadosFAC fac = new ListadosFAC();
         ObjetoSalida objetoSalida = fac.listarTipoActividadReduccion(OE);
+        return API.retornarRespuesta(objetoSalida);
+    }
+    
+    @POST
+    @Path("/listarPoliticas")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    @JWT
+    public Response listarPoliticas(ListarPoliticaOE OE) {
+        ListadosFAC fac = new ListadosFAC();
+        ObjetoSalida objetoSalida = fac.listarPoliticas(OE);
         return API.retornarRespuesta(objetoSalida);
     }
 }

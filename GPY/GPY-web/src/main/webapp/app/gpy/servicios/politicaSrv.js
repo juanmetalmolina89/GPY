@@ -29,6 +29,10 @@ angular.module('politica.services')
 	        return $http.delete(urlBase + '/' + id);
 	    };
 
+            datos.listarPoliticas = function (OE) {
+	        return $http.post( urlBackEnd + 'listados/listarPoliticas', OE);
+	    };
+            
 	    return datos;
 	}]);
 

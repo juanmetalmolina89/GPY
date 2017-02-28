@@ -1,5 +1,7 @@
 package gov.mads.gestor.gpy.fachada.impl;
 import gov.mads.gestor.comun.entidades.Archivo;
+import gov.mads.gestor.comun.entidades.ProyPolitica;
+import gov.mads.gestor.comun.entidades.ProySectrImplmntdr;
 import gov.mads.gestor.comun.vista.CodError;
 import gov.mads.gestor.comun.vista.ErrorClass;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
@@ -11,6 +13,7 @@ import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasProyectoOE;
 import gov.mads.gestor.gpy.vista.RegistrarAdjuntoPoliticaOE;
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaOE;
+import gov.mads.gestor.gpy.vista.RegistrarSectorImplementadorOE;
 import gov.mads.gestor.gpy.vista.RegistrarSoporteOE;
 import gov.mads.gestor.utl.fachada.IListadosFAC;
 import gov.mads.gestor.utl.fachada.impl.ListadosFAC;
@@ -35,7 +38,15 @@ public class PoliticaFAC implements IPoliticaFAC {
 	private final PoliticaDAO politicaDAO = new PoliticaDAO();
 
 	public ObjetoSalida registrarPolitica(RegistrarPoliticaOE objetoEntrada) {
-		return politicaDAO.registrarPolitica(objetoEntrada);
+            ObjetoSalida objetoSalida = new ObjetoSalida(); 
+            for (ProyPolitica item : objetoEntrada.getProyecto().getProyPoliticaList()) {
+                objetoEntrada.setProypolitica(item);
+                objetoSalida = politicaDAO.registrarPolitica(objetoEntrada);
+                if (objetoSalida.getCodError() != CodError.OPERACION_CORRECTA) {
+                        objetoSalida.setMsgError(objetoSalida.getMsgError() + "<br><br>" + objetoSalida.getMsgError());
+                }    
+            }        
+            return objetoSalida;
 	}
         // Faltantes
         public ObjetoSalida consultarPoliticaPorId(ConsultarPoliticaPorIdOE OE) {

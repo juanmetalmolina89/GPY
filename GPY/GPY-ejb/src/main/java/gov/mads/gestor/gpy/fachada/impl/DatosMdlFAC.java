@@ -14,6 +14,7 @@ import gov.mads.gestor.gpy.vista.ConsultarAdjuntoOE;
 import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarCartaNObjOE;
 import gov.mads.gestor.gpy.vista.ConsultarConsideracOE;
+import gov.mads.gestor.gpy.vista.ConsultarFiltroOE;
 import gov.mads.gestor.gpy.vista.ConsultarSoportePorIdOE;
 import gov.mads.gestor.gpy.vista.ListarAdjuntosOE;
 import gov.mads.gestor.gpy.vista.RegistrarAdjuntoOE;
@@ -251,7 +252,7 @@ public class DatosMdlFAC implements IDatosMdlFAC {
                 String numrrdcd = "";
                 for (HashMap<String, Object> item : objetoSalida.getRespuesta()) {
                     
-                    numrrdcd = item.get("a008numrradcd").toString();
+                    //numrrdcd = item.get("a008numrradcd").toString();
                     nombreAdjunto = item.get("a026nomarchivo").toString();
                     //rutaAdjunto = item.get("A014RUTAADJUNTO").toString();
                 }
@@ -259,4 +260,11 @@ public class DatosMdlFAC implements IDatosMdlFAC {
             }
             return adjunto;
         }
+
+        @Override
+        public ObjetoSalida consultarProyAdjuntoFiltro(ConsultarFiltroOE OE) {
+            return datosMdlDAO.consultarProyAdjuntoFiltro(OE);
+        }
+        
+        
 }

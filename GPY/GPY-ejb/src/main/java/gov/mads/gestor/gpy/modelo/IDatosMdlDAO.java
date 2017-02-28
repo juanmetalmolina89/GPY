@@ -7,6 +7,7 @@ import gov.mads.gestor.gpy.vista.ConsultarAdjuntoOE;
 import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarCartaNObjOE;
 import gov.mads.gestor.gpy.vista.ConsultarConsideracOE;
+import gov.mads.gestor.gpy.vista.ConsultarFiltroOE;
 import gov.mads.gestor.gpy.vista.ListarAdjuntosOE;
 import gov.mads.gestor.gpy.vista.RegistrarAdjuntoOE;
 import gov.mads.gestor.gpy.vista.RegistrarConsideracOE;
@@ -31,4 +32,6 @@ public interface IDatosMdlDAO {
         ObjetoSalida actualizarCartaNObj(ActualizarCartaNObjOE OE);
         ObjetoSalida actualizarAdjunto(ActualizarAdjuntoOE OE);
         ObjetoSalida consultarAdjuntoPorID(ConsultarAdjuntoPorIdOE OE);
+        
+        ObjetoSalida consultarProyAdjuntoFiltro(ConsultarFiltroOE OE);
 }

@@ -71,7 +71,16 @@ public class RepAnioFteIndcdr implements Serializable {
     @JoinColumn(name = "A012IDFUENTE", referencedColumnName = "A039CODIGO")
     @ManyToOne(optional = false)
     private ObjetivoEspecifico a012idfuente;
-
+    @Column(name = "A012FECHAMETA")
+    private Date a012fechameta;
+    @Column(name = "A012VALORMETA")
+    private BigDecimal a012valormeta;
+    @Column(name = "A012ACCIONESREALIZADAS")
+    private String a012accionesrealizadas;
+    @Column(name = "A012RECURSSINVRTDS")
+    private BigDecimal a012recurssinvrtds;
+    
+    
     public RepAnioFteIndcdr() {
     }
 
@@ -197,6 +206,38 @@ public class RepAnioFteIndcdr implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.RepAnioFteIndcdr[ a012codigo=" + a012codigo + " ]";
+    }
+
+    public BigDecimal getA012valormeta() {
+        return a012valormeta;
+    }
+
+    public void setA012valormeta(BigDecimal a012valormeta) {
+        this.a012valormeta = a012valormeta;
+    }
+
+    public Date getA012fechameta() {
+        return a012fechameta;
+    }
+
+    public void setA012fechameta(Date a012fechameta) {
+        this.a012fechameta = a012fechameta;
+    }
+
+    public String getA012accionesrealizadas() {
+        return a012accionesrealizadas;
+    }
+
+    public void setA012accionesrealizadas(String a012accionesrealizadas) {
+        this.a012accionesrealizadas = a012accionesrealizadas;
+    }
+
+    public BigDecimal getA012recurssinvrtds() {
+        return a012recurssinvrtds;
+    }
+
+    public void setA012recurssinvrtds(BigDecimal a012recurssinvrtds) {
+        this.a012recurssinvrtds = a012recurssinvrtds;
     }
     
 }

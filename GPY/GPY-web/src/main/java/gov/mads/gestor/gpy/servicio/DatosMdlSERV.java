@@ -21,6 +21,7 @@ import gov.mads.gestor.gpy.vista.ConsultarAdjuntoOE;
 import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarCartaNObjOE;
 import gov.mads.gestor.gpy.vista.ConsultarConsideracOE;
+import gov.mads.gestor.gpy.vista.ConsultarFiltroOE;
 import gov.mads.gestor.gpy.vista.ConsultarSoportePorIdOE;
 import gov.mads.gestor.gpy.vista.ListarAdjuntosOE;
 import gov.mads.gestor.gpy.vista.RegistrarConsideracOE;
@@ -185,4 +186,22 @@ public class DatosMdlSERV {
                         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
                 }
 	}
+        
+        @POST
+	@Path("/consultarAdjuntoPorFiltro")
+	//@Consumes({MediaType.APPLICATION_JSON})
+	//@Produces("application/pdf")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	
+        @JWT
+	public Response consultarAdjuntoPorFiltro(ConsultarFiltroOE objetoEntrada) {
+		/*DatosMdlFAC fac = new DatosMdlFAC();
+		ObjetoSalida os = fac.consultarAdjunto(objetoEntrada);
+		return API.retornarRespuesta(os);*/
+            DatosMdlFAC fac = new DatosMdlFAC();
+            ObjetoSalida objetoSalida = fac.consultarProyAdjuntoFiltro(objetoEntrada);
+            return API.retornarRespuesta(objetoSalida);
+	}
+
 }

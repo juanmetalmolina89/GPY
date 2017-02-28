@@ -121,8 +121,61 @@
                     <!-- Si estamos en registro, debe mostrar el  -->
                     <!-- formulario de instrumentos de financiación -->
                     <!-- ============================================================-->
-                    <!-- <div ng-show="false" ng-include src="'app/gpy/vistas/instrumentoFinanciacion.html'"></div>-->
+                    
+                    <br/>
+                    <form class="form-horizontal" id="formInstrumentos" name="formInstrumentos">
+                        <fieldset ng-disabled="sesion.perfil == INVITADO">
+                            <!-- Form Name -->
+                            <legend>Instrumentos de financiación</legend>
 
+                            <table  class="table table-bordered">
+                                <tr>
+                                    <th>Financiación</th>
+                                    <th>Distribución</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                <tr ng-repeat="filaInstrumentos in instrumentos">
+                                    <td>{{filaInstrumentos.a102valor}}</td>
+                                    <td>{{filaInstrumentos.a009porfinnccnestmd}}%</td>
+                                    <td><button type="button" class="btn btn-primary" 
+                                            ng-click="eliminarInstrumento(filaInstrumentos)" data-toggle="tooltip" data-placement="top"
+                                            title="Eliminar instrumento de financiación"><span class="glyphicon glyphicon-remove"></span></button></td>    
+                                </tr>
+                                
+                            </table>
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="selectbasic">Tipo de instrumento de finaciación</label>
+                                <div class="col-md-4">
+                                    <select id="tiposInstrumentos" name="tiposInstrumentos" class="form-control" required ng-model="instrumento.a009idtipinstrmntf.a102codigo"  ng-options="tipoInstrumento.a102codigo as tipoInstrumento.a102valor for tipoInstrumento in tiposInstrumentos">
+                                        <option value="1">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+                           
+                            <div class="form-group" ng-class="{'has-error': !formInstrumentos.a009porfinnccnestmd.$valid}">
+                                <label class="col-md-4 control-label" for="a009porfinnccnestmd"><font style="color: #a94442">*</font> Distribución porcentual de financiación</label>
+                                <div class="col-md-4">
+                                    <input id="a009porfinnccnestmd" name="a009porfinnccnestmd" required
+                                           placeholder="%" ng-model="instrumento.a009porfinnccnestmd" maxlength="5" format="number"
+                                           class="form-control input-md" type="text">
+                                </div>
+                                <span class="control-label"
+                                      ng-show="formInstrumentos.a009porfinnccnestmd.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                            
+
+                            <!-- Button (Double) -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="button1id"></label>
+                                <div class="col-md-8">
+                                    <button id="btnGuardarInstrumento" name="btnGuardarInstrumento" class="btn btn-primary"  ng-disabled="formInstrumentos.$invalid" ng-click="guardarInstrumento()">Guardar</button>
+                                    <button id="btnCancelarInstrumento" name="btnCancelarInstrumento" class="btn btn-primary" ng-click="cancelar()">Cancelar</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
 
                 </div>
             </div>

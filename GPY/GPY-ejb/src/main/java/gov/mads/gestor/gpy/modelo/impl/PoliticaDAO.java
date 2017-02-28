@@ -52,7 +52,8 @@ public class PoliticaDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A003NIVEL3", objetoEntrada.getProypolitica().getA007idpolitica().getA003nivel3(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A003NOMNIVEL3", objetoEntrada.getProypolitica().getA007idpolitica().getA003nomnivel3(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
 			parametros.add(new SentenciaParametroDAO("p_A003NOMNIVEL4", objetoEntrada.getProypolitica().getA007idpolitica().getA003nomnivel4(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-			parametros.add(new SentenciaParametroDAO("P_A026CODIGO", objetoEntrada.getPolitica().getA003idarchiv().getA026codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			Integer idarchivo = (objetoEntrada.getProypolitica().getA007idpolitica().getA003idarchiv() == null) ?  null : objetoEntrada.getProypolitica().getA007idpolitica().getA003idarchiv().getA026codigo();
+                        parametros.add(new SentenciaParametroDAO("P_A026CODIGO", idarchivo, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         //parametros.add(new SentenciaParametroDAO("p_A026DESCRPCNARCHIV", objetoEntrada.getPolitica().getA003idarchiv().getA026descrpcnarchiv(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                         //parametros.add(new SentenciaParametroDAO("p_A026NOMARCHIVO", objetoEntrada.getPolitica().getA003idarchiv().getA026nomarchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
 			//parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getPolitica().getA003idarchiv().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));

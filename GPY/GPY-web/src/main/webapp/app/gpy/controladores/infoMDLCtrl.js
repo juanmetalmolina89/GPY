@@ -31,9 +31,9 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                 /* Métodos */
 
                 $scope.registrarConsiderac = function () {
-                    $scope.OE = new Object();
+                    $scope.OE = {};
                     $scope.OE.idUsuario = $scope.idUsuario;
-                    $scope.OE.proyecto = $scope.proyecto;
+                    $scope.OE.proyecto = {}; //$scope.proyecto;
                     $scope.OE.proyecto.a002codigo = $scope.pid;
                     delete $scope.OE.proyecto.coddivipola; // para no tener que alterar todos los SP
                     infoMDLSrv.registrarConsiderac($scope.OE)
@@ -58,7 +58,7 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.proyecto = $scope.proyecto;
-
+                    delete $scope.OE.proyecto.coddivipola; // para no tener que alterar todos los SP
                     infoMDLSrv.registrarCartaNObj($scope.OE)
                             .then(function (response) {
                                 comunSrv.mensajeSalida(response);
@@ -141,10 +141,24 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.a002tipproyct = $scope.tpid;
                     $scope.OE.a0025idpantalla = $scope.pantalla;
-                    infoMDLSrv.listarAdjuntos($scope.OE)
+                    $scope.adjuntos = [];
+                    $scope.filtro={"idUsuario":$scope.idUsuario ,"filtro":" NVL(A008IDPROYECTO," + $scope.pid + ") = " + $scope.pid +" AND A025IDPANTALLA=" + $scope.pantalla + " AND A025IDTIPPROYCT=" + $scope.tpid }; //7: Consideración temprana (mdl1)
+                    infoMDLSrv.consultarAdjuntoPorFiltro($scope.filtro)
                             .then(function (response) {
-                                $scope.adjuntos = response.data.respuesta;
-                                //@todo mostrar adjuntos de acuerdo a este resultado
+                                for(var i=0; i< response.data.respuesta.length; i++) {
+                                    var respuesta = response.data.respuesta[i];
+                                    respuesta.radicado = respuesta.a008numrradcd
+                                    if(respuesta.a026nomarchivo)
+                                    {
+                                        respuesta.mostrarUpload = false;                                       
+                                    }
+                                    else
+                                    {
+                                        respuesta.mostrarUpload = true;
+                                    }
+                                    $scope.adjuntos.push(respuesta);
+                                    //$scope.filtro={"idUsuario":$scope.idUsuario ,"filtro":"A008IDPROYECTO=" + $scope.pid +" AND A008IDADJNT= " + response.data.respuesta[i].a025codigo};
+                                }
                             }, function (error) {
                                 comunSrv.mensajeSalida(error);
                             });
@@ -153,7 +167,11 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                 $scope.guardarAdjuntos = function () {
 
                     angular.forEach($scope.adjuntos, function (value, key) {
-                        $scope.registrarAdjunto(value);
+                        if(value.adjunto)
+                        {
+                            $scope.registrarAdjunto(value);
+                        }
+          
 
                     });
                 };
@@ -166,12 +184,32 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                             }, function (error) {
                                 comunSrv.mensajeSalida(error);
                             });
-                };
+                };                               
+                
+                $scope.consultarSoportePorId = function (archivo) {
 
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.a002codigo = parseInt($scope.pid);
+                    $scope.OE.a008idadjunto = parseInt(archivo.a008idadjnt);
+
+                    infoMDLSrv.consultarSoportePorId($scope.OE).then(function (response) {
+                        //Se llama método de utilería que descarga del archivo
+                        comunSrv.descargarArchivo(response);
+                        //comunSrv.mensajeSalida(response);
+                    }, function (error) {
+                        comunSrv.mensajeSalida(error);
+                    });
+                };
+                
+                $scope.mostrarCampoUpload = function (adjunto, mostrar) {
+                    adjunto.mostrarUpload = mostrar;
+                };
+                
                 /**************************************************************/
                 /* Inicializar formulario */
                 $scope.proyecto = infoProyecto.proyecto;
-
+                
                 if ($location.path().substr(0, '/gpy/etapa1pre/'.length) === '/gpy/etapa1pre/') {
                     //etapa 1
                     $scope.pantalla = MDLETP1PRE;
@@ -181,12 +219,13 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                     $scope.pantalla = MDLETP2PRE;
                     $scope.listarEscalas();
                     $scope.listarMetdMDL();
+                
                 } else if ($location.path().substr(0, '/gpy/etapa3pre/'.length) === '/gpy/etapa3pre/') {
                     //etapa 2
                     $scope.pantalla = MDLETP3PRE;
                 }
                 $scope.listarAdjuntos();
-
+                $scope.numAdjuntos = $scope.adjuntos.length;
 
             }]);
 

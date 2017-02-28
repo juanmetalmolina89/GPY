@@ -16,35 +16,54 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class ReporteOE extends ObjetoEntrada{
+    
     @XmlElement
-    private Integer idReporte;
+    private Integer anio;
     @XmlElement
-    private List<Long> listaProyectos;
+    private Integer a001codigo;
     @XmlElement
-    private Long idproyecto;
-
-    public Integer getIdReporte() {
-        return idReporte;
+    private Integer a103codigo;
+    @XmlElement
+    private String nombrePlantilla;
+    
+    public ReporteOE(Integer anio, Integer a001codigo, Integer a103codigo,Integer idUsuario){
+        this.anio = anio;
+        this.a001codigo = a001codigo;
+        this.a103codigo = a103codigo;
+        this.setIdUsuario(idUsuario);
+    }
+    
+    public Integer getAnio() {
+        return anio;
     }
 
-    public void setIdReporte(Integer idReporte) {
-        this.idReporte = idReporte;
+    public void setAnio(Integer anio) {
+        this.anio = anio;
     }
 
-    public List<Long> getListaProyectos() {
-        return listaProyectos;
+    public Integer getA001codigo() {
+        return a001codigo;
     }
 
-    public void setListaProyectos(List<Long> listaProyectos) {
-        this.listaProyectos = listaProyectos;
+    public void setA001codigo(Integer a001codigo) {
+        this.a001codigo = a001codigo;
     }
 
-    public Long getIdproyecto() {
-        return idproyecto;
+    public Integer getA103codigo() {
+        return a103codigo;
     }
 
-    public void setIdproyecto(Long idproyecto) {
-        this.idproyecto = idproyecto;
+    public void setA103codigo(Integer a103codigo) {
+        this.a103codigo = a103codigo;
     }
+
+    public String getNombrePlantilla() {
+        return nombrePlantilla;
+    }
+
+    public void setNombrePlantilla(String nombrePlantilla) {
+        this.nombrePlantilla = nombrePlantilla;
+    }
+
     
 }

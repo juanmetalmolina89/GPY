@@ -42,14 +42,14 @@ angular.module('fuente.controllers', ['ngSanitize'])
         $scope.listar = function () {
             
             // FICASA 20170217: prueba para el redirect con vital:
-                    var urlBase = 'http://127.0.0.1:8088/GPY-web/servicios/usuario/redireccionarVital';
+                    var urlBase = 'http://127.0.0.1:8080/GPY-web/servicios/usuario/redireccionarVital';
                     var datosBody = "<root><datosSeguridad><token>xxxxxxx</token><mac>xxxxxxx</mac></datosSeguridad><datosConexion><aliasUsuarioOrigen>88888888</aliasUsuarioOrigen><aliasUsuarioDestino>GPY88888888</aliasUsuarioDestino><autoridadAmbiental>xxxx</autoridadAmbiental><sistemaOrigen>xxxx</sistemaOrigen><sistemaDestino>xxxx</sistemaDestino><codigoOperacion>xxxxx</codigoOperacion></datosConexion><datosOperacion>...</datosOperacion></root>";
                 
                     $http({ 
                         method: 'POST',
                         url: urlBase,
                         data: datosBody,
-                        headers: { "Content-Type": 'application/xml',"Access-Control-Allow-Origin": "http://127.0.0.1:8088"}
+                        headers: { "Content-Type": 'application/xml' }
                     });
             // fin prueba
                 

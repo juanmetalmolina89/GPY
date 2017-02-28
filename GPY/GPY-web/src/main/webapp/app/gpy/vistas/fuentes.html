@@ -23,7 +23,7 @@
                     <form class="form-horizontal" ng-show="muestraForm" name="frmFuentes">
                         <fieldset ng-disabled="sesion.perfil == INVITADO">
                             <!-- Fuentes de Emisión -->
-                            <legend>Fuentes de Emisión</legend>
+                            <legend>Fuentes de Emisión / Remoción GEI</legend>
                             
                             <table class="table table-striped table-bordered">
                                 <tr>
@@ -49,7 +49,7 @@
 
                             <!-- Fuente de emisión GEI--> 
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="textinput">Fuente de emisión GEI</label>  
+                                <label class="col-md-4 control-label" for="textinput">Fuente de emisión / remoción GEI</label>  
                                 <div class="col-md-4">
                                     <input id="a038nombrfunt" name="a038nombrfunt" type="text" ng-model="fuente.a038nombrfunt"  placeholder="" required   class="form-control input-md">
                                 </div> 
@@ -84,7 +84,7 @@
 							
                             <!-- Sub-Categoría IPCC o partida informativa de la Fuente de emisión -->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="selectbasic">Sub-Categoría IPCC o partida informativa de la Fuente de emisión </label>
+                                <label class="col-md-4 control-label" for="selectbasic">Sub-Categoría IPCC o partida informativa de la Fuente de emisión / remoción GEI </label>
                                 <div class="col-md-4">
                                     <select id="selectbasic" name="selectbasic" class="form-control" ng-model="fuente.a047codigo" ng-change="listarDesagregacionIPCC()" ng-options="subcategoria.a047codigo as subcategoria.a047nombre for subcategoria in subcategorias">
                                     </select>
@@ -103,7 +103,7 @@
 
                             <!-- factor de emisión GEI-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="textinput">Factor de emisión/remoción</label>  
+                                <label class="col-md-4 control-label" for="textinput">Factor de emisión/remoción GEI</label>  
                                 <div class="col-md-4">
                                     <input id="a038factoremision" name="a038factoremision" type="text" ng-model="fuente.a038factoremision" ng-pattern="/^[0-9]+([.][0-9]{1,2})?$/"  placeholder="" required   class="form-control input-md">
                                 </div>

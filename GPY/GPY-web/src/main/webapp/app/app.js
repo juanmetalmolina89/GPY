@@ -2,17 +2,16 @@
  * Autor: Yeimmy Lee 
  */
 'use strict';
-
-angular.module('GPYApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngResource', 'angular-jwt', 'angular-storage', 'ngFileUpload'
+angular.module('GPYApp', ['ui.tree','ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngResource', 'angular-jwt', 'angular-storage', 'ngFileUpload'
 				, 'usuario.services', 'comun.services',  'listado.services'
                                 ,'persona.services', 'representante.services', 'contacto.services'
                                 , 'datosBasicos.services', 'actividad.services', 'infoMDL.services'
                                 , 'avance.services', 'grilla.services','financiacion.services','politica.services'
-                                , 'participante.services', 'fuente.services','aprobarprereg.services','proyecto.services'
+                                , 'participante.services', 'fuente.services','aprobarprereg.services','proyecto.services','reporte.services'
 				, 'usuario.controllers', 'comun.controllers', 'listado.controllers', 'persona.controllers'
                                 ,'representante.controllers','contacto.controllers','datosBasicos.controllers','actividad.controllers'
                                 ,'infoMDL.controllers','avance.controllers','financiacion.controllers','politica.controllers'
-                                , 'participante.controllers' , 'fuente.controllers','aprobarprereg.controllers','proyecto.controllers'
+                                , 'participante.controllers' , 'fuente.controllers','aprobarprereg.controllers','proyecto.controllers','reporte.controllers'
 				, 'GPYApp.directives'
 				]);
                                 
@@ -30,11 +29,12 @@ angular.module('infoMDL.services'                , []);
 angular.module('avance.services'                 , []);
 angular.module('grilla.services'                 , []);
 angular.module('financiacion.services'           , []);
-angular.module('politica.services'           , []);
+angular.module('politica.services'               , []);
 angular.module('participante.services'           , []);
-angular.module('fuente.services'           		 , []);
-angular.module('aprobarprereg.services'           		 , []);
+angular.module('fuente.services'           	 , []);
+angular.module('aprobarprereg.services'          , []);
 angular.module('proyecto.services'               , []);
+angular.module('reporte.services'                , []);
 
 
 /* Controllers */
@@ -54,7 +54,7 @@ angular.module('fuente.controllers'              , []);
 angular.module('politica.controllers'              , []);
 angular.module('aprobarprereg.controllers'              , []);
 angular.module('proyecto.controllers'            , []);
-
+angular.module('reporte.controllers'            , []);
 /* Directives */
 angular.module('GPYApp.directives'               , []);
 

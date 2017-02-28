@@ -32,33 +32,7 @@ angular.module('financiacion.controllers', ['ngSanitize'])
                 $scope.financiacion = {};
                 $scope.financiacion.a002codigo = $scope.pid;
                 $scope.editar = false;
-                $scope.cargarInfoProyecto = function () {
-                    $scope.OE = new Object();
-                    $scope.OE.idUsuario = $scope.idUsuario;
-                    $scope.OE.a002codigo = $scope.pid;
-                    financiacionSrv.cargarCostos($scope.OE)
-                            .then(function (response) {
-                                $scope.costos = response.data.respuesta[0];
-
-                                //console.log(JSON.stringify($scope.costos));
-                                if ($scope.costos.a002costsestmdformlcn && $scope.costos.a002busqudfinnccn && $scope.costos.a002costtonldrdcr && $scope.costos.a002costsestmdtotl && $scope.costos.a002trm) {
-                                    $scope.financiacion.a002costsestmdformlcn = $scope.costos.a002costsestmdformlcn;
-                                    $scope.financiacion.a002busqudfinnccn = $scope.costos.a002busqudfinnccn;
-                                    $scope.financiacion.a002costtonldrdcr = $scope.costos.a002costtonldrdcr;
-                                    $scope.financiacion.a002costsestmdtotl = $scope.costos.a002costsestmdtotl;
-                                    $scope.financiacion.a002trm = $scope.costos.a002trm;
-                                    $scope.financiacion.a002codigo = $scope.costos.a002codigo;
-                                    $scope.editar = true;
-                                } else {
-                                    $scope.financiacion = {};
-                                }
-                                $scope.cargarFuentesConfiguradas();
-                            }, function (error) {
-                                comunSrv.mensajeSalida(error);
-                            });
-                };
-                $scope.cargarInfoProyecto();
-
+ 
                 $scope.cargarFuentesConfiguradas = function () {
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
@@ -119,6 +93,33 @@ angular.module('financiacion.controllers', ['ngSanitize'])
                             });
                 };
 
+
+                $scope.listarTiposInstrumentos = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.categoria = TIPOINSTRUFINAN;
+                    listadoSrv.listarParametros($scope.OE)
+                            .then(function (response) {
+                                $scope.tiposInstrumentos = response.data.respuesta;
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
+                
+                $scope.listarInstrumentosFinanciacion = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.a009idproyecto = $scope.pid;
+					
+                    financiacionSrv.listarInstrumentos($scope.OE)
+                            .then(function (response) {
+                                $scope.instrumentos = response.data.respuesta;
+                            }, function (error) {
+                                $scope.mensaje = error.data.respuesta;
+                                console.log($scope.mensaje);
+                            });
+                };
+                
                 $scope.a004idproyecto = {};
                 $scope.guardar = function (form) {
                     //console.log("guardardoi info...");
@@ -189,6 +190,31 @@ angular.module('financiacion.controllers', ['ngSanitize'])
                     }
                 };
 
+
+                $scope.guardarInstrumento = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.instrumentofinanciacion = new Object();
+                    
+                    //{"idUsuario":1,"instrumentofinanciacion":{"a009idtipinstrmntf":{"a102codigo":13},"a009idproyecto":{"a002codigo":1},"a009porfinnccnestmd":10000}}
+                    
+                    $scope.OE.instrumentofinanciacion.a009idtipinstrmntf = $scope.instrumento.a009idtipinstrmntf;
+                    $scope.OE.instrumentofinanciacion.a009idproyecto = {"a002codigo":$scope.pid};					
+                    $scope.OE.instrumentofinanciacion.a009porfinnccnestmd = $scope.instrumento.a009porfinnccnestmd;
+                                      
+                    financiacionSrv.insertarInstrumento($scope.OE)
+                        .then(function (response) {
+                                $scope.mensaje = 'Instrumento insertado con éxito.';
+                                $scope.instrumentofinanciacion=[];
+                                $scope.listarInstrumentosFinanciacion();
+                                console.log($scope.mensaje);
+                        }, function (error) {
+                                $scope.mensaje = error.data.respuesta;
+                                console.log($scope.mensaje);
+                        }); 
+			
+                };
+                
                 $scope.limpiar = function () {
                     $scope.objparametrows = {};
                     $scope.listfuentesfinancSelected = [];
@@ -233,6 +259,51 @@ angular.module('financiacion.controllers', ['ngSanitize'])
                             });
                 };
 
+                $scope.eliminarInstrumento = function (esteInstrumento) {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.a009codigo=esteInstrumento.a009codigo;
+					
+                    financiacionSrv.borrarInstrumento($scope.OE)
+                        .then(function (response) {
+                            $scope.mensaje = 'Participante eliminado con éxito.';
+                            $scope.instrumento=[];
+                            $scope.listarInstrumentosFinanciacion();  
+                        }, function (error) {
+                            $scope.mensaje = error.data.respuesta;
+                            console.log($scope.mensaje);
+                        });
+                };              
+
+
+               $scope.cargarInfoProyecto = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.a002codigo = $scope.pid;
+                    financiacionSrv.cargarCostos($scope.OE)
+                            .then(function (response) {
+                                $scope.costos = response.data.respuesta[0];
+
+                                //console.log(JSON.stringify($scope.costos));
+                                if ($scope.costos.a002costsestmdformlcn && $scope.costos.a002busqudfinnccn && $scope.costos.a002costtonldrdcr && $scope.costos.a002costsestmdtotl && $scope.costos.a002trm) {
+                                    $scope.financiacion.a002costsestmdformlcn = $scope.costos.a002costsestmdformlcn;
+                                    $scope.financiacion.a002busqudfinnccn = $scope.costos.a002busqudfinnccn;
+                                    $scope.financiacion.a002costtonldrdcr = $scope.costos.a002costtonldrdcr;
+                                    $scope.financiacion.a002costsestmdtotl = $scope.costos.a002costsestmdtotl;
+                                    $scope.financiacion.a002trm = $scope.costos.a002trm;
+                                    $scope.financiacion.a002codigo = $scope.costos.a002codigo;
+                                    $scope.editar = true;
+                                } else {
+                                    $scope.financiacion = {};
+                                }
+                                $scope.cargarFuentesConfiguradas();
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                    $scope.listarTiposInstrumentos();        
+                };
+               $scope.cargarInfoProyecto();
+               $scope.listarInstrumentosFinanciacion();
             }]);
 
 

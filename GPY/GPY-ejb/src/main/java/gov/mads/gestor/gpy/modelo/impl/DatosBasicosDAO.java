@@ -214,9 +214,9 @@ public class DatosBasicosDAO extends GenericoDAO{
             parametros.add(new SentenciaParametroDAO("p_A002IDTIPPERDACRDTCN", a002idtipperdacrdtcn, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             java.sql.Date a002fechinicio = (objetoEntrada.getProyecto().getA002fechinicio() == null) ? null : new java.sql.Date(objetoEntrada.getProyecto().getA002fechinicio().getTime());
             parametros.add(new SentenciaParametroDAO("p_A002FECHINICIO", a002fechinicio, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
-            java.sql.Date a002fechfin = (objetoEntrada.getProyecto().getA002fechfin() == null) ? null : new java.sql.Date(objetoEntrada.getProyecto().getA002fechinicio().getTime());           
+            java.sql.Date a002fechfin = (objetoEntrada.getProyecto().getA002fechfin() == null) ? null : new java.sql.Date(objetoEntrada.getProyecto().getA002fechfin().getTime());           
             parametros.add(new SentenciaParametroDAO("p_A002FECHFIN", a002fechfin, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
-            parametros.add(new SentenciaParametroDAO("p_A002APLICMERCDVOLNTR", objetoEntrada.getProyecto().getA002aplicmercdvolntr(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
+            parametros.add(new SentenciaParametroDAO("p_A002APLICMERCDVOLNTR", objetoEntrada.getProyecto().getA002aplicmercdvolntr(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             Integer a002idestndrmercdvolntr = (objetoEntrada.getProyecto().getA002idestndrmercdvolntr() == null) ? null : objetoEntrada.getProyecto().getA002idestndrmercdvolntr().getA102codigo();
             parametros.add(new SentenciaParametroDAO("p_A002IDESTNDRMERCDVOLNTR", a002idestndrmercdvolntr, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             

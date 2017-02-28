@@ -25,11 +25,23 @@ angular.module('financiacion.services')
 	        return $http.post(urlBase + '/eliminarFtesFinanc', OE);
 	    };
             
+            datos.insertarInstrumento = function (OE) {
+	        return $http.post(urlBase + '/registrarInstrmntFinnccnP', OE);
+	    };
+             
+            datos.listarInstrumentos = function (OE) {
+	        return $http.post(urlBase + '/listarInstrmntFinnccnP', OE);
+	    };
             
 	    datos.listar = function () {
 	        return $http.get(urlBase);
 	    };
+            
+            datos.borrarInstrumento = function (OE) {
+	        return $http.post(urlBase + '/eliminarInstrmntFinnccnP', OE);
+	    };
 
+            
 	    datos.consultarPorId = function (id) {
 	        return $http.get(urlBase + '/' + id);
 	    };

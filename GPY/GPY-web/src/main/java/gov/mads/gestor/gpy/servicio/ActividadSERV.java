@@ -16,11 +16,19 @@ import javax.ws.rs.core.Response;
 import gov.mads.gestor.gpy.fachada.impl.ActividadFAC;
 import gov.mads.gestor.gpy.vista.RegistrarActividadOE;
 import gov.mads.gestor.gpy.vista.ActualizarActividadOE;
+import gov.mads.gestor.gpy.vista.ActualizarIndicadorOE;
+import gov.mads.gestor.gpy.vista.ActualizarMetaOE;
 import gov.mads.gestor.gpy.vista.ConsultarActividadPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarGeometriaPorIdOE;
+import gov.mads.gestor.gpy.vista.ConsultarIndicadorOE;
+import gov.mads.gestor.gpy.vista.ConsultarMetaOE;
 import gov.mads.gestor.gpy.vista.ConsultarSoportePorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarActividadOE;
+import gov.mads.gestor.gpy.vista.EliminarIndicadorOE;
+import gov.mads.gestor.gpy.vista.EliminarMetaOE;
 import gov.mads.gestor.gpy.vista.ListarActividadesOE;
+import gov.mads.gestor.gpy.vista.RegistrarIndicadorOE;
+import gov.mads.gestor.gpy.vista.RegistrarMetaOE;
 import java.io.File;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 /**
@@ -143,6 +151,96 @@ public class ActividadSERV {
 	public Response listarActividades(ListarActividadesOE objetoEntrada) {
 		ActividadFAC fac = new ActividadFAC();
 		ObjetoSalida os = fac.listarActividades(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/registrarIndicador")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response registrarIndicador(RegistrarIndicadorOE objetoEntrada) {
+		ActividadFAC fac = new ActividadFAC();
+		ObjetoSalida os = fac.registrarIndicador(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+
+	@POST
+	@Path("/actualizarIndicador")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response actualizarIndicador(ActualizarIndicadorOE objetoEntrada) {
+		ActividadFAC fac = new ActividadFAC();
+		ObjetoSalida os = fac.actualizarIndicador(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+
+	@POST
+	@Path("/eliminarIndicador")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response eliminarIndicador(EliminarIndicadorOE objetoEntrada) {
+		ActividadFAC fac = new ActividadFAC();
+		ObjetoSalida os = fac.eliminarIndicador(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        // @author juanmetalmolina 
+        // Se agrego el metodo consultar Actividad por Id
+        @POST
+	@Path("/consultarIndicador")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response consultarIndicador(ConsultarIndicadorOE objetoEntrada) {
+		ActividadFAC fac = new ActividadFAC();
+		ObjetoSalida os = fac.consultarIndicador(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/registrarMeta")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response registrarMeta(RegistrarMetaOE objetoEntrada) {
+		ActividadFAC fac = new ActividadFAC();
+		ObjetoSalida os = fac.registrarMeta(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+
+	@POST
+	@Path("eliminarMeta")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response eliminarMeta(EliminarMetaOE objetoEntrada) {
+		ActividadFAC fac = new ActividadFAC();
+		ObjetoSalida os = fac.eliminarMeta(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+
+	@POST
+	@Path("/actualizarMeta")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response actualizarMeta(ActualizarMetaOE objetoEntrada) {
+		ActividadFAC fac = new ActividadFAC();
+		ObjetoSalida os = fac.actualizarMeta(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        // @author juanmetalmolina 
+        // Se agrego el metodo consultar Actividad por Id
+        @POST
+	@Path("/consultarMeta")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response consultarMeta(ConsultarMetaOE objetoEntrada) {
+		ActividadFAC fac = new ActividadFAC();
+		ObjetoSalida os = fac.consultarMeta(objetoEntrada);
 		return API.retornarRespuesta(os);
 	}
 }

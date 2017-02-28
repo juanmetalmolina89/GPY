@@ -5,6 +5,8 @@
  */
 package gov.mads.gestor.rpt.fachada;
 
+import gov.mads.gestor.comun.vista.ObjetoSalida;
+import gov.mads.gestor.rpt.vista.ListarReporteOE;
 import gov.mads.gestor.rpt.vista.ReporteOE;
 import java.io.File;
 
@@ -15,4 +17,5 @@ import java.io.File;
 public interface IReporteFAC {
     public File generarReporteProyectos(ReporteOE OE)throws Exception;
     public File generarReporteProyectosDemo(gov.mads.gestor.gpy.vista.ListarProyectoOE OE)throws Exception;
+    public ObjetoSalida listarReporteProyectos(ListarReporteOE OE)throws Exception;
 }

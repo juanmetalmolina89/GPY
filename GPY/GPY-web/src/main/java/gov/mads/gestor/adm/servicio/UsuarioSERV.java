@@ -127,7 +127,7 @@ public class UsuarioSERV {
         else{
             //return Response.status(Response.Status.OK).entity(objetoSalida).build();
             //return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(objetoSalida.getRespuesta().stream().findFirst().get().get("a041username").toString())).build();
-            java.net.URI ubicacion = new java.net.URI("http://www.google.com.co");
+            java.net.URI ubicacion = new java.net.URI("http://google.com.co");
             return Response.seeOther(ubicacion).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
         }
         

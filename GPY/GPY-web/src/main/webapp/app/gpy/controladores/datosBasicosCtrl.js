@@ -12,15 +12,6 @@ angular.module('datosBasicos.controllers', ['ngSanitize'])
                 $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
                 $scope.idUsuario = $scope.sesion.sub;
 
-                /*ficasa 20170211: verificsr esto. al parecer va en contravíacon el caso001 que permite a un invitado entrar en modo consulta */
-                /*                  se ha puesto inactivo a nivel de formulario*/
-                /*
-                if ($scope.sesion.perfil == INVITADO) {
-                    comunSrv.mensaje("Está intentando ingresar a una opción no permitida", "info");
-                    $location.path('/gpy');
-                }
-                */
-
                 /**************************************************************/
                 /* Variables */
                 $scope.tpid = $routeParams.tpid;//@todo preguntar por el funcionamiento de estos dos
@@ -125,6 +116,57 @@ angular.module('datosBasicos.controllers', ['ngSanitize'])
                             });
                 };
 
+                $scope.listarProcesosValidacion = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.categoria = TIPOINSTRUFINAN;
+                    listadoSrv.listarParametros($scope.OE)
+                            .then(function (response) {
+                                $scope.estadosPV = response.data.respuesta;
+
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
+                
+                $scope.listarPeriodosAcreditacion = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.categoria = TIPOPERIODOACREDITA;
+                    listadoSrv.listarParametros($scope.OE)
+                            .then(function (response) {
+                                $scope.tiposPeriodo = response.data.respuesta;
+
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
+                
+                $scope.listarTipoProyectoMDL = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.categoria = TIPOPROYECTOMDL;
+                    listadoSrv.listarParametros($scope.OE)
+                            .then(function (response) {
+                                $scope.tiposProyectoMDL = response.data.respuesta;
+
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
+                
+                $scope.listarEstandaresMVC = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.categoria = STANDARMRCDOVOL;
+                    listadoSrv.listarParametros($scope.OE)
+                            .then(function (response) {
+                                $scope.tiposEstandarMVC = response.data.respuesta;
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
+                
                 $scope.consultarProyectoAsociado = function () {
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
@@ -234,8 +276,16 @@ angular.module('datosBasicos.controllers', ['ngSanitize'])
                     $scope.pantalla = DATOSBASICOSPRE;
                 } else if ($location.path().substr(0, '/gpy/datbasreg/'.length) === '/gpy/datbasreg/') {
                     $scope.pantalla = DATOSBASICOSREG;
+                    
+                    // inicializa los combos nuevos para la etapa de registro
+                    $scope.listarProcesosValidacion();
+                    $scope.listarPeriodosAcreditacion();
+                    $scope.listarTipoProyectoMDL();
+                    $scope.listarEstandaresMVC(); 
                 }
 
+               
+                
                 //se cargan los combos, si no viene el id del proyecto, de lo contrario se cargaron al consultar la info del id del proyecto que se recibe
                 if ($scope.pid == undefined) {
                     $scope.cargaDepartamentos({"a020codpais": COLOMBIA});

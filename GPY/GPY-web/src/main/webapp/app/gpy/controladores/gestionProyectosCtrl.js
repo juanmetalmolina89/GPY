@@ -87,7 +87,8 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
                         "a020codigo": response.data.respuesta[0].a002loclzcn,
                         "a020nommunicipio": response.data.respuesta[0].a020nommunicipio,
                         "a020coddepartamento": response.data.respuesta[0].a020coddepartamento,
-                        "a020nomdepartamento": response.data.respuesta[0].a020nomdepartamento
+                        "a020nomdepartamento": response.data.respuesta[0].a020nomdepartamento,
+                        "a020divipola": response.data.respuesta[0].coddivipola
                     };
                     $scope.proyecto.a002idalcance = {
                         "a102codigo": response.data.respuesta[0].a002idalcance
@@ -98,7 +99,8 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
                     //info MDL etp1 pre
                     $scope.proyecto.a002nombrproyctingls = response.data.respuesta[0].a002nombrproyctingls;
                     $scope.proyecto.a002tecnlgcontmpld = response.data.respuesta[0].a002tecnlgcontmpld;
-                    $scope.proyecto.a002idsectoralscope = {
+                    //$scope.proyecto.a002idsectoralscope = response.data.respuesta[0].a002idsectoralscope;
+                   $scope.proyecto.a002idsectoralscope = {
                         "a102codigo": response.data.respuesta[0].a002idsectoralscope
                     };
 
@@ -110,11 +112,30 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
                         "a102codigo": response.data.respuesta[0].a002idescala
                     };
 
-                    //info gral reg
+                    //info gral reg 
                     $scope.proyecto.a002idproyctmdl = {
                         "a102codigo": response.data.respuesta[0].a002idproyctmdl
                     };
-
+                    
+                    $scope.proyecto.a002idestndrmercdvolntr = {
+                        "a102codigo": response.data.respuesta[0].a002idestndrmercdvolntr
+                    };
+                    
+                    $scope.proyecto.a002idtipperdacrdtcn = {
+                        "a102codigo": response.data.respuesta[0].a002idtipperdacrdtcn
+                    };
+                    
+                    $scope.proyecto.a002idestdprocsvaldcn = {
+                        "a102codigo": response.data.respuesta[0].a002idestdprocsvaldcn
+                    };
+                   
+                    $scope.proyecto.a002procsvaldcnec = response.data.respuesta[0].a002procsvaldcnec ;
+                    $scope.proyecto.a002fechinicio = new Date(response.data.respuesta[0].a002fechinicio) ;
+                    $scope.proyecto.a002fechfin = new Date(response.data.respuesta[0].a002fechfin) ;
+                    $scope.proyecto.a002aplicmercdvolntr = response.data.respuesta[0].a002aplicmercdvolntr ;
+ 
+ 
+ 
                     //para el manejo del proyecto a lo largo de las pantallas
                     $scope.estadoProy = $scope.proyecto.a002estadoproyecto;
                     infoProyecto.proyecto = $scope.proyecto;
@@ -124,6 +145,10 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
             var rutaDatosBasicos = '/gpy/datbaspre/';
             if ($location.path().substr(0, rutaDatosBasicos.length) === rutaDatosBasicos) {
                 $rootScope.$emit("llamaInicializaDatosBasicos", {});
+            }
+            rutaDatosBasicos = '/gpy/datbasreg/';
+            if ($location.path().substr(0, rutaDatosBasicos.length) === rutaDatosBasicos) {
+                $rootScope.$emit("llamaInicializaDatosBasicos", {}); // ver si es necesario otro para registro
             }
 
         }, function (error) {

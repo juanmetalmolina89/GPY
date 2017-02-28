@@ -159,7 +159,7 @@ public class GenericoDAO {
 
             objetoSalida.setCodError(CodError.forValue(callableStatement.getInt("p_codError")));
             objetoSalida.setMsgError(callableStatement.getString("p_msjError"));
-
+                
             if (objetoSalida.getCodError() == CodError.OPERACION_CORRECTA) {
 
                 try(ResultSet datos = ((ResultSet) callableStatement.getObject("p_resultado"))){
@@ -189,10 +189,84 @@ public class GenericoDAO {
             objetoSalida.setMsgError(e.toString());
             ErrorClass.getMessage(objetoSalida,GenericoDAO.class);
         } finally {
-            ConexionDS.desconectar(con);           
+            ConexionDS.desconectar(con);
             //Conexion.desconectar(con);
         }
 
         return objetoSalida;
     }
+    
+    public ObjetoSalida ejecutarReporte(SentenciaDAO sentencia, ObjetoSalida objetoSalida) throws Exception {
+
+            Connection con = conectar();
+
+            try {
+
+                CallableStatement callableStatement = con.prepareCall(obtenerSQL(sentencia));
+                for (SentenciaParametroDAO parametro : sentencia.getParametros()) {
+                    if (parametro.getTipoParametro() == SentenciaTipoParametroDAO.ENTRADA) {
+                        if (parametro.getTipoDato() == OracleTypes.BLOB) {
+                            Blob blob = con.createBlob();
+                            blob.setBytes(1, parametro.getValor().toString().getBytes());
+                            callableStatement.setObject(parametro.getNombre(), blob, parametro.getTipoDato());
+                        }
+                        if (parametro.getTipoDato() == OracleTypes.CLOB) {
+                            Clob clob = con.createClob();
+                            clob.setString(1, parametro.getValor().toString());
+                            callableStatement.setObject(parametro.getNombre(), clob, parametro.getTipoDato());
+                        } else {
+                            callableStatement.setObject(parametro.getNombre(), parametro.getValor(), parametro.getTipoDato());
+                        }
+                    }else if (parametro.getTipoParametro() == SentenciaTipoParametroDAO.SALIDA) {
+                        callableStatement.registerOutParameter(parametro.getNombre(), parametro.getTipoDato());
+                    }
+                }
+
+                callableStatement.setInt("p_IdUsuario", sentencia.getIdUsuario());
+                callableStatement.registerOutParameter("p_resultado", OracleTypes.CURSOR);
+                callableStatement.registerOutParameter("p_codError", OracleTypes.INTEGER);
+                callableStatement.registerOutParameter("p_msjError", OracleTypes.VARCHAR);
+
+                callableStatement.execute();
+
+                objetoSalida.setCodError(CodError.forValue(callableStatement.getInt("p_codError")));
+                objetoSalida.setMsgError(callableStatement.getString("p_msjError"));
+                if (callableStatement.getString("P_A103NOMBREPLANTILLA")!= null){
+                    objetoSalida.setNombrePlantilla(callableStatement.getString("P_A103NOMBREPLANTILLA"));
+                }
+                if (objetoSalida.getCodError() == CodError.OPERACION_CORRECTA) {
+
+                    try(ResultSet datos = ((ResultSet) callableStatement.getObject("p_resultado"))){
+                        ResultSetMetaData infoResultado = datos.getMetaData();
+                        Integer columnas = infoResultado.getColumnCount();
+                        List<HashMap<String, Object>> respuesta = new ArrayList<HashMap<String, Object>>();
+
+                        while (datos.next()) {
+                            HashMap<String, Object> registro = new HashMap<String, Object>(columnas);
+                            for (Integer i = 1; i <= columnas; ++i) {
+                                registro.put(infoResultado.getColumnName(i).toLowerCase(), datos.getObject(i));
+                            }
+                            respuesta.add(registro);
+                        }
+
+                        objetoSalida.setRespuesta(respuesta);
+
+                    }catch(Exception e){
+                        objetoSalida.setCodError(CodError.NO_SE_ENCONTRARON_DATOS);
+                        objetoSalida.setMsgError(callableStatement.getString("p_msjError"));
+                    }
+                }
+                ErrorClass.getMessage(objetoSalida,GenericoDAO.class);
+            } catch (Exception e) {
+
+                objetoSalida.setCodError(CodError.ERROR_INTERNO);
+                objetoSalida.setMsgError(e.toString());
+                ErrorClass.getMessage(objetoSalida,GenericoDAO.class);
+            } finally {
+                ConexionDS.desconectar(con);    
+                //Conexion.desconectar(con);
+            }
+
+            return objetoSalida;
+        }
 }

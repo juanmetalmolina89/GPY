@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gov.mads.gestor.comun.modelo;
+package gov.mads.gestor.rpt.vista;
 
-import java.sql.Connection;
+import gov.mads.gestor.comun.vista.ObjetoEntrada;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author juanmetalmolina
  */
-public interface IRemoteConnection {
-    public Connection conectar();
+@XmlRootElement
+public class ListarReporteOE extends ObjetoEntrada{
+    
 }

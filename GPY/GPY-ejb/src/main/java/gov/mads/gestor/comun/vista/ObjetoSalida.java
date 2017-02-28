@@ -20,6 +20,9 @@ public class ObjetoSalida extends ObjetoGenerico {
     @XmlElement
     private String msgError;
 
+    @XmlElement
+    private String nombrePlantilla;
+            
     private List<HashMap<String, Object>> respuesta;
 
     public CodError getCodError() {
@@ -64,5 +67,13 @@ public class ObjetoSalida extends ObjetoGenerico {
     public Boolean esRespuestaOperacionCorrecta() {
 
         return this.codError == CodError.OPERACION_CORRECTA && this.respuesta != null && !respuesta.isEmpty();
+    }
+
+    public String getNombrePlantilla() {
+        return nombrePlantilla;
+    }
+
+    public void setNombrePlantilla(String nombrePlantilla) {
+        this.nombrePlantilla = nombrePlantilla;
     }
 }

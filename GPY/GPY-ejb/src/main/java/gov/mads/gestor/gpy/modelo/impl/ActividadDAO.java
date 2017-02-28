@@ -14,14 +14,22 @@ import java.util.List;
 import gov.mads.gestor.gpy.vista.RegistrarActividadOE;
 import gov.mads.gestor.gpy.vista.ActualizarActividadOE;
 import gov.mads.gestor.gpy.vista.ActualizarGeometriaOE;
+import gov.mads.gestor.gpy.vista.ActualizarIndicadorOE;
+import gov.mads.gestor.gpy.vista.ActualizarMetaOE;
 import gov.mads.gestor.gpy.vista.ActualizarSoporteOE;
 import gov.mads.gestor.gpy.vista.ConsultarActividadPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarGeometriaPorIdOE;
+import gov.mads.gestor.gpy.vista.ConsultarIndicadorOE;
+import gov.mads.gestor.gpy.vista.ConsultarMetaOE;
 import gov.mads.gestor.gpy.vista.ConsultarSoportePorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarActividadOE;
+import gov.mads.gestor.gpy.vista.EliminarIndicadorOE;
+import gov.mads.gestor.gpy.vista.EliminarMetaOE;
 import gov.mads.gestor.gpy.vista.RegistrarGeometriaOE;
 import gov.mads.gestor.gpy.vista.RegistrarSoporteOE;
 import gov.mads.gestor.gpy.vista.ListarActividadesOE;
+import gov.mads.gestor.gpy.vista.RegistrarIndicadorOE;
+import gov.mads.gestor.gpy.vista.RegistrarMetaOE;
 
 /**
  *
@@ -332,5 +340,197 @@ public class ActividadDAO extends GenericoDAO {
 
                 return objetoSalida;
         }
+        
+        public ObjetoSalida registrarIndicador(RegistrarIndicadorOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_RegistrarIndicador", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_A011NOMBRINDCDR", objetoEntrada.getIndicador().getA011nombrindcdr(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                        parametros.add(new SentenciaParametroDAO("p_A011IDTIPINDCDR", objetoEntrada.getIndicador().getA011idtipindcdr().getA034codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A011IDACTVDD", objetoEntrada.getIndicador().getA011idactvdd().getA005codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A011IDTIPACCION", objetoEntrada.getIndicador().getA011idtipaccion().getA050codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));//*/
+                        sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+        
+        public ObjetoSalida eliminarIndicador(EliminarIndicadorOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_EliminarIndicador", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+                        parametros.add(new SentenciaParametroDAO("p_A011CODIGO", objetoEntrada.getIndicador().getA011codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+
+        public ObjetoSalida actualizarIndicador(ActualizarIndicadorOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ActualizarIndicador", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_A011CODIGO", objetoEntrada.getIndicador().getA011codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A011NOMBRINDCDR", objetoEntrada.getIndicador().getA011nombrindcdr(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));//*/
+                        sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+        
+        public ObjetoSalida consultarIndicador(ConsultarIndicadorOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ConsultarIndicador", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_A005CODIGO", objetoEntrada.getIndicador().getA011idactvdd().getA005codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));//*/
+                        parametros.add(new SentenciaParametroDAO("p_A011CODIGO", objetoEntrada.getIndicador().getA011codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+        
+        public ObjetoSalida registrarMeta(RegistrarMetaOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_RegistrarMeta", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+                        java.sql.Date a012fechameta = ( objetoEntrada.getMeta().getA012fechameta() == null) ? null : new java.sql.Date(objetoEntrada.getMeta().getA012fechameta().getTime());
+			parametros.add(new SentenciaParametroDAO("p_A012FECHAMETA", a012fechameta, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
+                        parametros.add(new SentenciaParametroDAO("p_A012VALORMETA", objetoEntrada.getMeta().getA012valormeta().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        java.sql.Date a012reprtanfuntindicdr = ( objetoEntrada.getMeta().getA012reprtanfuntindicdr() == null) ? null : new java.sql.Date(objetoEntrada.getMeta().getA012reprtanfuntindicdr().getTime());
+                        parametros.add(new SentenciaParametroDAO("p_A012REPRTANFUNTINDICDR", a012reprtanfuntindicdr, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
+                        parametros.add(new SentenciaParametroDAO("p_A012VALRLOGRD", objetoEntrada.getMeta().getA012valrlogrd().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A012ACCIONESREALIZADAS", objetoEntrada.getMeta().getA012accionesrealizadas(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                        parametros.add(new SentenciaParametroDAO("p_A012RECURSSINVRTDS", objetoEntrada.getMeta().getA012recurssinvrtds().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        Integer a012idfuente = (objetoEntrada.getMeta().getA012idfuente() == null) ? null : objetoEntrada.getMeta().getA012idfuente().getA039codigo();
+                        parametros.add(new SentenciaParametroDAO("p_A012IDFUENTE", a012idfuente, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        Integer a012idindcdr = (objetoEntrada.getMeta().getA012idindcdr() == null) ? null : objetoEntrada.getMeta().getA012idindcdr().getA011codigo();
+                        parametros.add(new SentenciaParametroDAO("p_A012IDINDCDR", a012idindcdr, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A012UNIDDMEDD", objetoEntrada.getMeta().getA012uniddmedd(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                        sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+
+        
+        public ObjetoSalida eliminarMeta(EliminarMetaOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_EliminarMeta", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_A012CODIGO", objetoEntrada.getMeta().getA012codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+
+        
+        public ObjetoSalida actualizarMeta(ActualizarMetaOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ActualizarMeta", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+                        parametros.add(new SentenciaParametroDAO("p_A012CODIGO", objetoEntrada.getMeta().getA012codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A012VALORMETA", objetoEntrada.getMeta().getA012valormeta().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        java.sql.Date a012reprtanfuntindicdr = ( objetoEntrada.getMeta().getA012reprtanfuntindicdr() == null) ? null : new java.sql.Date(objetoEntrada.getMeta().getA012reprtanfuntindicdr().getTime());
+                        parametros.add(new SentenciaParametroDAO("p_A012REPRTANFUNTINDICDR", a012reprtanfuntindicdr, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
+                        parametros.add(new SentenciaParametroDAO("p_A012VALRLOGRD", objetoEntrada.getMeta().getA012valrlogrd().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A012ACCIONESREALIZADAS", objetoEntrada.getMeta().getA012accionesrealizadas(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                        parametros.add(new SentenciaParametroDAO("p_A012RECURSSINVRTDS", objetoEntrada.getMeta().getA012recurssinvrtds().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        Integer a012idfuente = (objetoEntrada.getMeta().getA012idfuente() == null) ? null : objetoEntrada.getMeta().getA012idfuente().getA039codigo();
+                        parametros.add(new SentenciaParametroDAO("p_A012IDFUENTE", a012idfuente, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        Integer a012idindcdr = (objetoEntrada.getMeta().getA012idindcdr() == null) ? null : objetoEntrada.getMeta().getA012idindcdr().getA011codigo();
+                        parametros.add(new SentenciaParametroDAO("p_A012IDINDCDR", a012idindcdr, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A012UNIDDMEDD", objetoEntrada.getMeta().getA012uniddmedd(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+
+			sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
+
+        
+        public ObjetoSalida consultarMeta(ConsultarMetaOE objetoEntrada) {
+
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ConsultarMeta", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_A012CODIGO", objetoEntrada.getMeta().getA012codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
 
 }

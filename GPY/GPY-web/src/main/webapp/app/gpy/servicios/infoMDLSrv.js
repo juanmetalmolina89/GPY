@@ -41,10 +41,22 @@ angular.module('infoMDL.services')
                     return $http.post(urlBase + '/registrarAdjunto', OE);
                 };
 
+                datos.actualizarAdjunto = function (OE) {
+                    return $http.post(urlBase + '/actualizarAdjunto', OE);
+                };
+                
                 datos.consultarAdjunto = function (OE) {
                     return $http.post(urlBase + '/consultarAdjunto', OE);
                 };
 
+                datos.consultarAdjuntoPorFiltro = function (OE) {
+                    return $http.post(urlBase + '/consultarAdjuntoPorFiltro', OE);
+                };
+                
+                datos.consultarSoportePorId = function (OE) {
+                    return $http.post(urlBase + '/consultarAdjuntoPorId', OE, {responseType: 'arraybuffer'});
+                };
+                
                 return datos;
             }])
 

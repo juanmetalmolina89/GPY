@@ -1,0 +1,307 @@
+<!-- ===================================================================================== -->
+<!-- 1 - Datos Básicos Preregistro -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy"> 
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
+        </div>
+
+
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
+                </div>
+
+                <div class="panel-body" ng-controller="datosBasicosCtrl">
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+
+                    <form class="form-horizontal" name="form">
+                        <fieldset ng-disabled="sesion.perfil == INVITADO">
+
+                            <!-- Datos Básicos  -->
+                            <legend>Datos Básicos</legend>
+
+                            <!-- Proyecto Asociado -->
+                            <div class="form-group" >
+                                <label class="col-md-4 control-label" for="proytascd">Proyecto Asociado</label>
+                                <div class="col-md-4">
+                                    <select id="proytascd" name="proytascd" class="form-control" ng-model="proyecto.a002proytascd" 
+                                            ng-options="proyectoAsoc as proyectoAsoc.a002nombrproyct for proyectoAsoc in proyectosAsoc track by proyectoAsoc.a002codigo" >
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Nombre Proyecto-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="nombrproyct">Nombre Proyecto</label>  
+                                <div class="col-md-4">
+                                    <input id="nombrproyct" name="nombrproyct" type="text" placeholder="" class="form-control input-md" ng-model="proyecto.a002nombrproyct" required>
+                                </div>
+                                <span class="control-label" ng-show="form.nombrproyct.$error.required"><strong>Requerido</strong></span>
+                            </div>
+
+                            <!-- Ubicación del proyecto -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="ubccn">Ubicación del proyecto</label>
+                                <div class="col-md-4">
+                                    <select id="ubccn" name="ubccn" class="form-control" ng-model="proyecto.a002ubccn" 
+                                            ng-options="ubicacion as ubicacion.a102valor for ubicacion in ubicaciones track by ubicacion.a102codigo" required>
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="form.ubccn.$error.required"><strong>Requerido</strong></span>
+                            </div> 
+
+                            <!-- Departamento -->
+                            <div class="form-group" >
+                                <label class="col-md-4 control-label" for="departamento">Departamento</label>
+                                <div class="col-md-4">
+                                    <select id="departamento" name="departamento" class="form-control" ng-model="departamentoProySel" required
+                                             ng-options="departamento as departamento.a020nomdepartamento for departamento in departamentos | orderBy:'a020nomdepartamento'" ng-change="cargaMunicipios(departamentoProySel)">
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="form.departamento.$error.required"><strong>Requerido</strong></span>
+                            </div>
+
+                            <!-- Municipio -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="municipio">Municipio</label>
+                                <div class="col-md-4">
+                                    <select id="municipio" name="municipio" class="form-control" ng-model="proyecto.a002loclzcn" required
+                                            ng-disabled="!departamentoProySel" ng-options="municipio as municipio.a020nommunicipio for municipio in municipios | orderBy:'a020nommunicipio'  track by municipio.a020codmunicipio ">
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="form.municipio.$error.required"><strong>Requerido</strong></span>
+                            </div>
+
+                            <!-- Admite socios extrangeros -->
+                            <div class="form-group">
+                                <label class="col-md-12">¿Alguna de las actividades del proyecto distinta a la de conservación del sistema de parques nacionales naturales, admite a socios o accionistas a gobiernos extranjeros, o constituye algún derecho al respecto? (artículo 2.2.2.1.10.3. del decreto 1076 de 2015)? </label>
+                                <div class="col-md-12"> 
+                                    <label class="radio-inline">
+                                        <input type="radio" value="SI" ng-model="proyecto.a002socextrnjr">
+                                        SI
+                                    </label> 
+                                    <label class="radio-inline">
+                                        <input type="radio" value="NO" ng-model="proyecto.a002socextrnjr">
+                                        NO
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Descripción del proyecto / Iniciativa -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="descrpcinproyct">Descripción del proyecto / Iniciativa </label>
+                                <div class="col-md-4">
+                                    <textarea class="form-control" id="descrpcinproyct" name="descrpcinproyct" ng-model="proyecto.a002descrpcinproyct" required></textarea>
+                                </div>
+                                <span class="control-label" ng-show="form.descrpcinproyct.$error.required"><strong>Requerido</strong></span>
+                            </div>
+
+                            <!-- Duración prevista total (años)-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="durcnprevst">Duración prevista total (años)</label>  
+                                <div class="col-md-2">
+                                    <input id="durcnprevst" name="durcnprevst" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002durcnprevst" required>
+                                </div>
+                                <span class="control-label" ng-show="form.durcnprevst.$error.required"><strong>Requerido</strong></span>
+                                <span class="control-label" ng-show="form.durcnprevst.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
+                            </div>
+
+                            <!-- Vida útil del proyecto (años)-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="vidautl">Vida útil del proyecto (años)</label>  
+                                <div class="col-md-2">
+                                    <input id="vidautl" name="vidautl" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002vidautl" required>
+                                </div>
+                                <span class="control-label" ng-show="form.vidautl.$error.required"><strong>Requerido</strong></span>
+                                <span class="control-label" ng-show="form.vidautl.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
+                            </div>
+
+                            <!-- numero de CPAs que se proyecta involucra-->
+                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA">
+                                <label class="col-md-4 control-label" for="nrocpas">numero de CPAs que se proyecta involucra</label>  
+                                <div class="col-md-2">
+                                    <input id="nrocpas" name="nrocpas" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002nrocpas" >
+                                </div>
+                                <span class="control-label" ng-show="form.nrocpas.$error.required"><strong>Requerido</strong></span>
+                                <span class="control-label" ng-show="form.nrocpas.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
+                            </div>
+
+                            <!-- Potencial estimado de reducción de emisores GEI total (ton CO2 eq/año)-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="potnclestmdredccn">Potencial estimado de reducción de emisores GEI total (ton CO2 eq/año)</label>  
+                                <div class="col-md-4">
+                                    <input id="potnclestmdredccn" name="potnclestmdredccn" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" type="text" ng-model="proyecto.a002potnclestmdredccn" required>
+                                </div>
+                                <span class="control-label" ng-show="form.potnclestmdredccn.$error.required"><strong>Requerido</strong></span>
+                                <span class="control-label" ng-show="form.potnclestmdredccn.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
+                            </div>
+
+                            <!-- Objetivo general de la iniciativa/Proyecto -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="objtvgenrl">Objetivo general de la iniciativa/Proyecto</label>
+                                <div class="col-md-4">
+                                    <textarea class="form-control" id="objtvgenrl" name="objtvgenrl" ng-model="proyecto.a002objtvgenrl" required></textarea>
+                                </div>
+                                <span class="control-label" ng-show="form.objtvgenrl.$error.required"><strong>Requerido</strong></span>
+                            </div>
+
+                            <!-- Alcance de la iniciativa / Proyecto -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="idalcance">Alcance de la iniciativa / Proyecto</label>
+                                <div class="col-md-4">
+                                    <select id="idalcance" name="idalcance" class="form-control" ng-model="proyecto.a002idalcance" 
+                                            ng-options="alcance as alcance.a102valor for alcance in alcances track by alcance.a102codigo" required>
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="form.idalcance.$error.required"><strong>Requerido</strong></span>
+                            </div>
+
+                            <!-- Sector Implementador -->
+                            <div class="form-group" ng-show="tpid == NAMA || tpid == PBDBCRC">
+                                <label class="col-md-4 control-label" for="proySectrImplmntdrList">Sector Implementador</label>
+                                <div class="col-md-4">
+                                    <select id="proySectrImplmntdrList" name="proySectrImplmntdrList" class="form-control" ng-model="multipleList.proySectrImplmntdrList" multiple ng-required='tpid == NAMA || tpid == PBDBCRC'>
+                                        <option ng-repeat="sector in sectores" value="{{sector.a023codigo}}">
+                                            {{sector.a023descsectrimplmntdr}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="form.proySectrImplmntdrList.$error.required"><strong>Requerido</strong></span>
+                            </div>
+
+                            <!------------------------------------------------------------------------->
+                            <!---------------           CAMPOS ETAPA REGISTRO        ------------------>
+                            <!------------------------------------------------------------------------->
+                            
+                            
+                            <!-- Aplica proceso de validación?  -->
+                            <div class="form-group" ng-class="{'has-error': formEnviado}">
+                                <label class="col-md-4 control-label">Aplica proceso de validación?</label>
+                                <div class="col-md-4" ng-class="{'has-error': !form.a002procsvaldcnec.required && formEnviado}">
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="proyecto.a002procsvaldcnec"
+                                               required value="SI" name="a002procsvaldcnec" id="a002procsvaldcnec">
+                                        Si
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="proyecto.a002procsvaldcnec"
+                                               required value="NO" name="a002procsvaldcnec" id="a002procsvaldcnec">
+                                        No
+                                    </label>
+                                </div>
+                                <span class="control-label" ng-show="form.a002procsvaldcnec.$error.required"><strong>Requerido</strong></span>
+                            </div>
+                            
+                            <!-- estado de proceso de Validación -->
+                            <div class="form-group" ng-class="{'has-error': formEnviado}">
+                                <label class="col-md-4 control-label" for="proyEstadoProcesoValidacion">Estado de proceso de Validación</label>
+                                <div class="col-md-4">                  
+                                    <select id="proyEstadoProcesoValidacion" name="proyEstadoProcesoValidacion" class="form-control" ng-model="proyecto.a002idestdprocsvaldcn"
+                                            ng-options="estadoPV.a102codigo as estadoPV.a102valor for estadoPV in estadosPV track by estadoPV.a102codigo" required>                                       
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="form.proyEstadoProcesoValidacion.$error.required"><strong>Requerido</strong></span>
+                            </div>
+                                                        
+                            <!-- fecha de inicio -->
+                            <div class="form-group" ng-class="{'has-error': formEnviado}">
+                                <label class="col-md-4 control-label" for="fechainicio">Fecha Inicial</label>
+                                <div class="col-md-5">
+                                    <input type="date" class="form-control" id="fechainicio" name="fechainicio" placeholder="aaaa-mm-dd" maxlength="10" required ng-model="proyecto.a002fechinicio">
+                                </div>
+                                <span class="control-label" ng-show="form.fechainicio.$error.required"><strong>Requerido</strong></span>
+                            </div>
+                            
+                            <!-- fecha final -->
+                            <div class="form-group" ng-class="{'has-error': formEnviado}">
+                                <label class="col-md-4 control-label" for="fechafin">Fecha Final</label>
+                                <div class="col-md-5">
+                                    <input type="date" class="form-control" id="fechafin" name="fechafin" placeholder="aaaa-mm-dd" maxlength="10" required ng-model="proyecto.a002fechfin">
+                                </div>
+                                <span class="control-label" ng-show="form.fechafin.$error.required"><strong>Requerido</strong></span>
+                            </div>
+                            
+                            <!-- MDL - ¿Desea aplicar al mercado voluntario? -->
+                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA" ng-class="{'has-error': formEnviado}">
+                                <label class="col-md-4 control-label">Desea aplicar al mercado voluntario?</label>
+                                <div class="col-md-4" ng-class="{'has-error': !form.a002aplicmercdvoluntr.required && formEnviado}">
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="proyecto.a002aplicmercdvolntr"
+                                               ng-required='tpid == MDL || tpid == MDL_POA' value="SI" name="a002aplicmercdvoluntr" id="a002aplicmercdvoluntr">
+                                        Si
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="proyecto.a002aplicmercdvolntr"
+                                               ng-required='tpid == MDL || tpid == MDL_POA' value="NO" name="a002aplicmercdvoluntr" id="a002aplicmercdvoluntr">
+                                        No
+                                    </label>
+                                </div>
+                                <span class="control-label" ng-show="form.a002aplicmercdvoluntr.$error.required"><strong>Requerido</strong></span>
+                            </div>
+
+                            <!-- MDL - Estándar del mercado voluntario del carbono  -->
+                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA">
+                                <label class="col-md-4 control-label" for="proyEstandaresMVC">Estándar del mercado voluntario del carbono</label>
+                                <div class="col-md-4">
+                                    <select id="proyEstandaresMVC" name="proyEstandaresMVC" class="form-control" ng-model="proyecto.a002idestndrmercdvolntr" ng-required='tpid == MDL || tpid == MDL_POA'
+                                            ng-options="tipoEstandarMVC.a102codigo as tipoEstandarMVC.a102valor for tipoEstandarMVC in tiposEstandarMVC track by tipoEstandarMVC.a102codigo" required> 
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="form.proyEstandaresMVC.$error.required"><strong>Requerido</strong></span>
+                            </div> 
+                            
+                            <!-- MDL - tipo de Proyecto MDL -->
+                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA">
+                                <label class="col-md-4 control-label" for="proyTipoProyectoMDL">Tipo de Proyecto MDL</label>
+                                <div class="col-md-4">
+                                    <select id="proyTipoProyectoMDL" name="proyTipoProyectoMDL" class="form-control" ng-model="proyecto.a002idproyctmdl" ng-required='tpid == MDL || tpid == MDL_POA'
+                                        ng-options="tipoProyectoMDL.a102codigo as tipoProyectoMDL.a102valor for tipoProyectoMDL in tiposProyectoMDL track by tipoProyectoMDL.a102codigo" required> 
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="form.proyTipoProyectoMDL.$error.required"><strong>Requerido</strong></span>
+                            </div> 
+                            
+                            <!-- MDL - tipo de periodo de acreditación  -->
+                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA">
+                                <label class="col-md-4 control-label" for="proySectrImplmntdrList">Tipo de periodo de acreditación</label>
+                                <div class="col-md-4">
+                                    <select id="proyTipoPeriodoAcreditacion" name="proyTipoPeriodoAcreditacion" class="form-control" ng-model="proyecto.a002idtipperdacrdtcn" ng-required='tpid == MDL || tpid == MDL_POA'
+                                        ng-options="tipoPeriodo.a102codigo  as tipoPeriodo.a102valor for tipoPeriodo in tiposPeriodo track by tipoPeriodo.a102codigo" required> 
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="form.proyTipoPeriodoAcreditacion.$error.required"><strong>Requerido</strong></span>
+                            </div>                            
+                            
+                            
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-8">
+                                    <button id="guardar" name="guardar" class="btn btn-primary" ng-click="guardarProyecto()" ng-disabled="form.$invalid">Guardar Proyecto</button>
+                                    <a ng-click="cancelar()" class="btn btn-primary" role="button">Cancelar</a>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

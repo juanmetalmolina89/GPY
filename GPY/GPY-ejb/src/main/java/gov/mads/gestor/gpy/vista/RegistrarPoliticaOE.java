@@ -3,6 +3,7 @@ import gov.mads.gestor.comun.vista.ObjetoEntrada;
 
 import gov.mads.gestor.comun.entidades.Politica;
 import gov.mads.gestor.comun.entidades.ProyPolitica;
+import gov.mads.gestor.comun.entidades.Proyecto;
 
 
 import javax.xml.bind.annotation.XmlElement;
@@ -16,6 +17,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RegistrarPoliticaOE extends ObjetoEntrada {
 
 	@XmlElement
+        private Proyecto proyecto;
+        @XmlElement
 	private Politica politica;
         @XmlElement
         private ProyPolitica proypolitica;
@@ -34,6 +37,14 @@ public class RegistrarPoliticaOE extends ObjetoEntrada {
 
         public void setProypolitica(ProyPolitica proypolitica) {
             this.proypolitica = proypolitica;
+        }
+
+        public Proyecto getProyecto() {
+            return proyecto;
+        }
+
+        public void setProyecto(Proyecto proyecto) {
+            this.proyecto = proyecto;
         }
 
 }

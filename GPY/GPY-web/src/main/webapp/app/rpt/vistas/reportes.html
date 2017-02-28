@@ -1,16 +1,59 @@
-<div class="container">
+<div class="container gest_proy">
 	<div class="col-sm-1 col-md-1"> </div>
 	<div class="col-sm-10 col-md-10">
-		<div class="panel panel-default">
+            <div class="panel panel-default">
 		<div class="panel-heading">
-		<h3 class="panel-title">REPORTES</h3>
+                    <h3 class="panel-title">REPORTES</h3>
 		</div>
-		<div class="panel-body">
-		<!-- <p>Listado proyectos disponibles</p>
-		<div class="alert alert-success"><h3>Aquí va el listdo de proyectos según perfil </h3></div>
-		</div> -->
+		<div class="panel-body" ng-controller="reporteCtrl">
 
+                    <div class="panel panel-default">
+                        
+                        
+                        <div class="panel-body panel-collapse"> 
+
+                            <div class="row">
+                                <div class="col-xs-3 col-sm-3">
+                                    <label for="search">Año</label>
+                                    <input ng-model="anio" id="search" class="form-control" />
+                                </div>
+                                <div class="col-xs-3 col-sm-3">
+                                    <label for="search">Autoridad ambiental</label>
+                                    <select class="form-control campotextable control-label"
+                                            id="selAA" name="selAA" style="width: 240px"
+                                            ng-model="autoridad"
+                                            ng-options="item as item.a001sigla for item in listaAutoridadAmb track by item.a001sigla">
+                                        <option value="" selected>Todas</option>
+                                    </select> 
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel-body panel-collapse">
+                        <div class="row"  ng-repeat="tipo in tiposReporte">
+                            <div class="panel-body panel-collapse"> 
+                                <div class="panel panel-default" >
+                                    <div class="col-xs-12 col-sm-12">  <!-- iteración por cada tipo de reporte -->
+                                        <label style="font-size: 1.2em">{{tipo.a102valor}}</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-xs-3 col-sm-3 reporte" ng-repeat="reporte in reportes | filter:{ a103categoria:tipo.a102codigo}"  >  <!-- iteración por cada reporte -->                  
+                                    <a ng-click="abrirReporte(reporte)" class="btn btn-primary" role="button" data-toggle="tooltip" data-placement="top" title="{{reporte.a103nombre}}">
+                                                <span class="glyphicon {{reporte.a103icono}} ico_reportes"></span></a>    
+                                    <label>{{reporte.a103nombre}} </label>
+                                </div>
+                            </div>                            
+                            
+                        </div>
+                         
+                        
+                    </div>                      
 		</div>
+           </div>
 	</div>
-	<div class="col-sm-1 col-md-1"></div>
+	
+        
 </div>

@@ -13,6 +13,7 @@ import gov.mads.gestor.gpy.vista.ConsultarAdjuntoOE;
 import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarCartaNObjOE;
 import gov.mads.gestor.gpy.vista.ConsultarConsideracOE;
+import gov.mads.gestor.gpy.vista.ConsultarFiltroOE;
 import gov.mads.gestor.gpy.vista.ListarAdjuntosOE;
 import gov.mads.gestor.gpy.vista.RegistrarAdjuntoOE;
 import oracle.jdbc.OracleTypes;
@@ -265,7 +266,7 @@ public class DatosMdlDAO extends GenericoDAO {
 
 		ObjetoSalida objetoSalida = new ObjetoSalida();
 		try {
-			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_DATOSMDL.Pr_ListarAdjuntos", objetoEntrada.getIdUsuario());
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_DATOSMDL.Pr_ConsultarAdjuntoPorId", objetoEntrada.getIdUsuario());
 			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
 			parametros.add(new SentenciaParametroDAO("p_A008IDADJNT", objetoEntrada.getA008idadjunto(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A002CODIGO", objetoEntrada.getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
@@ -281,5 +282,24 @@ public class DatosMdlDAO extends GenericoDAO {
 		return objetoSalida;
 
 	}
+        
+        public ObjetoSalida consultarProyAdjuntoFiltro(ConsultarFiltroOE objetoEntrada) {
 
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_T008_PROY_ADJUNTO.Pr_ConsultarPorFiltro", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_Filtro", objetoEntrada.getFiltro(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                        sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida, DatosMdlDAO.class);
+		}
+
+		return objetoSalida;
+
+	}
 }

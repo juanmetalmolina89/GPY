@@ -1,3 +1,4 @@
+
 <!-- ===================================================================================== -->
 <!-- 5 - Políticas -->
 <!-- ===================================================================================== -->
@@ -6,7 +7,6 @@
         <div class="col-sm-3 col-md-3">
             <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
         </div>
-
 
         <div class="col-sm-9 col-md-9">
             <div class="panel panel-default">
@@ -26,9 +26,14 @@
 
                             <label> Politicas a las que su proyecto le aporta </label>
                             <p> Plan/Estrategia/Programa nacional/sectorial/territorial de cambio climático al que le aporta su proyecto</p>
-
-                            <p><i>Aquí va un componente tipo arbol para elegir el plan / programa nacional </i></p>
-                            
+                                                       
+                            <div class="col-sm-12">
+                                <div ui-tree id="tree-root">
+                                  <ol ui-tree-nodes ng-model="data">
+                                    <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                                  </ol>
+                                </div>
+                            </div>
                             
                             <br/><br/><br/>
 
@@ -41,23 +46,7 @@
                                     <th>Politica</th>
                                     <th>Adjunto</th>
                                     <th>Acciones</th>
-                                </tr>
-                                <tr>
-                                    <td>Politica pry 1</td>
-                                    <td><a href="#">Adjunto pry 1</a> </td>
-                                    <td></td>    
-                                </tr>
-                                <tr>
-                                    <td>Politica pry 2</td>
-                                    <td><a href="#">Adjunto pry 2</a></td>
-                                    <td></td>
-
-                                </tr> 
-                                <tr>
-                                    <td>politica pry 3</td>
-                                    <td><a href="#">Adjunto pry 3</a></td>
-                                    <td></td>
-                                </tr>
+                                </tr>                                
                             </table>
 
                             <!-- Nombre politica -->
@@ -106,3 +95,29 @@
         </div>
     </div>
 </div>
+<!-- ============================================================-->
+<!-- Plantilla de nodo  -->
+<!-- ============================================================-->
+<script type="text/ng-template" id="nodes_renderer.html">
+  <div ui-tree-handle class="tree-node tree-node-content">
+    <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" collapsed="{collapsed}" data-nodrop data-nodrag ng-click="toggle(this)"><span
+        class="glyphicon"
+        ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+        }"></span></a>
+    <input
+        data-nodrag 
+        type="checkbox"
+        name="politicasSeleccionadas[]"
+        value="{{id}}"
+        ng-checked="selection.indexOf(title) > -1"
+        ng-click="marcar(this)"
+    >
+    {{node.id}} - {{node.title}}
+  </div>
+  <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}" data-nodrop >
+    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+    </li>
+  </ol>
+</script>

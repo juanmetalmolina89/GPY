@@ -170,7 +170,9 @@ public class Proyecto implements Serializable {
     private List<ProyFteFinanc> proyFteFinancList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "a006idproyecto")
     private List<ProySectrImplmntdr> proySectrImplmntdrList;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a007idproyecto")
+    private List<ProyPolitica> proyPoliticaList;
+    
     public Proyecto() {
     }
 
@@ -548,4 +550,12 @@ public class Proyecto implements Serializable {
         }
         return true;
     }    
+
+    public List<ProyPolitica> getProyPoliticaList() {
+        return proyPoliticaList;
+    }
+
+    public void setProyPoliticaList(List<ProyPolitica> proyPoliticaList) {
+        this.proyPoliticaList = proyPoliticaList;
+    }
 }

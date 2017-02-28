@@ -25,8 +25,10 @@
                             <legend>Etapa 3 Autorización de Entidad Coordinadora</legend>
 
                             <!-- Adjuntos -->                            
-                            <!-- En esta pantalla son varios adjuntos, todos se traen de la BD de acuedo al tipo de proyecto -->
+                            <!-- Solicitud de Consideracion Temprana -->
+                            <!-- Formato Form de Prior Consideration de la  CMNUCC-->
                             <div class="div_adjuntos" ng-repeat="adjunto in adjuntos">
+                                 
                                 <label> {{adjunto.a025nombradjnt}}</label>
                                 <br/><p> {{adjunto.a025descrpcnadjnt}}</p>
                                 <!-- Número de radicado-->
@@ -38,14 +40,28 @@
                                 </div>
 
                                 <!-- Adjunto-->
-                                <div class="form-group">
+                                <div class="form-group"  ng-show="adjunto.mostrarUpload">
                                     <label class="col-md-4 control-label" for="appendedtext">Adjunto</label>
                                     <div class="col-md-6">
                                         <input type="file" class="form-control" id="{{adjunto.a025codigo}}" name="{{adjunto.a025codigo}}" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'" ng-model="adjunto.adjunto">
                                     </div>
                                 </div>
-                            </div>                                                        
-                            
+                                
+                                <!-- Muestra soporte cargado -->                                
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="adjunto" ng-show="!adjunto.mostrarUpload">Archivo de soporte</label>
+                                    <label class="col-md-4 control-label" for="adjunto" ng-show="adjunto.mostrarUpload">Deshacer la subida</label>
+                                    <div class="col-md-6" ng-show="!adjunto.mostrarUpload">
+                                        {{adjunto.a026nomarchivo}} 
+                                        <a ng-click="consultarSoportePorId(adjunto)" class="btn btn-primary" role="button">Ver soporte</a>
+                                        <a ng-click="mostrarCampoUpload(adjunto,true)" class="btn btn-primary" role="button" >Actualizar soporte</a>
+                                    </div>
+                                    <div class="col-md-6" ng-show="adjunto.mostrarUpload">
+                                        <a ng-click="mostrarCampoUpload(adjunto,false)" class="btn btn-primary" role="button" >Cancelar</a>
+                                    </div>
+                                </div>                                
+                            </div>
+
                             <!-- Guardar -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="guardar"></label>

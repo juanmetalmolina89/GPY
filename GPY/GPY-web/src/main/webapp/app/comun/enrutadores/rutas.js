@@ -66,7 +66,7 @@ angular.module('GPYApp').config(['$routeProvider', '$httpProvider', '$locationPr
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/datbasreg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
+			templateUrl	: 'app/gpy/vistas/datosBasicosReg.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/participantesreg/:tpid/:pid', {
@@ -78,19 +78,19 @@ angular.module('GPYApp').config(['$routeProvider', '$httpProvider', '$locationPr
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/actividadesreg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
+			templateUrl	: 'app/gpy/vistas/actividadesReg.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/politicasreg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
+			templateUrl	: 'app/gpy/vistas/politicasReg.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/financiacionreg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
+			templateUrl	: 'app/gpy/vistas/financiacionReg.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/documentosreg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
+			templateUrl	: 'app/gpy/vistas/documentosReg.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/etapa1reg/:tpid/:pid', {

@@ -9,13 +9,21 @@ import gov.mads.gestor.gpy.modelo.impl.ActividadDAO;
 import gov.mads.gestor.gpy.vista.RegistrarActividadOE;
 import gov.mads.gestor.gpy.vista.ActualizarActividadOE;
 import gov.mads.gestor.gpy.vista.ActualizarGeometriaOE;
+import gov.mads.gestor.gpy.vista.ActualizarIndicadorOE;
+import gov.mads.gestor.gpy.vista.ActualizarMetaOE;
 import gov.mads.gestor.gpy.vista.ActualizarSoporteOE;
 import gov.mads.gestor.gpy.vista.ConsultarActividadPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarGeometriaPorIdOE;
+import gov.mads.gestor.gpy.vista.ConsultarIndicadorOE;
+import gov.mads.gestor.gpy.vista.ConsultarMetaOE;
 import gov.mads.gestor.gpy.vista.ConsultarSoportePorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarActividadOE;
+import gov.mads.gestor.gpy.vista.EliminarIndicadorOE;
+import gov.mads.gestor.gpy.vista.EliminarMetaOE;
 import gov.mads.gestor.gpy.vista.ListarActividadesOE;
 import gov.mads.gestor.gpy.vista.RegistrarGeometriaOE;
+import gov.mads.gestor.gpy.vista.RegistrarIndicadorOE;
+import gov.mads.gestor.gpy.vista.RegistrarMetaOE;
 import gov.mads.gestor.gpy.vista.RegistrarSoporteOE;
 import gov.mads.gestor.utl.fachada.IListadosFAC;
 import gov.mads.gestor.utl.fachada.impl.ListadosFAC;
@@ -278,5 +286,45 @@ public class ActividadFAC implements IActividadFAC {
         @Override
         public ObjetoSalida consultarGeometriaPorId(ConsultarGeometriaPorIdOE OE) {
             return actividadDAO.consultarGeometriaPorId(OE);
+        }
+
+        @Override
+        public ObjetoSalida registrarIndicador(RegistrarIndicadorOE OE) {
+            return actividadDAO.registrarIndicador(OE);
+        }
+
+        @Override
+        public ObjetoSalida eliminarIndicador(EliminarIndicadorOE OE) {
+            return actividadDAO.eliminarIndicador(OE);
+        }
+
+        @Override
+        public ObjetoSalida actualizarIndicador(ActualizarIndicadorOE OE) {
+            return actividadDAO.actualizarIndicador(OE);
+        }
+
+        @Override
+        public ObjetoSalida consultarIndicador(ConsultarIndicadorOE OE) {
+            return actividadDAO.consultarIndicador(OE);
+        }
+
+        @Override
+        public ObjetoSalida registrarMeta(RegistrarMetaOE OE) {
+            return actividadDAO.registrarMeta(OE);
+        }
+
+        @Override
+        public ObjetoSalida eliminarMeta(EliminarMetaOE OE) {
+            return actividadDAO.eliminarMeta(OE);
+        }
+
+        @Override
+        public ObjetoSalida actualizarMeta(ActualizarMetaOE OE) {
+            return actividadDAO.actualizarMeta(OE);
+        }
+
+        @Override
+        public ObjetoSalida consultarMeta(ConsultarMetaOE OE) {
+            return actividadDAO.consultarMeta(OE);
         }
 }

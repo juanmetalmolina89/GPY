@@ -68,4 +68,5 @@ public interface IListadosFAC {
     public ObjetoSalida listarTipoActividadReduccion(ListarTipoActividadReducOE OE);
     public ObjetoSalida listarSubgrupoIPCC(ListarSubGrupoIPCCOE OE);
     public ObjetoSalida listarPoliticas(ListarPoliticaOE OE);
+    public String obtenerParametro(Integer idUsuario, String nombreParametro) throws Exception;
 }

@@ -168,4 +168,17 @@ public class ListadosFAC implements IListadosFAC {
         return UtlListadosDAO.listarPoliticas(OE);
     }
     
+    @Override
+    public String obtenerParametro(Integer idUsuario, String nombreParametro) throws Exception {
+
+        IListadosFAC fachadaListados = new ListadosFAC();
+        ListarParametricoOE listaOE = new ListarParametricoOE();
+        listaOE.setIdUsuario(idUsuario);
+        listaOE.setCategoria(nombreParametro);
+        ObjetoSalida objetoSalidaParametrica = fachadaListados.listarParametrico(listaOE);
+        if (!objetoSalidaParametrica.esRespuestaOperacionCorrecta()) {
+            throw new Exception(nombreParametro + ":No se encuentra parametrizado");
+        }
+        return objetoSalidaParametrica.getRespuesta().get(0).get("a102valor").toString();
+    }
 }

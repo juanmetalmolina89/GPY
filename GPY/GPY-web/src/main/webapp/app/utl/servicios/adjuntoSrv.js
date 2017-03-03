@@ -4,31 +4,33 @@
 'use strict';
 
 angular.module('adjunto.services')
-	    .factory('adjuntoSrv', ['$http', function($http) {
+    .factory('adjuntoSrv', ['$http', function($http) {
 
-	    var urlBase = urlBackEnd+'adjunto';
 	    var datos = {};
 
-	    datos.listar = function () {
-	        return $http.get(urlBase);
-	    };
+            datos.consultarAdjuntoPorFiltro = function (OE) {
+                return $http.post(urlBackEnd + 'datosMdl/consultarAdjuntoPorFiltro', OE);
+            };
 
-	    datos.consultarPorId = function (id) {
-	        return $http.get(urlBase + '/' + id);
-	    };
+            datos.consultarSoportePorId = function (OE) {
+                return $http.post(urlBackEnd + 'datosMdl/consultarAdjuntoPorId', OE, {responseType: 'arraybuffer'});
+            };
 
-	    datos.insertar = function (adjunto) {
-	        return $http.post(urlBase, adjunto);
-	    };
-
-	    datos.actualizar = function (adjunto) {
-	        return $http.put(urlBase + '/' + adjunto.id, adjunto);
-	    };
-
-	    datos.borrar = function (id) {
-	        return $http.delete(urlBase + '/' + id);
-	    };
 
 	    return datos;
-	}]);
+	}])
+    
+    .service('adjuntoUploadSrv', ['Upload', function (Upload) {
+
+                var urlBase = urlBackEnd + 'datosMdl';
+
+                this.registrarAdjunto = function (adjunto, idUsuario, idProyecto, numrradcd, idAdjnt) {
+                    return Upload.upload({
+                        method: 'POST',
+                        url: urlBase + '/registrarAdjunto',
+                        data: {file: adjunto, 'idUsuario': idUsuario, 'idProyecto': idProyecto, 'numrradcd': numrradcd, 'idAdjnt': idAdjnt}
+                    });
+                };
+
+            }]);
 

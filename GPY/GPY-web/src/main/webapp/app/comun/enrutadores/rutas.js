@@ -90,23 +90,11 @@ angular.module('GPYApp').config(['$routeProvider', '$httpProvider', '$locationPr
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/documentosreg/:tpid/:pid', {
-			templateUrl	: 'app/gpy/vistas/documentosReg.html',
+			templateUrl	: 'app/gpy/vistas/aprobacionNacional.html',
 			controller 	: 'gestionProyectosCtrl'
-		})
-		.when('/gpy/etapa1reg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
-			controller 	: 'gestionProyectosCtrl'
-		})
-		.when('/gpy/etapa1reg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
-			controller 	: 'gestionProyectosCtrl'
-		})
-		.when('/gpy/etapa1reg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
-			controller 	: 'gestionProyectosCtrl'
-		})
+		})		
 		.when('/gpy/aprobacionreg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
+			templateUrl	: 'app/gpy/vistas/aprobacionRegistro.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/infogralseg/:tpid/:pid', {

@@ -1,0 +1,40 @@
+                        <div>
+                            <div ng-controller="adjuntoCtrl as includeArchivos">
+
+                                <div class="div_adjuntos" ng-repeat="adjunto in adjuntos">
+
+                                    <label> {{adjunto.a025nombradjnt}}</label>
+                                    <br/><p> {{adjunto.a025descrpcnadjnt}}</p>
+                                    <!-- Número de radicado-->
+                                    <div class="form-group" ng-show="adjunto.a025aplicpcnadjnt == 'SI'">
+                                        <label class="col-md-4 control-label" for="radicado">Número de radicado</label>  
+                                        <div class="col-md-4">
+                                            <input id="radicado" name="radicado" placeholder="" class="form-control input-md" type="text" ng-model="adjunto.radicado">
+                                        </div>
+                                    </div>
+
+                                    <!-- Adjunto-->
+                                    <div class="form-group"  ng-show="adjunto.mostrarUpload">
+                                        <label class="col-md-4 control-label" for="appendedtext">Adjunto</label>
+                                        <div class="col-md-6">
+                                            <input type="file" class="form-control" id="{{adjunto.a025codigo}}" name="{{adjunto.a025codigo}}" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'" ng-model="adjunto.adjunto">
+                                        </div>
+                                    </div>
+
+                                    <!-- Muestra soporte cargado -->                                
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="adjunto" ng-show="!adjunto.mostrarUpload">Archivo de soporte</label>
+                                        <label class="col-md-4 control-label" for="adjunto" ng-show="adjunto.mostrarUpload">Deshacer la subida</label>
+                                        <div class="col-md-6" ng-show="!adjunto.mostrarUpload">
+                                            {{adjunto.a026nomarchivo}} 
+                                            <a ng-click="consultarSoportePorId(adjunto)" class="btn btn-primary" role="button">Ver soporte</a>
+                                            <a ng-click="mostrarCampoUpload(adjunto,true)" class="btn btn-primary" role="button" >Actualizar soporte</a>
+                                        </div>
+                                        <div class="col-md-6" ng-show="adjunto.mostrarUpload">
+                                            <a ng-click="mostrarCampoUpload(adjunto,false)" class="btn btn-primary" role="button" >Cancelar</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>

@@ -25,9 +25,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -91,7 +93,8 @@ public class ReporteFAC implements IReporteFAC{
         XSSFWorkbook libro = new XSSFWorkbook(inputStream);    
         //XSSFWorkbook libro = new XSSFWorkbook();
         XSSFSheet hoja = (XSSFSheet) libro.getSheet("Reporte");
-
+        org.apache.log4j.Logger log = Logger.getLogger( ReporteFAC.class );
+        
         if (datosReporte != null && !datosReporte.isEmpty()) {
 
             Integer numFila = 10; // 
@@ -108,7 +111,15 @@ public class ReporteFAC implements IReporteFAC{
                 Integer numColumna = 0;
                 for (String nomColumna : fila.keySet()) {
                     Cell celda = filaDatos.createCell(numColumna++);
-                    celda.setCellValue(fila.get(nomColumna) == null ? "" : (fila.get(nomColumna)).toString());
+                    if(isNumeric((fila.get(nomColumna)).toString())){
+                        double dato = Double.parseDouble((fila.get(nomColumna)).toString());
+                        celda.setCellValue((double) (fila.get(nomColumna) == null ? 0 : dato));
+                    }else{
+                        celda.setCellValue(fila.get(nomColumna) == null ? "" : (fila.get(nomColumna)).toString());
+                    }
+                    
+                    
+                    
                 }
             }
         }
@@ -131,4 +142,7 @@ public class ReporteFAC implements IReporteFAC{
 
             return objetoSalidaParametrica.getRespuesta().get(0).get("a102valor").toString();
         }
+    private boolean isNumeric(String s) {
+            return java.util.regex.Pattern.matches("\\d+", s);
+    }
 }

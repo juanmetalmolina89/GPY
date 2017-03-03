@@ -14,7 +14,7 @@
                     <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
                 </div>
 
-                <div class="panel-body" ng-controller="aprobarpreregCtrl">
+                <div class="panel-body" ng-controller="aprobacionNacionalCtrl">
                     <!-- ============================================================-->
                     <!-- Formulario -->
                     <!-- ============================================================-->
@@ -22,33 +22,14 @@
                         <fieldset>
 
                             <!-- Aprobación Preregistro -->
-                            <legend>Aprobación Preregistro</legend>
+                            <legend>Solicitud de Aprobación Nacional del Proyecto</legend>
 
-                            <!-- Multiple Checkboxes (inline) -->
-                            <div class="form-group" ng-class="{'has-error': formEnviado}">
-                                <label class="col-md-4 control-label"></label>
-                                <div class="col-md-4" ng-class="{'has-error': !regdocumento.numrradcd.$valid && formEnviado}">
-                                    <label class="checkbox-inline">
-                                        <input type="radio" ng-model="proyecto.a002estadoproyecto"
-                                               required value="{{REGISTRO}}" name="estadoProyecto" id="estadoProyecto">
-                                        Aprobado
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input type="radio" ng-model="proyecto.a002estadoproyecto"
-                                               required value="{{RECHAZADO}}" name="estadoProyecto" id="estadoProyecto">
-                                        Rechazado
-                                    </label>
-                                </div>
-                                 <span class="control-label"
-                                      ng-show="formEnviado">{{campoObligatorio}}</span>
-                            </div>
-                            <hr>
                             
                             <div  id="listaArhivos" ng-include="'app/utl/vistas/adjunto.html'"></div>
                             
                             <hr>
                             <!-- Guardar -->
-                            <div class="form-group" ng-show="(sesion.perfil == FUNCMADS) || (sesion.perfil == ADMINAA)">
+                            <div class="form-group" ng-disabled="">
                                 <label class="col-md-4 control-label" for="singlebutton"></label>
                                 <div class="col-md-4">
                                     <button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="guardar(formpreaprobacion)">Guardar</button>

@@ -8,6 +8,10 @@ angular.module('comun.controllers', ['ngSanitize'])
 
                 /**************************************************************/
                 /* Variables */
+                $scope.FUNCMADS = FUNCMADS;
+                $scope.ADMINAA = ADMINAA;
+                $scope.GESTPROY = GESTPROY;
+                $scope.PUBLICADOR = PUBLICADOR;
                 $scope.INVITADO = INVITADO;
 
 

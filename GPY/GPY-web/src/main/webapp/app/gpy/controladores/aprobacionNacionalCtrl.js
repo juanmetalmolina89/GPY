@@ -1,15 +1,15 @@
 /* 
- * Autor: Yeimmy Lee
+ * Autor: Fernando Camargo S
  */
 'use strict';
 
-angular.module('aprobarprereg.controllers', ['ngSanitize'])
-        .controller('aprobarpreregCtrl', ['$scope', '$routeParams', 'comunSrv', 'listadoSrv', 'aprobarPreRegSrv','datosBasicosSrv', function ($scope, $routeParams, comunSrv, listadoSrv, aprobarPreRegSrv, datosBasicosSrv) {
+angular.module('aprobacionNacional.controllers', ['ngSanitize'])
+        .controller('aprobacionNacionalCtrl', ['$scope', '$routeParams', 'comunSrv', 'datosBasicosSrv', '$route', function ($scope,  $routeParams, comunSrv, datosBasicosSrv, $route) {
 
                 $scope.REGISTRO = REGISTRO;
                 $scope.RECHAZADO = RECHAZADO;
                 $scope.APRREG = APRREG;
-                $scope.DEVUELTAREG = APRREG;
+                $scope.DEVUELTAREG = DEVUELTAREG;
 
                 $scope.FUNCMADS = FUNCMADS;
                 $scope.ADMINAA = ADMINAA;
@@ -17,7 +17,7 @@ angular.module('aprobarprereg.controllers', ['ngSanitize'])
                 $scope.PUBLICADOR = PUBLICADOR;
                 $scope.INVITADO = INVITADO;
 
-                $scope.pantalla = 10;
+                $scope.pantalla = 17;
                 $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
                 $scope.idUsuario = $scope.sesion.sub;
 
@@ -31,30 +31,34 @@ angular.module('aprobarprereg.controllers', ['ngSanitize'])
                 $scope.formEnviado = false;
 
 
-                // idProyecto, idAdjnt, idUsuario, numrradcd
+                
                 $scope.guardar = function (form) {
-
-                    if (form.$valid) { 
-                        $scope.$broadcast ('procesar'); // procesa los archivos en el scope hijo
-                        $scope.OE = {};
-                        $scope.OE.idUsuario = $scope.idUsuario;        
-                        $scope.OE.a002codigo = $scope.proyecto.a002codigo;
-                        $scope.OE.estadoproyecto = $scope.proyecto.a002estadoproyecto;
-                        datosBasicosSrv.cambiarEstado($scope.OE)
-                            .then(function (response) {
-                                response.data.msgError = 'Se ha cambiado el estado.';
-                                comunSrv.mensajeSalida(response);
-                                console.log($scope.mensaje);
-                            }, function (error) {
-                                $scope.mensaje = error.data.respuesta;
-                                console.log($scope.mensaje);      
-                            });
-
-                    } else {
-                        $scope.formEnviado = true;                       
-                        comunSrv.mensajeInfo("Ingrese la información marcada como obligatoria *");
+                    
+                    comunSrv.mensajeInfo("Por favor, espere un instante mientras se procesa la subida al servidor.");
+                    if (form.$valid) {
+                        
+                        // pegar esta llamada para procesar el envío.
+                        $scope.$broadcast ('procesar');
+                        $scope.OE = {};                      
+                    } else {                        
                     }
                 };
+                
+                //pegar este método para verificar cuándo se hayan subido correctamente los archivos.
+                $scope.$on('procesado', function(event, args) {
+                    if(args.resultado === true)
+                    {
+                        $scope.formEnviado = true;                       
+                        comunSrv.mensajeOk("Archivos almacenados correctamente");
+                        $route.reload();
+                    }
+                    else
+                    {
+                        $scope.formEnviado = false;                       
+                        comunSrv.mensajeInfo("No se ha completado el envío. Intente de nuevo por favor");                        
+                    }
+                });
+
                 
                 
                 // este archivo puede ser accedido sin entrar a datos básicos, cpor lo cual no está precargada la información del proyecto.
@@ -71,8 +75,3 @@ angular.module('aprobarprereg.controllers', ['ngSanitize'])
                 }
                 
             }]);
-
-
-
-
-

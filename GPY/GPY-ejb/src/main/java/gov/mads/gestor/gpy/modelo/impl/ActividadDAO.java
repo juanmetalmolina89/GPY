@@ -352,7 +352,7 @@ public class ActividadDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A011IDACTVDD", objetoEntrada.getIndicador().getA011idactvdd().getA005codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A011IDTIPACCION", objetoEntrada.getIndicador().getA011idtipaccion().getA050codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));//*/
                         sentencia.setParametros(parametros);
-			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
@@ -372,7 +372,7 @@ public class ActividadDAO extends GenericoDAO {
 			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
                         parametros.add(new SentenciaParametroDAO("p_A011CODIGO", objetoEntrada.getIndicador().getA011codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
-			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
@@ -392,8 +392,11 @@ public class ActividadDAO extends GenericoDAO {
 			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
 			parametros.add(new SentenciaParametroDAO("p_A011CODIGO", objetoEntrada.getIndicador().getA011codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A011NOMBRINDCDR", objetoEntrada.getIndicador().getA011nombrindcdr(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));//*/
+                        parametros.add(new SentenciaParametroDAO("p_A011IDTIPINDCDR", objetoEntrada.getIndicador().getA011idtipindcdr().getA034codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A011IDACTVDD", objetoEntrada.getIndicador().getA011idactvdd().getA005codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A011IDTIPACCION", objetoEntrada.getIndicador().getA011idtipaccion().getA050codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));//*/
                         sentencia.setParametros(parametros);
-			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
@@ -409,12 +412,12 @@ public class ActividadDAO extends GenericoDAO {
 
 		ObjetoSalida objetoSalida = new ObjetoSalida();
 		try {
-			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ConsultarIndicador", objetoEntrada.getIdUsuario());
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ConsultarIndicadoresAct", objetoEntrada.getIdUsuario());
 			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
-			parametros.add(new SentenciaParametroDAO("p_A005CODIGO", objetoEntrada.getIndicador().getA011idactvdd().getA005codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));//*/
-                        parametros.add(new SentenciaParametroDAO("p_A011CODIGO", objetoEntrada.getIndicador().getA011codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			parametros.add(new SentenciaParametroDAO("p_A011IDACTVDD", objetoEntrada.getIndicador().getA011idactvdd().getA005codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));//*/
+                        //parametros.add(new SentenciaParametroDAO("p_A011CODIGO", objetoEntrada.getIndicador().getA011codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
-			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
@@ -446,7 +449,7 @@ public class ActividadDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A012IDINDCDR", a012idindcdr, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A012UNIDDMEDD", objetoEntrada.getMeta().getA012uniddmedd(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                         sentencia.setParametros(parametros);
-			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
@@ -467,7 +470,7 @@ public class ActividadDAO extends GenericoDAO {
 			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
 			parametros.add(new SentenciaParametroDAO("p_A012CODIGO", objetoEntrada.getMeta().getA012codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
-			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
@@ -500,7 +503,7 @@ public class ActividadDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A012UNIDDMEDD", objetoEntrada.getMeta().getA012uniddmedd(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
 
 			sentencia.setParametros(parametros);
-			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);
@@ -517,11 +520,11 @@ public class ActividadDAO extends GenericoDAO {
 
 		ObjetoSalida objetoSalida = new ObjetoSalida();
 		try {
-			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ConsultarMeta", objetoEntrada.getIdUsuario());
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ConsultarMetasIndicador", objetoEntrada.getIdUsuario());
 			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
-			parametros.add(new SentenciaParametroDAO("p_A012CODIGO", objetoEntrada.getMeta().getA012codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+			parametros.add(new SentenciaParametroDAO("p_A012IDINDCDR", objetoEntrada.getMeta().getA012codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
-			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
 		} catch (Exception e) {
 			objetoSalida.setCodError(CodError.ERROR_INTERNO);

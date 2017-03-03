@@ -7,16 +7,15 @@ angular.module('GPYApp', ['ui.tree','ngRoute', 'ngSanitize', 'ui.bootstrap', 'ng
                                 ,'persona.services', 'representante.services', 'contacto.services'
                                 , 'datosBasicos.services', 'actividad.services', 'infoMDL.services'
                                 , 'avance.services', 'grilla.services','financiacion.services','politica.services'
-                                , 'participante.services', 'fuente.services','aprobarprereg.services','proyecto.services','reporte.services'
+                                , 'participante.services', 'fuente.services','aprobarprereg.services','aprobacionregistro.services','proyecto.services','reporte.services','adjunto.services'
 				, 'usuario.controllers', 'comun.controllers', 'listado.controllers', 'persona.controllers'
                                 ,'representante.controllers','contacto.controllers','datosBasicos.controllers','actividad.controllers'
                                 ,'infoMDL.controllers','avance.controllers','financiacion.controllers','politica.controllers'
-                                , 'participante.controllers' , 'fuente.controllers','aprobarprereg.controllers','proyecto.controllers','reporte.controllers'
+                                , 'participante.controllers' , 'fuente.controllers' , 'aprobarprereg.controllers', 'aprobacionregistro.controllers' ,'aprobacionNacional.controllers' ,'proyecto.controllers','reporte.controllers','adjunto.controllers'
 				, 'GPYApp.directives'
 				]);
                                 
 
-/* Services */
 angular.module('comun.services'                  , []);
 angular.module('usuario.services'                , []);
 angular.module('listado.services'                , []);
@@ -32,9 +31,11 @@ angular.module('financiacion.services'           , []);
 angular.module('politica.services'               , []);
 angular.module('participante.services'           , []);
 angular.module('fuente.services'           	 , []);
+angular.module('aprobacionregistro.services'     , []);
 angular.module('aprobarprereg.services'          , []);
 angular.module('proyecto.services'               , []);
 angular.module('reporte.services'                , []);
+angular.module('adjunto.services'                , []);
 
 
 /* Controllers */
@@ -51,10 +52,13 @@ angular.module('avance.controllers'              , []);
 angular.module('financiacion.controllers'        , []);
 angular.module('participante.controllers'        , []);
 angular.module('fuente.controllers'              , []);
-angular.module('politica.controllers'              , []);
-angular.module('aprobarprereg.controllers'              , []);
+angular.module('politica.controllers'            , []);
+angular.module('aprobacionregistro.controllers'  , []);
+angular.module('aprobacionNacional.controllers'  , []);
+angular.module('aprobarprereg.controllers'       , []);
 angular.module('proyecto.controllers'            , []);
-angular.module('reporte.controllers'            , []);
+angular.module('reporte.controllers'             , []);
+angular.module('adjunto.controllers'             , []);
 /* Directives */
 angular.module('GPYApp.directives'               , []);
 

@@ -70,7 +70,7 @@
                                         <th>Tipo Proyecto</th> 
                                         <th>Proyecto</th> 
                                         <th>Estado</th> 
-                                        <th>Acciones</th> 
+                                        <th style="width:100px;">Acciones</th> 
                                     </tr> 
                                 </thead>
                                 <tbody>
@@ -81,12 +81,37 @@
                                         <td>{{proyecto.a002descrpcinproyct}}</td>
                                         <td>{{proyecto.estadoproyecto}}</td>
                                         <td>
-                                            <button type="submit" class="btn btn-primary"
-                                                    aria-label="Left Align"
-                                                    ng-click="verdalleproy(proyecto)"
-                                                    style="color: #FFF ">
-                                                <span class="glyphicon glyphicon-search btn-icon"
-                                                      aria-hidden="true"></span>
+                                            <!-- acciones compartidas -->
+                                            <button type="submit" class="btn btn-primary" style="color: #FFF" aria-label="Left Align" ng-click="verdalleproy(proyecto)" >
+                                                <span class="glyphicon glyphicon-search btn-icon" aria-hidden="true"></span>
+                                            </button>
+                                            
+                                            <!-- acciones para el publicador -->
+                                            <button type="button" class="btn btn-warning" style="color: #FFF" aria-label="Left Align" ng-show="habilitarLink('SOLMDL1', proyecto)" ng-click="procesarLink('SOLMDL1',proyecto)" title="Solicitar aprobación MDL - 1" >
+                                                <span class="glyphicon " aria-hidden="true"><b>01</b></span>
+                                            </button>
+                                            <button type="button" class="btn btn-warning" style="color: #FFF" aria-label="Left Align" ng-show="habilitarLink('SOLMDL3', proyecto)" ng-click="procesarLink('SOLMDL3',proyecto)" title="Solicitar aprobación MDL - etapa 3" >
+                                                <span class="glyphicon" aria-hidden="true"><b>03</b></span>
+                                            </button>
+                                            <button type="button" class="btn btn-success" style="color: #FFF" aria-label="Left Align" ng-show="habilitarLink('SOLPRE', proyecto)" ng-click="procesarLink('SOLPRE',proyecto)" title="Solicitar aprobación del pre-registro" >
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-primary" style="color: #FFF" aria-label="Left Align" ng-show="habilitarLink('SOLREG', proyecto)" ng-click="procesarLink('SOLREG',proyecto)" title="Solicitar aprobación del proyecto" >
+                                                <span class="glyphicon glyphicon-open" aria-hidden="true"></span>
+                                            </button>
+                                            
+                                            <!-- acciones para la autoridad -->
+                                            <button type="button" class="btn btn-warning" style="color: #FFF" aria-label="Left Align" ng-show="habilitarLink('GESMDL1', proyecto)" ng-click="procesarLink('GESMDL1',proyecto)" title="Gestionar aprobación MDL -  etapa 1" >
+                                                <span class="glyphicon " aria-hidden="true"><b>01</b></span>
+                                            </button>
+                                            <button type="button" class="btn btn-warning" style="color: #FFF" aria-label="Left Align" ng-show="habilitarLink('GESMDL3', proyecto)" ng-click="procesarLink('GESMDL3',proyecto)" title="Gestionar aprobación MDL - etapa 3" >
+                                                <span class="glyphicon" aria-hidden="true"><b>03</b></span>
+                                            </button>
+                                            <button type="button" class="btn btn-success" style="color: #FFF" aria-label="Left Align" ng-show="habilitarLink('GESPRE', proyecto)" ng-click="procesarLink('GESPRE',proyecto)" title="Gestionar aprobación pre-registro" >
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="button" class="btn btn-primary" style="color: #FFF" aria-label="Left Align" ng-show="habilitarLink('GESREG', proyecto)" ng-click="procesarLink('GESREG',proyecto)" title="Gestionar aprobación del proyecto" >
+                                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                                             </button>
                                         </td>
                                     </tr> 

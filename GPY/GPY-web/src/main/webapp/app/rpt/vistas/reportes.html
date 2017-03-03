@@ -15,7 +15,7 @@
                             <div class="row">
                                 <div class="col-xs-3 col-sm-3">
                                     <label for="search">Año</label>
-                                    <input ng-model="anio" id="search" class="form-control" />
+                                    <input ng-model="anio" id="search" class="form-control" required />
                                 </div>
                                 <div class="col-xs-3 col-sm-3">
                                     <label for="search">Autoridad ambiental</label>
@@ -23,7 +23,7 @@
                                             id="selAA" name="selAA" style="width: 240px"
                                             ng-model="autoridad"
                                             ng-options="item as item.a001sigla for item in listaAutoridadAmb track by item.a001sigla">
-                                        <option value="" selected>Todas</option>
+                                        <option value="0" selected>Todas</option>
                                     </select> 
                                 </div>
 
@@ -41,7 +41,7 @@
                                 </div>
                                 
                                 <div class="col-xs-3 col-sm-3 reporte" ng-repeat="reporte in reportes | filter:{ a103categoria:tipo.a102codigo}"  >  <!-- iteración por cada reporte -->                  
-                                    <a ng-click="abrirReporte(reporte)" class="btn btn-primary" role="button" data-toggle="tooltip" data-placement="top" title="{{reporte.a103nombre}}">
+                                    <a ng-disabled="!(autoridad && anio)" target="_blank" ng-href="{{(autoridad && anio) ? 'servicios/reporte/reporteGeneral/'+ idUsuario + '/' + anio + '/' + autoridad.a001codigo + '/' + reporte.a103codigo : '#'}}" class="btn btn-primary" role="button" data-toggle="tooltip" data-placement="top" title="{{reporte.a103nombre}}">
                                                 <span class="glyphicon {{reporte.a103icono}} ico_reportes"></span></a>    
                                     <label>{{reporte.a103nombre}} </label>
                                 </div>

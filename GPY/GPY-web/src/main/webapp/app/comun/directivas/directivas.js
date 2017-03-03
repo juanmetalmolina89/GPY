@@ -49,7 +49,8 @@ angular.module('GPYApp.directives', [])
                         '</div>',
                 replace: true
             };
-        }).directive('menuLink', function() {
+        })    
+        .directive('menuLink', function() {
             return {
               scope: {
                 enabled: '=menuLink'
@@ -62,7 +63,8 @@ angular.module('GPYApp.directives', [])
                 });                
               }
             };
-        }).directive("format", ["$filter", function ($filter) {
+        })
+        .directive("format", ["$filter", function ($filter) {
             return {
                 require: '?ngModel',
                 link: function (scope, elem, attrs, ctrl) {

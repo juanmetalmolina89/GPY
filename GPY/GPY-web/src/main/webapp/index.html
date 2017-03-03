@@ -58,7 +58,7 @@
 
                         <form class="navbar-form navbar-left" ng-show="obtenerSesion() !== null">
                             <a href="#home" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> Gestión de Proyectos</a>
-                            <a ng-show="obtenerSesion().perfil != INVITADO" href="#reportes" class="btn btn-primary" role="button" ><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Reportes</a>
+                            <a ng-show="(obtenerSesion().perfil == FUNCMADS) || (obtenerSesion().perfil == ADMINAA)" href="#reportes" class="btn btn-primary" role="button" ><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Reportes</a>
                             <a ng-show="obtenerSesion().perfil != INVITADO" href="#adm/cuenta" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Administración</a>
                         </form>
 
@@ -66,7 +66,7 @@
                             <li>
                                 <a href="#">
                                     <span ng-show="obtenerSesion() != null">
-                                        Bienvenido, {{obtenerSesion().nombre}}
+                                        Bienvenido, {{obtenerSesion().nombre}} 
                                     </span>
                                 </a>
                             </li>
@@ -198,6 +198,7 @@
 
             <script type="text/javascript" src="app/comun/servicios/comunSrv.js"></script>
             <script type="text/javascript" src="app/utl/servicios/listadoSrv.js"></script>
+            <script type="text/javascript" src="app/utl/servicios/adjuntoSrv.js"></script>
             <script type="text/javascript" src="app/gpy/servicios/grillaSrv.js"></script>
             <script type="text/javascript" src="app/gpy/servicios/datosBasicosSrv.js"></script>
             <script type="text/javascript" src="app/gpy/servicios/financiacionSrv.js"></script>
@@ -213,10 +214,12 @@
             <script type="text/javascript" src="app/adm/servicios/representanteSrv.js"></script> 
             <script type="text/javascript" src="app/adm/servicios/contactoSrv.js"></script>
             <script type="text/javascript" src="app/gpy/servicios/aprobarPreRegistroSrv.js"></script>
+            <script type="text/javascript" src="app/gpy/servicios/aprobarRegistroSrv.js"></script>
             <script type="text/javascript" src="app/rpt/servicios/reportesSrv.js"></script>  
             
-
             <script type="text/javascript" src="app/comun/controladores/comunCtrl.js"></script>
+            <script type="text/javascript" src="app/utl/controladores/listadoCtrl.js"></script>
+            <script type="text/javascript" src="app/utl/controladores/adjuntoCtrl.js"></script>            
             <script type="text/javascript" src="app/gpy/controladores/gestionProyectosCtrl.js"></script>
             <script type="text/javascript" src="app/gpy/controladores/datosBasicosCtrl.js"></script>
             <script type="text/javascript" src="app/gpy/controladores/financiacionCtrl.js"></script>
@@ -233,6 +236,8 @@
             <script type="text/javascript" src="app/adm/controladores/representanteCtrl.js"></script> 
             <script type="text/javascript" src="app/adm/controladores/contactoCtrl.js"></script> 
             <script type="text/javascript" src="app/gpy/controladores/aprobarPreRegistroCtrl.js"></script> 
+            <script type="text/javascript" src="app/gpy/controladores/aprobarRegistroCtrl.js"></script> 
+            <script type="text/javascript" src="app/gpy/controladores/aprobacionNacionalCtrl.js"></script> 
             <script type="text/javascript" src="app/rpt/controladores/reportesCtrl.js"></script>
 
 

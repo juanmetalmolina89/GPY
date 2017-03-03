@@ -110,9 +110,9 @@ public class GenericoDAO {
 
     public Connection conectar() throws Exception {
 
-        return Conexion.obtenerInstancia().obtenerConexion();
+        //return Conexion.obtenerInstancia().obtenerConexion();
         //return ConexionDS.obtenerConexion();
-        //return ConexionDS.obtenerInstancia();
+        return ConexionDS.obtenerInstancia();
     }
 
     private String obtenerSQL(SentenciaDAO sentencia) {

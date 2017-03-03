@@ -14,8 +14,7 @@ angular.module('reporte.services')
                 };
 
                 datos.reporteGeneral = function (OE) {
-                    return $http.post(urlBase + '/reporteGeneral', OE);
-                    //return $http.get(urlBase + '/download/xls');
+                    return $http.get(urlBase + '/reporteGeneral/'+ OE.idUsuario + "/" + OE.anio + "/" + OE.a001codigo + "/"  + OE.a103codigo );
                 };
 
 

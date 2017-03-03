@@ -8,6 +8,7 @@ angular.module('datosBasicos.services')
 
                 var urlBase = urlBackEnd + 'datosbasicos';
                 var urlGrilla = urlBackEnd + 'grilla';
+                var urlEstados = urlBackEnd + 'aprobnacional';
                 
                 var datos = {};
 
@@ -42,6 +43,11 @@ angular.module('datosBasicos.services')
                 datos.listarProyectosFiltro = function (OE) {
                     return $http.post(urlGrilla + '/listarProyectoPorClave', OE);
                 };
+                
+                datos.cambiarEstado = function (OE) {
+                    return $http.post(urlEstados + '/cambiarEstado', OE);
+                };
+            
                 return datos;
             }])
         .factory('infoProyecto', function () {

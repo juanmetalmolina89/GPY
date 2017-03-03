@@ -1,15 +1,15 @@
 /* 
- * Autor: Yeimmy Lee
+ * Autor: Fernando Camargo S
  */
 'use strict';
 
-angular.module('aprobarprereg.controllers', ['ngSanitize'])
-        .controller('aprobarpreregCtrl', ['$scope', '$routeParams', 'comunSrv', 'listadoSrv', 'aprobarPreRegSrv','datosBasicosSrv', function ($scope, $routeParams, comunSrv, listadoSrv, aprobarPreRegSrv, datosBasicosSrv) {
+angular.module('aprobacionregistro.controllers', ['ngSanitize'])
+        .controller('aprobacionregistroCtrl', ['$scope', '$routeParams', 'comunSrv', 'datosBasicosSrv', function ($scope,  $routeParams, comunSrv, datosBasicosSrv) {
 
                 $scope.REGISTRO = REGISTRO;
                 $scope.RECHAZADO = RECHAZADO;
                 $scope.APRREG = APRREG;
-                $scope.DEVUELTAREG = APRREG;
+                $scope.DEVUELTAREG = DEVUELTAREG;
 
                 $scope.FUNCMADS = FUNCMADS;
                 $scope.ADMINAA = ADMINAA;
@@ -17,7 +17,7 @@ angular.module('aprobarprereg.controllers', ['ngSanitize'])
                 $scope.PUBLICADOR = PUBLICADOR;
                 $scope.INVITADO = INVITADO;
 
-                $scope.pantalla = 10;
+                $scope.pantalla = 21;
                 $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
                 $scope.idUsuario = $scope.sesion.sub;
 
@@ -71,8 +71,3 @@ angular.module('aprobarprereg.controllers', ['ngSanitize'])
                 }
                 
             }]);
-
-
-
-
-

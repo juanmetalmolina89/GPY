@@ -4,7 +4,14 @@
 'use strict';
 
 angular.module('infoMDL.controllers', ['ngSanitize'])
-        .controller('infoMDLCtrl', ['$scope', '$routeParams', '$location', 'infoMDLSrv', 'comunSrv', 'listadoSrv', 'avanceSrv', 'adjuntosMDLSrv', 'infoProyecto', function ($scope, $routeParams, $location, infoMDLSrv, comunSrv, listadoSrv, avanceSrv, adjuntosMDLSrv, infoProyecto) {
+        .controller('infoMDLCtrl', ['$scope', '$routeParams', '$location', 'infoMDLSrv', 'comunSrv', 'listadoSrv', 'avanceSrv', 'adjuntosMDLSrv', 'infoProyecto','datosBasicosSrv', function ($scope, $routeParams, $location, infoMDLSrv, comunSrv, listadoSrv, avanceSrv, adjuntosMDLSrv, infoProyecto, datosBasicosSrv) {
+
+                $scope.ADMINAA = ADMINAA;
+                $scope.FUNCMADS = FUNCMADS;
+                $scope.INVITADO = INVITADO;
+                $scope.GESTPROY = GESTPROY;
+                $scope.PUBLICADOR = PUBLICADOR;
+
 
                 /**************************************************************/
                 /* Manejo sesión */
@@ -28,8 +35,29 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
 
 
                 /**************************************************************/
+                /**************************************************************/
                 /* Métodos */
 
+                /* Operaciones con registros */
+
+                //invoca un servicio para cambio de estado del proyecto
+                $scope.cambiarEstado = function (nuevoEstado) {
+                    $scope.OE = {};
+                    $scope.OE.idUsuario = $scope.idUsuario;        
+                    $scope.OE.a002codigo = $scope.pid;
+                    $scope.OE.estadoproyecto = nuevoEstado;
+                    datosBasicosSrv.cambiarEstado($scope.OE)
+                        .then(function (response) {
+                            response.data.msgError = 'Se ha enviado la solicitud con éxito.';
+                            comunSrv.mensajeSalida(response);
+                            $scope.listarTodosLosProyectosUsuario();
+                            console.log($scope.mensaje);
+                        }, function (error) {
+                            $scope.mensaje = error.data.respuesta;
+                            console.log($scope.mensaje);
+                        });
+                 };
+                
                 $scope.registrarConsiderac = function () {
                     $scope.OE = {};
                     $scope.OE.idUsuario = $scope.idUsuario;
@@ -91,6 +119,28 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
 
 
                 };
+                $scope.gestionarConsiderac = function (aprobar) {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    if(aprobar===true)
+                    {
+                        $scope.$parent.cambiarEstado($scope.proyecto,APRMDL1 )
+                            .then(function (response) {
+                                $location.path('/gpy/');
+                             }, function (error) {
+                                $location.path('/gpy/');
+                            });      
+                    }
+                    else
+                    {
+                        $scope.$parent.cambiarEstado($scope.proyecto,DEVUELTAMDL1);                        
+                    }
+                    // Hacer lo mismo para gestionar autorizacion de Entidad Coordinadora
+                };
+
+
+                /* Operaciones de consulta de listas */
+
 
                 $scope.listarSectoralScopes = function () {
                     $scope.OE = new Object();
@@ -135,6 +185,8 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                         }
                     }
                 };
+
+                /* Operaciones con adjuntos */
 
                 $scope.listarAdjuntos = function () {
                     $scope.OE = new Object();
@@ -208,7 +260,23 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                 
                 /**************************************************************/
                 /* Inicializar formulario */
-                $scope.proyecto = infoProyecto.proyecto;
+                
+                // este archivo puede ser accedido sin entrar a datos básicos, cpor lo cual no está precargada la información del proyecto.
+                // es necesario traerla:                
+                if (infoProyecto.proyecto=="")
+                {                    
+                    $scope.$parent.consultarProyectoPorId($scope.pid)
+                        .then(function (response) {
+                            $scope.proyecto = $scope.$parent.proyecto;
+                         }, function (error) {
+                            $scope.mensaje = error.data.respuesta;
+                            console.log($scope.mensaje);
+                        });
+                }
+                else
+                {
+                    $scope.proyecto = infoProyecto.proyecto;
+                }
                 
                 if ($location.path().substr(0, '/gpy/etapa1pre/'.length) === '/gpy/etapa1pre/') {
                     //etapa 1

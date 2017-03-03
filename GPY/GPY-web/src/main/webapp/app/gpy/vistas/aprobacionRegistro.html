@@ -1,5 +1,5 @@
 <!-- ===================================================================================== -->
-<!-- 10 - Aprobación  -->
+<!-- 17 - Aprobación  -->
 <!-- ===================================================================================== -->
 ﻿<div class="container gest_proy">
     <div class="row">
@@ -14,7 +14,7 @@
                     <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
                 </div>
 
-                <div class="panel-body" ng-controller="aprobarpreregCtrl">
+                <div class="panel-body" ng-controller="aprobacionregistroCtrl">
                     <!-- ============================================================-->
                     <!-- Formulario -->
                     <!-- ============================================================-->
@@ -22,7 +22,7 @@
                         <fieldset>
 
                             <!-- Aprobación Preregistro -->
-                            <legend>Aprobación Preregistro</legend>
+                            <legend>Aprobación del proyecto</legend>
 
                             <!-- Multiple Checkboxes (inline) -->
                             <div class="form-group" ng-class="{'has-error': formEnviado}">
@@ -30,12 +30,12 @@
                                 <div class="col-md-4" ng-class="{'has-error': !regdocumento.numrradcd.$valid && formEnviado}">
                                     <label class="checkbox-inline">
                                         <input type="radio" ng-model="proyecto.a002estadoproyecto"
-                                               required value="{{REGISTRO}}" name="estadoProyecto" id="estadoProyecto">
+                                               required value="{{APRREG}}" name="estadoProyecto" id="estadoProyecto">
                                         Aprobado
                                     </label>
                                     <label class="checkbox-inline">
                                         <input type="radio" ng-model="proyecto.a002estadoproyecto"
-                                               required value="{{RECHAZADO}}" name="estadoProyecto" id="estadoProyecto">
+                                               required value="{{DEVUELTAREG}}" name="estadoProyecto" id="estadoProyecto">
                                         Rechazado
                                     </label>
                                 </div>

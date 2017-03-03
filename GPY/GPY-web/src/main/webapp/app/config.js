@@ -71,8 +71,19 @@ var CPA = 16;
 /* ESTADOS PROYECTO */
 var NUEVO = 0;//@TODO actualizar el código cuando lo creen en la tabla 
 var PREREGISTRO = 23;
-var REGISTRO = 99999999;//@TODO actualizar el código cuando lo creen en la tabla 
-var SEGUIMIENTO = 999999999;//@TODO actualizar el código cuando lo creen en la tabla 
+var RECHAZADO = 25;
+var SOLMDL1 = 99;
+var APRMDL1 = 100;
+var DEVUELTAMDL1 = 101;
+var SOLMDL3 = 102;
+var APRMDL3 = 103;
+var DEVUELTAMDL3 = 104;
+var REGISTRO = 24;// igual que aprobado
+var SEGUIMIENTO = 27; // en proceso, es lo mismo.  
+var SOLPRE = 107;
+var SOLREG = 108;
+var APRREG = 109;
+var DEVUELTAREG = 110;
 
 
 /* PANTALLAS */

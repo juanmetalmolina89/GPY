@@ -54,23 +54,13 @@ public class ActividadDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A005CONTRBCNPROP", contrbcnprop, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			Long contrbcextrn = (objetoEntrada.getActividad().getA005contrbcnextrn() == null) ? null : objetoEntrada.getActividad().getA005contrbcnextrn().longValue();  
                         parametros.add(new SentenciaParametroDAO("p_A005CONTRBCNEXTRN", contrbcextrn, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			//java.sql.Date a002fechinicio = (objetoEntrada.getActividad().getA005fechainicio() == null) ? null : new java.sql.Date(objetoEntrada.getActividad().getA005fechainicio().getYear(),objetoEntrada.getActividad().getA005fechainicio().getMonth(),objetoEntrada.getActividad().getA005fechainicio().getDate());
-                        java.sql.Date a002fechinicio = (objetoEntrada.getActividad().getA005fechainicio() == null) ? null : new java.sql.Date(objetoEntrada.getActividad().getA005fechainicio().getTime());
+			java.sql.Date a002fechinicio = (objetoEntrada.getActividad().getA005fechainicio() == null) ? null : new java.sql.Date(objetoEntrada.getActividad().getA005fechainicio().getTime());
                         parametros.add(new SentenciaParametroDAO("p_A005FECHAINICIO", a002fechinicio, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
-                        //java.sql.Date a002fechfin = (objetoEntrada.getActividad().getA005fechafinal() == null) ? null : new java.sql.Date(objetoEntrada.getActividad().getA005fechafinal().getYear(),objetoEntrada.getActividad().getA005fechafinal().getMonth(),objetoEntrada.getActividad().getA005fechafinal().getDate());
                         java.sql.Date a002fechfin = (objetoEntrada.getActividad().getA005fechafinal() == null) ? null : new java.sql.Date(objetoEntrada.getActividad().getA005fechafinal().getTime());
 			parametros.add(new SentenciaParametroDAO("p_A005FECHAFINAL", a002fechfin, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
-                        /*
-                        parametros.add(new SentenciaParametroDAO("p_A005DESCRPCNACTVDD", objetoEntrada.getActividad().getA005descrpcnactvdd(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-			parametros.add(new SentenciaParametroDAO("p_A005IDTIPACTVDD", objetoEntrada.getActividad().getA005idtipactvdd().getA022codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005UBCCNGEGRFC", objetoEntrada.getActividad().getA005ubccngegrfc(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-			parametros.add(new SentenciaParametroDAO("p_A005IDPROYECTO", objetoEntrada.getActividad().getA005idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005IDSECTORIPCC", objetoEntrada.getActividad().getA005idsectoripcc().getA045codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005IDSOPORTE", objetoEntrada.getActividad().getA005idsoporte().getA026codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005COSTOTOTAL", objetoEntrada.getActividad().getA005costototal().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005CONTRBCNPROP", objetoEntrada.getActividad().getA005contrbcnprop().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005CONTRBCNEXTRN", objetoEntrada.getActividad().getA005contrbcnextrn().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			*/
+                        Integer idmtdcalcreduccbaseline = (objetoEntrada.getActividad().getA005idmtdcalcreduccbaseline() == null) ? null : objetoEntrada.getActividad().getA005idmtdcalcreduccbaseline().getA102codigo();
+ 			parametros.add(new SentenciaParametroDAO("p_A005IDMTDCALCREDUCCBASELINE", idmtdcalcreduccbaseline, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+ 
                         sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
@@ -91,15 +81,6 @@ public class ActividadDAO extends GenericoDAO {
 			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ActualizarActividad", objetoEntrada.getIdUsuario());
 			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
 			parametros.add(new SentenciaParametroDAO("p_A005CODIGO", objetoEntrada.getActividad().getA005codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-/*			parametros.add(new SentenciaParametroDAO("p_A005DESCRPCNACTVDD", objetoEntrada.getActividad().getA005descrpcnactvdd(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-			parametros.add(new SentenciaParametroDAO("p_A005IDTIPACTVDD", objetoEntrada.getActividad().getA005idtipactvdd().getA022codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005UBCCNGEGRFC", objetoEntrada.getActividad().getA005ubccngegrfc(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-			parametros.add(new SentenciaParametroDAO("p_A005IDPROYECTO", objetoEntrada.getActividad().getA005idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005IDSECTORIPCC", objetoEntrada.getActividad().getA005idsectoripcc().getA045codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005IDSOPORTE", objetoEntrada.getActividad().getA005idsoporte().getA026codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005COSTOTOTAL", objetoEntrada.getActividad().getA005costototal().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005CONTRBCNPROP", objetoEntrada.getActividad().getA005contrbcnprop().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-			parametros.add(new SentenciaParametroDAO("p_A005CONTRBCNEXTRN", objetoEntrada.getActividad().getA005contrbcnextrn().intValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));*/
 			parametros.add(new SentenciaParametroDAO("p_A005DESCRPCNACTVDD", objetoEntrada.getActividad().getA005descrpcnactvdd(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
 			parametros.add(new SentenciaParametroDAO("p_A005IDTIPACTVDD", objetoEntrada.getActividad().getA005idtipactvdd().getA022codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			parametros.add(new SentenciaParametroDAO("p_A005IDPROYECTO", objetoEntrada.getActividad().getA005idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
@@ -115,8 +96,9 @@ public class ActividadDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A005FECHAINICIO", a002fechinicio, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
                         java.sql.Date a002fechfin = (objetoEntrada.getActividad().getA005fechafinal() == null) ? null : new java.sql.Date(objetoEntrada.getActividad().getA005fechafinal().getTime());
 			parametros.add(new SentenciaParametroDAO("p_A005FECHAFINAL", a002fechfin, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
-
-			sentencia.setParametros(parametros);
+                        //Integer idmtdcalcreduccbaseline = (objetoEntrada.getActividad().getA005idmtdcalcreduccbaseline() == null) ? null : objetoEntrada.getActividad().getA005idmtdcalcreduccbaseline().getA102codigo();
+ 			//parametros.add(new SentenciaParametroDAO("p_A005IDMTDCALCREDUCCBASELINE", idmtdcalcreduccbaseline, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
 		} catch (Exception e) {
@@ -490,6 +472,8 @@ public class ActividadDAO extends GenericoDAO {
 			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ActualizarMeta", objetoEntrada.getIdUsuario());
 			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
                         parametros.add(new SentenciaParametroDAO("p_A012CODIGO", objetoEntrada.getMeta().getA012codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        java.sql.Date a012fechameta = ( objetoEntrada.getMeta().getA012fechameta() == null) ? null : new java.sql.Date(objetoEntrada.getMeta().getA012fechameta().getTime());
+			parametros.add(new SentenciaParametroDAO("p_A012FECHAMETA", a012fechameta, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
                         parametros.add(new SentenciaParametroDAO("p_A012VALORMETA", objetoEntrada.getMeta().getA012valormeta().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         java.sql.Date a012reprtanfuntindicdr = ( objetoEntrada.getMeta().getA012reprtanfuntindicdr() == null) ? null : new java.sql.Date(objetoEntrada.getMeta().getA012reprtanfuntindicdr().getTime());
                         parametros.add(new SentenciaParametroDAO("p_A012REPRTANFUNTINDICDR", a012reprtanfuntindicdr, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));

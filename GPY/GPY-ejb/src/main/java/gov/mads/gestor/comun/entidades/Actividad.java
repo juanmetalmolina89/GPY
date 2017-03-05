@@ -90,7 +90,11 @@ public class Actividad implements Serializable {
     private SectorIpcc a005idsectoripcc;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a042idactvdd")
 //    private List<ActividadGeometria> actividadGeometriaList;
+    @JoinColumn(name = "A005IDSOPORTECALCULO", referencedColumnName = "A026CODIGO")
+    private Archivo a005idsoportecalculo;
     
+    @JoinColumn(name = "A005IDMTDCALCREDUCCBASELINE", referencedColumnName = "A026CODIGO")
+    private Lista a005idmtdcalcreduccbaseline;
     
     @JoinColumn(name = "A005IDTIPACTVDREDUC", referencedColumnName = "A058CODIGO")
     @ManyToOne
@@ -304,6 +308,22 @@ public class Actividad implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.Actividad[ a005codigo=" + a005codigo + " ]";
+    }
+
+    public Archivo getA005idsoportecalculo() {
+        return a005idsoportecalculo;
+    }
+
+    public void setA005idsoportecalculo(Archivo a005idsoportecalculo) {
+        this.a005idsoportecalculo = a005idsoportecalculo;
+    }
+
+    public Lista getA005idmtdcalcreduccbaseline() {
+        return a005idmtdcalcreduccbaseline;
+    }
+
+    public void setA005idmtdcalcreduccbaseline(Lista a005idmtdcalcreduccbaseline) {
+        this.a005idmtdcalcreduccbaseline = a005idmtdcalcreduccbaseline;
     }
     
 }

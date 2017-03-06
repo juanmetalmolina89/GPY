@@ -1,0 +1,8 @@
+DELETE FROM GESTOR.DEBT_T900_NIVEL_SISTEMA;
+
+INSERT INTO DEBT_T900_NIVEL_SISTEMA (a900codigo, a900descripcion, a900estadoregistro) VALUES (1, 'SEVERE', 'I');
+INSERT INTO DEBT_T900_NIVEL_SISTEMA (a900codigo, a900descripcion, a900estadoregistro) VALUES (2, 'WARNING', 'I');
+INSERT INTO DEBT_T900_NIVEL_SISTEMA (a900codigo, a900descripcion, a900estadoregistro) VALUES (3, 'INFO', 'I');
+INSERT INTO DEBT_T900_NIVEL_SISTEMA (a900codigo, a900descripcion, a900estadoregistro) VALUES (4, 'TRACE', 'A');
+
+COMMIT;

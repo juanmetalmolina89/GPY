@@ -1,0 +1,14 @@
+--------------------------------------------------------
+-- Archivo creado  - lunes-febrero-13-2017   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for View GPYV_012_ESCENARIOBASEFNTS
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "GESTOR"."GPYV_012_ESCENARIOBASEFNTS" ("A010CODIGO", "A010REPRTANFUNT", "A010VALREMSN", "A010IDFUENTE", "A010ESTADOREGISTRO") AS 
+  SELECT A010CODIGO,
+    A010REPRTANFUNT,
+    A010VALREMSN,
+    A010IDFUENTE,
+    A010ESTADOREGISTRO
+  FROM GPYT_T010_REPORTE_ANIO_FUENTE;

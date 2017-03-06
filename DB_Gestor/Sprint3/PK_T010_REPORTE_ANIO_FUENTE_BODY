@@ -1,0 +1,174 @@
+--------------------------------------------------------
+-- Archivo creado  - lunes-febrero-13-2017   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Package Body PK_T010_REPORTE_ANIO_FUENTE
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE BODY "GESTOR"."PK_T010_REPORTE_ANIO_FUENTE" 
+IS
+  PROCEDURE Pr_Insertar(
+      p_A010REPRTANFUNT IN GPYT_T010_Reporte_Anio_Fuente.A010REPRTANFUNT%TYPE,
+      p_A010VALREMSN    IN GPYT_T010_Reporte_Anio_Fuente.A010VALREMSN%TYPE,
+      p_A010IDFUENTE    IN GPYT_T010_Reporte_Anio_Fuente.A010IDFUENTE%TYPE,
+      p_idUsuario       IN NUMBER,
+      p_resultado OUT CURSOR_SALIDA,
+      p_codError OUT NUMBER,
+      p_msjError OUT VARCHAR2)
+  IS
+    codExcepcion         NUMBER;
+    NOMBRE_PROCEDIMIENTO VARCHAR2(50) := 'Pr_Insertar';
+    p_A010CODIGO         NUMBER;
+  BEGIN
+    --
+    pk_utl_utilidad.pr_registrardebug ( p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Entro a Pr_Insertar ' || p_A010VALREMSN);
+    -- Validamos obligatoriedad de datos
+    IF p_A010REPRTANFUNT IS NULL OR p_A010VALREMSN IS NULL OR p_A010IDFUENTE IS NULL THEN
+      p_codError         := 4;
+      p_msjError         := PK_UTL_UTILIDAD.Fn_Obtenermensaje(p_codError);
+      OPEN p_resultado FOR SELECT '' FROM dual;
+      RETURN;
+    END IF;
+    -- obtenemos el siguiente id
+    p_A010CODIGO := PK_UTL_UTILIDAD.Fn_Obtenerid('T010_REPORTE_ANIO_FUENTE_SEQ');
+    INSERT
+    INTO GPYT_T010_REPORTE_ANIO_FUENTE
+      (
+        A010CODIGO,
+        A010REPRTANFUNT,
+        A010VALREMSN,
+        A010IDFUENTE,
+        A010ESTADOREGISTRO,
+        A010FECHACREACION,
+        A010FECHAMODIFICACION,
+        A010USUARIOCREACION,
+        A010USUARIOMODIFICACION
+      )
+      VALUES
+      (
+        p_A010CODIGO,
+        p_A010REPRTANFUNT,
+        p_A010VALREMSN,
+        p_A010IDFUENTE,
+        PK_UTL_CONSTANTE.COD_ACTIVO,
+        sysdate,
+        sysdate,
+        p_idUsuario,
+        ''
+      );
+    ---
+    OPEN p_resultado FOR SELECT p_A010CODIGO A010CODIGO FROM dual;
+    p_codError := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+    p_msjError := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+    pk_utl_utilidad.pr_registrardebug(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Salio de Pr_Insertar ' || p_A010REPRTANFUNT);
+    ---
+  END Pr_Insertar;
+---***
+  PROCEDURE Pr_Actualizar
+    (
+      p_A010CODIGO      IN GPYT_T010_Reporte_Anio_Fuente.A010CODIGO%TYPE,
+      p_A010REPRTANFUNT IN GPYT_T010_Reporte_Anio_Fuente.A010REPRTANFUNT%TYPE,
+      p_A010VALREMSN    IN GPYT_T010_Reporte_Anio_Fuente.A010VALREMSN%TYPE,
+      p_A010IDFUENTE    IN GPYT_T010_Reporte_Anio_Fuente.A010IDFUENTE%TYPE,
+      p_idUsuario       IN NUMBER,
+      p_resultado OUT CURSOR_SALIDA,
+      p_codError OUT NUMBER,
+      p_msjError OUT VARCHAR2
+    )
+  IS
+    codExcepcion         NUMBER;
+    NOMBRE_PROCEDIMIENTO VARCHAR2(50) := 'Pr_Actualizar';
+    estadoReg            VARCHAR2(1);
+    numReg               NUMBER;
+  BEGIN
+    pk_utl_utilidad.pr_registrardebug (p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Entro a Pr_Actualizar ' || p_A010CODIGO);
+    IF p_A010CODIGO IS NULL THEN
+      p_codError    := 4;
+      p_msjError    := PK_UTL_UTILIDAD.Fn_Obtenermensaje(p_codError);
+      OPEN p_resultado FOR SELECT '' FROM dual;
+      RETURN;
+    END IF;
+    --
+    SELECT COUNT(*)
+    INTO numReg
+    FROM GPYT_T010_REPORTE_ANIO_FUENTE
+    WHERE A010CODIGO       = p_A010CODIGO
+    AND A010ESTADOREGISTRO = PK_UTL_CONSTANTE.COD_ACTIVO;
+    --
+    IF numReg > 0 THEN
+      UPDATE GPYT_T010_REPORTE_ANIO_FUENTE
+      SET A010REPRTANFUNT       =NVL(p_A010REPRTANFUNT, A010REPRTANFUNT),
+        A010VALREMSN            =NVL(p_A010VALREMSN,A010VALREMSN),
+        A010IDFUENTE            =NVL(p_A010IDFUENTE,A010IDFUENTE),
+        A010ESTADOREGISTRO      =PK_UTL_CONSTANTE.COD_ACTIVO,
+        A010FECHAMODIFICACION   =sysdate,
+        A010USUARIOMODIFICACION = p_idUsuario
+      WHERE A010CODIGO          = p_A010CODIGO;
+      --
+      OPEN p_resultado FOR SELECT p_A010CODIGO A010CODIGO FROM dual;
+      p_codError := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+      p_msjError := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+      RETURN;
+    ELSE
+      p_codError := 5;
+      p_msjError := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+      OPEN p_resultado FOR SELECT '' FROM dual;
+      RETURN;
+    END IF;
+    pk_utl_utilidad.pr_registrardebug(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Salio de Pr_Actualizar ' || p_A010CODIGO);
+  END Pr_Actualizar;
+---***
+  PROCEDURE Pr_ConsultarPorFiltro(
+      p_Filtro    IN VARCHAR2,
+      p_idUsuario IN NUMBER,
+      p_resultado OUT CURSOR_SALIDA,
+      p_codError OUT NUMBER,
+      p_msjError OUT VARCHAR2)
+  IS
+    codExcepcion         NUMBER;
+    NOMBRE_PROCEDIMIENTO VARCHAR2(50) := 'Pr_ConsultarPorFiltro';
+    estadoReg            VARCHAR2(1);
+    strSQL               VARCHAR2(255);
+    strSQL2              VARCHAR2(500);
+  BEGIN
+    pk_utl_utilidad.pr_registrardebug (p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Entro a Pr_ConsultarPorFiltro ' || p_Filtro);
+    IF p_Filtro                                                                                IS NULL THEN
+      OPEN p_resultado FOR SELECT * FROM GPYT_T010_REPORTE_ANIO_FUENTE WHERE A010ESTADOREGISTRO = PK_UTL_CONSTANTE.COD_ACTIVO ;
+      p_codError                                                                               := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+      p_msjError                                                                               := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+      RETURN;
+    END IF;
+    strSQL2 := 'SELECT * FROM GPYT_T010_REPORTE_ANIO_FUENTE WHERE ' || p_Filtro || ' AND A010ESTADOREGISTRO = PK_UTL_CONSTANTE.COD_ACTIVO' ;
+    OPEN p_resultado FOR strSQL2;
+    pk_utl_utilidad.pr_registrardebug(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Salio de Pr_ConsultarPorFiltro ' || p_Filtro);
+  END Pr_ConsultarPorFiltro;
+---***
+  PROCEDURE Pr_Eliminar(
+      p_A010CODIGO IN GPYT_T010_REPORTE_ANIO_FUENTE.A010CODIGO%TYPE,
+      p_idUsuario  IN NUMBER,
+      p_resultado OUT CURSOR_SALIDA,
+      p_codError OUT NUMBER,
+      p_msjError OUT VARCHAR2)
+  IS
+    codExcepcion         NUMBER;
+    NOMBRE_PROCEDIMIENTO VARCHAR2(50) := 'Pr_Eliminar';
+    estadoReg            VARCHAR2(1);
+    numReg               NUMBER;
+  BEGIN
+    pk_utl_utilidad.pr_registrardebug (p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Entro a Pr_Eliminar ' || p_A010CODIGO);
+    UPDATE GPYT_T010_REPORTE_ANIO_FUENTE
+    SET A010ESTADOREGISTRO    = PK_UTL_CONSTANTE.COD_INACTIVO,
+      A010FECHAMODIFICACION   = sysdate,
+      A010USUARIOMODIFICACION = p_idUsuario
+    WHERE A010CODIGO          = p_A010CODIGO;
+    OPEN p_resultado FOR SELECT '' FROM dual;
+    p_codError := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+    p_msjError := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+    pk_utl_utilidad.pr_registrardebug(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Salio de Pr_Eliminar ' || p_A010CODIGO);
+  END Pr_Eliminar;
+END PK_T010_REPORTE_ANIO_FUENTE;
+/************************************************************************
+FIN creación del BODY del package PK_T010_REPORTE_ANIO_FUENTE
+************************************************************************/
+
+/

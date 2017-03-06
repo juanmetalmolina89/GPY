@@ -1,0 +1,66 @@
+--------------------------------------------------------
+-- Archivo creado  - lunes-febrero-13-2017   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Package PK_T010_REPORTE_ANIO_FUENTE
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE "GESTOR"."PK_T010_REPORTE_ANIO_FUENTE" 
+IS
+  /************************************************************************
+  DESCRIPCION       : Servicios CRUD sobre la tabla GPYT_T010_Reporte_Anio_Fuente
+  REALIZADO POR     : Fernando Mondragón Amaya
+  FECHA CREACION    : 10/02/2017
+  FECHA MODIFICA    : 10/02/2017
+  MODIFICADO POR    :
+  DESCRIPCION CAMBIO:
+  ************************************************************************/
+  NOMBRE_PAQUETE CONSTANT VARCHAR2(100) := 'PK_T010_REPORTE_ANIO_FUENTE';
+TYPE CURSOR_SALIDA
+IS
+  REF
+  CURSOR;
+    -- Funciones y Procedimientos del paquete:
+    -- PROCEDURE Pr_Insertar
+    -- PROCEDURE Pr_Eliminar
+    -- PROCEDURE Pr_Actualizar
+    -- PROCEDURE Pr_ConsultarPorFiltro
+    ----
+    PROCEDURE Pr_Insertar(
+        p_A010REPRTANFUNT IN GPYT_T010_Reporte_Anio_Fuente.A010REPRTANFUNT%TYPE,
+        p_A010VALREMSN    IN GPYT_T010_Reporte_Anio_Fuente.A010VALREMSN%TYPE,
+        p_A010IDFUENTE    IN GPYT_T010_Reporte_Anio_Fuente.A010IDFUENTE%TYPE,
+        p_idUsuario       IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+    ----
+    PROCEDURE Pr_Eliminar(
+        p_A010CODIGO IN GPYT_T010_Reporte_Anio_Fuente.A010CODIGO%TYPE,
+        p_idUsuario  IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+    ----
+    PROCEDURE Pr_Actualizar(
+        p_A010CODIGO      IN GPYT_T010_Reporte_Anio_Fuente. A010CODIGO%TYPE,
+        p_A010REPRTANFUNT IN GPYT_T010_Reporte_Anio_Fuente.A010REPRTANFUNT%TYPE,
+        p_A010VALREMSN    IN GPYT_T010_Reporte_Anio_Fuente.A010VALREMSN%TYPE,
+        p_A010IDFUENTE    IN GPYT_T010_Reporte_Anio_Fuente.A010IDFUENTE%TYPE,
+        p_idUsuario       IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+    ----
+    PROCEDURE Pr_ConsultarPorFiltro(
+        p_Filtro    IN VARCHAR2,
+        p_idUsuario IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+  END PK_T010_Reporte_Anio_Fuente;
+  /************************************************************************
+  FIN creación del HEADER del package PK_T010_Reporte_Anio_Fuente
+  ************************************************************************/
+
+/

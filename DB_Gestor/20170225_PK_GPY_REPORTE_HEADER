@@ -1,0 +1,40 @@
+--------------------------------------------------------
+-- Archivo creado  - sábado-febrero-25-2017   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Package PK_GPY_REPORTE
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE "GESTOR"."PK_GPY_REPORTE" 
+IS
+  /*******************************************************************************
+  DESCRIPCION       : Paquete encargado de manejo y generacion de reportes.
+  REALIZADO POR     : Fernando Mondragón Amaya
+  FECHA CREACION    : 24/02/2017
+  FECHA MODIFICA    :  24/02/2017
+  MODIFICADO POR    :
+  DESCRIPCION CAMBIO:
+  *********************************************************************************/
+  NOMBRE_PAQUETE CONSTANT VARCHAR2(100) := 'PK_GPY_REPORTE';
+TYPE CURSOR_SALIDA
+IS
+  REF
+  CURSOR;
+    PROCEDURE Pr_GenerarReporte(
+        p_A103CODIGO IN PART_T103_REPORTE.A103CODIGO%TYPE,
+        p_A001CODIGO IN GPYT_T001_ENTIDAD.A001CODIGO%TYPE,
+        p_ANO        IN NUMBER,     
+        p_idUsuario  IN NUMBER,
+        P_A103NOMBREPLANTILLA OUT PART_T103_REPORTE.A103NOMBREPLANTILLA%TYPE,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+        ---***
+    PROCEDURE Pr_ListarReportes(
+        p_idUsuario IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+  END PK_GPY_REPORTE;
+
+/

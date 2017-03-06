@@ -1,0 +1,69 @@
+create or replace PACKAGE BODY          "PK_GPY_REPORTE" AS
+
+    PROCEDURE Pr_GenerarReporte(
+        p_A103CODIGO IN PART_T103_REPORTE.A103CODIGO%TYPE,
+        p_A001CODIGO IN GPYT_T001_ENTIDAD.A001CODIGO%TYPE,
+        p_ANO        IN NUMBER,
+        p_idUsuario  IN NUMBER,
+        P_A103NOMBREPLANTILLA OUT PART_T103_REPORTE.A103NOMBREPLANTILLA%TYPE,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2) AS    
+		NOMBRE_PROCEDIMIENTO VARCHAR2(50) := 'Pr_GenerarReporte';
+		codExcepcion         NUMBER;
+		P_A103SQL			 VARCHAR2(1000);
+  BEGIN
+    PK_UTL_UTILIDAD.PR_REGISTRARDEBUG(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Entro a Pr_GenerarReporte ');
+    --
+	IF p_A103CODIGO IS NULL OR p_A001CODIGO IS NULL OR p_ANO IS NULL THEN
+      p_codError        := 4;
+      p_msjError        := PK_UTL_UTILIDAD.Fn_Obtenermensaje(p_codError);
+      OPEN p_resultado FOR SELECT '' FROM dual;
+      RETURN;
+    END IF;
+	--
+	SELECT A103SQL,A103NOMBREPLANTILLA INTO P_A103SQL,P_A103NOMBREPLANTILLA FROM PART_T103_REPORTE REP WHERE REP.A103CODIGO = p_A103CODIGO AND A103ESTADOREGISTRO = PK_UTL_CONSTANTE.COD_ACTIVO;
+	--
+	OPEN p_resultado FOR P_A103SQL USING p_A001CODIGO,p_ANO;
+	--
+    p_codError := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+    p_msjError := PK_UTL_UTILIDAD.Fn_ObtenerMensaje (p_codError);
+    --
+    PK_UTL_UTILIDAD.PR_REGISTRARDEBUG(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Salio de Pr_GenerarReporte');
+  EXCEPTION
+  WHEN OTHERS THEN
+    ROLLBACK;
+    codExcepcion := PK_UTL_UTILIDAD.Fn_RegistrarExcepcion (PK_UTL_CONSTANTE.COD_USUARIO_DEFECTO, NOMBRE_PAQUETE, NOMBRE_PROCEDIMIENTO, SQLCODE, SQLERRM);
+    OPEN p_resultado FOR SELECT '' FROM dual;
+    p_codError := PK_UTL_CONSTANTE.ERROR_GENERAL;
+    p_msjError := PK_UTL_CONSTANTE.MSJ_EXCEPCION_GENERAL || TO_CHAR(codExcepcion);
+  END Pr_GenerarReporte;
+ ---****
+  PROCEDURE Pr_ListarReportes(
+        p_idUsuario IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2) AS 
+		NOMBRE_PROCEDIMIENTO VARCHAR2(50) := 'Pr_ListarReportes';
+		codExcepcion         NUMBER;
+		numReg               NUMBER;
+  BEGIN
+     --
+    PK_UTL_UTILIDAD.PR_REGISTRARDEBUG(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Entro a Pr_ListarReportes ');
+     --
+    OPEN p_resultado FOR SELECT A103CODIGO,A103CATEGORIA,A103ICONO, A103NOMBRE,A103DESCRIPCION FROM PART_T103_REPORTE REP WHERE A103ESTADOREGISTRO = PK_UTL_CONSTANTE.COD_ACTIVO;
+    p_codError  := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+    p_msjError  := PK_UTL_UTILIDAD.Fn_ObtenerMensaje (p_codError);
+    PK_UTL_UTILIDAD.PR_REGISTRARDEBUG(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Salio de Pr_ListarReportes');
+    --
+  EXCEPTION
+  WHEN OTHERS THEN
+    ROLLBACK;
+    codExcepcion := PK_UTL_UTILIDAD.Fn_RegistrarExcepcion (PK_UTL_CONSTANTE.COD_USUARIO_DEFECTO, NOMBRE_PAQUETE, NOMBRE_PROCEDIMIENTO, SQLCODE, SQLERRM);
+    OPEN p_resultado FOR SELECT '' FROM dual;
+    p_codError := PK_UTL_CONSTANTE.ERROR_GENERAL;
+    p_msjError := PK_UTL_CONSTANTE.MSJ_EXCEPCION_GENERAL || TO_CHAR(codExcepcion);
+    NULL;
+  END Pr_ListarReportes;
+
+END PK_GPY_REPORTE;

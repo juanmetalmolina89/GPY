@@ -1,0 +1,17 @@
+--------------------------------------------------------
+-- Archivo creado  - jueves-febrero-02-2017   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for View GPYV_011_INSTRFINACPROYECTO
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE VIEW "GESTOR"."GPYV_011_INSTRFINACPROYECTO" ("A009CODIGO", "A009IDPROYECTO", "A102CODIGO", "A102VALOR", "A009PORFINNCCNESTMD", "A009ESTADOREGISTRO") AS 
+  SELECT IFN.A009CODIGO,
+    IFN.A009IDPROYECTO,
+    LST.A102CODIGO,
+    LST.A102VALOR,
+    A009PORFINNCCNESTMD,
+    A009ESTADOREGISTRO
+  FROM GPYT_T009_INSTRMNT_FINNCCN IFN
+  LEFT JOIN PART_T102_LISTA LST
+  ON IFN.A009IDTIPINSTRMNTF = LST.A102CODIGO;

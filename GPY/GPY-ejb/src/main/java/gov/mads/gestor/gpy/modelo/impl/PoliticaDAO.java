@@ -174,16 +174,39 @@ public class PoliticaDAO extends GenericoDAO {
                     parametros.add(new SentenciaParametroDAO("p_A026HASHARCHIVO", objetoEntrada.getAdjuntarArchivo().getA026hasharchivo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                     sentencia.setParametros(parametros);
                     objetoSalida = this.ejecutarX(sentencia, objetoSalida);
-                    ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
                 } catch (Exception e) {
 
                     objetoSalida.setCodError(CodError.ERROR_INTERNO);
                     objetoSalida.setMsgError(e.getMessage());
-                    ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
                 }
 
                 return objetoSalida;
 
 	}
+        
+        public ObjetoSalida registrarPoliticaNueva(RegistrarPoliticaOE objetoEntrada){
+                
+		ObjetoSalida objetoSalida = new ObjetoSalida();
 
+                try {
+
+                    SentenciaDAO sentencia = new SentenciaDAO("PK_T007_PROY_POLITICA.Pr_Insertar", objetoEntrada.getIdUsuario());
+                    List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+                    //parametros.add(new SentenciaParametroDAO("p_A003CODIGO", objetoEntrada.getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A007IDPROYECTO", objetoEntrada.getProypolitica().getA007idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A007IDPOLITICA", objetoEntrada.getProypolitica().getA007idpolitica().getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    sentencia.setParametros(parametros);
+                    objetoSalida = this.ejecutarX(sentencia, objetoSalida);
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
+                } catch (Exception e) {
+
+                    objetoSalida.setCodError(CodError.ERROR_INTERNO);
+                    objetoSalida.setMsgError(e.getMessage());
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
+                }
+
+                return objetoSalida;
+        }
 }

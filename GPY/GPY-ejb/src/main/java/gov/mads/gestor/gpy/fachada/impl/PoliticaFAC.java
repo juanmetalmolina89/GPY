@@ -38,15 +38,18 @@ public class PoliticaFAC implements IPoliticaFAC {
 	private final PoliticaDAO politicaDAO = new PoliticaDAO();
 
 	public ObjetoSalida registrarPolitica(RegistrarPoliticaOE objetoEntrada) {
+            //return 
+            
             ObjetoSalida objetoSalida = new ObjetoSalida(); 
             for (ProyPolitica item : objetoEntrada.getProyecto().getProyPoliticaList()) {
                 objetoEntrada.setProypolitica(item);
-                objetoSalida = politicaDAO.registrarPolitica(objetoEntrada);
+                objetoSalida = politicaDAO.registrarPoliticaNueva(objetoEntrada);
                 if (objetoSalida.getCodError() != CodError.OPERACION_CORRECTA) {
                         objetoSalida.setMsgError(objetoSalida.getMsgError() + "<br><br>" + objetoSalida.getMsgError());
                 }    
             }        
             return objetoSalida;
+            //*/
 	}
         // Faltantes
         public ObjetoSalida consultarPoliticaPorId(ConsultarPoliticaPorIdOE OE) {

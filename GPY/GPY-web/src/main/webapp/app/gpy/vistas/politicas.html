@@ -49,8 +49,8 @@
                     <!-- ============================================================-->
                     <!-- Formulario -->
                     <!-- ============================================================-->
-                     <form class="form-horizontal">
-                        <fieldset id= "frmPoliticasNuevas" ng-disabled="sesion.perfil == INVITADO">                          
+                     <form class="form-horizontal"  id="frmPoliticasNuevas" name="frmPoliticasNuevas" >
+                        <fieldset ng-disabled="sesion.perfil == INVITADO">                          
                             
                             <div>
                                 <br/><br/><br/>
@@ -59,7 +59,7 @@
                             <label> Politica(s) a nivel sectorial / territorial con la(s) que se alinea el proyecto / iniciativa</label>
                             <p> Sí exiten politicas relacionadas con el proyecto que no están el el listado anterior, por favor regístrela a continuación.</p>
 
-                            <table class="table table-bordered">
+                            <table class="table table-striped table-bordered">
                                 <tr>
                                     <th>Politica</th>
                                     <th style="width:100px;">Acciones</th>
@@ -73,14 +73,15 @@
                                             <a ng-click="mostrarForm(politicaP)" class="btn btn-primary" role="button" data-placement="top" title="Modificar">
                                                 <span class="glyphicon glyphicon-zoom-in"></span></a>                                
                                             <button type="button" class="btn btn-primary" ng-click="eliminarPoliticaP(politicaP)" data-toggle="tooltip" data-placement="top"
-                                                    title="Eliminar Actividad"><span class="glyphicon glyphicon-remove"></span></button>
+                                                    title="Eliminar"><span class="glyphicon glyphicon-remove"></span></button>
                                         </div>
                                     </td>
                                 </tr> 
                             </table>
 
                             <!-- Nombre politica -->
-                            <div class="form-group">
+                            <div class="form-group"  ng-class="{'has-error': !frmPoliticasNuevas.a059descripcion.$valid}">
+                                
                                 <label class="col-md-4 control-label" for="textarea">Nombre politica</label>
                                 <div class="col-md-4">                     
                                     <textarea class="form-control" id="a059descripcion" name="a059descripcion" required   ng-disabled="model.isDisabled"  ng-model="politicaPr.a059descripcion"></textarea>
@@ -92,7 +93,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="btnGuardarPoliticaPr"></label>
                                 <div class="col-md-8">
-                                    <button id="btnGuardarPoliticaPr" name="btnGuardarPoliticaPr" class="btn btn-primary" ng-click="guardar()" >Guardar Politica</button>
+                                    <button id="btnGuardarPoliticaPr" name="btnGuardarPoliticaPr" class="btn btn-primary" ng-click="guardar()" ng-disabled="frmPoliticasNuevas.$invalid" >Guardar Politica</button>
                                     <button id="btnCancelarPoliticaPr" name="btnCancelarPoliticaPr" class="btn btn-primary" ng-click="cancelar()" >Cancelar</button>
                                 </div>
                             </div>

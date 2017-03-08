@@ -154,7 +154,7 @@ angular.module('politica.controllers', ['ngSanitize'])
                              $scope.politicaPr.a059idproyecto = $scope.pid;
                              $scope.politicaPr.a059descripcion = estaPoliticaP.a059descripcion;
                              $scope.politicaPr.a059codigo = estaPoliticaP.a059codigo;
-                             $scope.model.isDisabled = false;
+                             //$scope.model.isDisabled = false;
                      } 
                      else 
                      {
@@ -186,7 +186,7 @@ angular.module('politica.controllers', ['ngSanitize'])
                                     console.log($scope.mensaje);
                                 });
                         $scope.mostrarForm();        
-                        $scope.model.isDisabled = false;
+                        //$scope.model.isDisabled = false;
                      } 
                      else 
                      {
@@ -209,12 +209,17 @@ angular.module('politica.controllers', ['ngSanitize'])
                                 });
                         
                         $scope.mostrarForm();
-                        $scope.model.isDisabled = false;
+                        //$scope.model.isDisabled = false;
                         return true;
                     }
 				
                 };
                 
+                
+                
+                $scope.cancelar = function () {	
+                    $scope.mostrarForm();
+                };
                 
                 $scope.eliminarPoliticaP = function (estaPoliticaP) {  
                     $scope.OE = new Object();

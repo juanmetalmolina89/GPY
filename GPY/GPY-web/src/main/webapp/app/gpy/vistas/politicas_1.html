@@ -26,28 +26,17 @@
 
                             <label> Politicas a las que su proyecto le aporta </label>
                             <p> Plan/Estrategia/Programa nacional/sectorial/territorial de cambio climático al que le aporta su proyecto</p>
-                                  
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            <div class="col-sm-12" style='padding-bottom:20px;'>
+                                                       
+                            <div class="col-sm-12">
                                 <div ui-tree id="tree-root">
-                                  <ol ui-tree-nodes  data-nodrag ng-model="listaPoliticas">
-                                    <li ng-repeat="(key, value) in listaPoliticas  | groupBy: 'a003nomnivel1' " ui-tree-node  ng-include="'nodes_rendererLev1.html'"></li>
+                                  <ol ui-tree-nodes ng-model="data">
+                                    <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
                                   </ol>
                                 </div>
                             </div>
                             
-                            
-                            
-                            
-                            <div>
-                                <br/><br/><br/>
-                            </div>
+                            <br/><br/><br/>
+
 
                             <label> Politica(s) a nivel sectorial / territorial con la(s) que se alinea el proyecto / iniciativa</label>
                             <p> Sí exiten politicas relacionadas con el proyecto que no están el el listado anterior, por favor regístrela a continuación.</p>
@@ -107,56 +96,28 @@
     </div>
 </div>
 <!-- ============================================================-->
-<!-- Plantilla de nodo nivel 1 (quito reursividad porque cada nivel tiene diferencias importantes) -->
+<!-- Plantilla de nodo  -->
 <!-- ============================================================-->
-<script type="text/ng-template" id="nodes_rendererLev1.html">
-  <div ui-tree-handle class="tree-node tree-node-content" style='font-weight: 100!important;'>
-    <a class="btn btn-success btn-xs" collapsed="{collapsed}" data-nodrop data-nodrag ng-click="toggle(this)"><span
+<script type="text/ng-template" id="nodes_renderer.html">
+  <div ui-tree-handle class="tree-node tree-node-content">
+    <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" collapsed="{collapsed}" data-nodrop data-nodrag ng-click="toggle(this)"><span
         class="glyphicon"
         ng-class="{
           'glyphicon-chevron-right': collapsed,
           'glyphicon-chevron-down': !collapsed
-        }"></span></a>   
-    {{key}}
-  </div>
-  <ol ui-tree-nodes="" ng-model="value" ng-class="{hidden: collapsed}" data-nodrop  data-nodrag>
-     <li ng-repeat="(key, value)  in value  | groupBy:'a003nomnivel2' " ui-tree-node ng-include="'nodes_rendererLev2.html'">
-    </li>
-  </ol>
-</script>
-<!-- ============================================================-->
-<!-- Plantilla de nodo nivel 2  -->
-<!-- ============================================================-->
-<script type="text/ng-template" id="nodes_rendererLev2.html">
-  <div ui-tree-handle class="tree-node tree-node-content" style='font-weight: 100!important;'>
-    <a class="btn btn-success btn-xs" collapsed="{!collapsed}" data-nodrop data-nodrag ng-click="toggle(this)"><span
-        class="glyphicon"
-        ng-class="{
-          'glyphicon-chevron-right': !collapsed,
-          'glyphicon-chevron-down': collapsed,
-          'font-weight':'100'
-        }"></span></a>   
-    {{key}}
-  </div>
-  <ol ui-tree-nodes="" ng-model="politica" ng-class="{hidden: !collapsed}" data-nodrop data-nodrag >
-    <li ng-repeat="politica in value  | groupBy:'a003nomnivel3' " ui-tree-node ng-include="'nodes_rendererLev3.html'">
-    </li>
-  </ol>
-</script>
-<!-- ============================================================-->
-<!-- Plantilla de nodo nivel 3  -->
-<!-- ============================================================-->
-<script type="text/ng-template" id="nodes_rendererLev3.html">
-  <div ui-tree-handle  class="tree-node tree-node-content" style='font-weight: 100!important;' title="{{politica[0].a003descrpcnpoltc}}">    
+        }"></span></a>
     <input
         data-nodrag 
         type="checkbox"
         name="politicasSeleccionadas[]"
-        value="{{politica[0].a003nivel4}}"
+        value="{{id}}"
         ng-checked="selection.indexOf(title) > -1"
         ng-click="marcar(this)"
     >
-    {{politica[0].a003nomnivel3}}
+    {{node.id}} - {{node.title}}
   </div>
-  
+  <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}" data-nodrop >
+    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+    </li>
+  </ol>
 </script>

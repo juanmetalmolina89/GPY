@@ -5,7 +5,7 @@ var ambiente = 'local';//local, desarrollo, pruebas, produccion
 //var ambiente = 'desarrollo';
 
 var urlServidor = getUrlServidor();
-var urlPuerto = urlServidor + ":8088/"; // en local
+var urlPuerto = urlServidor + ":8080/"; // en local
 //var urlPuerto = urlServidor + ":8088/"; //en desarrollo
 var urlPrincipal = urlPuerto + "GPY-web/";
 var urlBackEnd = urlPrincipal + "servicios/";

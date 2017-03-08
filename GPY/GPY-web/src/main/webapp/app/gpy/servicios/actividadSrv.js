@@ -33,6 +33,28 @@ angular.module('actividad.services')
                     return $http.post(urlBase + '/consultarGeografia', OE);
                 };
 
+                // indicadores
+                datos.registrarIndicador = function (OE) {
+                    return $http.post(urlBase + '/registrarIndicador', OE);
+                };
+                
+                datos.actualizarIndicador = function (OE) {
+                    return $http.post(urlBase + '/actualizarIndicador', OE);
+                };
+                
+                datos.consultarIndicador = function (OE) {
+                    return $http.post(urlBase + '/consultarIndicador', OE);
+                };
+                
+                datos.eliminarIndicador = function (OE) {
+                    return $http.post(urlBase + '/eliminarIndicador', OE);
+                };
+                
+                
+                
+                // metas y seguimiento
+                
+                
                 return datos;
             }])
 

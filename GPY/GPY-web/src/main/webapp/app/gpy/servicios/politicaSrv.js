@@ -17,21 +17,27 @@ angular.module('politica.services')
 	        return $http.get(urlBase + '/' + id);
 	    };
 
-	    datos.insertar = function (politica) {
-	        return $http.post(urlBase, politica);
-	    };
-
 	    datos.actualizar = function (politica) {
 	        return $http.put(urlBase + '/' + politica.id, politica);
 	    };
 
-	    datos.borrar = function (id) {
-	        return $http.delete(urlBase + '/' + id);
+	    datos.registrarPolitica = function (OE) {
+	        return $http.post(urlBase+'/registrarPolitica', OE);
+	    };
+
+	    datos.eliminarPolitica = function (OE) {
+	        return $http.post(urlBase+'/eliminarPolitica', OE);
 	    };
 
             datos.listarPoliticas = function (OE) {
 	        return $http.post( urlBackEnd + 'listados/listarPoliticas', OE);
 	    };
+            
+            datos.listarPoliticaProyecto = function (OE) {
+	        return $http.post( urlBackEnd + '/listarPoliticaProyecto', OE);
+	    };
+            
+            
             
 	    return datos;
 	}]);

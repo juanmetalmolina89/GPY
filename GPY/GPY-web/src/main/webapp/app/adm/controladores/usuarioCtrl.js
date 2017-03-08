@@ -228,11 +228,26 @@ angular.module('usuario.controllers', ['ngSanitize'])
                 };
             }])
 
-        .controller('infoAutoridadesModalCtrl', function ($scope, $uibModalInstance) {
+        .controller('infoAutoridadesModalCtrl', ['$scope', 'listadoSrv','$uibModalInstance','comunSrv', function ($scope, listadoSrv, $uibModalInstance, comunSrv) {
 
             $scope.ok = function () {
                 $uibModalInstance.dismiss('cancel');
             };
-        })
+            
+            
+                $scope.listarAutoridades = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario ="1";
+                    listadoSrv.listarAutoridades($scope.OE)
+                            .then(function (response) {
+                                $scope.autoridades = response.data.respuesta;                              
+                                    
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
 
-        ;
+                /**************************************************************/
+                /* Inicializar formulario */
+                $scope.listarAutoridades();
+        }]);

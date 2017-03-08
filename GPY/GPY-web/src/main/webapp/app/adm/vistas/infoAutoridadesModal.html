@@ -6,10 +6,14 @@
         <h3>Información importante</h3>
         <hr>
 
-        <div>
+        <div id="autoridades">
             <p>Para la creación de usuarios, comuníquese con la Autoridad Ambiental correspondiente a la zona geográfica de su jurísdicción.</p>
-            <p><i>Aquí va la información de las Autoridades Ambientales</i></p>
-            <br/><br/><br/><br/><br/><br/><br/>
+            <table class="table table-striped table-bordered">
+                <tr ng-repeat="autoridad in autoridades">
+                    <td>{{autoridad.a001nombre}}</td>                    
+                </tr>
+            </table>
+            <br/>
         </div>
 
         <!-- Botones -->

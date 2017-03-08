@@ -6,12 +6,14 @@ angular.module('actividad.controllers', ['ngSanitize'])
         .controller('actividadCtrl', ['$scope', '$routeParams', '$location', '$window', 'actividadSrv', 'soporteActividadSrv', 'comunSrv', 'listadoSrv', 'avanceSrv', 'grillaSrv', 'infoProyecto', function ($scope, $routeParams, $location, $window, actividadSrv, soporteActividadSrv, comunSrv, listadoSrv, avanceSrv, grillaSrv, infoProyecto) {
 
                 /**************************************************************/
-                /* Manejo sesión */
+                /**********************   SESIÓN      *************************/
+
                 $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
                 $scope.idUsuario = $scope.sesion.sub;
 
                 /**************************************************************/
-                /* Variables */
+                /********************     VARIABLES    ************************/
+
                 $scope.tpid = $routeParams.tpid; //@todo preguntar por el funcionamiento de estos dos
                 $scope.pid = $routeParams.pid;
 
@@ -29,6 +31,8 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 $scope.muestraForm = false;
                 $scope.muestraListTpActRed = false;
                 $scope.muestraCampoSoporte = false;
+                $scope.muestraFormIndicadores = false;
+                
 
                 //geometria
                 $scope.geometria = '';
@@ -42,9 +46,14 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 $scope.itemsPerPage = 5;
                 $scope.maxSize = 5;
 
+                /**************************************************************/
+                /**************************************************************/
+                /*************            ACTIVIDADES          ****************/
+                /**************************************************************/
+                /**************************************************************/
 
                 /**************************************************************/
-                /* Métodos */
+                /*****************     Métodos DATOS     **********************/
 
                 $scope.guardarActividad = function () {
                     console.log("geometria: " + $scope.a042geometriasitio);
@@ -181,9 +190,9 @@ angular.module('actividad.controllers', ['ngSanitize'])
                     }
                 };
 
-                /* CONTROL ELEMENTOS DE LA VISTA */
+                /**************************************************************/
+                /*****************    Métodos VISUALES  ***********************/
 
-                //este formulario sirve para crear actividades nuevas y para editarlas
                 $scope.mostrarForm = function (act) {
                     $scope.muestraForm = true;
                     //si viene una actividad como parámetro es edición
@@ -235,7 +244,9 @@ angular.module('actividad.controllers', ['ngSanitize'])
                     }
                 };
 
-                /* LISTADOS Y GRILLAS */
+                /**************************************************************/
+                /***************  Métodos GRILLAS Y LISTAS  *******************/
+
                 $scope.listarActividadPorClave = function () {
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
@@ -275,8 +286,90 @@ angular.module('actividad.controllers', ['ngSanitize'])
                             });
                 };
 
+                /**************************************************************/
+                /**************************************************************/
+                /*************            INDICADORES          ****************/
+                /**************************************************************/
+                /**************************************************************/
+                
+                $scope.listarIndicadores = function (actividad) {
+                    // ocultar form de actividades y mostrar el de indicadores
+                    $scope.ocultarForm();
+                    $scope.mostrarFormIndicadores();
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.indicador={};
+                    //$scope.OE.indicador.a011codigo = null;
+                    $scope.OE.indicador.a011idactvdd = {"a005codigo":actividad.a005codigo};
+                    
+                    actividadSrv.consultarIndicador($scope.OE)
+                            .then(function (response) {
+                                $scope.indicadores = response.data.respuesta;
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
 
-                /* GEOMETRÍA */
+                $scope.guardarIndicador = function (actividad) {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;                  
+                    
+                    //Si ya existe lo actualiza, de lo contrario lo registra
+                    if ($scope.indicador.a011codigo !== undefined && $scope.indicador.a011codigo !== null && $scope.indicador.a011codigo !== '') 
+                    { 
+                        actividadSrv.actualizarIndicador($scope.OE)
+                                .then(function (response) {
+                                    $scope.indicadores = response.data.respuesta;
+                                    $scope.listarIndicadores(actividad);
+                                }, function (error) {
+                                    comunSrv.mensajeSalida(error);
+                                });
+                    }
+                    else
+                    {
+                        actividadSrv.registrarIndicador($scope.OE)
+                                .then(function (response) {
+                                    $scope.indicadores = response.data.respuesta;
+                                    $scope.listarIndicadores(actividad);
+                                }, function (error) {
+                                    comunSrv.mensajeSalida(error);
+                                });
+                    }
+                    
+                };
+
+
+                /**************************************************************/
+                /*****************    Métodos VISUALES  ***********************/
+
+                $scope.mostrarFormIndicadores  = function (indicador) {
+                    $scope.muestraFormIndicadores = true;
+                    //si viene una actividad como parámetro es edición
+                    if (indicador != undefined && indicador != null) {
+                        $scope.indicador.a005codigo = indicador.a005codigo;
+                        $scope.indicador.a005descrpcnactvdd = indicador.a005descrpcnactvdd;
+                        $scope.indicador.a005fechainicio = new Date(indicador.a005fechainicio);
+                        $scope.indicador.a005fechafinal = new Date(indicador.a005fechafinal);
+                        $scope.indicador.a005idtipactvdd = {"a022codigo": indicador.a005idtipactvdd};
+                        $scope.indicador.a005idtipactvdreduc = {"a58codigo": indicador.a005idtipactvdreduc};
+                    } else {
+                        $scope.indicador = new Object();
+                        $scope.indicador.a005idproyecto = {"a002codigo": $scope.pid};
+                    }
+
+                };
+
+                $scope.ocultarFormIndicadores  = function () {
+                    $scope.muestraFormIndicadores = false;
+                };
+                
+                
+                /**************************************************************/
+                /**************************************************************/
+                /*************             GEOMETRÍA           ****************/
+                /**************************************************************/
+                /**************************************************************/
+
                 $scope.cargarGeometria = function () {
 
                     $('#geometria').modal('show');
@@ -368,6 +461,7 @@ angular.module('actividad.controllers', ['ngSanitize'])
                     $scope.a042geometriasitio = '';
                     $scope.a042geometriaintersec = {"Prueba": {"codigo": 1, "nombre": "nombre", "apellido": "apellido"}}; //@todo pendiente que definan qué debe ir en este campo
                 };
+
 
                 /**************************************************************/
                 /* Inicializar formulario */

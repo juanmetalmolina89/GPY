@@ -2,7 +2,7 @@
  * Autor: Yeimmy Lee 
  */
 'use strict';
-angular.module('GPYApp', ['ui.tree','ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngResource', 'angular-jwt', 'angular-storage', 'ngFileUpload'
+angular.module('GPYApp', ['ui.tree','angular.filter', 'ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngResource', 'angular-jwt', 'angular-storage', 'ngFileUpload'
 				, 'usuario.services', 'comun.services',  'listado.services'
                                 ,'persona.services', 'representante.services', 'contacto.services'
                                 , 'datosBasicos.services', 'actividad.services', 'infoMDL.services'

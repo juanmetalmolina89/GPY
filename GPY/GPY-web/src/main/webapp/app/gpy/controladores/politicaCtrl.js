@@ -19,21 +19,18 @@ angular.module('politica.controllers', ['ngSanitize'])
                 $scope.listaPoliticas = [];
                 $scope.politica = [];
 
-                $scope.cargarConfiguracion = function () {
-
-                    $scope.objeto = {};
-                    $scope.objeto.idUsuario = $scope.idUsuario;
-                    $scope.objeto.idpoliticaproyecto = $scope.pid;
-                    
-                    politicaSrv.listar($scope.objeto)
-                            .then(function (response) {
-                                $scope.listaPoliticas = response.data.respuesta;
-                            }, function (error) {
-                                $scope.mensaje = error.data.respuesta;
-                                console.log($scope.mensaje);
-                            });
+                $scope.politicasP  = [];
+                $scope.politicaPr = {};
+                
+                $scope.model = {
+                        isDisabled: false
                 };
-                $scope.cargarConfiguracion();
+                /**************************************************************/
+                /**************************************************************/
+                /*************        POLÍTICAS ARBOL          ****************/
+                /**************************************************************/
+                /**************************************************************/
+                                
 
                 $scope.marcar = function (scope) {
                     scope.toggle();
@@ -76,7 +73,7 @@ angular.module('politica.controllers', ['ngSanitize'])
                 };
 
                 $scope.verNodo = function (nodo) {
-                  console.log(">>>>>>>>>>>"+JSON.stringify(nodo));
+                  //console.log(">>>>>>>>>>>"+JSON.stringify(nodo));
                 };
                 
 
@@ -93,28 +90,167 @@ angular.module('politica.controllers', ['ngSanitize'])
                   padre.items.push(hijo)
                 };
                 
+                $scope.evaluar = function (dato) {
+                  if(dato!==0)
+                  {
+                      return true;
+                  }
+                  else
+                  {
+                      return false;
+                  }
+                };
+                
                 $scope.listarPoliticas = function () {
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
                     politicaSrv.listarPoliticas($scope.OE)
-                            .then(function (response) {
-                              
-                                $scope.listaPoliticas = response.data.respuesta;
-                                // ahora debemos traer las politicas del proyecto, 
-                                // listarPoliticaProyecto
-                                // recorrerlas y con ellas barrer el arbol para ponerle un nuevo atributo a las que estén seleccionadas.
-                                // ese atributo es el id
-                                // de esa forma queda el ciclo completo
-                                
-                                console.log($scope.mensaje);
+                            .then(function (response) {                              
+                                var r1 = response.data.respuesta;
+                                $scope.OEP = {};
+                                $scope.OEP.idUsuario = $scope.idUsuario;
+                                $scope.OEP.idpoliticaproyecto = $scope.pid;
+                                politicaSrv.listarPoliticaProyecto ($scope.OEP)
+                                    .then(function (response) {
+                                        var r2 = response.data.respuesta;
+
+                                        angular.forEach( r1, function(val1){
+                                            //promises.push(writeSome(value));
+                                            val1.a007codigo = 0;
+                                            angular.forEach( r2, function(val2){
+                                                //promises.push(writeSome(value));                                                
+                                                if(val2.a007idpolitica === val1.a003codigo)
+                                                {
+                                                    val1.a007codigo=val2.a007codigo;  // le adiciona el id del rompe
+                                                }
+                                            });                                            
+                                        });
+                                        
+                                        $scope.listaPoliticas = r1;
+                                                                                
+                                    }, function (error) {
+                                        $scope.mensaje = error.data.respuesta;
+                                        console.log($scope.mensaje);
+                                    });
                             }, function (error) {
                                 $scope.mensaje = error.data.respuesta;
                                 console.log($scope.mensaje);
                             });
                 };
                 
+                
+                /**************************************************************/
+                /**************************************************************/
+                /*************      POLÍTICAS PROPIAS          ****************/
+                /**************************************************************/
+                /**************************************************************/
+
+                // manejo del formulario
+                // viene con parámetro cuando se invoca desde el botón de actualizar de la grilla
+                $scope.mostrarForm = function (estaPoliticaP) {				
+
+                   if (estaPoliticaP != undefined && estaPoliticaP != null) 
+                   {
+                             $scope.politicaPr.a059idproyecto = $scope.pid;
+                             $scope.politicaPr.a059descripcion = estaPoliticaP.a059descripcion;
+                             $scope.politicaPr.a059codigo = estaPoliticaP.a059codigo;
+                             $scope.model.isDisabled = false;
+                     } 
+                     else 
+                     {
+                             $scope.politicaPr = new Object();
+                             $scope.politicaPr.a059idproyecto = $scope.pid;
+                             $scope.politicaPr.a059descripcion = "";
+                    }
+				
+                };
+                
+                $scope.guardar = function () {				
+
+                   if ($scope.politicaPr.a059codigo != undefined && $scope.politicaPr.a059codigo  != null) 
+                   {
+                        // update
+                        $scope.OE = new Object();
+                        $scope.OE.idUsuario = $scope.idUsuario;
+                        $scope.OE.politica = {};
+                        $scope.OE.politica.a059codigo= $scope.politicaPr.a059codigo;
+                        $scope.OE.politica.a059descripcion= $scope.politicaPr.a059descripcion;
+                        $scope.OE.politica.a059idproyecto = {"a002codigo":$scope.pid};
+                        
+                        politicaSrv.actualizarPoliticaNueva($scope.OE)
+                                .then(function (response) {
+                                    $scope.listar();
+                                    comunSrv.mensajeSalida(response);
+                                }, function (error) {
+                                    $scope.mensaje = error.data.respuesta;
+                                    console.log($scope.mensaje);
+                                });
+                        $scope.mostrarForm();        
+                        $scope.model.isDisabled = false;
+                     } 
+                     else 
+                     {
+                        // nuevo
+                        $scope.OE = new Object();
+                        $scope.OE.idUsuario = $scope.idUsuario;
+                        $scope.OE.politica = {};
+                        $scope.OE.politica.a059descripcion= $scope.politicaPr.a059descripcion;
+                        $scope.OE.politica.a059idproyecto = {"a002codigo":$scope.pid};
+                        
+                        politicaSrv.registrarPoliticaNueva($scope.OE)
+                                .then(function (response) {
+                                    $scope.mensaje = 'Creada con éxito.';
+                                    comunSrv.mensajeSalida(response);
+                                    $scope.listar();
+
+                                }, function (error) {
+                                    $scope.mensaje = error.data.respuesta;
+
+                                });
+                        
+                        $scope.mostrarForm();
+                        $scope.model.isDisabled = false;
+                        return true;
+                    }
+				
+                };
+                
+                
+                $scope.eliminarPoliticaP = function (estaPoliticaP) {  
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;            
+                    $scope.OE.a059codigo= estaPoliticaP.a059codigo;
+                    politicaSrv.eliminarPoliticaNueva($scope.OE)
+                            .then(function (response) {
+                                $scope.mensaje = 'Borrado con éxito.';
+                                comunSrv.mensajeSalida(response);
+                                $scope.listar();
+
+                            }, function (error) {
+                                $scope.mensaje = error.data.respuesta;
+                                console.log($scope.mensaje);
+                            });
+                };
+
+
+
+                $scope.listar = function () {                   
+
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.a059idproyecto = $scope.pid;
+
+                    politicaSrv.listarPoliticaNueva($scope.OE)
+                            .then(function (response) {
+                                $scope.politicasP = response.data.respuesta;
+                            }, function (error) {
+                                $scope.mensaje = error.data.respuesta;
+                                console.log($scope.mensaje);
+                            });
+                }; 
+
                 $scope.listarPoliticas();
-   
+                $scope.listar();
   
             }]);
 

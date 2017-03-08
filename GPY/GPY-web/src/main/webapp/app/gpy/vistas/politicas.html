@@ -19,7 +19,7 @@
                     <!-- Formulario -->
                     <!-- ============================================================-->
                     <form class="form-horizontal">
-                        <fieldset ng-disabled="sesion.perfil == INVITADO">
+                        <fieldset id= "frmPoliticas" ng-disabled="sesion.perfil == INVITADO">
 
                             <!-- Politicas -->
                             <legend>Politicas</legend>
@@ -43,7 +43,14 @@
                             </div>
                             
                             
-                            
+ 
+                        </fieldset>
+                    </form>
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                     <form class="form-horizontal">
+                        <fieldset id= "frmPoliticasNuevas" ng-disabled="sesion.perfil == INVITADO">                          
                             
                             <div>
                                 <br/><br/><br/>
@@ -55,52 +62,42 @@
                             <table class="table table-bordered">
                                 <tr>
                                     <th>Politica</th>
-                                    <th>Adjunto</th>
-                                    <th>Acciones</th>
-                                </tr>                                
+                                    <th style="width:100px;">Acciones</th>
+                                </tr>   
+                                <tr ng-repeat="politicaP in politicasP">
+                                    <td>{{politicaP.a059descripcion}}</td>
+
+                                    <td>
+                                        <div class="btn-group">
+                                            <!-- ver detalle -->
+                                            <a ng-click="mostrarForm(politicaP)" class="btn btn-primary" role="button" data-placement="top" title="Modificar">
+                                                <span class="glyphicon glyphicon-zoom-in"></span></a>                                
+                                            <button type="button" class="btn btn-primary" ng-click="eliminarPoliticaP(politicaP)" data-toggle="tooltip" data-placement="top"
+                                                    title="Eliminar Actividad"><span class="glyphicon glyphicon-remove"></span></button>
+                                        </div>
+                                    </td>
+                                </tr> 
                             </table>
 
                             <!-- Nombre politica -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="textarea">Nombre politica</label>
                                 <div class="col-md-4">                     
-                                    <textarea class="form-control" id="textarea" name="textarea"></textarea>
+                                    <textarea class="form-control" id="a059descripcion" name="a059descripcion" required   ng-disabled="model.isDisabled"  ng-model="politicaPr.a059descripcion"></textarea>
                                 </div>
+                                <span class="control-label" ng-show="frmPoliticasNuevas.a059descripcion.$error.required"><strong>Requerido</strong></span>
                             </div>
-
-                            <!-- Adjunto-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="appendedtext">Adjunto</label>
-                                <div class="col-md-5">
-                                    <div class="input-group">
-                                        <input id="appendedtext" name="appendedtext" class="form-control" placeholder="c:\users\pc\documents\preregistro" type="text">
-                                        <span class="input-group-addon">Examinar</span>
-                                    </div>
-                                    <p class="help-block">Por favor adjunte el archivo de la politica a nivel nacional / sectorial / regional</p>
-                                </div>
-                            </div>
-                            <!-- Button -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="singlebutton"></label>
-                                <div class="col-md-4">
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-inverse">cargar documento</button>
-                                </div>
-                            </div>
-
+                           
                             <!-- Guardar -->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="button1id"></label>
+                                <label class="col-md-4 control-label" for="btnGuardarPoliticaPr"></label>
                                 <div class="col-md-8">
-                                    <button id="button1id" name="button1id" class="btn btn-primary">Registrar Politica</button>
-                                    <button id="button2id" name="button2id" class="btn btn-primary">Cancelar</button>
+                                    <button id="btnGuardarPoliticaPr" name="btnGuardarPoliticaPr" class="btn btn-primary" ng-click="guardar()" >Guardar Politica</button>
+                                    <button id="btnCancelarPoliticaPr" name="btnCancelarPoliticaPr" class="btn btn-primary" ng-click="cancelar()" >Cancelar</button>
                                 </div>
                             </div>
-
                         </fieldset>
                     </form>
-                    <!-- ============================================================-->
-                    <!-- Formulario -->
-                    <!-- ============================================================-->
                 </div>
             </div>
         </div>
@@ -149,13 +146,12 @@
 <script type="text/ng-template" id="nodes_rendererLev3.html">
   <div ui-tree-handle  class="tree-node tree-node-content" style='font-weight: 100!important;' title="{{politica[0].a003descrpcnpoltc}}">    
     <input
-        data-nodrag 
-        type="checkbox"
-        name="politicasSeleccionadas[]"
-        value="{{politica[0].a003nivel4}}"
-        ng-checked="selection.indexOf(title) > -1"
+        type="checkbox"        
+        value="{{politica[0].a003codigo}}"
+        ng-checked="evaluar(politica[0].a007codigo)"
         ng-click="marcar(this)"
     >
+   <input type="hidden" value="{{politica[0].a007codigo}}">
     {{politica[0].a003nomnivel3}}
   </div>
   

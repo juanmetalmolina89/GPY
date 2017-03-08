@@ -34,10 +34,26 @@ angular.module('politica.services')
 	    };
             
             datos.listarPoliticaProyecto = function (OE) {
-	        return $http.post( urlBackEnd + '/listarPoliticaProyecto', OE);
+	        return $http.post( urlBase + '/listarPoliticaProyecto', OE);
 	    };
             
+            // POLITICAS PROPIAS QUE SOLO ATAÑEN AL PROYECTO
             
+            datos.registrarPoliticaNueva = function (OE) {
+	        return $http.post( urlBase + '/registrarPoliticaNueva', OE);
+	    };
+            
+            datos.actualizarPoliticaNueva = function (OE) {
+	        return $http.post( urlBase + '/actualizarPoliticaNueva', OE);
+	    };
+            
+            datos.eliminarPoliticaNueva = function (OE) {
+	        return $http.post( urlBase + '/eliminarPoliticaNueva', OE);
+	    };
+            
+            datos.listarPoliticaNueva = function (OE) {
+	        return $http.post( urlBase + '/listarPoliticaNueva', OE);
+	    };
             
 	    return datos;
 	}]);

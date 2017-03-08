@@ -11,6 +11,7 @@ import gov.mads.gestor.adm.vista.ValidarUsuarioOE;
 import gov.mads.gestor.adm.vista.CambiarContrasenaOE;
 import gov.mads.gestor.adm.vista.ListarUsuarioOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOE;
+import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOS;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.comun.vista.UsuarioVitalOE;
 /**
@@ -25,5 +26,6 @@ public interface IUsuarioFAC {
     public ObjetoSalida validarUsuario(ValidarUsuarioOE OE);
     public ObjetoSalida cambiarContrasena(CambiarContrasenaOE OE);
     public ObjetoSalida validarUsuarioVital(UsuarioVitalOE OE);
-    public ObjetoSalida validarUsuarioVital(ValidarUsuarioVitalOE OE);
+    //public ObjetoSalida validarUsuarioVital(ValidarUsuarioVitalOE OE);
+    public ValidarUsuarioVitalOS validarUsuarioVital(ValidarUsuarioVitalOE OE);
 }

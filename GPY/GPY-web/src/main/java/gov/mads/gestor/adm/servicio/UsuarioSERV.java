@@ -13,6 +13,7 @@ import gov.mads.gestor.adm.vista.ValidarUsuarioOE;
 import gov.mads.gestor.adm.vista.CambiarContrasenaOE;
 import gov.mads.gestor.adm.vista.ListarUsuarioOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOE;
+import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOS;
 import gov.mads.gestor.comun.servicio.API;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.comun.servicio.jwt.JWT;
@@ -136,18 +137,21 @@ public class UsuarioSERV {
     @POST
     @Path("/validarVital")
     @Consumes({ MediaType.APPLICATION_XML})
-    @Produces({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_XML})
     public Response validarVital(ValidarUsuarioVitalOE OE) throws URISyntaxException, Exception {
 
         UsuarioFAC fac = new UsuarioFAC();
-        ObjetoSalida objetoSalida = fac.validarUsuarioVital(OE);
-        if (objetoSalida.getRespuesta() == null || objetoSalida.getRespuesta().isEmpty())
+        //ObjetoSalida objetoSalida = fac.validarUsuarioVital(OE);
+        ValidarUsuarioVitalOS objetoSalida = fac.validarUsuarioVital(OE);
+        //if (objetoSalida.getRespuesta() == null || objetoSalida.getRespuesta().isEmpty())
+        if (objetoSalida.respuesta == null || objetoSalida.respuesta.isEmpty())
             return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
         else{
             //return Response.status(Response.Status.OK).entity(objetoSalida).build();
             //return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(objetoSalida.getRespuesta().stream().findFirst().get().get("a041username").toString())).build();
             //java.net.URI ubicacion = new java.net.URI("http://127.0.0.1:8088/GPY-web/#/gpy");
-            return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
+            return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.respuesta))).build();
+            //return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
         }
         
     }

@@ -14,6 +14,7 @@ import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.adm.fachada.IUsuarioFAC;
 import gov.mads.gestor.adm.vista.ListarUsuarioOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOE;
+import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOS;
 import gov.mads.gestor.comun.vista.UsuarioVitalOE;
 /**
  *
@@ -57,13 +58,26 @@ public class UsuarioFAC implements IUsuarioFAC {
         
         return AdmUsuarioDAO.validarUsuarioVital(OE);
     }
-
-    public ObjetoSalida validarUsuarioVital(ValidarUsuarioVitalOE OE) {
+    
+    /*public ObjetoSalida validarUsuarioVital(ValidarUsuarioVitalOE OE) {
         ValidarUsuarioOE OEE = new ValidarUsuarioOE();
         OEE.setUsername(OE.username);
         OEE.setClave(OE.clave);
         OEE.setIdUsuario(0);
         return AdmUsuarioDAO.validarUsuario(OEE);
-    }
+    }//*/
+    
+    public ValidarUsuarioVitalOS validarUsuarioVital(ValidarUsuarioVitalOE OE) {
+        ValidarUsuarioOE OEE = new ValidarUsuarioOE();
+        OEE.setUsername(OE.username);
+        OEE.setClave(OE.clave);
+        OEE.setIdUsuario(0);
+        ObjetoSalida OS = AdmUsuarioDAO.validarUsuario(OEE);
+        ValidarUsuarioVitalOS OSS = new ValidarUsuarioVitalOS();
+        OSS.codError = OS.getCodError();
+        OSS.respuesta = OS.getRespuesta();
+        OSS.msgError = OS.getMsgError();
+        return OSS;
+    }//*/
 }
 

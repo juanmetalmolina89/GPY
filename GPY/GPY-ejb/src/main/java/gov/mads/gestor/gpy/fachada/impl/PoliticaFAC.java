@@ -8,10 +8,14 @@ import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.gpy.fachada.IPoliticaFAC;
 import gov.mads.gestor.gpy.modelo.impl.PoliticaDAO;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticaOE;
+import gov.mads.gestor.gpy.vista.ActualizarPoliticasNuevasOE;
 import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
+import gov.mads.gestor.gpy.vista.EliminarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
+import gov.mads.gestor.gpy.vista.ListarPoliticasNuevasOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasProyectoOE;
 import gov.mads.gestor.gpy.vista.RegistrarAdjuntoPoliticaOE;
+import gov.mads.gestor.gpy.vista.RegistrarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaOE;
 import gov.mads.gestor.gpy.vista.RegistrarSectorImplementadorOE;
 import gov.mads.gestor.gpy.vista.RegistrarSoporteOE;
@@ -166,5 +170,25 @@ public class PoliticaFAC implements IPoliticaFAC {
             ObjetoSalida objetoSalidaParametrica = fachadaListados.listarParametrico(listaOE);
 
             return objetoSalidaParametrica.getRespuesta().get(0).get("a102valor").toString();
+        }
+
+        @Override
+        public ObjetoSalida registrarPoliticaProy(RegistrarPoliticaNuevaOE OE) {
+            return politicaDAO.registrarPoliticaProy(OE);
+        }
+
+        @Override
+        public ObjetoSalida actualizarPoliticaProy(ActualizarPoliticasNuevasOE OE) {
+            return politicaDAO.actualizarPoliticaProy(OE);
+        }
+
+        @Override
+        public ObjetoSalida eliminarPoliticaProy(EliminarPoliticaNuevaOE OE) {
+            return politicaDAO.eliminarPoliticaProy(OE);
+        }
+
+        @Override
+        public ObjetoSalida listarPoliticasProy(ListarPoliticasNuevasOE OE) {
+            return politicaDAO.listarPoliticasProy(OE);
         }
 }

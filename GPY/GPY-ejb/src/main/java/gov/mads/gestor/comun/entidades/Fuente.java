@@ -6,7 +6,9 @@ package gov.mads.gestor.comun.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,12 +16,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -31,6 +37,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Fuente.findAll", query = "SELECT f FROM Fuente f")})
 public class Fuente implements Serializable {
+
+    @Column(name = "A038IDARCHIVO")
+    private Integer a038idarchivo;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "fuente")
+    private ReporteAnioFuente reporteAnioFuente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a012idfuente")
+    private List<RepAnioFteIndcdr> repAnioFteIndcdrList;
 
     @JoinColumn(name = "A038IDPROYECTO", referencedColumnName = "A002CODIGO")
     @ManyToOne(optional = false)
@@ -190,6 +203,32 @@ public class Fuente implements Serializable {
 
     public void setA038idproyecto(Proyecto a038idproyecto) {
         this.a038idproyecto = a038idproyecto;
+    }
+
+    public Integer getA038idarchivo() {
+        return a038idarchivo;
+    }
+
+    public void setA038idarchivo(Integer a038idarchivo) {
+        this.a038idarchivo = a038idarchivo;
+    }
+
+    public ReporteAnioFuente getReporteAnioFuente() {
+        return reporteAnioFuente;
+    }
+
+    public void setReporteAnioFuente(ReporteAnioFuente reporteAnioFuente) {
+        this.reporteAnioFuente = reporteAnioFuente;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<RepAnioFteIndcdr> getRepAnioFteIndcdrList() {
+        return repAnioFteIndcdrList;
+    }
+
+    public void setRepAnioFteIndcdrList(List<RepAnioFteIndcdr> repAnioFteIndcdrList) {
+        this.repAnioFteIndcdrList = repAnioFteIndcdrList;
     }
     
 }

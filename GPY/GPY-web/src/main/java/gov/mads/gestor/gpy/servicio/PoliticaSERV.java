@@ -15,9 +15,13 @@ import javax.ws.rs.core.Response;
 
 import gov.mads.gestor.gpy.fachada.impl.PoliticaFAC;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticaOE;
+import gov.mads.gestor.gpy.vista.ActualizarPoliticasNuevasOE;
 import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
+import gov.mads.gestor.gpy.vista.EliminarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
+import gov.mads.gestor.gpy.vista.ListarPoliticasNuevasOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasProyectoOE;
+import gov.mads.gestor.gpy.vista.RegistrarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaOE;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 /**
@@ -93,5 +97,50 @@ public class PoliticaSERV {
                ObjetoSalida objetoSalida = fac.registrarAdjunto(OE);
                return API.retornarRespuesta(objetoSalida);
         }
-
+        
+        @POST
+	@Path("/registrarPoliticaNueva")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response registrarPoliticaProy(RegistrarPoliticaNuevaOE objetoEntrada) {
+		PoliticaFAC fac = new PoliticaFAC();
+		ObjetoSalida os = fac.registrarPoliticaProy(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        
+        @POST
+	@Path("/actualizarPoliticaNueva")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response actualizarPoliticaProy(ActualizarPoliticasNuevasOE objetoEntrada) {
+		PoliticaFAC fac = new PoliticaFAC();
+		ObjetoSalida os = fac.actualizarPoliticaProy(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        
+        @POST
+	@Path("/eliminarPoliticaNueva")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response eliminarPoliticaProy(EliminarPoliticaNuevaOE objetoEntrada) {
+		PoliticaFAC fac = new PoliticaFAC();
+		ObjetoSalida os = fac.eliminarPoliticaProy(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/listarPoliticaNueva")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response listarPoliticasProy(ListarPoliticasNuevasOE objetoEntrada) {
+		PoliticaFAC fac = new PoliticaFAC();
+		ObjetoSalida os = fac.listarPoliticasProy(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
 }

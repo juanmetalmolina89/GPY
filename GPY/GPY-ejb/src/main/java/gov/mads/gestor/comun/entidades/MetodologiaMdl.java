@@ -36,6 +36,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "MetodologiaMdl.findAll", query = "SELECT m FROM MetodologiaMdl m")})
 public class MetodologiaMdl implements Serializable {
 
+    @OneToMany(mappedBy = "a002idmetdlgmdl")
+    private List<Proyecto> proyectoList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -202,6 +205,16 @@ public class MetodologiaMdl implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.MetodologiaMdl[ a028codigo=" + a028codigo + " ]";
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Proyecto> getProyectoList() {
+        return proyectoList;
+    }
+
+    public void setProyectoList(List<Proyecto> proyectoList) {
+        this.proyectoList = proyectoList;
     }
     
 }

@@ -35,6 +35,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "SectorIpcc.findAll", query = "SELECT s FROM SectorIpcc s")})
 public class SectorIpcc implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a043idsectoripcc")
+    private List<SubgrupoIpcc> subgrupoIpccList;
+    @OneToMany(mappedBy = "a005idsectoripcc")
+    private List<Actividad> actividadList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -192,6 +197,26 @@ public class SectorIpcc implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.SectorIpcc[ a045codigo=" + a045codigo + " ]";
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<SubgrupoIpcc> getSubgrupoIpccList() {
+        return subgrupoIpccList;
+    }
+
+    public void setSubgrupoIpccList(List<SubgrupoIpcc> subgrupoIpccList) {
+        this.subgrupoIpccList = subgrupoIpccList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Actividad> getActividadList() {
+        return actividadList;
+    }
+
+    public void setActividadList(List<Actividad> actividadList) {
+        this.actividadList = actividadList;
     }
     
 }

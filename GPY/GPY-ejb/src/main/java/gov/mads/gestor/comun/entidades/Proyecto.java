@@ -38,6 +38,31 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Proyecto.findAll", query = "SELECT p FROM Proyecto p")})
 public class Proyecto implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a009idproyecto")
+    private List<InstrmntFinnccn> instrmntFinnccnList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a044idpryto")
+    private List<CambiosEstado> cambiosEstadoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a05idproyecto")
+    private List<Participante> participanteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a008idproyecto")
+    private List<ProyAdjunto> proyAdjuntoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a038idproyecto")
+    private List<Fuente> fuenteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a039idproyecto")
+    private List<ObjetivoEspecifico> objetivoEspecificoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a005idproyecto")
+    private List<Actividad> actividadList;
+    @OneToMany(mappedBy = "a002proytascd")
+    private List<Proyecto> proyectoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a013idproyecto")
+    private List<AvanceProyecto> avanceProyectoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a042idproyecto")
+    private List<ActividadGeometria> actividadGeometriaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a057idproyecto")
+    private List<AvancePantalla> avancePantallaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a059idproyecto")
+    private List<ProyPoliticasP> proyPoliticasPList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -557,5 +582,125 @@ public class Proyecto implements Serializable {
 
     public void setProyPoliticaList(List<ProyPolitica> proyPoliticaList) {
         this.proyPoliticaList = proyPoliticaList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<InstrmntFinnccn> getInstrmntFinnccnList() {
+        return instrmntFinnccnList;
+    }
+
+    public void setInstrmntFinnccnList(List<InstrmntFinnccn> instrmntFinnccnList) {
+        this.instrmntFinnccnList = instrmntFinnccnList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<CambiosEstado> getCambiosEstadoList() {
+        return cambiosEstadoList;
+    }
+
+    public void setCambiosEstadoList(List<CambiosEstado> cambiosEstadoList) {
+        this.cambiosEstadoList = cambiosEstadoList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Participante> getParticipanteList() {
+        return participanteList;
+    }
+
+    public void setParticipanteList(List<Participante> participanteList) {
+        this.participanteList = participanteList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<ProyAdjunto> getProyAdjuntoList() {
+        return proyAdjuntoList;
+    }
+
+    public void setProyAdjuntoList(List<ProyAdjunto> proyAdjuntoList) {
+        this.proyAdjuntoList = proyAdjuntoList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Fuente> getFuenteList() {
+        return fuenteList;
+    }
+
+    public void setFuenteList(List<Fuente> fuenteList) {
+        this.fuenteList = fuenteList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<ObjetivoEspecifico> getObjetivoEspecificoList() {
+        return objetivoEspecificoList;
+    }
+
+    public void setObjetivoEspecificoList(List<ObjetivoEspecifico> objetivoEspecificoList) {
+        this.objetivoEspecificoList = objetivoEspecificoList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Actividad> getActividadList() {
+        return actividadList;
+    }
+
+    public void setActividadList(List<Actividad> actividadList) {
+        this.actividadList = actividadList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Proyecto> getProyectoList() {
+        return proyectoList;
+    }
+
+    public void setProyectoList(List<Proyecto> proyectoList) {
+        this.proyectoList = proyectoList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<AvanceProyecto> getAvanceProyectoList() {
+        return avanceProyectoList;
+    }
+
+    public void setAvanceProyectoList(List<AvanceProyecto> avanceProyectoList) {
+        this.avanceProyectoList = avanceProyectoList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<ActividadGeometria> getActividadGeometriaList() {
+        return actividadGeometriaList;
+    }
+
+    public void setActividadGeometriaList(List<ActividadGeometria> actividadGeometriaList) {
+        this.actividadGeometriaList = actividadGeometriaList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<AvancePantalla> getAvancePantallaList() {
+        return avancePantallaList;
+    }
+
+    public void setAvancePantallaList(List<AvancePantalla> avancePantallaList) {
+        this.avancePantallaList = avancePantallaList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<ProyPoliticasP> getProyPoliticasPList() {
+        return proyPoliticasPList;
+    }
+
+    public void setProyPoliticasPList(List<ProyPoliticasP> proyPoliticasPList) {
+        this.proyPoliticasPList = proyPoliticasPList;
     }
 }

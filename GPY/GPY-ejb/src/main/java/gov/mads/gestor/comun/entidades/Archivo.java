@@ -35,6 +35,17 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Archivo.findAll", query = "SELECT a FROM Archivo a")})
 public class Archivo implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a008idarchv")
+    private List<ProyAdjunto> proyAdjuntoList;
+    @OneToMany(mappedBy = "a053idarchivo")
+    private List<RepLegal> repLegalList;
+    @OneToMany(mappedBy = "a005idsoportecalculo")
+    private List<Actividad> actividadList;
+    @OneToMany(mappedBy = "a005idsoporte")
+    private List<Actividad> actividadList1;
+    @OneToMany(mappedBy = "a003idarchiv")
+    private List<Politica> politicaList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -243,6 +254,56 @@ public class Archivo implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.Archivo[ a026codigo=" + a026codigo + " ]";
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<ProyAdjunto> getProyAdjuntoList() {
+        return proyAdjuntoList;
+    }
+
+    public void setProyAdjuntoList(List<ProyAdjunto> proyAdjuntoList) {
+        this.proyAdjuntoList = proyAdjuntoList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<RepLegal> getRepLegalList() {
+        return repLegalList;
+    }
+
+    public void setRepLegalList(List<RepLegal> repLegalList) {
+        this.repLegalList = repLegalList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Actividad> getActividadList() {
+        return actividadList;
+    }
+
+    public void setActividadList(List<Actividad> actividadList) {
+        this.actividadList = actividadList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Actividad> getActividadList1() {
+        return actividadList1;
+    }
+
+    public void setActividadList1(List<Actividad> actividadList1) {
+        this.actividadList1 = actividadList1;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Politica> getPoliticaList() {
+        return politicaList;
+    }
+
+    public void setPoliticaList(List<Politica> politicaList) {
+        this.politicaList = politicaList;
     }
     
 }

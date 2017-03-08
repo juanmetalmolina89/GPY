@@ -4,6 +4,7 @@
 package gov.mads.gestor.comun.entidades;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -36,29 +37,32 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Politica.findAll", query = "SELECT p FROM Politica p")})
 public class Politica implements Serializable {
 
+    @Column(name = "A003NIVEL1")
+    private BigInteger a003nivel1;
+    @Column(name = "A003NIVEL2")
+    private BigInteger a003nivel2;
+    @Column(name = "A003NIVEL3")
+    private Integer a003nivel3;
+    @Column(name = "A003NIVEL4")
+    private Integer a003nivel4;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a007idpolitica")
+    private List<ProyPolitica> proyPoliticaList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "A003CODIGO")
     private Integer a003codigo;
-    @Column(name = "A003NIVEL1")
-    private Short a003nivel1;
     @Size(max = 40)
     @Column(name = "A003NOMNIVEL1")
     private String a003nomnivel1;
-    @Column(name = "A003NIVEL2")
-    private Short a003nivel2;
     @Size(max = 40)
     @Column(name = "A003NOMNIVEL2")
     private String a003nomnivel2;
-    @Column(name = "A003NIVEL3")
-    private Short a003nivel3;
     @Size(max = 40)
     @Column(name = "A003NOMNIVEL3")
     private String a003nomnivel3;
-    @Column(name = "A003NIVEL4")
-    private Short a003nivel4;
     @Size(max = 40)
     @Column(name = "A003NOMNIVEL4")
     private String a003nomnivel4;
@@ -111,13 +115,6 @@ public class Politica implements Serializable {
         this.a003codigo = a003codigo;
     }
 
-    public Short getA003nivel1() {
-        return a003nivel1;
-    }
-
-    public void setA003nivel1(Short a003nivel1) {
-        this.a003nivel1 = a003nivel1;
-    }
 
     public String getA003nomnivel1() {
         return a003nomnivel1;
@@ -127,13 +124,6 @@ public class Politica implements Serializable {
         this.a003nomnivel1 = a003nomnivel1;
     }
 
-    public Short getA003nivel2() {
-        return a003nivel2;
-    }
-
-    public void setA003nivel2(Short a003nivel2) {
-        this.a003nivel2 = a003nivel2;
-    }
 
     public String getA003nomnivel2() {
         return a003nomnivel2;
@@ -143,13 +133,6 @@ public class Politica implements Serializable {
         this.a003nomnivel2 = a003nomnivel2;
     }
 
-    public Short getA003nivel3() {
-        return a003nivel3;
-    }
-
-    public void setA003nivel3(Short a003nivel3) {
-        this.a003nivel3 = a003nivel3;
-    }
 
     public String getA003nomnivel3() {
         return a003nomnivel3;
@@ -159,13 +142,6 @@ public class Politica implements Serializable {
         this.a003nomnivel3 = a003nomnivel3;
     }
 
-    public Short getA003nivel4() {
-        return a003nivel4;
-    }
-
-    public void setA003nivel4(Short a003nivel4) {
-        this.a003nivel4 = a003nivel4;
-    }
 
     public String getA003nomnivel4() {
         return a003nomnivel4;
@@ -263,6 +239,48 @@ public class Politica implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.Politica[ a003codigo=" + a003codigo + " ]";
+    }
+
+    public BigInteger getA003nivel1() {
+        return a003nivel1;
+    }
+
+    public void setA003nivel1(BigInteger a003nivel1) {
+        this.a003nivel1 = a003nivel1;
+    }
+
+    public BigInteger getA003nivel2() {
+        return a003nivel2;
+    }
+
+    public void setA003nivel2(BigInteger a003nivel2) {
+        this.a003nivel2 = a003nivel2;
+    }
+
+    public Integer getA003nivel3() {
+        return a003nivel3;
+    }
+
+    public void setA003nivel3(Integer a003nivel3) {
+        this.a003nivel3 = a003nivel3;
+    }
+
+    public Integer getA003nivel4() {
+        return a003nivel4;
+    }
+
+    public void setA003nivel4(Integer a003nivel4) {
+        this.a003nivel4 = a003nivel4;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<ProyPolitica> getProyPoliticaList() {
+        return proyPoliticaList;
+    }
+
+    public void setProyPoliticaList(List<ProyPolitica> proyPoliticaList) {
+        this.proyPoliticaList = proyPoliticaList;
     }
     
 }

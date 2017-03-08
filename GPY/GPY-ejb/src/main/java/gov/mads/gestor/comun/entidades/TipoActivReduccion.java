@@ -42,6 +42,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "TipoActivReduccion.findByA058usuariomodificacion", query = "SELECT t FROM TipoActivReduccion t WHERE t.a058usuariomodificacion = :a058usuariomodificacion")})
 public class TipoActivReduccion implements Serializable {
 
+    @OneToMany(mappedBy = "a005idtipactvdreduc")
+    private List<Actividad> actividadList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -186,6 +189,16 @@ public class TipoActivReduccion implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.TipoActivReduccion[ a058codigo=" + a058codigo + " ]";
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Actividad> getActividadList() {
+        return actividadList;
+    }
+
+    public void setActividadList(List<Actividad> actividadList) {
+        this.actividadList = actividadList;
     }
     
 }

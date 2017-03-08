@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,6 +31,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ReporteAnioFuente.findAll", query = "SELECT r FROM ReporteAnioFuente r")})
 public class ReporteAnioFuente implements Serializable {
+
+    /*@Basic(optional = false)
+    @NotNull
+    @Column(name = "A010IDFUENTE")
+    private int a010idfuente;*/
+    @JoinColumn(name = "A010CODIGO", referencedColumnName = "A038CODIGO")
+    @OneToOne(optional = false)
+    private Fuente fuente;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -185,6 +194,22 @@ public class ReporteAnioFuente implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.ReporteAnioFuente[ a010codigo=" + a010codigo + " ]";
+    }
+/*
+    public int getA010idfuente() {
+        return a010idfuente;
+    }
+
+    public void setA010idfuente(int a010idfuente) {
+        this.a010idfuente = a010idfuente;
+    }
+*/
+    public Fuente getFuente() {
+        return fuente;
+    }
+
+    public void setFuente(Fuente fuente) {
+        this.fuente = fuente;
     }
     
 }

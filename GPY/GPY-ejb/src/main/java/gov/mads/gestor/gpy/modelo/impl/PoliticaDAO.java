@@ -7,10 +7,14 @@ import gov.mads.gestor.comun.vista.CodError;
 import gov.mads.gestor.comun.vista.ErrorClass;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticaOE;
+import gov.mads.gestor.gpy.vista.ActualizarPoliticasNuevasOE;
 import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
+import gov.mads.gestor.gpy.vista.EliminarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
+import gov.mads.gestor.gpy.vista.ListarPoliticasNuevasOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasProyectoOE;
 import gov.mads.gestor.gpy.vista.RegistrarAdjuntoPoliticaOE;
+import gov.mads.gestor.gpy.vista.RegistrarPoliticaNuevaOE;
 import oracle.jdbc.OracleTypes;
 import java.util.ArrayList;
 import java.util.List;
@@ -197,6 +201,102 @@ public class PoliticaDAO extends GenericoDAO {
                     //parametros.add(new SentenciaParametroDAO("p_A003CODIGO", objetoEntrada.getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     parametros.add(new SentenciaParametroDAO("p_A007IDPROYECTO", objetoEntrada.getProypolitica().getA007idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     parametros.add(new SentenciaParametroDAO("p_A007IDPOLITICA", objetoEntrada.getProypolitica().getA007idpolitica().getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    sentencia.setParametros(parametros);
+                    objetoSalida = this.ejecutarX(sentencia, objetoSalida);
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
+                } catch (Exception e) {
+
+                    objetoSalida.setCodError(CodError.ERROR_INTERNO);
+                    objetoSalida.setMsgError(e.getMessage());
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
+                }
+
+                return objetoSalida;
+        }
+        
+        public ObjetoSalida registrarPoliticaProy(RegistrarPoliticaNuevaOE objetoEntrada){
+                
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+
+                try {
+
+                    SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_POLITICA.Pr_RegistrarPryPolitica", objetoEntrada.getIdUsuario());
+                    List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+                    //parametros.add(new SentenciaParametroDAO("p_A003CODIGO", objetoEntrada.getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A059IDPROYECTO", objetoEntrada.getPolitica().getA059idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A059DESCRIPCION", objetoEntrada.getPolitica().getA059descripcion(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                    sentencia.setParametros(parametros);
+                    objetoSalida = this.ejecutarX(sentencia, objetoSalida);
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
+                } catch (Exception e) {
+
+                    objetoSalida.setCodError(CodError.ERROR_INTERNO);
+                    objetoSalida.setMsgError(e.getMessage());
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
+                }
+
+                return objetoSalida;
+        }
+        
+        public ObjetoSalida actualizarPoliticaProy(ActualizarPoliticasNuevasOE objetoEntrada){
+                
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+
+                try {
+
+                    SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_POLITICA.Pr_ActualizarPryPolitica", objetoEntrada.getIdUsuario());
+                    List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+                    parametros.add(new SentenciaParametroDAO("p_A059CODIGO", objetoEntrada.getPolitica().getA059codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A059IDPROYECTO", objetoEntrada.getPolitica().getA059idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A059DESCRIPCION", objetoEntrada.getPolitica().getA059descripcion(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                    sentencia.setParametros(parametros);
+                    objetoSalida = this.ejecutarX(sentencia, objetoSalida);
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
+                } catch (Exception e) {
+
+                    objetoSalida.setCodError(CodError.ERROR_INTERNO);
+                    objetoSalida.setMsgError(e.getMessage());
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
+                }
+
+                return objetoSalida;
+        }
+
+        public ObjetoSalida eliminarPoliticaProy(EliminarPoliticaNuevaOE objetoEntrada){
+                
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+
+                try {
+
+                    SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_POLITICA.Pr_EliminarPryPolitica", objetoEntrada.getIdUsuario());
+                    List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+                    //parametros.add(new SentenciaParametroDAO("p_A003CODIGO", objetoEntrada.getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A059CODIGO", objetoEntrada.getA059codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    //parametros.add(new SentenciaParametroDAO("p_A007IDPOLITICA", objetoEntrada.getProypolitica().getA007idpolitica().getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    sentencia.setParametros(parametros);
+                    objetoSalida = this.ejecutarX(sentencia, objetoSalida);
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
+                } catch (Exception e) {
+
+                    objetoSalida.setCodError(CodError.ERROR_INTERNO);
+                    objetoSalida.setMsgError(e.getMessage());
+                    ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);
+                }
+
+                return objetoSalida;
+        }
+        
+        public ObjetoSalida listarPoliticasProy(ListarPoliticasNuevasOE objetoEntrada){
+                
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+
+                try {
+
+                    SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_POLITICA.Pr_ListarPryPolitica", objetoEntrada.getIdUsuario());
+                    List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+                    //parametros.add(new SentenciaParametroDAO("p_A003CODIGO", objetoEntrada.getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A059IDPROYECTO", objetoEntrada.getA059idproyecto(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    //parametros.add(new SentenciaParametroDAO("p_A007IDPOLITICA", objetoEntrada.getProypolitica().getA007idpolitica().getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     sentencia.setParametros(parametros);
                     objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                     ErrorClass.getMessage(objetoSalida,PoliticaDAO.class);

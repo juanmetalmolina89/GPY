@@ -58,8 +58,8 @@ public class ActividadDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A005FECHAINICIO", a002fechinicio, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
                         java.sql.Date a002fechfin = (objetoEntrada.getActividad().getA005fechafinal() == null) ? null : new java.sql.Date(objetoEntrada.getActividad().getA005fechafinal().getTime());
 			parametros.add(new SentenciaParametroDAO("p_A005FECHAFINAL", a002fechfin, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
-                        Integer idmtdcalcreduccbaseline = (objetoEntrada.getActividad().getA005idmtdcalcreduccbaseline() == null) ? null : objetoEntrada.getActividad().getA005idmtdcalcreduccbaseline().getA102codigo();
- 			parametros.add(new SentenciaParametroDAO("p_A005IDMTDCALCREDUCCBASELINE", idmtdcalcreduccbaseline, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    /*    Integer idmtdcalcreduccbaseline = (objetoEntrada.getActividad().getA005idmtdcalcreduccbaseline() == null) ? null : objetoEntrada.getActividad().getA005idmtdcalcreduccbaseline().getA102codigo();
+ 			parametros.add(new SentenciaParametroDAO("p_A005IDMTDCALCREDUCCBASELINE", idmtdcalcreduccbaseline, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));*/
  
                         sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutar(sentencia, objetoSalida);

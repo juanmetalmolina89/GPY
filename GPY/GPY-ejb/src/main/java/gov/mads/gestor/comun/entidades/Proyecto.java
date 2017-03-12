@@ -139,6 +139,9 @@ public class Proyecto implements Serializable {
     @Column(name = "A002FECHACREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date a002fechacreacion;
+    @Column(name = "A002FECHREGJUNTAMDL")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date a002fechregjuntamdl;
     @Column(name = "A002FECHAMODIFICACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date a002fechamodificacion;
@@ -584,8 +587,8 @@ public class Proyecto implements Serializable {
         this.proyPoliticaList = proyPoliticaList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<InstrmntFinnccn> getInstrmntFinnccnList() {
         return instrmntFinnccnList;
     }
@@ -594,8 +597,8 @@ public class Proyecto implements Serializable {
         this.instrmntFinnccnList = instrmntFinnccnList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<CambiosEstado> getCambiosEstadoList() {
         return cambiosEstadoList;
     }
@@ -604,8 +607,8 @@ public class Proyecto implements Serializable {
         this.cambiosEstadoList = cambiosEstadoList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<Participante> getParticipanteList() {
         return participanteList;
     }
@@ -614,8 +617,8 @@ public class Proyecto implements Serializable {
         this.participanteList = participanteList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<ProyAdjunto> getProyAdjuntoList() {
         return proyAdjuntoList;
     }
@@ -634,8 +637,8 @@ public class Proyecto implements Serializable {
         this.fuenteList = fuenteList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<ObjetivoEspecifico> getObjetivoEspecificoList() {
         return objetivoEspecificoList;
     }
@@ -644,8 +647,8 @@ public class Proyecto implements Serializable {
         this.objetivoEspecificoList = objetivoEspecificoList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<Actividad> getActividadList() {
         return actividadList;
     }
@@ -654,8 +657,8 @@ public class Proyecto implements Serializable {
         this.actividadList = actividadList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<Proyecto> getProyectoList() {
         return proyectoList;
     }
@@ -664,8 +667,8 @@ public class Proyecto implements Serializable {
         this.proyectoList = proyectoList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<AvanceProyecto> getAvanceProyectoList() {
         return avanceProyectoList;
     }
@@ -674,8 +677,8 @@ public class Proyecto implements Serializable {
         this.avanceProyectoList = avanceProyectoList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<ActividadGeometria> getActividadGeometriaList() {
         return actividadGeometriaList;
     }
@@ -684,8 +687,8 @@ public class Proyecto implements Serializable {
         this.actividadGeometriaList = actividadGeometriaList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<AvancePantalla> getAvancePantallaList() {
         return avancePantallaList;
     }
@@ -694,13 +697,21 @@ public class Proyecto implements Serializable {
         this.avancePantallaList = avancePantallaList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<ProyPoliticasP> getProyPoliticasPList() {
         return proyPoliticasPList;
     }
 
     public void setProyPoliticasPList(List<ProyPoliticasP> proyPoliticasPList) {
         this.proyPoliticasPList = proyPoliticasPList;
+    }
+
+    public Date getA002fechregjuntamdl() {
+        return a002fechregjuntamdl;
+    }
+
+    public void setA002fechregjuntamdl(Date a002fechregjuntamdl) {
+        this.a002fechregjuntamdl = a002fechregjuntamdl;
     }
 }

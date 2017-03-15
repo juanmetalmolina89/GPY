@@ -85,9 +85,9 @@ angular.module('adjunto.controllers', ['ngSanitize'])
                     return def.promise;
                 };
                 
-                adjuntoUploadSrv.consultarSoportePorId = function (archivo) {
+                $scope.consultarSoportePorId = function (archivo) {  // deberia coger este y no el del parent
 
-                    $scope.OE = new Object();
+                    $scope.OE = new Object();  
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.a002codigo = parseInt($scope.pid);
                     $scope.OE.a008idadjunto = parseInt(archivo.a008idadjnt);

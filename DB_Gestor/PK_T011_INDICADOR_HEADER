@@ -1,0 +1,63 @@
+--------------------------------------------------------
+-- Archivo creado  - jueves-marzo-02-2017   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Package PK_T011_INDICADOR
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE "GESTOR"."PK_T011_INDICADOR" 
+IS
+  /************************************************************************
+  DESCRIPCION       : Servicios CRUD sobre la tabla PK_T011_INDICADOR
+  REALIZADO POR     : Fernando Mondragón Amaya
+  FECHA CREACION    : 27/02/2017
+  FECHA MODIFICA    : 27/02/2017
+  MODIFICADO POR    :
+  DESCRIPCION CAMBIO:
+  ************************************************************************/
+  NOMBRE_PAQUETE CONSTANT VARCHAR2(100) := 'PK_T011_INDICADOR';
+TYPE CURSOR_SALIDA
+IS
+  REF
+  CURSOR;
+    --
+    PROCEDURE Pr_Insertar(
+        p_A011NOMBRINDCDR IN GPYT_T011_Indicador.A011NOMBRINDCDR%TYPE,
+        p_A011IDTIPINDCDR IN GPYT_T011_Indicador.A011IDTIPINDCDR%TYPE,
+        p_A011IDACTVDD    IN GPYT_T011_Indicador.A011IDACTVDD%TYPE,
+        p_A011IDTIPACCION IN GPYT_T011_Indicador.A011IDTIPACCION%TYPE,
+        p_idUsuario       IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+    ---
+    PROCEDURE Pr_Eliminar(
+        p_A011CODIGO IN GPYT_T011_Indicador.A011CODIGO%TYPE,
+        p_idUsuario  IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+    ---
+    PROCEDURE Pr_Actualizar(
+        p_A011CODIGO      IN GPYT_T011_Indicador.A011CODIGO%TYPE,
+        p_A011NOMBRINDCDR IN GPYT_T011_Indicador.A011NOMBRINDCDR%TYPE,
+        p_A011IDTIPINDCDR IN GPYT_T011_Indicador.A011IDTIPINDCDR%TYPE,
+        p_A011IDACTVDD    IN GPYT_T011_Indicador.A011IDACTVDD%TYPE,
+        p_A011IDTIPACCION IN GPYT_T011_Indicador.A011IDTIPACCION%TYPE,
+        p_idUsuario       IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+    ---
+    PROCEDURE Pr_ConsultarPorFiltro(
+        p_Filtro    IN VARCHAR2,
+        p_idUsuario IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+  END PK_T011_Indicador;
+  /************************************************************************
+  FIN creación del HEADER del package PK_T011_Indicador
+  ************************************************************************/
+
+/

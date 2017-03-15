@@ -5,10 +5,10 @@ var ambiente = 'local';//local, desarrollo, pruebas, produccion
 //var ambiente = 'desarrollo';
 
 var urlServidor = getUrlServidor();
-var urlPuerto = urlServidor + ":8080/"; // en local
-//var urlPuerto = urlServidor + ":8088/"; //en desarrollo
+var urlPuerto = urlServidor + ":8080/"; //  local
+//var urlPuerto = urlServidor + ":8088/"; // desarrollo
 var urlPrincipal = urlPuerto + "GPY-web/";
-var urlBackEnd = urlPrincipal + "servicios/";
+var urlBackEnd = urlPrincipal + "servicios/"; 
 
 function getUrlServidor() {
 
@@ -41,6 +41,10 @@ var TIPOPERIODOACREDITA = 'TIPOPERIODOACREDITA';
 var TIPOPROYECTOMDL = 'TIPOPROYECTOMDL';
 var TIPOINSTRUFINAN = 'TIPOINSTRUFINAN';
 var TIPOREPORTE = 'TIPOREPORTE';
+var NOMBREINDICADOR = 'NOMBREINDICADOR';
+var TIPOINDICADOR = 'TIPOINDICADOR';
+var NOMBREINDICADOR = 'NOMBREINDICADOR';
+var MTDCALCREDUCCBASELINE = 'MTDCALCREDUCCBASELINE';
 
 
 /* TIPOS PERSONA */

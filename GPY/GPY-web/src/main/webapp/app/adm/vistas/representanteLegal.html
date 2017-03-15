@@ -146,33 +146,89 @@
         
         </div>
         
-            <!-- Poder-->
+
+        
+        <!--
+        <div class="form-group" ng-show="!actividad.a005idsoporte.a026nomarchivo">
+                                    <label class="col-md-4 control-label" for="adjunto">Archivo de soporte</label>
+                                    <div class="col-md-6">
+                                        <input type="file" class="form-control" id="adjunto" name="adjunto" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'"
+                                               ng-model="soporte.adjunto">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" ng-hide="!actividad.a005idsoporte.a026nomarchivo">
+                                    <label class="col-md-4 control-label" for="adjunto">Archivo de soporte</label>
+                                    <div class="col-md-6" ng-show="!muestraCampoSoporte">
+                                        {{actividad.a005idsoporte.a026nomarchivo}} 
+                                        <a ng-click="consultarSoportePorId()" class="btn btn-primary" role="button">Ver soporte</a>
+                                        <a ng-click="mostrarCampoSoporte()" class="btn btn-primary" role="button" >Actualizar soporte</a>
+                                    </div>
+                                    <div class="col-md-6" ng-show="muestraCampoSoporte">
+                                        <a ng-click="ocultarCampoSoporte()" class="btn btn-primary" role="button" >Cancelar</a>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="form-group" ng-show="muestraCampoSoporte">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-6">
+                                        <input type="file" class="form-control" id="adjunto" name="adjunto" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'"
+                                               ng-model="soporte.adjunto">
+                                    </div>
+                                </div>
+                                
+         -->                       
+                                
+                                
 
         <!-- Poder-->
         <div id="poder" ng-show="representante.a053tiporepresentante.a102codigo === APODERADO"> 
-            <div class="form-group" ng-class="{ 'has-error' : poder.adjunto === '' 
-                                                                  , 'has-success' : poder.adjunto !== ''}">
-                <label class="col-md-4 control-label" for="adjunto">Poder</label>
-                <div class="col-md-6">
-                    <input type="file" class="form-control" id="adjunto" name="adjunto" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'"
-                           ng-model="poder.adjunto" tabindex=14>
+
+                <!-- Muestra campo para subida de soporte -->
+                <div class="form-group" ng-show="!representante.a053idarchivo.a026codigo">
+                        <label class="col-md-4 control-label" for="adjunto">Poder</label>
+                        <div class="col-md-6">
+                            <input type="file" class="form-control" id="adjunto" name="adjunto" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'"
+                                   ng-model="poder.adjunto" tabindex=14>
+                        </div>
+                </div>                
+                                
+                <!-- Muestra soporte cargado -->
+                <div class="form-group" ng-hide="!representante.a053idarchivo.a026codigo">
+                    <label class="col-md-4 control-label" for="adjunto">Poder</label>
+                    <div class="col-md-6" ng-show="!muestraCampoSoporte">
+                        {{representante.a053idarchivo.a026rutarchivo}} 
+                        <a ng-click="consultarSoportePorId()" class="btn btn-primary" role="button">Ver pdf</a>
+                        <a ng-click="mostrarCampoSoporte()" class="btn btn-primary" role="button" >Actualizar poder</a>
+                    </div>
+                    <div class="col-md-6" ng-show="muestraCampoSoporte">
+                        <a ng-click="ocultarCampoSoporte()" class="btn btn-primary" role="button" >Cancelar</a>
+                    </div>
                 </div>
-                <!--
-                <div class="col-md-9">
-                    <input type="file" class="form-control" id="adjunto" name="adjunto" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'"
-                           ng-model="adjunto">
-                    <button type="button" class="btn btn-default" ng-click="consultarInventarioAdjunto()">
-                        <span class="glyphicon glyphicon-download-alt"></span>Descargar
-                    </button>
-                </div>-->
-            </div>
+
+                <!-- Actualizar -->
+                <div class="form-group" ng-show="muestraCampoSoporte">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-6">
+                        <input type="file" class="form-control" id="adjunto" name="adjunto" placeholder="Poder" ngf-select="" ngf-accept="'application/pdf'"
+                               ng-model="poder.adjunto">
+                    </div>
+                </div>
+                
+                
+                
+                
+                
+                
+
         </div>
 
         <!-- Botón -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="guardar"></label>
             <div class="col-md-12 text-center">
-                <button id="guardar" name="guardar" class="btn btn-primary" ng-click="guardarRepLegal()" tabindex=15 ng-disabled="(representante.a053tiporepresentante.a102codigo === APODERADO && poder.adjunto === '') || form.$invalid">Guardar Datos</button>
+                <button id="guardar" name="guardar" class="btn btn-primary" ng-click="guardarRepLegal()" tabindex=15 ng-disabled="form.$invalid">Guardar Datos</button>
             </div>
         </div>
 

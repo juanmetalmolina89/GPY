@@ -138,7 +138,26 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                     // Hacer lo mismo para gestionar autorizacion de Entidad Coordinadora
                 };
 
-
+                $scope.gestionarAutorizacionEntCoord = function (aprobar) {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    if(aprobar===true)
+                    {
+                        $scope.$parent.cambiarEstado($scope.proyecto,APRMDL3 )
+                            .then(function (response) {
+                                $location.path('/gpy/');
+                             }, function (error) {
+                                $location.path('/gpy/');
+                            });      
+                    }
+                    else
+                    {
+                        $scope.$parent.cambiarEstado($scope.proyecto,DEVUELTAMDL3);                        
+                    }
+                    // Hacer lo mismo para gestionar autorizacion de Entidad Coordinadora
+                };
+                
+                
                 /* Operaciones de consulta de listas */
 
 
@@ -239,7 +258,7 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                 };                               
                 
                 $scope.consultarSoportePorId = function (archivo) {
-
+                    // ficasa: en MDL no se usa la librería de archivos. Se debe nificar con la que utilizan en aprobación nacional (aprobacionNacional.html)
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.a002codigo = parseInt($scope.pid);

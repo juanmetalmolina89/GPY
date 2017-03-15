@@ -50,9 +50,25 @@ angular.module('actividad.services')
                     return $http.post(urlBase + '/eliminarIndicador', OE);
                 };
                 
+                //metas
+                datos.registrarMeta = function (OE) {
+                    return $http.post(urlBase + '/registrarMeta', OE);
+                };
+                
+                datos.actualizarMeta = function (OE) {
+                    return $http.post(urlBase + '/actualizarMeta', OE);
+                };
+                
+                datos.consultarMeta = function (OE) {
+                    return $http.post(urlBase + '/consultarMeta', OE);
+                };
+                
+                datos.eliminarMeta = function (OE) {
+                    return $http.post(urlBase + '/eliminarMeta', OE);
+                };
                 
                 
-                // metas y seguimiento
+                // seguimiento
                 
                 
                 return datos;

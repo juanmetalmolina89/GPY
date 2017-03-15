@@ -11,17 +11,17 @@ angular.module('participante.controllers', ['ngSanitize'])
                 $scope.mensaje;
                 $scope.participantes = []; 
                 $scope.participante = []; 
-				//$scope.persona = []; 
-				$scope.tiposDocumento = []; 
+                //$scope.persona = []; 
+                $scope.tiposDocumento = []; 
 
                 $scope.participante = new Object();
                 $scope.participante.a051idproyecto = $scope.pid;
 				
-				$scope.muestraForm = true;
-				
-				$scope.model = {
-					isDisabled: false
-				};
+                $scope.muestraForm = true;
+
+                $scope.model = {
+                        isDisabled: false
+                };
 				
                 $scope.listar = function () {
 					$scope.OE = new Object();
@@ -46,9 +46,9 @@ angular.module('participante.controllers', ['ngSanitize'])
 					
                     participanteSrv.borrar($scope.OE)
                             .then(function (response) {
-								$scope.mensaje = 'Participante eliminado con éxito.';
-								$scope.participante=[];
-								$scope.listar();  
+                                $scope.mensaje = 'Participante eliminado con éxito.';
+                                $scope.participante=[];
+                                $scope.listar();  
                             }, function (error) {
                                 $scope.mensaje = error.data.respuesta;
                                 console.log($scope.mensaje);

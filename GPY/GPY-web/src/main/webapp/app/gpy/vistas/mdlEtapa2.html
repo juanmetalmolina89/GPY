@@ -39,14 +39,20 @@
                             <!-- Metodología MDL aplicable -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="idmetdlgmdl">Metodología MDL aplicable</label>
-                                <div class="col-md-4">
+                                <div class="col-md-4" title="Recuerde que esta lista depende de la escala y del sector seleccionado en la etapa de consideración temprana">
                                     <select id="idmetdlgmdl" name="idmetdlgmdl" class="form-control" ng-model="proyecto.a002idmetdlgmdl" 
                                             ng-options="metodologiadMDL as metodologiadMDL.a028descmetdlgmdl for metodologiadMDL in metodologiasMDL track by metodologiadMDL.a028codigo" required>
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>
+                                
                             </div>
-
+                            <div class="form-group">
+                                <div class="col-md-4"><br/><br/></div>    
+                                <div>Recuerde que esta lista depende de la escala y del sector seleccionado en la etapa de consideración temprana</div>                                
+                            </div>
+                            
+                            
                             <!-- Adjuntos -->                            
                             <!-- Solicitud de Consideracion Temprana -->
                             <!-- Formato Form de Prior Consideration de la  CMNUCC-->

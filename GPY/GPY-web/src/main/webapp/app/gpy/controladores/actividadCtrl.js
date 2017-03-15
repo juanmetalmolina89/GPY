@@ -18,6 +18,7 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 $scope.pid = $routeParams.pid;
 
 
+                $scope.actividadPadre = new Object();
                 $scope.actividad = new Object();
                 $scope.actividad.a005idproyecto = {"a002codigo": $scope.pid};
                 $scope.actividad.a005idsoporte = {"a026codigo": '', "a026nomarchivo": ''};
@@ -27,12 +28,19 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 $scope.tiposActividades = [];
                 $scope.tiposActivReduccion = [];
                 $scope.categoriaMitigacion = '';
+                
+                $scope.nombresIndicador = [];
+                $scope.tiposIndicador = [];
+
+                $scope.mtdcalcreduccbaseline = [];
 
                 $scope.muestraForm = false;
                 $scope.muestraListTpActRed = false;
                 $scope.muestraCampoSoporte = false;
                 $scope.muestraFormIndicadores = false;
-                
+                $scope.muestraListaIndicadores = false;
+                $scope.muestraListaMetas = false;
+                $scope.muestraFormMetas = false;
 
                 //geometria
                 $scope.geometria = '';
@@ -66,6 +74,17 @@ angular.module('actividad.controllers', ['ngSanitize'])
                             $scope.OE = new Object();
                             $scope.OE.idUsuario = $scope.idUsuario;
                             $scope.OE.actividad = $scope.actividad;
+                            
+                            /* los campos de la fase de registro se pasan vacíos o en ceros */
+                            if ($location.path().substr(0, '/gpy/actividadesreg/'.length) === '/gpy/actividadespre/') 
+                            {
+                                $scope.OE.actividad.a005costototal = 0;
+                                $scope.OE.actividad.a005contrbcnprop = 0;
+                                $scope.OE.actividad.a005contrbcnextrn = 0;
+                            }
+                            $scope.OE.actividad.a005idsectoripcc = 1; // bloqueado por ahora
+                            $scope.OE.actividad.a005idmtdcalcreduccbaseline = 1; // bloqueado por ahora
+                            
                             $scope.OE.actividad.a005idtipactvdd = {"a022codigo": $scope.actividad.a005idtipactvdd.a022codigo}; //Sólo necesito el id (si envío el obj completo voy a tener problemas con el valor tipproyctmdl que se trae para mostrarse, pero no pertenece a la entidad como tal.                    
                             $scope.OE.geometria = $scope.geometria;
                             $scope.OE.a042geometriasitio = $scope.a042geometriasitio;
@@ -84,12 +103,14 @@ angular.module('actividad.controllers', ['ngSanitize'])
                                     }
                                     comunSrv.mensajeSalida(response);
                                     //Registra avance
+                                    /*
                                     avanceSrv.registrarAvance({"idUsuario": $scope.idUsuario, "a002codigo": $scope.proyecto.a002codigo, "a057idpantalla": $scope.pantalla})
                                             .then(function (response) {
                                                 //comunSrv.mensajeSalida(response);
                                             }, function (error) {
                                                 comunSrv.mensajeSalida(error);
                                             });
+                                    */
                                     //recarga la lista de actividades
                                     $scope.listarActividadPorClave();
                                 }, function (error) {
@@ -195,12 +216,16 @@ angular.module('actividad.controllers', ['ngSanitize'])
 
                 $scope.mostrarForm = function (act) {
                     $scope.muestraForm = true;
+                    $scope.muestraFormIndicadores = false;
                     //si viene una actividad como parámetro es edición
                     if (act != undefined && act != null) {
                         $scope.actividad.a005codigo = act.a005codigo;
                         $scope.actividad.a005descrpcnactvdd = act.a005descrpcnactvdd;
                         $scope.actividad.a005fechainicio = new Date(act.a005fechainicio);
                         $scope.actividad.a005fechafinal = new Date(act.a005fechafinal);
+                        $scope.actividad.a005costototal = act.a005costototal;
+                        $scope.actividad.a005contrbcnprop = act.a005contrbcnprop;
+                        $scope.actividad.a005contrbcnextrn = act.a005contrbcnextrn;
                         $scope.actividad.a005idtipactvdd = {"a022codigo": act.a005idtipactvdd};
                         $scope.actividad.a005idtipactvdreduc = {"a58codigo": act.a005idtipactvdreduc};
                         $scope.actividad.a005idsoporte = {"a026codigo": act.a005idsoporte, "a026nomarchivo": act.a026nomarchivo};
@@ -286,41 +311,108 @@ angular.module('actividad.controllers', ['ngSanitize'])
                             });
                 };
 
+
+                $scope.listarMtdcalcreduccbaseline = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.categoria = MTDCALCREDUCCBASELINE;
+                    listadoSrv.listarParametros($scope.OE)
+                            .then(function (response) {
+                                $scope.mtdcalcreduccbaseline = response.data.respuesta;
+
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
                 /**************************************************************/
                 /**************************************************************/
                 /*************            INDICADORES          ****************/
                 /**************************************************************/
                 /**************************************************************/
+               
+               
+                $scope.listarNombresIndicador = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.categoria = NOMBREINDICADOR;
+                    listadoSrv.listarParametros($scope.OE)
+                            .then(function (response) {
+                                $scope.nombresIndicador = response.data.respuesta;
+
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };  
+                
+                $scope.listarTiposIndicador = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.categoria = TIPOINDICADOR;
+                    listadoSrv.listarParametros($scope.OE)
+                            .then(function (response) {
+                                $scope.tiposIndicador = response.data.respuesta;
+
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };                                
                 
                 $scope.listarIndicadores = function (actividad) {
                     // ocultar form de actividades y mostrar el de indicadores
                     $scope.ocultarForm();
-                    $scope.mostrarFormIndicadores();
+                    $scope.mostrarListaIndicadores();
+                    $scope.ocultarListaMetas();
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.indicador={};
+                    $scope.actividadPadre = actividad;
                     //$scope.OE.indicador.a011codigo = null;
                     $scope.OE.indicador.a011idactvdd = {"a005codigo":actividad.a005codigo};
                     
                     actividadSrv.consultarIndicador($scope.OE)
                             .then(function (response) {
                                 $scope.indicadores = response.data.respuesta;
+                                $scope.nombreActividadActual = actividad.a005descrpcnactvdd;
                             }, function (error) {
                                 comunSrv.mensajeSalida(error);
                             });
                 };
 
-                $scope.guardarIndicador = function (actividad) {
+                $scope.eliminarIndicador = function (indicador) {
+                    // ocultar form de actividades y mostrar el de indicadores
+                    $scope.ocultarForm();
+                    $scope.ocultarFormIndicadores();
                     $scope.OE = new Object();
-                    $scope.OE.idUsuario = $scope.idUsuario;                  
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.indicador = {};
+                    $scope.OE.indicador.a011codigo = indicador.a011codigo;
                     
+                    actividadSrv.eliminarIndicador($scope.OE)
+                            .then(function (response) {
+                                $scope.indicadores = response.data.respuesta;
+                                $scope.listarIndicadores($scope.actividadPadre);
+                                comunSrv.mensajeSalida(response);
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
+                
+                $scope.guardarIndicador = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.indicador = {};
+                    $scope.OE.indicador.a011nombrindcdr = $scope.indicador.a011nombrindcdr;
+                    $scope.OE.indicador.a011idtipindcdr = {"a034codigo":$scope.indicador.a011idtipindcdr.a102codigo};
+                    $scope.OE.indicador.a011idactvdd={"a005codigo":$scope.actividadPadre.a005codigo};
+                    $scope.OE.indicador.a011idtipaccion={"a050codigo":1};
                     //Si ya existe lo actualiza, de lo contrario lo registra
                     if ($scope.indicador.a011codigo !== undefined && $scope.indicador.a011codigo !== null && $scope.indicador.a011codigo !== '') 
                     { 
                         actividadSrv.actualizarIndicador($scope.OE)
                                 .then(function (response) {
                                     $scope.indicadores = response.data.respuesta;
-                                    $scope.listarIndicadores(actividad);
+                                    $scope.listarIndicadores($scope.actividadPadre);
+                                    comunSrv.mensajeSalida(response);
                                 }, function (error) {
                                     comunSrv.mensajeSalida(error);
                                 });
@@ -330,7 +422,8 @@ angular.module('actividad.controllers', ['ngSanitize'])
                         actividadSrv.registrarIndicador($scope.OE)
                                 .then(function (response) {
                                     $scope.indicadores = response.data.respuesta;
-                                    $scope.listarIndicadores(actividad);
+                                    $scope.listarIndicadores($scope.actividadPadre);
+                                    comunSrv.mensajeSalida(response);
                                 }, function (error) {
                                     comunSrv.mensajeSalida(error);
                                 });
@@ -342,8 +435,22 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 /**************************************************************/
                 /*****************    Métodos VISUALES  ***********************/
 
+                $scope.mostrarListaIndicadores  = function (indicador) {
+                    $scope.muestraListaIndicadores = true;
+                    $scope.muestraFormIndicadores = false;
+                    $scope.ocultarListaMetas();
+                   
+
+                };
+
+                $scope.ocultarListaIndicadores  = function () {
+                    $scope.muestraListaIndicadores = false;
+                    $scope.ocultarListaMetas();
+                };
+                
                 $scope.mostrarFormIndicadores  = function (indicador) {
                     $scope.muestraFormIndicadores = true;
+                    $scope.ocultarListaMetas();
                     //si viene una actividad como parámetro es edición
                     if (indicador != undefined && indicador != null) {
                         $scope.indicador.a005codigo = indicador.a005codigo;
@@ -361,7 +468,175 @@ angular.module('actividad.controllers', ['ngSanitize'])
 
                 $scope.ocultarFormIndicadores  = function () {
                     $scope.muestraFormIndicadores = false;
+                };                
+                
+                $scope.cancelarIndicador = function () {	
+                   $scope.muestraFormIndicadores = false;
                 };
+                
+                
+                /**************************************************************/
+                /**************************************************************/
+                /*************                METAS            ****************/
+                /**************************************************************/
+                /**************************************************************/
+               
+
+                $scope.listarMetas = function (indicador) {
+                    $scope.ocultarForm();
+                    $scope.ocultarListaIndicadores();
+                    $scope.mostrarListaMetas();
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.meta={};                    
+                    $scope.indicadorPadre = indicador;
+                    //$scope.OE.indicador.a011codigo = null;
+                    $scope.OE.meta.a012codigo = indicador.a011codigo;
+                    
+                    actividadSrv.consultarMeta($scope.OE)
+                            .then(function (response) {
+                                $scope.metas = response.data.respuesta;                               
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
+
+                $scope.eliminarMeta = function (meta) {
+                    // ocultar form de actividades y mostrar el de indicadores
+                    $scope.ocultarForm();
+                    $scope.ocultarListaIndicadores();
+                    $scope.ocultarFormMetas();
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.meta  = {};
+                    $scope.OE.meta.a012codigo = meta.a012codigo;
+                    
+                    actividadSrv.eliminarMeta($scope.OE)
+                            .then(function (response) {
+                                //$scope.metas = response.data.respuesta;
+                                $scope.listarMetas($scope.indicadorPadre);
+                                comunSrv.mensajeSalida(response);
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
+                
+                $scope.guardarMeta = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.meta = {};
+                    $scope.OE.meta.a012fechameta = $scope.meta.a012fechameta ;
+                    $scope.OE.meta.a012valormeta = $scope.meta.a012valormeta ;
+                    $scope.OE.meta.a012uniddmedd = $scope.meta.a012uniddmedd ;
+                    $scope.OE.meta.a012idindcdr = {"a011codigo":$scope.indicadorPadre.a011codigo} ;
+                    $scope.OE.meta.a012idfuente={"a039codigo":1};
+                    if ($scope.meta.a012valrlogrd !== undefined && $scope.meta.a012valrlogrd !== null && $scope.meta.a012valrlogrd !== '') 
+                    {
+                        $scope.OE.meta.a012valrlogrd=$scope.meta.a012valrlogrd;
+                    }
+                    else
+                    {
+                        $scope.OE.meta.a012valrlogrd=0;
+                    }
+                    
+                    if ($scope.meta.a012accionesrealizadas !== undefined && $scope.meta.a012accionesrealizadas !== null && $scope.meta.a012accionesrealizadas !== '') 
+                    {
+                        $scope.OE.meta.a012accionesrealizadas=$scope.meta.a012accionesrealizadas;
+                    }
+                    else
+                    {
+                        $scope.OE.meta.a012accionesrealizadas=" ";
+                    }
+                    
+                    if ($scope.meta.a012recurssinvrtds !== undefined && $scope.meta.a012recurssinvrtds !== null && $scope.meta.a012recurssinvrtds !== '') 
+                    {
+                        $scope.OE.meta.a012recurssinvrtds=$scope.meta.a012recurssinvrtds;
+                    }
+                    else
+                    {
+                        $scope.OE.meta.a012recurssinvrtds= 0;
+                    }
+                   
+                    if ($scope.meta.a012reprtanfuntindicdr !== undefined && $scope.meta.a012reprtanfuntindicdr !== null && $scope.meta.a012reprtanfuntindicdr !== '') 
+                    {
+                        $scope.OE.meta.a012reprtanfuntindicdr=$scope.meta.a012reprtanfuntindicdr;
+                    }
+                    else
+                    {
+                        $scope.OE.meta.a012reprtanfuntindicdr= $scope.meta.a012fechameta;
+                    }	 
+                    
+                    
+                    //Si ya existe lo actualiza, de lo contrario lo registra
+                    if ($scope.meta.a012codigo !== undefined && $scope.meta.a012codigo !== null && $scope.meta.a012codigo !== '') 
+                    { 
+                        actividadSrv.actualizarMeta($scope.OE)
+                                .then(function (response) {
+                                    $scope.metas = response.data.respuesta;
+                                    $scope.listarMetas($scope.indicadorPadre);
+                                    comunSrv.mensajeSalida(response);
+                                }, function (error) {
+                                    comunSrv.mensajeSalida(error);
+                                });
+                    }
+                    else
+                    {
+                        actividadSrv.registrarMeta($scope.OE)
+                                .then(function (response) {
+                                    $scope.metas = response.data.respuesta;
+                                    $scope.listarMetas($scope.indicadorPadre);
+                                    comunSrv.mensajeSalida(response);
+                                }, function (error) {
+                                    comunSrv.mensajeSalida(error);
+                                });
+                    }
+                    
+                };
+
+
+                /**************************************************************/
+                /*****************    Métodos VISUALES  ***********************/
+
+                $scope.mostrarListaMetas  = function (meta) {
+                    $scope.muestraListaIndicadores = true;
+                    $scope.muestraFormIndicadores = false;
+                    $scope.muestraListaMetas = true;
+                    $scope.muestraFormMetas = false;
+                    
+                };
+
+                $scope.ocultarListaMetas  = function () {
+                    $scope.muestraListaMetas = false;
+                };
+                
+                $scope.mostrarFormMetas  = function (meta) {
+                    $scope.muestraFormMetas = true;
+                    //si viene una actividad como parámetro es edición
+                    if (meta != undefined && meta != null) {
+                        $scope.meta.a012codigo = meta.a012codigo;
+                        $scope.meta.a012fechameta =  new Date(meta.a012fechameta);
+                        $scope.meta.a012valormeta = meta.a012valormeta;
+                        $scope.meta.a012uniddmedd = meta.a012uniddmedd;
+                    } else {
+                        $scope.meta = new Object();
+                        $scope.meta.a012idindcdr = {"a011codigo": $scope.indicadorPadre.a011codigo};
+                    }
+
+                };
+
+                $scope.ocultarFormMetas  = function () {
+                    $scope.muestraFormMetas = false;
+                };                
+                
+                $scope.cancelarMeta = function () {	
+                   $scope.muestraFormMeta = false;
+                };
+                
+                
+                
+                
+                
+                
                 
                 
                 /**************************************************************/
@@ -472,6 +747,9 @@ angular.module('actividad.controllers', ['ngSanitize'])
                     $scope.pantalla = ACTIVIDADESPRE;
                 } else if ($location.path().substr(0, '/gpy/actividadesreg/'.length) === '/gpy/actividadesreg/') {
                     $scope.pantalla = ACTIVIDADESREG;
+                    $scope.listarNombresIndicador();
+                    $scope.listarTiposIndicador();
+                    $scope.listarMtdcalcreduccbaseline();
                 }
 
                 $scope.inicializarObjetosGeografia();

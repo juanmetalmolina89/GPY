@@ -1,0 +1,73 @@
+--------------------------------------------------------
+-- Archivo creado  - jueves-marzo-02-2017   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Package PK_T012_REP_ANIO_FTE_INDCDR
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE "GESTOR"."PK_T012_REP_ANIO_FTE_INDCDR" 
+IS
+  /************************************************************************
+  DESCRIPCION       : Servicios CRUD sobre la tabla PK_T012_REP_ANIO_FTE_INDCDR
+  REALIZADO POR     : Fernando Mondragón Amaya
+  FECHA CREACION    : 27/02/2017
+  FECHA MODIFICA    : 27/02/2017
+  MODIFICADO POR    :
+  DESCRIPCION CAMBIO:
+  ************************************************************************/
+  NOMBRE_PAQUETE CONSTANT VARCHAR2(100) := 'PK_T012_REP_ANIO_FTE_INDCDR';
+TYPE CURSOR_SALIDA
+IS
+  REF
+  CURSOR;
+    ----
+    PROCEDURE Pr_Insertar(
+        p_A012FECHAMETA          IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012FECHAMETA%TYPE,
+        p_A012VALORMETA          IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012VALORMETA%TYPE,
+        p_A012REPRTANFUNTINDICDR IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012REPRTANFUNTINDICDR%TYPE,
+        p_A012VALRLOGRD          IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012VALRLOGRD%TYPE,
+        p_A012ACCIONESREALIZADAS IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012ACCIONESREALIZADAS%TYPE,
+        p_A012RECURSSINVRTDS     IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012RECURSSINVRTDS%TYPE,
+        p_A012IDFUENTE           IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012IDFUENTE%TYPE,
+        p_A012IDINDCDR           IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012IDINDCDR%TYPE,
+        p_A012UNIDDMEDD          IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012UNIDDMEDD%TYPE,
+        p_idUsuario              IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+    ----
+    PROCEDURE Pr_Eliminar(
+        p_A012CODIGO IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012CODIGO%TYPE,
+        p_idUsuario  IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+    ----
+    PROCEDURE Pr_Actualizar(
+        p_A012CODIGO             IN GPYT_T012_Rep_Anio_Fte_Indcdr. A012CODIGO%TYPE,
+        p_A012FECHAMETA          IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012FECHAMETA%TYPE,
+        p_A012VALORMETA          IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012VALORMETA%TYPE,
+        p_A012REPRTANFUNTINDICDR IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012REPRTANFUNTINDICDR%TYPE,
+        p_A012VALRLOGRD          IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012VALRLOGRD%TYPE,
+        p_A012ACCIONESREALIZADAS IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012ACCIONESREALIZADAS%TYPE,
+        p_A012RECURSSINVRTDS     IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012RECURSSINVRTDS%TYPE,
+        p_A012IDFUENTE           IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012IDFUENTE%TYPE,
+        p_A012IDINDCDR           IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012IDINDCDR%TYPE,
+        p_A012UNIDDMEDD          IN GPYT_T012_Rep_Anio_Fte_Indcdr.A012UNIDDMEDD%TYPE,
+        p_idUsuario              IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+    ----
+    PROCEDURE Pr_ConsultarPorFiltro(
+        p_Filtro    IN VARCHAR2,
+        p_idUsuario IN NUMBER,
+        p_resultado OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);
+  END PK_T012_Rep_Anio_Fte_Indcdr;
+  /************************************************************************
+  FIN creación del HEADER del package PK_T012_Rep_Anio_Fte_Indcdr
+  ************************************************************************/
+
+/

@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="usuario">Nombre de Usuario</label>  
                             <div class="col-md-4">
-                                <input id="usuario" name="usuario" type="text" placeholder="Nombre de usuario" class="form-control input-md" ng-model="usuario.username" required>
+                                <input id="usuario" name="usuario" type="text" placeholder="Nombre de usuario" class="form-control input-md" ng-model="usuario.username" title="Digite su usuario" required>
                                 <!--<span class="help-block">Ingrese el nombre de usuario asignado.</span>-->  
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="clave">Contraseña</label>
                             <div class="col-md-4">
-                                <input id="clave" name="clave" type="password" placeholder="Contraseña" class="form-control input-md" ng-model="usuario.clave" required>
+                                <input id="clave" name="clave" type="password" placeholder="Contraseña" class="form-control input-md" ng-model="usuario.clave" required title="Digite su contraseña" >
                                 <!--<span class="help-block">Ingrese su contraseña de ingreso.</span>-->
                             </div>
                         </div>
@@ -36,10 +36,10 @@
                         <div class="form-group text-center">
                             <label class="col-md-4 control-label" for="boton"></label>
                             <div class="col-md-4">
-                                <button id="boton" name="boton" class="btn btn-primary" ng-disabled="ingresarForm.$invalid" ng-click="validarUsuario()" >Ingresar</button>
+                                <button id="boton" name="boton" class="btn btn-primary" ng-disabled="ingresarForm.$invalid" ng-click="validarUsuario()" title="Haga click para ingresar"  >Ingresar</button>
                             </div>
-                            <label class="col-md-2 control-label"><a ng-click="infoAutoridadesModal()" style="cursor:pointer">Solicitar usuario</a></label>
-                            <label class="col-md-2 control-label"><a ng-click="invitado()" style="cursor:pointer">Ingresar como Invitado</a></label>
+                            <label class="col-md-2 control-label"><a ng-click="infoAutoridadesModal()" style="cursor:pointer" title="Entidades en las cuales puede solicitar un usuario" >Solicitar usuario</a></label>
+                            <label class="col-md-2 control-label"><a ng-click="invitado()" style="cursor:pointer" title="Consulte los proyectos ingresando como invitado" >Ingresar como Invitado</a></label>
                             <label class="col-md-1 control-label"></label>
                         </div>
 

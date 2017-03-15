@@ -21,6 +21,10 @@ angular.module('representante.services')
                     return $http.post(urlBase + '/actualizarRepresentante', OE);
                 };
 
+                datos.consultarDocumento = function (OE) {
+                    return $http.post(urlBase + '/consultarDocumento', OE);
+                };                               
+                   
 //                datos.adjuntarDocumento = function (OE) {
 //                    return $http.post(urlBase + '/adjuntarDocumento', OE);
 //                };
@@ -28,17 +32,18 @@ angular.module('representante.services')
                 return datos;
             }])
 
-        .service('adjuntoSrv', ['Upload', function (Upload) {
+        .service('RepAdjuntoSrv', ['Upload', function (Upload) {
 
                 var urlBase = urlBackEnd + 'representante';
         
-                this.adjuntarDocumento = function (idRepresentante, adjunto, idUsuario) {
+                this.registrarAdjunto = function (idRepresentante, adjunto, idUsuario) {
                     return Upload.upload({
                         method: 'POST',
                         url: urlBase + '/adjuntarDocumento',
                         data: {file: adjunto, 'idRepresentante': idRepresentante, 'idUsuario': idUsuario}
                     });
-                };
+                };                          
+                
 
             }]);
 ;

@@ -439,7 +439,7 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
         $numFiltros = 0;
         if ($scope.filtroproyecto.palabra) {
             //$scope.filtroproyecto.filtro = $scope.filtroproyecto.palabra;
-            $scope.filtroproyecto.resultados = $filter('filter')($scope.filtroproyecto.resultados , {'a002descrpcinproyct':$scope.filtroproyecto.palabra});
+            $scope.filtroproyecto.resultados = $filter('filter')($scope.filtroproyecto.resultados , {'a002nombrproyct':$scope.filtroproyecto.palabra});
             $numFiltros++;
         }
         if ($scope.filtroproyecto.autoridad) {

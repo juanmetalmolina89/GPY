@@ -82,7 +82,7 @@ angular.module('GPYApp').config(['$routeProvider', '$httpProvider', '$locationPr
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/politicasreg/:tpid/:pid', {
-			templateUrl	: 'app/gpy/vistas/politicasReg.html',
+			templateUrl	: 'app/gpy/vistas/politicas.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/financiacionreg/:tpid/:pid', {

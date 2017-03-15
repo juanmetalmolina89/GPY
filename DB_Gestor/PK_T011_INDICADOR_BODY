@@ -1,0 +1,210 @@
+--------------------------------------------------------
+-- Archivo creado  - jueves-marzo-02-2017   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Package Body PK_T011_INDICADOR
+--------------------------------------------------------
+
+  CREATE OR REPLACE PACKAGE BODY "GESTOR"."PK_T011_INDICADOR" 
+AS
+  PROCEDURE Pr_Insertar(
+      p_A011NOMBRINDCDR IN GPYT_T011_Indicador.A011NOMBRINDCDR%TYPE,
+      p_A011IDTIPINDCDR IN GPYT_T011_Indicador.A011IDTIPINDCDR%TYPE,
+      p_A011IDACTVDD    IN GPYT_T011_Indicador.A011IDACTVDD%TYPE,
+      p_A011IDTIPACCION IN GPYT_T011_Indicador.A011IDTIPACCION%TYPE,
+      p_idUsuario       IN NUMBER,
+      p_resultado OUT CURSOR_SALIDA,
+      p_codError OUT NUMBER,
+      p_msjError OUT VARCHAR2)
+  AS
+    codExcepcion         NUMBER;
+    NOMBRE_PROCEDIMIENTO VARCHAR2(50) := 'Pr_Insertar';
+    p_A011CODIGO         NUMBER;
+  BEGIN
+    --
+    pk_utl_utilidad.pr_registrardebug ( p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Entro a Pr_Insertar ' || p_A011NOMBRINDCDR);
+    --
+    IF p_A011NOMBRINDCDR IS NULL OR p_A011IDTIPINDCDR IS NULL OR p_A011IDACTVDD IS NULL OR p_A011IDTIPACCION IS NULL THEN
+      p_codError         := 4;
+      p_msjError         := PK_UTL_UTILIDAD.Fn_Obtenermensaje(p_codError);
+      OPEN p_resultado FOR SELECT '' FROM dual;
+      RETURN;
+    END IF;
+    --
+    p_A011CODIGO := PK_UTL_UTILIDAD.Fn_Obtenerid('T011_Indicador_SEQ');
+    --
+    INSERT
+    INTO GPYT_T011_INDICADOR
+      (
+        A011CODIGO,
+        A011NOMBRINDCDR,
+        A011IDTIPINDCDR,
+        A011IDACTVDD,
+        A011IDTIPACCION,
+        A011ESTADOREGISTRO,
+        A011FECHACREACION,
+        A011FECHAMODIFICACION,
+        A011USUARIOCREACION,
+        A011USUARIOMODIFICACION
+      )
+      VALUES
+      (
+        p_A011CODIGO,
+        p_A011NOMBRINDCDR,
+        p_A011IDTIPINDCDR,
+        p_A011IDACTVDD,
+        p_A011IDTIPACCION,
+        PK_UTL_CONSTANTE.COD_ACTIVO,
+        sysdate,
+        sysdate,
+        p_idUsuario,
+        ''
+      );
+    --
+    OPEN p_resultado FOR SELECT p_A011CODIGO A011CODIGO FROM dual;
+    p_codError := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+    p_msjError := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+    pk_utl_utilidad.pr_registrardebug(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Salio de Pr_Insertar ' || p_A011NOMBRINDCDR);
+    --
+  END Pr_Insertar;
+---***
+  PROCEDURE Pr_Eliminar
+    (
+      p_A011CODIGO IN GPYT_T011_Indicador.A011CODIGO%TYPE,
+      p_idUsuario  IN NUMBER,
+      p_resultado OUT CURSOR_SALIDA,
+      p_codError OUT NUMBER,
+      p_msjError OUT VARCHAR2
+    )
+  AS
+    codExcepcion         NUMBER;
+    NOMBRE_PROCEDIMIENTO VARCHAR2(50) := 'Pr_Eliminar';
+    estadoReg            VARCHAR2(1);
+    numReg               NUMBER;
+  BEGIN
+    pk_utl_utilidad.pr_registrardebug (p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Entro a Pr_Eliminar ' || p_A011CODIGO);
+    ----
+    IF p_A011CODIGO IS NULL THEN
+      p_codError    := 4;
+      p_msjError    := PK_UTL_UTILIDAD.Fn_Obtenermensaje(p_codError);
+      OPEN p_resultado FOR SELECT '' FROM dual;
+      RETURN;
+    END IF;
+    --
+    SELECT COUNT(*)
+    INTO numReg
+    FROM GPYT_T011_INDICADOR
+    WHERE A011CODIGO       = p_A011CODIGO
+    AND A011ESTADOREGISTRO = PK_UTL_CONSTANTE.COD_ACTIVO;
+    --
+    IF numReg > 0 THEN
+      UPDATE GPYT_T011_INDICADOR
+      SET A011ESTADOREGISTRO    = PK_UTL_CONSTANTE.COD_INACTIVO,
+        A011FECHAMODIFICACION   = sysdate,
+        A011USUARIOMODIFICACION = p_idUsuario
+      WHERE A011CODIGO          = p_A011CODIGO;
+      ---
+      OPEN p_resultado FOR SELECT p_A011CODIGO A011CODIGO FROM dual;
+      p_codError := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+      p_msjError := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+      RETURN;
+    ELSE
+      p_codError := 5;
+      p_msjError := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+      OPEN p_resultado FOR SELECT '' FROM dual;
+      RETURN;
+    END IF;
+    pk_utl_utilidad.pr_registrardebug(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Salio de Pr_Eliminar ' || p_A011CODIGO);
+    ---
+  END Pr_Eliminar;
+---***
+  PROCEDURE Pr_Actualizar(
+      p_A011CODIGO      IN GPYT_T011_Indicador.A011CODIGO%TYPE,
+      p_A011NOMBRINDCDR IN GPYT_T011_Indicador.A011NOMBRINDCDR%TYPE,
+      p_A011IDTIPINDCDR IN GPYT_T011_Indicador.A011IDTIPINDCDR%TYPE,
+      p_A011IDACTVDD    IN GPYT_T011_Indicador.A011IDACTVDD%TYPE,
+      p_A011IDTIPACCION IN GPYT_T011_Indicador.A011IDTIPACCION%TYPE,
+      p_idUsuario       IN NUMBER,
+      p_resultado OUT CURSOR_SALIDA,
+      p_codError OUT NUMBER,
+      p_msjError OUT VARCHAR2)
+  AS
+    codExcepcion         NUMBER;
+    NOMBRE_PROCEDIMIENTO VARCHAR2(50) := 'Pr_Actualizar';
+    estadoReg            VARCHAR2(1);
+    numReg               NUMBER;
+  BEGIN
+    --
+    pk_utl_utilidad.pr_registrardebug (p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Entro a Pr_Actualizar ' || p_A011CODIGO);
+    -- TAREA: Se necesita implantación para PROCEDURE PK_T011_INDICADOR.Pr_Actualizar
+    IF p_A011CODIGO IS NULL THEN
+      p_codError    := 4;
+      p_msjError    := PK_UTL_UTILIDAD.Fn_Obtenermensaje(p_codError);
+      OPEN p_resultado FOR SELECT '' FROM dual;
+      RETURN;
+    END IF;
+    --
+    SELECT COUNT(*)
+    INTO numReg
+    FROM GPYT_T011_INDICADOR
+    WHERE A011CODIGO       = p_A011CODIGO
+    AND A011ESTADOREGISTRO = PK_UTL_CONSTANTE.COD_ACTIVO;
+    ---
+    IF numReg > 0 THEN
+      UPDATE GPYT_T011_INDICADOR
+      SET A011NOMBRINDCDR       =NVL(p_A011NOMBRINDCDR, A011NOMBRINDCDR),
+        A011IDTIPINDCDR         =NVL(p_A011IDTIPINDCDR,A011IDTIPINDCDR),
+        A011IDACTVDD            =NVL(p_A011IDACTVDD,A011IDACTVDD),
+        A011IDTIPACCION         =NVL(p_A011IDTIPACCION,A011IDTIPACCION),
+        A011FECHAMODIFICACION   = sysdate,
+        A011USUARIOMODIFICACION = p_idUsuario
+      WHERE A011CODIGO          = p_A011CODIGO;
+      --
+      OPEN p_resultado FOR SELECT p_A011CODIGO A011CODIGO FROM dual;
+      p_codError := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+      p_msjError := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+      RETURN;
+    ELSE
+      p_codError := 5;
+      p_msjError := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+      OPEN p_resultado FOR SELECT '' FROM dual;
+      RETURN;
+    END IF;
+    --
+    pk_utl_utilidad.pr_registrardebug(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Salio de Pr_Actualizar ' || p_A011CODIGO);
+    --
+  END Pr_Actualizar;
+---***
+  PROCEDURE Pr_ConsultarPorFiltro(
+      p_Filtro    IN VARCHAR2,
+      p_idUsuario IN NUMBER,
+      p_resultado OUT CURSOR_SALIDA,
+      p_codError OUT NUMBER,
+      p_msjError OUT VARCHAR2)
+  AS
+    codExcepcion         NUMBER;
+    NOMBRE_PROCEDIMIENTO VARCHAR2(50) := 'Pr_ConsultarPorFiltro';
+    estadoReg            VARCHAR2(1);
+    strSQL               VARCHAR2(255);
+    strSQL2              VARCHAR2(500);
+  BEGIN
+    -- TAREA: Se necesita implantación para PROCEDURE PK_T011_INDICADOR.Pr_ConsultarPorFiltro
+    pk_utl_utilidad.pr_registrardebug (p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Entro a Pr_ConsultarPorFiltro ' || p_Filtro);
+    --
+    IF p_Filtro                                                                      IS NULL THEN
+      OPEN p_resultado FOR SELECT * FROM GPYT_T011_Indicador WHERE A011ESTADOREGISTRO = PK_UTL_CONSTANTE.COD_ACTIVO ;
+      p_codError                                                                     := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+      p_msjError                                                                     := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+      RETURN;
+    END IF;
+    strSQL2 := 'SELECT * FROM GPYT_T011_Indicador WHERE ' || p_Filtro || ' AND A011ESTADOREGISTRO = PK_UTL_CONSTANTE.COD_ACTIVO';
+    OPEN p_resultado FOR strSQL2;
+    p_codError := PK_UTL_CONSTANTE.COD_OPERACION_CORRECTA;
+    p_msjError := PK_UTL_UTILIDAD.fn_ObtenerMensaje(p_codError);
+    RETURN;
+    pk_utl_utilidad.pr_registrardebug(p_niveldebug => PK_UTL_CONSTANTE.NIVEL_TRACE, p_paquete => NOMBRE_PAQUETE, p_procedimiento => NOMBRE_PROCEDIMIENTO, p_usuario => p_idUsuario, p_descripcion => 'Salio de Pr_ConsultarPorFiltro ' || p_Filtro);
+    --
+  END Pr_ConsultarPorFiltro;
+END PK_T011_INDICADOR;
+
+/

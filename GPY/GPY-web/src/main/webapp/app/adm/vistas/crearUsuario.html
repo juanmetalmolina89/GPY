@@ -37,7 +37,7 @@
                                         <label class="col-md-4 control-label" for="terminos"></label>
                                         <div class="col-md-5">
                                             <input id="terminos" name="terminos" type="checkbox" ng-model="terminos" ng-click="muestraAA()" ng-disabled="bloqueado" tabindex=6  >
-                                            <span class="pointer" ng-click="muestraAA()"> El usuario pertenece a una Autoridad Ambiental </span>
+                                            <span class="pointer" ng-click="!bloqueado && muestraAA()"  > El usuario pertenece a una Autoridad Ambiental </span>
                                         </div>
                                     </div>
                                 </div>

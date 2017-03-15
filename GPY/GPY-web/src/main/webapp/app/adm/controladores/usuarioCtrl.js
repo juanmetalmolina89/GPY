@@ -26,7 +26,7 @@ angular.module('usuario.controllers', ['ngSanitize'])
                 $scope.autoridades = [];
                 $scope.NATURAL = NATURAL;
                 $scope.JURIDICA = JURIDICA;
-                               
+                
                 if($scope.sesion.perfil == ADMINAA)
                 {
                     $scope.perteneceAA = true;
@@ -43,6 +43,24 @@ angular.module('usuario.controllers', ['ngSanitize'])
                
                 /**************************************************************/
                 /* Métodos */
+                $scope.cambiarTipoPersona = function (tipo) {
+                    if(tipo.a102codigo == JURIDICA)
+                    {
+                        $scope.bloqueado = true;
+                    }
+                    else
+                    {
+                        if(($scope.sesion.perfil == ADMINAA) || ($scope.sesion.perfil == FUNCMADS))
+                        {                 
+                            $scope.bloqueado = false;
+                        }
+                        else
+                        {  
+                            $scope.bloqueado = true;
+                        }
+                    }                    
+                }
+                
                 $scope.registrarUsuario = function () {
 
                     $scope.OE = new Object();
@@ -64,8 +82,9 @@ angular.module('usuario.controllers', ['ngSanitize'])
                                 comunSrv.mensajeSalida(response );
                                 $scope.usuario = new Object();
                                 $scope.persona = new Object();
+                                
                             }, function (error) {
-                                error.data += ". Este usuario ya se encuentra registrado en la base de datos"
+                                error.statusText += ". Este usuario ya se encuentra registrado en la base de datos"
                                 comunSrv.mensajeSalida(error);
                             });
                 };
@@ -82,6 +101,7 @@ angular.module('usuario.controllers', ['ngSanitize'])
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.tipodocumento = $scope.persona.a052idtippersn;
+                    $scope.cambiarTipoPersona($scope.persona.a052idtippersn);
                     listadoSrv.listarTipoDocumento($scope.OE)
                             .then(function (response) {
                                 $scope.tiposDoc = response.data.respuesta;

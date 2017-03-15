@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('representante.controllers', ['ngSanitize'])
-        .controller('representanteCtrl', ['$scope', 'representanteSrv', 'listadoSrv', 'personaSrv', 'comunSrv', 'adjuntoSrv', function ($scope, representanteSrv, listadoSrv, personaSrv, comunSrv, adjuntoSrv) {
+        .controller('representanteCtrl', ['$scope', 'representanteSrv', 'listadoSrv', 'personaSrv', 'comunSrv', 'RepAdjuntoSrv','adjuntoUploadSrv', function ($scope, representanteSrv, listadoSrv, personaSrv, comunSrv, RepAdjuntoSrv,adjuntoUploadSrv) {
 
                 /**************************************************************/
                 /* Manejo sesión */
@@ -18,6 +18,7 @@ angular.module('representante.controllers', ['ngSanitize'])
                 $scope.tiposDocu = [];
                 $scope.APODERADO = APODERADO;
                 $scope.poder = {'adjunto': ''};
+                $scope.muestraCampoSoporte = false;
 
                 /**************************************************************/
                 /* Métodos */
@@ -63,12 +64,14 @@ angular.module('representante.controllers', ['ngSanitize'])
                                         "a020codpais": response.data.respuesta[0].a020codpais,
                                         "a020nompais": response.data.respuesta[0].a020nompais
                                     };
+                                    // $scope.representante.a026nomarchivo = response.data.respuesta[0].a026nomarchivo;
+                                    // $scope.representante.a053idarchivo = response.data.respuesta[0].a053idarchivo;
 //                                    //@todo pendiente manejo archivo
-//                                    $scope.representante.a053idarchivo = new Object();
-//                                    $scope.representante.a053idarchivo.a026codigo = response.data.respuesta[0].a053idarchivo;
-//                                    $scope.representante.a053idarchivo.a026rutarchiv = response.data.respuesta[0].a026rutarchiv;
-//                                    $scope.representante.a053idarchivo.a026descrpcnarchiv = response.data.respuesta[0].a026descrpcnarchiv;
-//                                    $scope.representante.a053idarchivo.a026hasharchivo = response.data.respuesta[0].a026hasharchivo;
+                                    $scope.representante.a053idarchivo = new Object();
+                                    $scope.representante.a053idarchivo.a026codigo = response.data.respuesta[0].a053idarchivo;
+                                    $scope.representante.a053idarchivo.a026rutarchiv = response.data.respuesta[0].a026rutarchiv;
+                                    $scope.representante.a053idarchivo.a026descrpcnarchiv = response.data.respuesta[0].a026descrpcnarchiv;
+                                    $scope.representante.a053idarchivo.a026hasharchivo = response.data.respuesta[0].a026hasharchivo;
                                 }
 
                                 //inicializa combos
@@ -123,11 +126,11 @@ angular.module('representante.controllers', ['ngSanitize'])
                                         "a020nompais": response.data.respuesta[0].a020nompais
                                     };
                                     //@todo pendiente manejo archivo
-//                                    $scope.representante.a053idarchivo = new Object();
-//                                    $scope.representante.a053idarchivo.a026codigo = response.data.respuesta[0].a053idarchivo;
-//                                    $scope.representante.a053idarchivo.a026rutarchiv = response.data.respuesta[0].a026rutarchiv;
-//                                    $scope.representante.a053idarchivo.a026descrpcnarchiv = response.data.respuesta[0].a026descrpcnarchiv;
-//                                    $scope.representante.a053idarchivo.a026hasharchivo = response.data.respuesta[0].a026hasharchivo;
+                                    $scope.representante.a053idarchivo = new Object();
+                                    $scope.representante.a053idarchivo.a026codigo = response.data.respuesta[0].a053idarchivo;
+                                    $scope.representante.a053idarchivo.a026rutarchiv = response.data.respuesta[0].a026rutarchiv;
+                                    $scope.representante.a053idarchivo.a026descrpcnarchiv = response.data.respuesta[0].a026descrpcnarchiv;
+                                    $scope.representante.a053idarchivo.a026hasharchivo = response.data.respuesta[0].a026hasharchivo;
                                 }
 
                                 //inicializa combos
@@ -145,50 +148,55 @@ angular.module('representante.controllers', ['ngSanitize'])
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.representante = $scope.representante;
 
-                    //Si ya existe lo actualiza, de lo contrario lo registra
-                    if ($scope.representante.a053codigo !== undefined && $scope.representante.a053codigo !== null && $scope.representante.a053codigo !== '') {
+                    if ($scope.representante.a053idarchivo.a026codigo != '' || $scope.representante.a053idarchivo.a026codigo != '') {
 
-                        $scope.representante.a053idrepresentante.a052idtippersn = {"a102codigo": NATURAL};
-                        representanteSrv.actualizarRepresentante($scope.OE)
-                                .then(function (response) {
-                                    comunSrv.mensajeSalida(response);
-                                    $scope.adjuntarDocumento();
-                                }, function (error) {
-                                    comunSrv.mensajeSalida(error);
-                                });
-                    } else {
-                        //valida si la persona existe para enviar el id
-                        personaSrv.consultarPersonaPorDocumento({"idUsuario": $scope.idUsuario, "a052numrdocmnt": $scope.representante.a053idrepresentante.a052numrdocmnt}).then(function (response) {
+                        //Si ya existe lo actualiza, de lo contrario lo registra
+                        if ($scope.representante.a053codigo !== undefined && $scope.representante.a053codigo !== null && $scope.representante.a053codigo !== '') {
 
-                            if (response.data.respuesta.lenght > 0)
-                                $scope.representante.a053idrepresentante = {"a052codigo": response.data.respuesta[0].a052codigo};
-
-                            $scope.representante.a053idpersonajurd = {"a052codigo": $scope.sesion.idpersona};
                             $scope.representante.a053idrepresentante.a052idtippersn = {"a102codigo": NATURAL};
-
-                            representanteSrv.registrarRepresentante($scope.OE)
+                            representanteSrv.actualizarRepresentante($scope.OE)
                                     .then(function (response) {
                                         comunSrv.mensajeSalida(response);
-                                        $scope.representante.a053codigo = response.respuesta.a053codigo;
-                                        $scope.adjuntarDocumento();
+                                        if($scope.poder.adjunto !== "")
+                                        {
+                                            $scope.adjuntarDocumento();
+                                        }
+                                        
+                                        $scope.muestraCampoSoporte = false;
+
                                     }, function (error) {
                                         comunSrv.mensajeSalida(error);
                                     });
-                        }, function (error) {
-                            comunSrv.mensajeSalida(error);
-                        });
-                    }
-                };
+                        } else {
+                            //valida si la persona existe para enviar el id
+                            personaSrv.consultarPersonaPorDocumento({"idUsuario": $scope.idUsuario, "a052numrdocmnt": $scope.representante.a053idrepresentante.a052numrdocmnt}).then(function (response) {
 
-                $scope.adjuntarDocumento = function () {
+                                if (response.data.respuesta.length > 0)
+                                    $scope.representante.a053idrepresentante = {"a052codigo": response.data.respuesta[0].a052codigo};
 
-                    adjuntoSrv.adjuntarDocumento($scope.representante.a053codigo, $scope.poder.adjunto, $scope.idUsuario)
-                            .then(function (response) {
-                                comunSrv.mensajeSalida(response);
+                                $scope.representante.a053idpersonajurd = {"a052codigo": $scope.sesion.idpersona};
+                                $scope.representante.a053idrepresentante.a052idtippersn = {"a102codigo": NATURAL};
+
+                                representanteSrv.registrarRepresentante($scope.OE)
+                                        .then(function (response) {
+                                            comunSrv.mensajeSalida(response);
+                                            $scope.representante.a053codigo = response.respuesta.a053codigo;
+                                            $scope.adjuntarDocumento();
+                                            $scope.muestraCampoSoporte = false;
+                                        }, function (error) {
+                                            comunSrv.mensajeSalida(error);
+                                        });
                             }, function (error) {
                                 comunSrv.mensajeSalida(error);
                             });
-                };
+                        }
+
+
+                    } else { //else validación adjunto
+                        comunSrv.mensaje("Debe adjuntar el poder.", "error");
+                    }
+                    
+                };                
 
                 $scope.listarTipoRepresentante = function () {
                     $scope.OE = new Object();
@@ -232,6 +240,43 @@ angular.module('representante.controllers', ['ngSanitize'])
                             });
                 };
 
+                //representante.a026nomarchivo
+                $scope.mostrarCampoSoporte = function () {
+                    $scope.muestraCampoSoporte = true;
+                };
+
+                $scope.ocultarCampoSoporte = function () {
+                    $scope.muestraCampoSoporte = false;
+                };
+                
+                $scope.adjuntarDocumento = function () {
+
+                    RepAdjuntoSrv.registrarAdjunto($scope.representante.a053codigo, $scope.poder.adjunto, $scope.idUsuario)
+                            .then(function (response) {
+                                $scope.poder = {'adjunto': ''};
+                                comunSrv.mensajeSalida(response);
+                                location.reload();
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
+                
+                $scope.consultarSoportePorId = function () {
+
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                     $scope.OE.a053codigo = $scope.representante.a053codigo;      
+                    $scope.OE.a026codigo = $scope.representante.a053idarchivo.a026codigo;                    
+
+                    representanteSrv.consultarDocumento($scope.OE).then(function (response) {
+                        //Se llama método de utilería que descarga del archivo
+                        comunSrv.descargarArchivo(response);
+                        //comunSrv.mensajeSalida(response);
+                    }, function (error) {
+                        comunSrv.mensajeSalida(error);
+                    });
+                };
+                
                 /* DIVIPOLA */
                 $scope.paises = [];
                 $scope.departamentos = [];

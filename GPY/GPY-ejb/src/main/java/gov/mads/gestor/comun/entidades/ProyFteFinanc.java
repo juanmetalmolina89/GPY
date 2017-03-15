@@ -160,5 +160,5 @@ public class ProyFteFinanc implements Serializable {
     public String toString() {
         return "gov.mads.gestor.comun.entidades.ProyFteFinanc[ a004codigo=" + a004codigo + " ]";
     }
-    
+
 }

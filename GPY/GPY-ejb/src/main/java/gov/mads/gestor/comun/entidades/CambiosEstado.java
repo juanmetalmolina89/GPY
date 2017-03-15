@@ -30,6 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CambiosEstado.findAll", query = "SELECT c FROM CambiosEstado c")})
 public class CambiosEstado implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -182,5 +184,7 @@ public class CambiosEstado implements Serializable {
     public String toString() {
         return "gov.mads.gestor.comun.entidades.CambiosEstado[ a044codigo=" + a044codigo + " ]";
     }
+
+
     
 }

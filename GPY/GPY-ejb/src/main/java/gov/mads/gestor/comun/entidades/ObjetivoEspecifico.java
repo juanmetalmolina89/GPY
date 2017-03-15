@@ -241,5 +241,5 @@ public class ObjetivoEspecifico implements Serializable {
     public void setRepAnioFteIndcdrCollection(Collection<RepAnioFteIndcdr> repAnioFteIndcdrCollection) {
         this.repAnioFteIndcdrCollection = repAnioFteIndcdrCollection;
     }
-    
+
 }

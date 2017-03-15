@@ -162,5 +162,5 @@ public class AvancePantalla implements Serializable {
     public String toString() {
         return "gov.mads.gestor.comun.entidades.GpytT057AvancePantalla[ a057codigo=" + a057codigo + " ]";
     }
-    
+
 }

@@ -172,5 +172,5 @@ public class InstrmFinanAnio implements Serializable {
     public String toString() {
         return "gov.mads.gestor.comun.entidades.InstrmFinanAnio[ a014codigo=" + a014codigo + " ]";
     }
-    
+
 }

@@ -197,5 +197,5 @@ public class ProyAdjunto implements Serializable {
     public String toString() {
         return "gov.mads.gestor.comun.entidades.ProyAdjunto[ a008codigo=" + a008codigo + " ]";
     }
-    
+
 }

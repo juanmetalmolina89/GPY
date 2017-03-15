@@ -37,10 +37,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Indicador.findAll", query = "SELECT i FROM Indicador i")})
 public class Indicador implements Serializable {
 
-/*    @Basic(optional = false)
-    @NotNull
-    @Column(name = "A011IDACTVDD")
-    private int a011idactvdd;*/
 
     @JoinColumn(name = "A011IDTIPACCION", referencedColumnName = "A050CODIGO")
     @ManyToOne(optional = false)
@@ -222,13 +218,4 @@ public class Indicador implements Serializable {
     public void setRepAnioFteIndcdrCollection(Collection<RepAnioFteIndcdr> repAnioFteIndcdrCollection) {
         this.repAnioFteIndcdrCollection = repAnioFteIndcdrCollection;
     }
-/*
-    public int getA011idactvdd() {
-        return a011idactvdd;
-    }
-
-    public void setA011idactvdd(int a011idactvdd) {
-        this.a011idactvdd = a011idactvdd;
-    }
-    */
 }

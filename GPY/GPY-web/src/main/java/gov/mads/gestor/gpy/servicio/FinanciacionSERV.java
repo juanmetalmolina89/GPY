@@ -18,6 +18,7 @@ import gov.mads.gestor.gpy.vista.RegistrarFtesFinancOE;
 import gov.mads.gestor.gpy.vista.ActualizarFinancOE;
 import gov.mads.gestor.gpy.vista.EliminarFtesFinancOE;
 import gov.mads.gestor.gpy.vista.EliminarInstrmntFinnccnPOE;
+import gov.mads.gestor.gpy.vista.InsertarInstrmntInfoGralPOE;
 import gov.mads.gestor.gpy.vista.ListarCostosProyectoOE;
 import gov.mads.gestor.gpy.vista.ListarFtesFinancOE;
 import gov.mads.gestor.gpy.vista.ListarInstrmntFinnccnPOE;
@@ -127,6 +128,17 @@ public class FinanciacionSERV {
 	public Response eliminarInstrmntFinnccnP(EliminarInstrmntFinnccnPOE objetoEntrada) {
 		FinanciacionFAC fac = new FinanciacionFAC();
 		ObjetoSalida os = fac.eliminarInstrmntFinnccnP(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/insertarInstrmntFinnccnInfoGralP")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response insertarInstrmntInfoGralP(InsertarInstrmntInfoGralPOE objetoEntrada) {
+		FinanciacionFAC fac = new FinanciacionFAC();
+		ObjetoSalida os = fac.insertarInstrmntInfoGralP(objetoEntrada);
 		return API.retornarRespuesta(os);
 	}
 }

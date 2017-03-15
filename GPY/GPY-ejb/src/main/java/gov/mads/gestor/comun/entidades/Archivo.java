@@ -35,6 +35,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Archivo.findAll", query = "SELECT a FROM Archivo a")})
 public class Archivo implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a013idarchv")
+    private List<AvanceProyecto> avanceProyectoList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "a008idarchv")
     private List<ProyAdjunto> proyAdjuntoList;
     @OneToMany(mappedBy = "a053idarchivo")
@@ -304,6 +307,16 @@ public class Archivo implements Serializable {
 
     public void setPoliticaList(List<Politica> politicaList) {
         this.politicaList = politicaList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<AvanceProyecto> getAvanceProyectoList() {
+        return avanceProyectoList;
+    }
+
+    public void setAvanceProyectoList(List<AvanceProyecto> avanceProyectoList) {
+        this.avanceProyectoList = avanceProyectoList;
     }
     
 }

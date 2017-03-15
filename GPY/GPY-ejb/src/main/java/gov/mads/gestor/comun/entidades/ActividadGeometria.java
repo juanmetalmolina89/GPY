@@ -31,11 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ActividadGeometria.findAll", query = "SELECT a FROM ActividadGeometria a")})
 public class ActividadGeometria implements Serializable {
 
-    /*@Basic(optional = false)
-    @NotNull
-    @Column(name = "A042IDACTVDD")
-    private int a042idactvdd;
-*/
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -201,13 +196,4 @@ public class ActividadGeometria implements Serializable {
     public String toString() {
         return "gov.mads.gestor.comun.entidades.ActividadGeometria[ a042codigo=" + a042codigo + " ]";
     }
-/*
-    public int getA042idactvdd() {
-        return a042idactvdd;
-    }
-
-    public void setA042idactvdd(int a042idactvdd) {
-        this.a042idactvdd = a042idactvdd;
-    }
-  */  
 }

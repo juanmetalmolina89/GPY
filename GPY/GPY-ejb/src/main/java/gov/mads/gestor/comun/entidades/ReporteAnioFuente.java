@@ -32,10 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReporteAnioFuente.findAll", query = "SELECT r FROM ReporteAnioFuente r")})
 public class ReporteAnioFuente implements Serializable {
 
-    /*@Basic(optional = false)
-    @NotNull
-    @Column(name = "A010IDFUENTE")
-    private int a010idfuente;*/
     @JoinColumn(name = "A010CODIGO", referencedColumnName = "A038CODIGO")
     @OneToOne(optional = false)
     private Fuente fuente;
@@ -211,5 +207,5 @@ public class ReporteAnioFuente implements Serializable {
     public void setFuente(Fuente fuente) {
         this.fuente = fuente;
     }
-    
+
 }

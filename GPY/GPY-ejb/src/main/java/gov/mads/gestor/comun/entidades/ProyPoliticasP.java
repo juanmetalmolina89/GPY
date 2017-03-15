@@ -170,5 +170,5 @@ public class ProyPoliticasP implements Serializable {
     public String toString() {
         return "gov.mads.gestor.comun.entidades.ProyPoliticasP[ a059codigo=" + a059codigo + " ]";
     }
-    
+
 }

@@ -172,5 +172,5 @@ public class ProySectrImplmntdr implements Serializable {
     public String toString() {
         return "gov.mads.gestor.comun.entidades.ProySectrImplmntdr[ a006codigo=" + a006codigo + " ]";
     }
-    
+
 }

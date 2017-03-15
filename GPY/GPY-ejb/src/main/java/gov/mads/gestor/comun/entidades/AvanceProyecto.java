@@ -38,6 +38,23 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "AvanceProyecto.findAll", query = "SELECT a FROM AvanceProyecto a")})
 public class AvanceProyecto implements Serializable {
 
+    @Column(name = "A013EMISREDCXVERIFICAR")
+    private Long a013emisredcxverificar;
+    @Column(name = "A013EMISREDCVERIFICADAS")
+    private Long a013emisredcverificadas;
+    @Column(name = "A013EMISREDCDISPNTRANSAR")
+    private Long a013emisredcdispntransar;
+    @Column(name = "A013EMISREDCTRANSADAS")
+    private Long a013emisredctransadas;
+    @Column(name = "A013NROCPAS")
+    private Short a013nrocpas;
+    @Size(max = 2)
+    @Column(name = "A013HAYNUEVOCPA")
+    private String a013haynuevocpa;
+    @JoinColumn(name = "A013IDARCHV", referencedColumnName = "A026CODIGO")
+    @ManyToOne(optional = false)
+    private Archivo a013idarchv;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "a014idavncproyct")
     private Collection<InstrmFinanAnio> instrmFinanAnioCollection;
 
@@ -239,6 +256,62 @@ public class AvanceProyecto implements Serializable {
 
     public void setInstrmFinanAnioCollection(Collection<InstrmFinanAnio> instrmFinanAnioCollection) {
         this.instrmFinanAnioCollection = instrmFinanAnioCollection;
+    }
+
+    public Long getA013emisredcxverificar() {
+        return a013emisredcxverificar;
+    }
+
+    public void setA013emisredcxverificar(Long a013emisredcxverificar) {
+        this.a013emisredcxverificar = a013emisredcxverificar;
+    }
+
+    public Long getA013emisredcverificadas() {
+        return a013emisredcverificadas;
+    }
+
+    public void setA013emisredcverificadas(Long a013emisredcverificadas) {
+        this.a013emisredcverificadas = a013emisredcverificadas;
+    }
+
+    public Long getA013emisredcdispntransar() {
+        return a013emisredcdispntransar;
+    }
+
+    public void setA013emisredcdispntransar(Long a013emisredcdispntransar) {
+        this.a013emisredcdispntransar = a013emisredcdispntransar;
+    }
+
+    public Long getA013emisredctransadas() {
+        return a013emisredctransadas;
+    }
+
+    public void setA013emisredctransadas(Long a013emisredctransadas) {
+        this.a013emisredctransadas = a013emisredctransadas;
+    }
+
+    public Short getA013nrocpas() {
+        return a013nrocpas;
+    }
+
+    public void setA013nrocpas(Short a013nrocpas) {
+        this.a013nrocpas = a013nrocpas;
+    }
+
+    public String getA013haynuevocpa() {
+        return a013haynuevocpa;
+    }
+
+    public void setA013haynuevocpa(String a013haynuevocpa) {
+        this.a013haynuevocpa = a013haynuevocpa;
+    }
+
+    public Archivo getA013idarchv() {
+        return a013idarchv;
+    }
+
+    public void setA013idarchv(Archivo a013idarchv) {
+        this.a013idarchv = a013idarchv;
     }
     
 }

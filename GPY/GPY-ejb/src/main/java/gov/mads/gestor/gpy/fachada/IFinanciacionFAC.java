@@ -4,6 +4,7 @@ import gov.mads.gestor.gpy.vista.RegistrarFtesFinancOE;
 import gov.mads.gestor.gpy.vista.ActualizarFinancOE;
 import gov.mads.gestor.gpy.vista.EliminarFtesFinancOE;
 import gov.mads.gestor.gpy.vista.EliminarInstrmntFinnccnPOE;
+import gov.mads.gestor.gpy.vista.InsertarInstrmntInfoGralPOE;
 import gov.mads.gestor.gpy.vista.ListarCostosProyectoOE;
 import gov.mads.gestor.gpy.vista.ListarFtesFinancOE;
 import gov.mads.gestor.gpy.vista.ListarInstrmntFinnccnPOE;
@@ -27,5 +28,5 @@ public interface IFinanciacionFAC {
         public ObjetoSalida registrarInstrmntFinnccnP(RegistrarInstrmntFinnccnPOE registrarFtesFinancOE);
         public ObjetoSalida listarInstrmntFinnccnP(ListarInstrmntFinnccnPOE OE);
         public ObjetoSalida eliminarInstrmntFinnccnP(EliminarInstrmntFinnccnPOE OE);        
-
+        public ObjetoSalida insertarInstrmntInfoGralP(InsertarInstrmntInfoGralPOE OE);
 }

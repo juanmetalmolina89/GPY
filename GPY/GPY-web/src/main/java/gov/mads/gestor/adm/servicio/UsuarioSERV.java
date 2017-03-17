@@ -117,18 +117,21 @@ public class UsuarioSERV {
     @POST
     @Path("/redireccionarVital")
     @Consumes({ MediaType.APPLICATION_XML})
-    //@Produces({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
     @JWT
     public Response redireccionarVital(UsuarioVitalOE OE) throws URISyntaxException, Exception {
 
         UsuarioFAC fac = new UsuarioFAC();
         ObjetoSalida objetoSalida = fac.validarUsuarioVital(OE);
-        if (objetoSalida.getRespuesta() == null || objetoSalida.getRespuesta().isEmpty())
-            return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
+        if (objetoSalida.getRespuesta() == null || objetoSalida.getRespuesta().isEmpty()){
+            java.net.URI ubicacion = new java.net.URI("http://google.com");
+            return Response.seeOther(ubicacion).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
+            //return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
+        }
         else{
             //return Response.status(Response.Status.OK).entity(objetoSalida).build();
             //return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(objetoSalida.getRespuesta().stream().findFirst().get().get("a041username").toString())).build();
-            java.net.URI ubicacion = new java.net.URI("http://google.com.co");
+            java.net.URI ubicacion = new java.net.URI("http://132.255.20.182:8088/GPY-web/");
             return Response.seeOther(ubicacion).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
         }
         

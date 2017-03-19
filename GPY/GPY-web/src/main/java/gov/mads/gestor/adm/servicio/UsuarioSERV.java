@@ -116,7 +116,7 @@ public class UsuarioSERV {
      */
     @POST
     @Path("/redireccionarVital")
-    @Consumes({ MediaType.APPLICATION_XML})
+    @Consumes({ MediaType.APPLICATION_XML,MediaType.TEXT_XML,MediaType.APPLICATION_XHTML_XML})
     @Produces({ MediaType.APPLICATION_JSON})
     @JWT
     public Response redireccionarVital(UsuarioVitalOE OE) throws URISyntaxException, Exception {

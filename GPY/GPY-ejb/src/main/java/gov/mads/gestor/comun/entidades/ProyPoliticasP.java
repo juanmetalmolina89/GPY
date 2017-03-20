@@ -40,6 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ProyPoliticasP.findByA059usuariomodificacion", query = "SELECT p FROM ProyPoliticasP p WHERE p.a059usuariomodificacion = :a059usuariomodificacion")})
 public class ProyPoliticasP implements Serializable {
 
+    @JoinColumn(name = "A059IDARCHIVO", referencedColumnName = "A026CODIGO")
+    @ManyToOne
+    private Archivo a059idarchivo;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -169,6 +173,14 @@ public class ProyPoliticasP implements Serializable {
     @Override
     public String toString() {
         return "gov.mads.gestor.comun.entidades.ProyPoliticasP[ a059codigo=" + a059codigo + " ]";
+    }
+
+    public Archivo getA059idarchivo() {
+        return a059idarchivo;
+    }
+
+    public void setA059idarchivo(Archivo a059idarchivo) {
+        this.a059idarchivo = a059idarchivo;
     }
 
 }

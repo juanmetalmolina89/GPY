@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CambiosEstado.findAll", query = "SELECT c FROM CambiosEstado c")})
 public class CambiosEstado implements Serializable {
 
-    
+
 
     private static final long serialVersionUID = 1L;
     @Id

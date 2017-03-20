@@ -38,7 +38,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Actividad.findAll", query = "SELECT a FROM Actividad a")})
 public class Actividad implements Serializable {
 
-   
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)

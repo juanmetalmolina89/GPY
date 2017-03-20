@@ -77,6 +77,9 @@ public class Indicador implements Serializable {
     @JoinColumn(name = "A011IDTIPINDCDR", referencedColumnName = "A034CODIGO")
     @ManyToOne(optional = false)
     private TipoIndicador a011idtipindcdr;
+    @JoinColumn(name = "A011IDFUENTE", referencedColumnName = "A011CODIGO")
+    @ManyToOne(optional = false)
+    private Fuente a011idfuente;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a012idindcdr")
 //    private List<RepAnioFteIndcdr> repAnioFteIndcdrList;
 
@@ -217,5 +220,13 @@ public class Indicador implements Serializable {
 
     public void setRepAnioFteIndcdrCollection(Collection<RepAnioFteIndcdr> repAnioFteIndcdrCollection) {
         this.repAnioFteIndcdrCollection = repAnioFteIndcdrCollection;
+    }
+
+    public Fuente getA011idfuente() {
+        return a011idfuente;
+    }
+
+    public void setA011idfuente(Fuente a011idfuente) {
+        this.a011idfuente = a011idfuente;
     }
 }

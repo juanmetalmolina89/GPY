@@ -239,5 +239,5 @@ public class RepAnioFteIndcdr implements Serializable {
     public void setA012recurssinvrtds(BigDecimal a012recurssinvrtds) {
         this.a012recurssinvrtds = a012recurssinvrtds;
     }
-    
+
 }

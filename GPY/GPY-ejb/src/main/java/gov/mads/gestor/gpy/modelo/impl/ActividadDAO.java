@@ -333,6 +333,8 @@ public class ActividadDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A011IDTIPINDCDR", objetoEntrada.getIndicador().getA011idtipindcdr().getA034codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A011IDACTVDD", objetoEntrada.getIndicador().getA011idactvdd().getA005codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A011IDTIPACCION", objetoEntrada.getIndicador().getA011idtipaccion().getA050codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));//*/
+                        Integer idfuente = (objetoEntrada.getIndicador().getA011idfuente() == null) ? null : objetoEntrada.getIndicador().getA011idfuente().getA038codigo();
+                        parametros.add(new SentenciaParametroDAO("p_A011IDFUENTE", idfuente, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));//*/
                         sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
@@ -377,6 +379,8 @@ public class ActividadDAO extends GenericoDAO {
                         parametros.add(new SentenciaParametroDAO("p_A011IDTIPINDCDR", objetoEntrada.getIndicador().getA011idtipindcdr().getA034codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A011IDACTVDD", objetoEntrada.getIndicador().getA011idactvdd().getA005codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A011IDTIPACCION", objetoEntrada.getIndicador().getA011idtipaccion().getA050codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));//*/
+                        Integer idfuente = (objetoEntrada.getIndicador().getA011idfuente() == null) ? null : objetoEntrada.getIndicador().getA011idfuente().getA038codigo();
+                        parametros.add(new SentenciaParametroDAO("p_A011IDFUENTE", idfuente, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));//*/
                         sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,ActividadDAO.class);

@@ -224,6 +224,7 @@ public class PoliticaDAO extends GenericoDAO {
                     List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
                     //parametros.add(new SentenciaParametroDAO("p_A003CODIGO", objetoEntrada.getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     parametros.add(new SentenciaParametroDAO("p_A059IDPROYECTO", objetoEntrada.getPolitica().getA059idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A059IDARCHIVO", objetoEntrada.getPolitica().getA059idarchivo().getA026codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     parametros.add(new SentenciaParametroDAO("p_A059DESCRIPCION", objetoEntrada.getPolitica().getA059descripcion(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                     sentencia.setParametros(parametros);
                     objetoSalida = this.ejecutarX(sentencia, objetoSalida);
@@ -248,6 +249,7 @@ public class PoliticaDAO extends GenericoDAO {
                     List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
                     parametros.add(new SentenciaParametroDAO("p_A059CODIGO", objetoEntrada.getPolitica().getA059codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     parametros.add(new SentenciaParametroDAO("p_A059IDPROYECTO", objetoEntrada.getPolitica().getA059idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    parametros.add(new SentenciaParametroDAO("p_A059IDARCHIVO", objetoEntrada.getPolitica().getA059idarchivo().getA026codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     parametros.add(new SentenciaParametroDAO("p_A059DESCRIPCION", objetoEntrada.getPolitica().getA059descripcion(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                     sentencia.setParametros(parametros);
                     objetoSalida = this.ejecutarX(sentencia, objetoSalida);

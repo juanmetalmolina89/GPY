@@ -88,7 +88,7 @@
                     <!-- Formulario actividades -->
                     <!-- ============================================================-->
                         <br/>
-                        <form class="form-horizontal" id="frmActividades" ng-show="muestraForm" ng-disabled="sesion.perfil == INVITADO">
+                        <form class="form-horizontal" id="frmActividades" name="frmActividades" ng-show="muestraForm" ng-disabled="sesion.perfil == INVITADO">
                             <fieldset>
                                 <legend>Detalles de la actividad </legend>   
                                 <div id="formulario">
@@ -210,8 +210,8 @@
                                     
                                    
                                     
-                                    <!-- Costo total  -->
-                                    <div class="form-group"  ng-class="{'has-error': !frmActividades.a005costototal.$valid}">
+                                    <!-- Costo total  -->                                    
+                                    <div class="form-group"  ng-class="{'has-error': !frmActividades.a005costototal.$valid, 'has-success': frmActividades.a005costototal.$valid}">
 
                                         <label class="col-md-4 control-label" for="a005costototal">Costo total (COP)</label>
                                         <div class="col-md-4">                     
@@ -223,7 +223,7 @@
                                     </div>
 
                                     <!-- Contribución propia) -->
-                                    <div class="form-group"  ng-class="{'has-error': !frmActividades.a005contrbcnprop.$valid}">
+                                    <div class="form-group"  ng-class="{'has-error': !frmActividades.a005contrbcnprop.$valid, 'has-success':frmActividades.a005contrbcnprop.$valid}">
 
                                         <label class="col-md-4 control-label" for="a005contrbcnprop">Contribución propia (COP)</label>
                                         <div class="col-md-4">                     
@@ -235,7 +235,7 @@
                                     </div>
                                                                         
                                     <!-- Contribución externa esperada (COP) -->
-                                    <div class="form-group"  ng-class="{'has-error': !frmActividades.a005contrbcnextrn.$valid}">
+                                    <div class="form-group"  ng-class="{'has-error': !frmActividades.a005contrbcnextrn.$valid, 'has-success':frmActividades.a005contrbcnextrn.$valid}">
 
                                         <label class="col-md-4 control-label" for="a005contrbcnextrn">Contribución externa esperada (COP)</label>
                                         <div class="col-md-4">                     
@@ -342,7 +342,18 @@
                                                             <option value="">Seleccione</option>
                                                         </select>                                        
                                                     </div>                                
-                                                </div>                                                      
+                                                </div>
+                                                
+                                                <!-- Fuente -->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="a011idfuente">Fuente relacionada</label>
+                                                    <div class="col-md-5">
+                                                        <select id="a011idfuente" name="a011idfuente" class="form-control" ng-model="indicador.a011idfuente" 
+                                                                ng-options="filaFuente as filaFuente.a038nombrfunt for filaFuente in fuentes track by filaFuente.a038codigo">
+                                                            <option value="">Seleccione</option>
+                                                        </select>                                        
+                                                    </div>                                
+                                                </div>   
 
                                                  <!-- Guardar -->
                                                 <div class="form-group">

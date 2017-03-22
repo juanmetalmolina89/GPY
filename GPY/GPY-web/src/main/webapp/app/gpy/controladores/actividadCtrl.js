@@ -3,7 +3,7 @@
  */
 'use strict';
 angular.module('actividad.controllers', ['ngSanitize'])
-        .controller('actividadCtrl', ['$scope', '$routeParams', '$location', '$window', 'actividadSrv', 'soporteActividadSrv', 'comunSrv', 'listadoSrv', 'avanceSrv', 'grillaSrv', 'infoProyecto', function ($scope, $routeParams, $location, $window, actividadSrv, soporteActividadSrv, comunSrv, listadoSrv, avanceSrv, grillaSrv, infoProyecto) {
+        .controller('actividadCtrl', ['$scope', '$routeParams', '$location', '$window', 'actividadSrv', 'soporteActividadSrv', 'comunSrv', 'listadoSrv', 'avanceSrv', 'grillaSrv', 'infoProyecto', 'fuenteSrv', function ($scope, $routeParams, $location, $window, actividadSrv, soporteActividadSrv, comunSrv, listadoSrv, avanceSrv, grillaSrv, infoProyecto, fuenteSrv) {
 
                 /**************************************************************/
                 /**********************   SESIÓN      *************************/
@@ -28,7 +28,8 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 $scope.tiposActividades = [];
                 $scope.tiposActivReduccion = [];
                 $scope.categoriaMitigacion = '';
-                
+                $scope.fuentes = [];
+                 
                 $scope.nombresIndicador = [];
                 $scope.tiposIndicador = [];
 
@@ -68,7 +69,7 @@ angular.module('actividad.controllers', ['ngSanitize'])
                     //valida que exista o haya elegido un adjunto
                     if ($scope.actividad.a005idsoporte.a026codigo != '' || $scope.soporte.adjunto != '') {
                         //Valida que haya elegido geometria
-                        if ($scope.a042geometriasitio != '') {
+                        if ($scope.a042geometriasitio != '' ) {
 
                             //Empieza a armar el objeto de entrada
                             $scope.OE = new Object();
@@ -402,6 +403,7 @@ angular.module('actividad.controllers', ['ngSanitize'])
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.indicador = {};
                     $scope.OE.indicador.a011nombrindcdr = $scope.indicador.a011nombrindcdr;
+                    $scope.OE.indicador.a011idfuente ={"a038codigo":$scope.indicador.a011idfuente.a038codigo} ;
                     $scope.OE.indicador.a011idtipindcdr = {"a034codigo":$scope.indicador.a011idtipindcdr.a102codigo};
                     $scope.OE.indicador.a011idactvdd={"a005codigo":$scope.actividadPadre.a005codigo};
                     $scope.OE.indicador.a011idtipaccion={"a050codigo":1};
@@ -434,7 +436,21 @@ angular.module('actividad.controllers', ['ngSanitize'])
 
                 /**************************************************************/
                 /*****************    Métodos VISUALES  ***********************/
+                $scope.mostrarListaFuentes = function () {
 
+                $scope.OE = new Object();
+                $scope.OE.idUsuario = $scope.idUsuario;
+                $scope.OE.a038idproyecto = $scope.pid;
+
+                fuenteSrv.listar($scope.OE)
+                        .then(function (response) {
+                            $scope.fuentes = response.data.respuesta;
+                        }, function (error) {
+                            $scope.mensaje = error.data.respuesta;
+                            console.log($scope.mensaje);
+                        });
+                }; 
+        
                 $scope.mostrarListaIndicadores  = function (indicador) {
                     $scope.muestraListaIndicadores = true;
                     $scope.muestraFormIndicadores = false;
@@ -770,6 +786,7 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 $scope.listarActividadPorClave();
                 $scope.listarTipoActividades();
                 $scope.listarTipoActividadReduccion();
+                $scope.mostrarListaFuentes();
 
             }]);
 

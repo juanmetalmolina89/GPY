@@ -23,10 +23,13 @@ angular.module('seguimiento.controllers', ['ngSanitize'])
                     
                     seguimientoSrv.consultarInfoGeneral($scope.OE)
                         .then(function (response) {
-                            
-                            $scope.avance = response.data.respuesta[0];
-                            $scope.avance.a013fechavncproyct = new Date($scope.avance.a013fechavncproyct);
-                            $scope.avance.a013fechreprt = new Date($scope.avance.a013fechreprt);
+                            if(response.data.respuesta.length>0)
+                            {
+                                $scope.avance = response.data.respuesta[0];
+                                $scope.avance.a013fechavncproyct = new Date($scope.avance.a013fechavncproyct);
+                                $scope.avance.a013fechreprt = new Date($scope.avance.a013fechreprt);
+                            }
+                           
                          }, function (error) {
                             $scope.mensaje = error.data.respuesta;
                             console.log($scope.mensaje);
@@ -53,13 +56,15 @@ angular.module('seguimiento.controllers', ['ngSanitize'])
                             $scope.mensaje = error.data.respuesta;
                             console.log($scope.mensaje);
                         });
-                    }                    
+                    }
                     else
                     {
                         // no: es un insert
                         $scope.OE = new Object();
                         $scope.OE.idUsuario = $scope.idUsuario;
-                        $scope.OE.avanceproyecto = $scope.avance;  
+                        $scope.OE.avanceproyecto = $scope.avance;
+                        $scope.OE.avanceproyecto.a013idproyecto = {"a002codigo":$scope.pid};
+                        $scope.OE.avanceproyecto.a013idarchv = {"a026codigo":1};
                         seguimientoSrv.registrarInfoGeneral($scope.OE)
                         .then(function (response) {
                            //$scope.mensaje = 'fuente actualizada con éxito.';
@@ -72,7 +77,7 @@ angular.module('seguimiento.controllers', ['ngSanitize'])
                             $scope.mensaje = error.data.respuesta;
                             console.log($scope.mensaje);
                         });
-                    }                    
+                    }
                     
                     // se guarda también el proyecto. No importa que sea asíncrono
                     $scope.OEp = new Object();

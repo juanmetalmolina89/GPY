@@ -1,0 +1,412 @@
+<!-- ===================================================================================== -->
+<!-- 7 - MDL etapa 1 Consideración Temprana -->
+<!-- ===================================================================================== -->
+﻿<div class="container gest_proy">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div ng-include src="'app/gpy/vistas/gestionProyectosMenu.html'"></div>
+        </div>
+
+
+        <div class="col-sm-9 col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div ng-include src="'app/gpy/vistas/gestionProyectosEncabezado.html'"></div>
+                </div>
+
+                <div class="panel-body" ng-controller="seguimientoCtrl">
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                    
+
+                    <form class="form-horizontal" id="frmAvance" name="frmAvance">
+                        <fieldset ng-disabled="sesion.perfil == INVITADO">
+
+                            <!-- Etapa 1 Consideración Temprana -->
+                            <legend>Información general</legend>
+
+
+                            <!-- Fecha para la cual realizará el reporte -->
+                            <!-- calendar -->
+                            <div class="form-group" ng-class="{'has-error': !frmAvance.a013fechreprt.$valid , 'has-success': frmAvance.a013fechreprt.$valid}">
+                                <label class="col-md-4 control-label" for="a013fechreprt">Fecha para la cual realizará el reporte </label>
+                                <div class="col-md-5">
+                                    <input type="date" class="form-control input-md" id="a013fechreprt" name="a013fechreprt" placeholder="dd-mm-aaaa" maxlength="10" required ng-model="avance.a013fechreprt">
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmAvance.a013fechreprt.$error.required">{{campoObligatorio}}</span>
+                            </div>
+
+                            <!-- El proyecto ha presentado cambios significativos? cuáles? -->
+                            <!-- textarea opcional  -->
+                            <div class="form-group" ng-class="{'has-error': !frmAvance.a013cambsignfctv.$valid,'has-success': frmAvance.a013cambsignfctv.$valid}">
+                                <label class="col-md-4 control-label" for="a013cambsignfctv">El proyecto ha presentado cambios significativos? cuáles? </label>
+                                <div class="col-md-5">
+                                    <textarea class="form-control input-md" id="a013cambsignfctv" name="a013cambsignfctv" ng-model="avance.a013cambsignfctv" placeholder="Debe justificar la elección del tipo de actividad con un texto y posteriormente adjuntar un archivo que soporte la respuesta." required></textarea>
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmAvance.a013cambsignfctv.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                                                        
+                            <!-- Costo de la tonelada de CO2 reducido (COP) -->
+                            <!-- numérico -->
+                            <div class="form-group" ng-class="{'has-error': !frmAvance.a013costtonld.$valid, 'has-success': frmAvance.a013costtonld.$valid}">
+                                <label class="col-md-4 control-label" for="a013costtonld"><font style="color: #a94442">*</font>Costo de la tonelada de CO2 reducido (COP)</label>  
+                                <div class="col-md-4">
+                                    <input id="a013costtonld" name="a013costtonld" required
+                                           placeholder="$"  ng-model="avance.a013costtonld" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmAvance.a013costtonld.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                            
+                            
+                            <!-- Ha logrado financiación? -->
+                            <!-- Si / No con radio -->
+                            <div class="form-group" ng-class="{'has-error': !frmAvance.a013financcn.$valid, 'has-success': frmAvance.a013financcn.$valid}">
+                                <label class="col-md-4 control-label" for="radios"><font style="color: #a94442">*</font> ¿Ha logrado financiación?</label>
+                                <div class="col-md-4"> 
+                                    <label class="radio-inline" for="radios">
+                                        <input name="a013financcn" id="radios-0" value="SI"  type="radio" ng-model="avance.a013financcn" required>
+                                        SI
+                                    </label> 
+                                    <label class="radio-inline" for="radios2">
+                                        <input name="a013financcn" id="radios-1" value="NO" type="radio" checked="checked" ng-model="avance.a013financcn" required>
+                                        NO
+                                    </label>
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmAvance.a013financcn.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                        </fieldset>
+                    </form>        
+                            
+                    <!------------------------------------------->
+                    <!--- Fuentes de financiación utilizadas  --->
+                    <!------------------------------------------->
+
+
+                    <br/>
+                    <form class="form-horizontal" id="frmInstrumentos" name="frmInstrumentos">
+                        <fieldset ng-disabled="sesion.perfil == INVITADO">
+                            <!-- Form Name -->
+                            <legend>Fuentes de financiación utilizadas</legend>
+
+                            <table  class="table table-striped table-bordered">
+                               <thead>
+                                    <tr>
+                                        <th>Financiación</th>
+                                        <th>Distribución</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="filaInstrumentos in instrumentos">
+                                        <td>{{filaInstrumentos.a102valor}}</td>
+                                        <td>{{filaInstrumentos.a009porfinnccnestmd}}%</td>
+                                        <td>
+                                            <!--
+                                            <button type="button" class="btn btn-primary" 
+                                                ng-click="mostrarForm(filaInstrumentos)" data-toggle="tooltip" data-placement="top"
+                                                title="Modificar instrumento de financiación"><span class="glyphicon glyphicon-edit"></span></button>
+                                            -->
+                                            <button type="button" class="btn btn-primary" 
+                                                ng-click="eliminarInstrumento(filaInstrumentos)" data-toggle="tooltip" data-placement="top"
+                                                title="Eliminar instrumento de financiación"><span class="glyphicon glyphicon-remove"></span></button>                                            
+                                        </td>    
+                                    </tr>
+                                </tbody>
+                                <tfoot> 
+                                    <tr ng-show="!editarFuente">
+                                        <td colspan="3">    
+                                            <div class="form-horizontal">
+                                                <a id="btnMform" name="btnMform" ng-click="sesion.perfil == INVITADO ? '': mostrarForm()" class="btn btn-primary" role="button"  ng-disabled="sesion.perfil == INVITADO">
+                                                    <span class="glyphicon glyphicon-plus"></span>&nbsp;Agregar nueva fuente</a>
+                                            </div> 
+                                         </td>    
+                                    </tr>    
+                                    <tr ng-show="editarFuente">
+                                        <td colspan="3">                                            
+                                            <!-- Select Basic -->
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="selectbasic">Tipo de instrumento de finaciación</label>
+                                                <div class="col-md-4">
+                                                    <select id="tiposInstrumentos" name="tiposInstrumentos" class="form-control" required ng-model="instrumento.a009idtipinstrmntf.a102codigo"  ng-options="tipoInstrumento.a102codigo as tipoInstrumento.a102valor for tipoInstrumento in tiposInstrumentos">
+                                                        <option value="1">Seleccione</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" ng-class="{'has-error': !frmInstrumentos.a009porfinnccnestmd.$valid, 'has-success': frmInstrumentos.a009porfinnccnestmd.$valid}">
+                                                <label class="col-md-4 control-label" for="a009porfinnccnestmd"><font style="color: #a94442">*</font> Distribución porcentual de financiación</label>
+                                                <div class="col-md-4">
+                                                    <input id="a009porfinnccnestmd" name="a009porfinnccnestmd" required
+                                                           placeholder="%" ng-model="instrumento.a009porfinnccnestmd" maxlength="5" format="number"
+                                                           class="form-control input-md" type="text">
+                                                </div>
+                                                <span class="control-label"
+                                                      ng-show="frmInstrumentos.a009porfinnccnestmd.$error.required">{{campoObligatorio}}</span>
+                                            </div>
+
+
+                                            <!-- Button (Double) -->
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="button1id"></label>
+                                                <div class="col-md-8">
+                                                    <button id="btnGuardarInstrumento" name="btnGuardarInstrumento" class="btn btn-primary"  ng-disabled="frmInstrumentos.$invalid" ng-click="guardarInstrumento()">Guardar</button>
+                                                    <button id="btnCancelarInstrumento" name="btnCancelarInstrumento" class="btn btn-primary" ng-click="cancelar()">Cancelar</button>
+                                                </div>
+                                            </div>  
+                                        </td>
+                                    </tr>
+                                </tfoot>                                
+                            </table>
+                            
+
+                        </fieldset>
+                    </form>
+
+                                                
+                                                         
+                    <!-------------------------------------------->
+                    <!-- Fin fuentes de financiación utilizadas -->
+                    <!-------------------------------------------->
+
+                    <form class="form-horizontal" id="frmProyecto" name="frmProyecto">
+                        <fieldset ng-disabled="sesion.perfil == INVITADO">                            
+                                                        
+                            <!-- Fecha de registro del proyecto ante la Junta Ejecutiva del MDL -->
+                            <!--  solo para MDL y MDL-POA -->
+                            <!--  Según Julio, este campo debe desaparecer de aqui y ponerse en información general del proyecto -->
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013fechavncproyct.$valid, 'has-success': frmProyecto.a013fechavncproyct.$valid}" ng-show="tpid == MDL || tpid == MDL_POA">
+                                <label class="col-md-4 control-label" for="a013fechavncproyct">Fecha de registro del proyecto ante la Junta Ejecutiva del MDL</label>
+                                <div class="col-md-5">
+                                    <input type="date" class="form-control" id="a013fechavncproyct" name="a013fechavncproyct" placeholder="aaaa-mm-dd" maxlength="10" required ng-model="avance.a013fechavncproyct">
+                                </div> 
+                                <span class="control-label"
+                                      ng-show="frmProyecto.a013fechavncproyct.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                            
+                            
+                            <!-- Tipo de periodo de acreditación del proyecto MDL -->
+                            <!--  solo para MDL y MDL-POA -->
+                            <!-- Informativo, se trae del Proyect0 Tabla GPYT_T002_PROYECTO , atributo A002IDTIPPERDACRDTCN y valor de la tabla PART_T102_LISTA-->
+                            {{traeTipoPeriodoAcreditacion()}}
+                            
+                            
+                            <!-- Emisiones reducidas a espera de ser verificadas (ton CO2 eq) -->
+                            <!-- numérico -->
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013emisredcxverificar.$valid , 'has-success': frmProyecto.a013emisredcxverificar.$valid}">
+                                <label class="col-md-4 control-label" for="a013emisredcxverificar"><font style="color: #a94442">*</font>Emisiones reducidas a espera de ser verificadas (ton CO2 eq)</label>  
+                                <div class="col-md-4">
+                                    <input id="a013emisredcxverificar" name="a013emisredcxverificar" required
+                                           placeholder=""  ng-model="avance.a013emisredcxverificar" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmProyecto.a013emisredcxverificar.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                            
+                            
+                            <!-- Ton reducidas disponibles para transar (ton CO2 eq) -->
+                            <!-- numérico -->
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013emisredcdispntransar.$valid, 'has-success': frmProyecto.a013emisredcdispntransar.$valid}">
+                                <label class="col-md-4 control-label" for="a013emisredcdispntransar"><font style="color: #a94442">*</font>Ton reducidas disponibles para transar (ton CO2 eq)</label>  
+                                <div class="col-md-4">
+                                    <input id="a013emisredcdispntransar" name="a013emisredcdispntransar" required
+                                           placeholder=""  ng-model="avance.a013emisredcdispntransar" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmProyecto.a013emisredcdispntransar.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                            
+                            
+                            <!-- Emisiones reducidas verificadas (ton CO2 eq) -->
+                            <!-- numérico -->
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013emisredcverificadas.$valid, 'has-success': frmProyecto.a013emisredcverificadas.$valid}">
+                                <label class="col-md-4 control-label" for="a013emisredcverificadas"><font style="color: #a94442">*</font>Emisiones reducidas verificadas (ton CO2 eq)</label>  
+                                <div class="col-md-4">
+                                    <input id="a013emisredcverificadas" name="a013emisredcverificadas" required
+                                           placeholder=""  ng-model="avance.a013emisredcverificadas" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmProyecto.a013emisredcverificadas.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                            
+                            
+                            <!-- Emisiones transadas / vendidas (ton CO2 eq) -->
+                            <!-- numérico -->
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013emisredctransadas.$valid, 'has-success': frmProyecto.a013emisredctransadas.$valid}">
+                                <label class="col-md-4 control-label" for="a013emisredctransadas"><font style="color: #a94442">*</font>Emisiones transadas / vendidas (ton CO2 eq)</label>  
+                                <div class="col-md-4">
+                                    <input id="a013emisredctransadas" name="a013emisredctransadas" required
+                                           placeholder=""  ng-model="avance.a013emisredctransadas" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmProyecto.a013emisredctransadas.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                            
+                            
+                            <!-- Por favor adjunte un documento con la información detallada de las emisiones transadas: cantidad, Nombre comprador, País... -->
+                            <!-- archivo -->
+                            <div  id="listaArhivos" ng-include="'app/utl/vistas/adjunto.html'"></div>
+                            
+                            <!---------------------------------------------------------------------------------->
+                            <!---------------------------- CAMPOS DEL PROYECTO  -------------------------------->
+                            <!---------------------------------------------------------------------------------->
+                             
+                             
+                            
+                            <!-- Está optando para venta de las emisiones reducidas en un mercado de carbono voluntario?  -->
+                            <!-- SI / NO con radio -->
+                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA"  ng-class="{'has-error': !frmProyecto.a002aplicmercdvoluntr.$valid, 'has-success': frmProyecto.a002aplicmercdvoluntr.$valid}">
+                                <label class="col-md-4 control-label">Está optando para venta de las emisiones reducidas en un mercado de carbono voluntario?</label>
+                                <div class="col-md-4">
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="proyecto.a002aplicmercdvolntr"
+                                               ng-required='tpid == MDL || tpid == MDL_POA' value="SI" name="a002aplicmercdvoluntr" id="a002aplicmercdvoluntr">
+                                        Si
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="proyecto.a002aplicmercdvolntr"
+                                               ng-required='tpid == MDL || tpid == MDL_POA' value="NO" name="a002aplicmercdvoluntr" id="a002aplicmercdvoluntr">
+                                        No
+                                    </label>
+                                </div>
+                                <span class="control-label" ng-show="frmProyecto.a002aplicmercdvoluntr.$error.required"><strong>Requerido</strong></span>
+                            </div>
+                            
+                            
+                            <!-- Estandar del mercado voluntario del carbono al que está optando -->
+                            <!-- Drop down -->
+                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA"  ng-class="{'has-error': !frmProyecto.proyEstandaresMVC.$valid, 'has-success': frmProyecto.proyEstandaresMVC.$valid}">
+                                <label class="col-md-4 control-label" for="proyEstandaresMVC">Estándar del mercado voluntario del carbono al que está optando</label>
+                                <div class="col-md-4">
+                                    <select id="proyEstandaresMVC" name="proyEstandaresMVC" class="form-control" ng-model="proyecto.a002idestndrmercdvolntr" ng-required='tpid == MDL || tpid == MDL_POA'
+                                            ng-options="tipoEstandarMVC.a102codigo as tipoEstandarMVC.a102valor for tipoEstandarMVC in tiposEstandarMVC track by tipoEstandarMVC.a102codigo" required> 
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="frmProyecto.proyEstandaresMVC.$error.required"><strong>Requerido</strong></span>
+                            </div> 
+                            
+                            
+                            <!-- Aplica proceso de verificación ante un ente certificador -->
+                            <!-- SI / NO con radio  -->
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a002procsvaldcnec.$valid, 'has-success': frmProyecto.a002procsvaldcnec.$valid}">
+                                <label class="col-md-4 control-label">Aplica proceso de verificación ante un ente certificador?</label>
+                                <div class="col-md-4">
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="proyecto.a002procsvaldcnec"
+                                               required value="SI" name="a002procsvaldcnec" id="a002procsvaldcnec">
+                                        Si
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="proyecto.a002procsvaldcnec"
+                                               required value="NO" name="a002procsvaldcnec" id="a002procsvaldcnec">
+                                        No
+                                    </label>
+                                </div>
+                                <span class="control-label" ng-show="frmProyecto.a002procsvaldcnec.$error.required"><strong>Requerido</strong></span>
+                            </div>
+                            
+                            
+                            
+                            <!-- Estandar del mercado voluntario del carbono bajo el cual se buscará la certificación  -->
+                            <!-- repetido? 
+                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA"  ng-class="{'has-error': !frmProyecto.proyEstandaresMVC.$valid, 'has-success': frmProyecto.proyEstandaresMVC.$valid}">
+                                <label class="col-md-4 control-label" for="proyEstandaresMVC">Estandar del mercado voluntario del carbono bajo el cual se buscará la certificación</label>
+                                <div class="col-md-4">
+                                    <select id="proyEstandaresMVC" name="proyEstandaresMVC" class="form-control" ng-model="proyecto.a002idestndrmercdvolntr" ng-required='tpid == MDL || tpid == MDL_POA'
+                                            ng-options="tipoEstandarMVC.a102codigo as tipoEstandarMVC.a102valor for tipoEstandarMVC in tiposEstandarMVC track by tipoEstandarMVC.a102codigo" required> 
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="frmProyecto.proyEstandaresMVC.$error.required"><strong>Requerido</strong></span>
+                            </div> 
+                            -->
+                            
+                            <!-- Estado del proceso de validación ante el estándar al que aplica -->
+                            <!-- Drop down -->
+                            <!-- estado de proceso de Validación -->
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a002procsvaldcnec.$valid, 'has-success': frmProyecto.a002procsvaldcnec.$valid}">
+                                <label class="col-md-4 control-label" for="proyEstadoProcesoValidacion">Estado del proceso de validación ante el estándar al que aplica</label>
+                                <div class="col-md-4">                  
+                                    <select id="proyEstadoProcesoValidacion" name="proyEstadoProcesoValidacion" class="form-control" ng-model="proyecto.a002idestdprocsvaldcn"
+                                            ng-options="estadoPV.a102codigo as estadoPV.a102valor for estadoPV in estadosPV track by estadoPV.a102codigo" required>                                       
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="frmProyecto.proyEstadoProcesoValidacion.$error.required"><strong>Requerido</strong></span>
+                            </div>
+                            
+
+                            <!---------------------------------------------------------------------------------->
+                            <!--------------------------- FIN CAMPOS DEL PROYECTO  ------------------------------>
+                            <!---------------------------------------------------------------------------------->
+                            
+                            
+                            <!-- Número de CPAs que se proyecta involucrar -->
+                            <!-- solo MDL-POA numérico -->                            
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013nrocpas.$valid, 'has-success': frmProyecto.a013nrocpas.$valid}" ng-show="tpid == MDL || tpid == MDL_POA">
+                                <label class="col-md-4 control-label" for="a013nrocpas"><font style="color: #a94442">*</font>Número de CPAs que se proyecta involucrar</label>  
+                                <div class="col-md-4">
+                                    <input id="a013emisredcxverificar" name="a013nrocpas" required
+                                           placeholder=""  ng-model="avance.a013nrocpas" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmProyecto.a013nrocpas.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                            
+                            <!-- Ha involucrado un nuevo CPA? -->
+                            <!-- SI / NO con radio  -->
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013haynuevocpa.$valid, 'has-success': frmProyecto.a013haynuevocpa.$valid}">
+                                <label class="col-md-4 control-label" for="radios"><font style="color: #a94442">*</font> ¿Ha involucrado un nuevo CPA?</label>
+                                <div class="col-md-4"> 
+                                    <label class="radio-inline" for="radios">
+                                        <input name="a013haynuevocpa" id="radios-0" value="SI"  type="radio" ng-model="avance.a013haynuevocpa" required>
+                                        SI
+                                    </label> 
+                                    <label class="radio-inline" for="radios2">
+                                        <input name="a013haynuevocpa" id="radios-1" value="NO" type="radio" checked="checked" ng-model="avance.a013haynuevocpa" required>
+                                        NO
+                                    </label>
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmProyecto.a013haynuevocpa.$error.required">{{campoObligatorio}}</span>
+                            </div>
+                            
+                            
+                            <!-- CPA asociados -->
+                            <!-- solo MDL-POA, listar CPA asociados  -->
+                            <div class="form-group" ng-show="avance.a013haynuevocpa == 'SI' " >
+                                <label class="col-md-4 control-label" for="proyEstadoProcesoValidacion"></label>                                
+                                <div class="col-md-4">
+                                    <b>No olvide registrar su nuevo CPA en la fase de registro</b>
+                                </div>
+                            </div>
+
+                            <!-- Guardar -->
+                            <div class="form-group" ng-show="!(sesion.perfil == INVITADO)">
+                                <label class="col-md-4 control-label" for="guardar"></label>
+                                <div class="col-md-8">
+                                    <button id="guardar" name="guardar" class="btn btn-primary" ng-click="guardarInfoGeneral()" ng-disabled="frmAvance.$invalid || frmProyecto.$invalid">Registrar información general avance</button>
+                                </div>
+                            </div> 
+                                                       
+                        </fieldset>
+                    </form>
+                    <!-- ============================================================-->
+                    <!-- Formulario -->
+                    <!-- ============================================================-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

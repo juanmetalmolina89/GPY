@@ -41,7 +41,7 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
     $scope.APRMDL3 = APRMDL3;
     $scope.DEVUELTAMDL3 = DEVUELTAMDL3;    
     $scope.REGISTRO = REGISTRO;
-    $scope.SEGUIMIENTO = SEGUIMIENTO;
+    $scope.SEGUIMIENTO = SEGUIMIENTO; // este estado es el mismo APRREG. evaluar su eliminación
     $scope.RECHAZADO = RECHAZADO;
     $scope.SOLPRE = SOLPRE;
     $scope.SOLREG = SOLREG;

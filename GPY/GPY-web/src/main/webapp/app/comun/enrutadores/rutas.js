@@ -98,11 +98,11 @@ angular.module('GPYApp').config(['$routeProvider', '$httpProvider', '$locationPr
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/infogralseg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
+			templateUrl	: 'app/gpy/vistas/seguimiento.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 		.when('/gpy/avanceseg/:tpid/:pid', {
-			templateUrl	: 'app/comun/vistas/construccion.html',
+			templateUrl	: 'app/gpy/vistas/avance.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
 

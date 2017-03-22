@@ -740,8 +740,22 @@ angular.module('actividad.controllers', ['ngSanitize'])
 
                 /**************************************************************/
                 /* Inicializar formulario */
-                $scope.proyecto = infoProyecto.proyecto;
-
+                
+                if (infoProyecto.proyecto=="")
+                {                    
+                    $scope.$parent.consultarProyectoPorId($scope.pid)
+                        .then(function (response) {
+                            $scope.proyecto = $scope.$parent.proyecto;
+                         }, function (error) {
+                            $scope.mensaje = error.data.respuesta;
+                            console.log($scope.mensaje);
+                        });
+                }
+                else
+                {
+                    $scope.proyecto = infoProyecto.proyecto;
+                }
+                
                 //Definir pantalla para registrar avance
                 if ($location.path().substr(0, '/gpy/actividadespre/'.length) === '/gpy/actividadespre/') {
                     $scope.pantalla = ACTIVIDADESPRE;

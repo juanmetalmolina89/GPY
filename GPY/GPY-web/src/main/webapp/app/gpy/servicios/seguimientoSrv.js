@@ -1,34 +1,26 @@
 /* 
- * Autor: Yeimmy Lee
+ * Autor: Fernando Camargo
  */
 'use strict';
 
 angular.module('seguimiento.services')
 	    .factory('seguimientoSrv', ['$http', function($http) {
 
-	    var urlBase = urlBackEnd+'seguimiento';
+	    var urlBase = urlBackEnd+'infogeneral';
 	    var datos = {};
 
-	    datos.listar = function () {
-	        return $http.get(urlBase);
+	   datos.registrarInfoGeneral = function (OE) {
+	        return $http.post(urlBase + '/registrarInfoGeneral', OE);
 	    };
 
-	    datos.consultarPorId = function (id) {
-	        return $http.get(urlBase + '/' + id);
+            datos.actualizarInfoGeneral = function (OE) {
+	        return $http.post(urlBase + '/actualizarInfoGeneral', OE);
 	    };
-
-	    datos.insertar = function (seguimiento) {
-	        return $http.post(urlBase, seguimiento);
+            
+            datos.consultarInfoGeneral = function (OE) {
+	        return $http.post(urlBase + '/consultarInfoGeneral', OE);
 	    };
-
-	    datos.actualizar = function (seguimiento) {
-	        return $http.put(urlBase + '/' + seguimiento.id, seguimiento);
-	    };
-
-	    datos.borrar = function (id) {
-	        return $http.delete(urlBase + '/' + id);
-	    };
-
+            
 	    return datos;
 	}]);
 

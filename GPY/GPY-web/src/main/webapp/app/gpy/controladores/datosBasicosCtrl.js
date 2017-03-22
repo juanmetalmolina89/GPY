@@ -14,7 +14,7 @@ angular.module('datosBasicos.controllers', ['ngSanitize'])
 
                 /**************************************************************/
                 /* Variables */
-                $scope.tpid = $routeParams.tpid;//@todo preguntar por el funcionamiento de estos dos
+                $scope.tpid = $routeParams.tpid;
                 $scope.pid = $routeParams.pid;
 
                 $scope.proyecto = new Object();

@@ -19,7 +19,7 @@ var ctrlGeo = IGAC.contenedor('mapid', {
     municipioId: getURLParameters('divipola')
 });
 
-//Funciones
+//Funciones 2017
 
 var obtenerGeometria = function () {
 

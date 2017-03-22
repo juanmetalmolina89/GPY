@@ -22,7 +22,7 @@
                         <fieldset>
 
                             <!-- Aprobación Preregistro -->
-                            <legend>Aprobación del proyecto</legend>
+                            <legend>Aprobación del proyecto (fase de registro)</legend>
 
                             <!-- Multiple Checkboxes (inline) -->
                             <div class="form-group" ng-class="{'has-error': formEnviado}">
@@ -31,12 +31,12 @@
                                     <label class="checkbox-inline">
                                         <input type="radio" ng-model="proyecto.a002estadoproyecto"
                                                required value="{{APRREG}}" name="estadoProyecto" id="estadoProyecto">
-                                        Aprobado
+                                        Registro aprobado
                                     </label>
                                     <label class="checkbox-inline">
                                         <input type="radio" ng-model="proyecto.a002estadoproyecto"
                                                required value="{{DEVUELTAREG}}" name="estadoProyecto" id="estadoProyecto">
-                                        Rechazado
+                                        Registro rechazado
                                     </label>
                                 </div>
                                  <span class="control-label"

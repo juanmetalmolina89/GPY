@@ -15,13 +15,15 @@ angular.module('politica.controllers', ['ngSanitize'])
                 $scope.pid = $routeParams.pid;
                 $scope.campoObligatorio = 'Campo obligatorio';
                 
+                $scope.muestraCampoSoporte = false;
+                
                 $scope.mensaje;
                 $scope.listaPoliticas = [];
                 $scope.politica = [];
 
                 $scope.politicasP  = [];
                 $scope.politicaPr = {};
-                
+                $scope.anexo = {};
                 $scope.model = {
                         isDisabled: false
                 };
@@ -148,7 +150,7 @@ angular.module('politica.controllers', ['ngSanitize'])
                 // manejo del formulario
                 // viene con parámetro cuando se invoca desde el botón de actualizar de la grilla
                 $scope.mostrarForm = function (estaPoliticaP) {				
-
+                   $scope.muestraCampoSoporte = false;
                    if (estaPoliticaP != undefined && estaPoliticaP != null) 
                    {
                              $scope.politicaPr.a059idproyecto = $scope.pid;
@@ -168,81 +170,120 @@ angular.module('politica.controllers', ['ngSanitize'])
 				
                 };
                 
+                
+                $scope.actualizar = function (OE) {
+                    politicaSrv.actualizarPoliticaNueva(OE)
+                        .then(function (response) {
+                            $scope.listar();
+                            comunSrv.mensajeSalida(response);
+                        }, function (error) {
+                            $scope.mensaje = error.data.respuesta;
+                            console.log($scope.mensaje);
+                        });
+                        $scope.mostrarForm(); 
+                }
                 $scope.guardar = function () {				
+                        $scope.idPadre = $scope.pid;
+                        if ($scope.politicaPr.a059codigo != undefined && $scope.politicaPr.a059codigo  != null) 
+                        {
+                            // update
+                            $scope.OE = new Object();
+                            $scope.OE.idUsuario = $scope.idUsuario;
+                            $scope.OE.politica = {};
+                            $scope.OE.politica.a059codigo= $scope.politicaPr.a059codigo;
+                            $scope.OE.politica.a059descripcion= $scope.politicaPr.a059descripcion;
+                            $scope.OE.politica.a059idproyecto = {"a002codigo":$scope.pid};
+                            
+                            $scope.OE.politica.a059idarchivo = {"a026codigo" : $scope.politicaPr.a059idarchivo.a026codigo};
+                            if($scope.anexo.adjunto) // actualizó el adjunto
+                            { 
+                                
+                                
+                                politicaAdjuntoSrv.registrarAdjunto($scope.idPadre, $scope.anexo.adjunto, $scope.idUsuario)
+                                .then(function (response) {
 
-                   if ($scope.politicaPr.a059codigo != undefined && $scope.politicaPr.a059codigo  != null) 
-                   {
-                        // update
-                        $scope.OE = new Object();
-                        $scope.OE.idUsuario = $scope.idUsuario;
-                        $scope.OE.politica = {};
-                        $scope.OE.politica.a059codigo= $scope.politicaPr.a059codigo;
-                        $scope.OE.politica.a059descripcion= $scope.politicaPr.a059descripcion;
-                        $scope.OE.politica.a059idproyecto = {"a002codigo":$scope.pid};
-                        
-                        politicaSrv.actualizarPoliticaNueva($scope.OE)
-                                .then(function (response) {
-                                    $scope.listar();
-                                    comunSrv.mensajeSalida(response);
+                                    $scope.OE.politica.a059idarchivo = {"a026codigo":response.data.respuesta[0].a026codigo};
+                                    $scope.actualizar($scope.OE);
+                                    $scope.anexo = {};
+                                    //location.reload();
                                 }, function (error) {
-                                    $scope.mensaje = error.data.respuesta;
-                                    console.log($scope.mensaje);
+                                    comunSrv.mensajeSalida(error);
                                 });
-                        $scope.mostrarForm();        
-                        //$scope.model.isDisabled = false;
-                     } 
-                     else 
-                     {
-                        // nuevo
-                        $scope.OE = new Object();
-                        $scope.OE.idUsuario = $scope.idUsuario;
-                        $scope.OE.politica = {};
-                        $scope.OE.politica.a059descripcion= $scope.politicaPr.a059descripcion;
-                        $scope.OE.politica.a059idproyecto = {"a002codigo":$scope.pid};
-                        
-                        politicaSrv.registrarPoliticaNueva($scope.OE)
-                                .then(function (response) {
-                                    $scope.idNuevaPolitica = response.data.respuesta[0].a059codigo;
+                                
+                                
+                                
+                                
+                                
+                            }
+                            else // no lo actualizó
+                            { 
+                                $scope.actualizar($scope.OE);
+                            }
                             
-                            
-                                    // hack para que permita subir el archivo:
-                                    // primero se inserta sin archivo, luego se obtiene el id de la política nueva, luego se sube el archivo y finalmente se actualiza la política con el id del archivo
                                     
-                                    $scope.idPadre = $scope.pid;
-                                    politicaAdjuntoSrv.registrarAdjunto($scope.idPadre, $scope.anexo.adjunto, $scope.idUsuario)
-                                    .then(function (response) {
-                                        
-                                        $scope.OE.politica.a059codigo= $scope.idNuevaPolitica;
-                                        $scope.OE.politica.a059idarchivo = {"a026codigo":response.data.respuesta[0].a026codigo};
-                                        politicaSrv.actualizarPoliticaNueva($scope.OE)
+                             //$scope.model.isDisabled = false;
+                        } 
+                        else 
+                        {
+                            if($scope.anexo.adjunto)
+                            {   
+                             
+                                // nuevo
+                                $scope.OE = new Object();
+                                $scope.OE.idUsuario = $scope.idUsuario;
+                                $scope.OE.politica = {};
+                                $scope.OE.politica.a059descripcion= $scope.politicaPr.a059descripcion;
+                                $scope.OE.politica.a059idproyecto = {"a002codigo":$scope.pid};
+
+                                politicaSrv.registrarPoliticaNueva($scope.OE)
                                         .then(function (response) {
-                                            $scope.anexo = {'adjunto': ''};
-                                            $scope.listar();
-                                            comunSrv.mensajeSalida(response);
+                                            $scope.idNuevaPolitica = response.data.respuesta[0].a059codigo;
+
+
+                                            // hack para que permita subir el archivo:
+                                            // primero se inserta sin archivo, luego se obtiene el id de la política nueva, luego se sube el archivo y finalmente se actualiza la política con el id del archivo
+
+                                            politicaAdjuntoSrv.registrarAdjunto($scope.idPadre, $scope.anexo.adjunto, $scope.idUsuario)
+                                            .then(function (response) {
+
+                                                $scope.OE.politica.a059codigo= $scope.idNuevaPolitica;
+                                                $scope.OE.politica.a059idarchivo = {"a026codigo":response.data.respuesta[0].a026codigo};
+                                                politicaSrv.actualizarPoliticaNueva($scope.OE)
+                                                .then(function (response) {
+                                                    $scope.anexo = {};
+                                                    $scope.politica={};
+                                                    $scope.listar();
+                                                    comunSrv.mensajeSalida(response);
+                                                }, function (error) {
+                                                    $scope.mensaje = error.data.respuesta;
+                                                    console.log($scope.mensaje);
+                                                });
+
+                                                //location.reload();
+                                            }, function (error) {
+                                                comunSrv.mensajeSalida(error);
+                                            });
+
+
+
+
+
                                         }, function (error) {
                                             $scope.mensaje = error.data.respuesta;
-                                            console.log($scope.mensaje);
+
                                         });
-                                        
-                                        //location.reload();
-                                    }, function (error) {
-                                        comunSrv.mensajeSalida(error);
-                                    });
-                                    
-                                    
-                                    
-                                    
 
-                                }, function (error) {
-                                    $scope.mensaje = error.data.respuesta;
-
-                                });
+                                $scope.mostrarForm();
+                                //$scope.model.isDisabled = false;
+                                return true;
+                            }    
+                            else
+                            {
+                              comunSrv.mensajeError("Debe adjuntar un archivo");  
+                            }
                         
-                        $scope.mostrarForm();
-                        //$scope.model.isDisabled = false;
-                        return true;
-                    }
-				
+                        }                   
+       
                 };
                 
                 $scope.consultarSoportePorId = function (archivo) {
@@ -261,6 +302,13 @@ angular.module('politica.controllers', ['ngSanitize'])
                     });
                 };
                 
+                $scope.mostrarCampoSoporte = function () {
+                    $scope.muestraCampoSoporte = true;
+                };
+
+                $scope.ocultarCampoSoporte = function () {
+                    $scope.muestraCampoSoporte = false;
+                };
                 
                 $scope.cancelar = function () {	
                     $scope.mostrarForm();

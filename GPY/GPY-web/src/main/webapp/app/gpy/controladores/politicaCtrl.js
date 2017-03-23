@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('politica.controllers', ['ngSanitize'])
-        .controller('politicaCtrl', ['$scope', '$routeParams', 'comunSrv', 'listadoSrv','politicaSrv','$filter', function ($scope, $routeParams, comunSrv, listadoSrv, politicaSrv, $filter) {
+        .controller('politicaCtrl', ['$scope', '$routeParams', 'comunSrv', 'listadoSrv','politicaSrv','$filter','politicaAdjuntoSrv', function ($scope, $routeParams, comunSrv, listadoSrv, politicaSrv, $filter,politicaAdjuntoSrv) {
 
                 console.log("Controller de politicas!!");
         
@@ -154,6 +154,9 @@ angular.module('politica.controllers', ['ngSanitize'])
                              $scope.politicaPr.a059idproyecto = $scope.pid;
                              $scope.politicaPr.a059descripcion = estaPoliticaP.a059descripcion;
                              $scope.politicaPr.a059codigo = estaPoliticaP.a059codigo;
+                             $scope.politicaPr.a059idarchivo = {};
+                             $scope.politicaPr.a059idarchivo.a026codigo = estaPoliticaP.a059idarchivo;
+                             $scope.politicaPr.a059idarchivo.a026rutarchivo = "Documento";
                              //$scope.model.isDisabled = false;
                      } 
                      else 
@@ -199,9 +202,36 @@ angular.module('politica.controllers', ['ngSanitize'])
                         
                         politicaSrv.registrarPoliticaNueva($scope.OE)
                                 .then(function (response) {
-                                    $scope.mensaje = 'Creada con éxito.';
-                                    comunSrv.mensajeSalida(response);
-                                    $scope.listar();
+                                    $scope.idNuevaPolitica = response.data.respuesta[0].a059codigo;
+                            
+                            
+                                    // hack para que permita subir el archivo:
+                                    // primero se inserta sin archivo, luego se obtiene el id de la política nueva, luego se sube el archivo y finalmente se actualiza la política con el id del archivo
+                                    
+                                    $scope.idPadre = $scope.pid;
+                                    politicaAdjuntoSrv.registrarAdjunto($scope.idPadre, $scope.anexo.adjunto, $scope.idUsuario)
+                                    .then(function (response) {
+                                        
+                                        $scope.OE.politica.a059codigo= $scope.idNuevaPolitica;
+                                        $scope.OE.politica.a059idarchivo = {"a026codigo":response.data.respuesta[0].a026codigo};
+                                        politicaSrv.actualizarPoliticaNueva($scope.OE)
+                                        .then(function (response) {
+                                            $scope.anexo = {'adjunto': ''};
+                                            $scope.listar();
+                                            comunSrv.mensajeSalida(response);
+                                        }, function (error) {
+                                            $scope.mensaje = error.data.respuesta;
+                                            console.log($scope.mensaje);
+                                        });
+                                        
+                                        //location.reload();
+                                    }, function (error) {
+                                        comunSrv.mensajeSalida(error);
+                                    });
+                                    
+                                    
+                                    
+                                    
 
                                 }, function (error) {
                                     $scope.mensaje = error.data.respuesta;
@@ -215,6 +245,21 @@ angular.module('politica.controllers', ['ngSanitize'])
 				
                 };
                 
+                $scope.consultarSoportePorId = function (archivo) {
+                    // ficasa: en MDL no se usa la librería de archivos. Se debe nificar con la que utilizan en aprobación nacional (aprobacionNacional.html)
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.a053codigo = parseInt($scope.pid);
+                    $scope.OE.a008idadjunto = parseInt(archivo.a026codigo);
+
+                    politicaSrv.consultarSoportePorId($scope.OE).then(function (response) {
+                        //Se llama método de utilería que descarga del archivo
+                        comunSrv.descargarArchivo(response);
+                        //comunSrv.mensajeSalida(response);
+                    }, function (error) {
+                        comunSrv.mensajeSalida(error);
+                    });
+                };
                 
                 
                 $scope.cancelar = function () {	

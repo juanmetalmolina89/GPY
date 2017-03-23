@@ -89,6 +89,33 @@
                                 <span class="control-label" ng-show="frmPoliticasNuevas.a059descripcion.$error.required"><strong>Requerido</strong></span>
                             </div>
                            
+                            
+                            
+                            <!-- Muestra campo para subida de soporte -->
+                            <div class="form-group" ng-show="!politicaPr.a059idarchivo.a026codigo">
+                                    <label class="col-md-4 control-label" for="adjunto">Anexo</label>
+                                    <div class="col-md-6">
+                                        <input type="file" class="form-control" id="adjunto" name="adjunto" placeholder="Anexo" ngf-select="" ngf-accept="'application/pdf'"
+                                               ng-model="anexo.adjunto" tabindex=14>
+                                    </div>
+                            </div>                
+
+                            <!-- Muestra soporte cargado -->
+                            <div class="form-group" ng-hide="!politicaPr.a059idarchivo.a026codigo">
+                                <label class="col-md-4 control-label" for="adjunto">Anexo</label>
+                                <div class="col-md-6" ng-show="!muestraCampoSoporte">
+                                    {{politicaPr.a059idarchivo.a026rutarchivo}} 
+                                    <a ng-click="consultarSoportePorId(politicaPr.a059idarchivo)" class="btn btn-primary" role="button">Ver pdf</a>
+                                    <a ng-click="mostrarCampoSoporte()" class="btn btn-primary" role="button" >Actualizar anexo</a>
+                                </div>
+                                <div class="col-md-6" ng-show="muestraCampoSoporte">
+                                    <a ng-click="ocultarCampoSoporte()" class="btn btn-primary" role="button" >Cancelar</a>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            
                             <!-- Guardar -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="btnGuardarPoliticaPr"></label>

@@ -224,7 +224,11 @@ public class PoliticaDAO extends GenericoDAO {
                     List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
                     //parametros.add(new SentenciaParametroDAO("p_A003CODIGO", objetoEntrada.getA003codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     parametros.add(new SentenciaParametroDAO("p_A059IDPROYECTO", objetoEntrada.getPolitica().getA059idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
-                    parametros.add(new SentenciaParametroDAO("p_A059IDARCHIVO", objetoEntrada.getPolitica().getA059idarchivo().getA026codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                    
+                    // Fernando: esto debe funcionar igual que el poder en representante legal
+                    // en ese caso: al insertar va sin adjunto, y después se actualiza
+                    //Integer a059idarchivo = (objetoEntrada.getPolitica().getA059idarchivo().getA026codigo() == null) ? null : objetoEntrada.getPolitica().getA059idarchivo().getA026codigo();
+                    //parametros.add(new SentenciaParametroDAO("p_A059IDARCHIVO", a059idarchivo, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                     parametros.add(new SentenciaParametroDAO("p_A059DESCRIPCION", objetoEntrada.getPolitica().getA059descripcion(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                     sentencia.setParametros(parametros);
                     objetoSalida = this.ejecutarX(sentencia, objetoSalida);

@@ -55,7 +55,26 @@ angular.module('politica.services')
 	        return $http.post( urlBase + '/listarPoliticaNueva', OE);
 	    };
             
+            datos.consultarSoportePorId = function (OE) {
+                    //return $http.post(urlBackEnd + 'representante' + '/consultarDocumento', OE, {responseType: 'arraybuffer'});
+                    return $http.post(urlBackEnd + 'representante' + '/consultarDocumento', OE);
+                };
+                
 	    return datos;
-	}]);
+	}])
+        .service('politicaAdjuntoSrv', ['Upload', function (Upload) {
 
+                var urlBase = urlBackEnd + 'politica';
+        
+                this.registrarAdjunto = function (idProyecto, adjunto, idUsuario) {
+                    return Upload.upload({
+                        method: 'POST',
+                        url: urlBase + '/registrarAdjuntarPolitica',
+                        data: {file: adjunto, 'idProyecto': idProyecto, 'idUsuario': idUsuario}
+                    });
+                };                          
+                
+
+            }]);
+;
 

@@ -129,9 +129,12 @@ angular.module('contacto.controllers', ['ngSanitize'])
                         //valida si la persona existe para enviar el id
                         personaSrv.consultarPersonaPorDocumento({"idUsuario": $scope.idUsuario, "a052numrdocmnt": $scope.contacto.a054idcontacto.a052numrdocmnt}).then(function (response) {
                             
-                            if (response.data.respuesta.lenght > 0)
-                                $scope.contacto.a054idcontacto = {"a052codigo": response.data.respuesta[0].a052codigo};
-                            
+                            if (response.data.respuesta.length > 0) 
+                            {
+                                $scope.contacto.a054idcontacto.a052codigo =  response.data.respuesta[0].a052codigo;
+                            }
+                                                            
+                                
                             $scope.contacto.a054idpersona = {"a052codigo": $scope.sesion.idpersona};
 
                             contactoSrv.registrarContacto($scope.OE)

@@ -290,10 +290,15 @@ angular.module('politica.controllers', ['ngSanitize'])
                     // ficasa: en MDL no se usa la librería de archivos. Se debe nificar con la que utilizan en aprobación nacional (aprobacionNacional.html)
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
-                    $scope.OE.a053codigo = parseInt($scope.pid);
-                    $scope.OE.a008idadjunto = parseInt(archivo.a026codigo);
+                    //$scope.OE.a053codigo = parseInt($scope.pid);
+                    //$scope.OE.a008idadjunto = parseInt(archivo.a026codigo);
+                    
+                    //$scope.OE.a005codigo = $scope.actividad.a005codigo;
+                    //$scope.OE.a026codigo = archivo.a026codigo;
+                    $scope.OE.a002idproyecto = $scope.pid;
+                    $scope.OE.filtro = "A026CODIGO=" + archivo.a026codigo;
 
-                    politicaSrv.consultarSoportePorId($scope.OE).then(function (response) {
+                    politicaSrv.consultarSoportePorFiltro($scope.OE).then(function (response) {
                         //Se llama método de utilería que descarga del archivo
                         comunSrv.descargarArchivo(response);
                         //comunSrv.mensajeSalida(response);

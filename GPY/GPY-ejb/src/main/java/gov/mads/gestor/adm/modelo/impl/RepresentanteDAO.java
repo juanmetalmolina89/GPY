@@ -46,13 +46,17 @@ public class RepresentanteDAO extends GenericoDAO {
             parametros.add(new SentenciaParametroDAO("p_A052NUMRDOCMNT", objetoEntrada.getRepresentante().getA053idrepresentante().getA052numrdocmnt(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A052LGREXPCNDOCMNT", objetoEntrada.getRepresentante().getA053idrepresentante().getA052lgrexpcndocmnt(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A052DIRCCNCORRSPNDNC", objetoEntrada.getRepresentante().getA053idrepresentante().getA052dirccncorrspndnc(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-            String a052digtchqu = (objetoEntrada.getRepresentante().getA053idrepresentante().getA052digtchqu() == null) ? null : objetoEntrada.getRepresentante().getA053idrepresentante().getA052digtchqu().toString();
+            String a052digtchqu = (objetoEntrada.getRepresentante().getA053idrepresentante().getA052digtchqu() == null) ? null : objetoEntrada.getRepresentante().getA053idrepresentante().getA052digtchqu().toString();            
             parametros.add(new SentenciaParametroDAO("p_A052DIGTCHQU", a052digtchqu, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             Integer a052loclzcn = (objetoEntrada.getRepresentante().getA053idrepresentante().getA052loclzcn() == null) ? null : objetoEntrada.getRepresentante().getA053idrepresentante().getA052loclzcn().getA020codigo();
             parametros.add(new SentenciaParametroDAO("p_A052LOCLZCN", a052loclzcn, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A052TELEFONO", objetoEntrada.getRepresentante().getA053idrepresentante().getA052telefono(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A052CELULAR", objetoEntrada.getRepresentante().getA053idrepresentante().getA052celular(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             parametros.add(new SentenciaParametroDAO("p_A052CORRELCTRNC", objetoEntrada.getRepresentante().getA053idrepresentante().getA052correlctrnc(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+            
+            Integer a052codigo = (objetoEntrada.getRepresentante().getA053idrepresentante().getA052codigo() == null) ? null : objetoEntrada.getRepresentante().getA053idrepresentante().getA052codigo();
+            parametros.add(new SentenciaParametroDAO("p_A052CODIGO", a052codigo, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));                      
+            
             Integer a052codgciiu = (objetoEntrada.getRepresentante().getA053idrepresentante().getA052digtchqu() == null) ? null : objetoEntrada.getRepresentante().getA053idrepresentante().getA052codgciiu().getA049codigo();
             parametros.add(new SentenciaParametroDAO("p_A052CODGCIIU", a052codgciiu, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
             Integer a052identidad = (objetoEntrada.getRepresentante().getA053idrepresentante().getA052identidad() == null) ? null : objetoEntrada.getRepresentante().getA053idrepresentante().getA052identidad().getA001codigo();

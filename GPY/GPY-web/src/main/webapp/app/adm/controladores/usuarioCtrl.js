@@ -67,12 +67,26 @@ angular.module('usuario.controllers', ['ngSanitize'])
                     $scope.OE.idUsuario = $scope.idUsuario;
 
                     $scope.usuario.a041username = 'GPY' + $scope.persona.a052numrdocmnt;
-                    $scope.usuario.a041clave = $scope.persona.a052numrdocmnt; /** @TODO cifrar */
-
+                    $scope.usuario.a041clave = $scope.persona.a052numrdocmnt; 
+                    
+                   
                     if ($scope.perteneceAA === false) {
                         $scope.persona.a052identidad = {};
                     }
-
+                   
+                    
+                    // si el usuario actual es una autoridad ambiental o una empresa, todos los usuarios que cree deben tener su autoridad ambiental.
+                    // El problema es que en el procedimiento almacenado toma la decisión del tipo de usuario basado en este campo.
+                    // Solución: 
+                    // en el SP consultar el usuario creador, y con base en su rol seleccionar el tipo de usuario nuevo, sin depender de la autoridad ambiental.
+                    /*
+                    if($scope.sesion.perfil == ADMINAA || $scope.sesion.perfil == GESTPROY)
+                    {
+                        $scope.filtro = $filter("filter")( $scope.autoridades, {'a001codigo':parseInt($scope.sesion.autoridadambiental)},true);
+                        $scope.persona.a052identidad = $scope.filtro[0];
+                    }
+                    */
+                   
                     $scope.OE.persona = $scope.persona;
                     $scope.OE.usuario = $scope.usuario;
 

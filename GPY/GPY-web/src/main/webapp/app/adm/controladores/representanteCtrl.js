@@ -17,7 +17,7 @@ angular.module('representante.controllers', ['ngSanitize'])
                 $scope.tiposRepresentante = [];
                 $scope.tiposDocu = [];
                 $scope.APODERADO = APODERADO;
-                $scope.poder = {'adjunto': ''};
+                $scope.poder = {};
                 $scope.muestraCampoSoporte = false;
 
                 /**************************************************************/
@@ -147,9 +147,7 @@ angular.module('representante.controllers', ['ngSanitize'])
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
                     $scope.OE.representante = $scope.representante;
-
-                    if ($scope.representante.a053idarchivo.a026codigo != '' || $scope.representante.a053idarchivo.a026codigo != '') {
-
+                                        
                         //Si ya existe lo actualiza, de lo contrario lo registra
                         if ($scope.representante.a053codigo !== undefined && $scope.representante.a053codigo !== null && $scope.representante.a053codigo !== '') {
 
@@ -157,7 +155,7 @@ angular.module('representante.controllers', ['ngSanitize'])
                             representanteSrv.actualizarRepresentante($scope.OE)
                                     .then(function (response) {
                                         comunSrv.mensajeSalida(response);
-                                        if($scope.poder.adjunto !== "")
+                                        if($scope.poder.adjunto)
                                         {
                                             $scope.adjuntarDocumento();
                                         }
@@ -168,33 +166,47 @@ angular.module('representante.controllers', ['ngSanitize'])
                                         comunSrv.mensajeSalida(error);
                                     });
                         } else {
-                            //valida si la persona existe para enviar el id
-                            personaSrv.consultarPersonaPorDocumento({"idUsuario": $scope.idUsuario, "a052numrdocmnt": $scope.representante.a053idrepresentante.a052numrdocmnt}).then(function (response) {
+                            
+                            if ($scope.poder.adjunto || $scope.representante.a053tiporepresentante.a102valorcorto=='RL') //$scope.representante.a053idarchivo.a026codigo != '' || $scope.representante.a053idarchivo.a026codigo != '') 
+                            {
+                        
+                                //valida si la persona existe para enviar el id
+                                personaSrv.consultarPersonaPorDocumento({"idUsuario": $scope.idUsuario, "a052numrdocmnt": $scope.representante.a053idrepresentante.a052numrdocmnt}).then(function (response) {
 
-                                if (response.data.respuesta.length > 0)
-                                    $scope.representante.a053idrepresentante = {"a052codigo": response.data.respuesta[0].a052codigo};
+                                    if (response.data.respuesta.length > 0)
+                                        $scope.representante.a053idrepresentante.a052codigo = response.data.respuesta[0].a052codigo;
 
-                                $scope.representante.a053idpersonajurd = {"a052codigo": $scope.sesion.idpersona};
-                                $scope.representante.a053idrepresentante.a052idtippersn = {"a102codigo": NATURAL};
+                                    $scope.representante.a053idpersonajurd = {"a052codigo": $scope.sesion.idpersona};
+                                    $scope.representante.a053idrepresentante.a052idtippersn = {"a102codigo": NATURAL};
 
-                                representanteSrv.registrarRepresentante($scope.OE)
-                                        .then(function (response) {
-                                            comunSrv.mensajeSalida(response);
-                                            $scope.representante.a053codigo = response.respuesta.a053codigo;
-                                            $scope.adjuntarDocumento();
-                                            $scope.muestraCampoSoporte = false;
-                                        }, function (error) {
-                                            comunSrv.mensajeSalida(error);
-                                        });
-                            }, function (error) {
-                                comunSrv.mensajeSalida(error);
-                            });
+                                    representanteSrv.registrarRepresentante($scope.OE)
+                                            .then(function (response) {
+                                                comunSrv.mensajeSalida(response);
+                                                $scope.representante.a053codigo = response.data.respuesta[0].a053codigo;
+                                                  if ($scope.representante.a053tiporepresentante.a102valorcorto!=='RL')
+                                                  {
+                                                      $scope.adjuntarDocumento();
+                                                  }
+                                                
+                                                
+                                                $scope.muestraCampoSoporte = false;
+                                            }, function (error) {
+                                                comunSrv.mensajeSalida(error);
+                                            });
+                                }, function (error) {
+                                    comunSrv.mensajeSalida(error);
+                                });                       
+                            } 
+                            else 
+                            { //else validación adjunto
+                                comunSrv.mensaje("Debe adjuntar el poder.", "error");
+                            }
+                            
+                            
+                            
                         }
 
-
-                    } else { //else validación adjunto
-                        comunSrv.mensaje("Debe adjuntar el poder.", "error");
-                    }
+                    
                     
                 };                
 
@@ -253,7 +265,7 @@ angular.module('representante.controllers', ['ngSanitize'])
 
                     RepAdjuntoSrv.registrarAdjunto($scope.representante.a053codigo, $scope.poder.adjunto, $scope.idUsuario)
                             .then(function (response) {
-                                $scope.poder = {'adjunto': ''};
+                                $scope.poder = {};
                                 comunSrv.mensajeSalida(response);
                                 location.reload();
                             }, function (error) {

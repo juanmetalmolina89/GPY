@@ -66,11 +66,13 @@ angular.module('actividad.controllers', ['ngSanitize'])
 
                 $scope.guardarActividad = function () {
                     console.log("geometria: " + $scope.a042geometriasitio);
-                    //valida que exista o haya elegido un adjunto
+                    //valida que exista o haya elegido un adjunto                   
+                    
+                     
                     if ($scope.actividad.a005idsoporte.a026codigo != '' || $scope.soporte.adjunto != '') {
                         //Valida que haya elegido geometria
-                        if ($scope.a042geometriasitio != '' ) {
-
+                        //if ($scope.a042geometriasitio != '' || $scope.pantalla == ACTIVIDADESPRE) { // ojo: en pre es opcional la geometria
+                        if ($scope.a042geometriasitio != '') {
                             //Empieza a armar el objeto de entrada
                             $scope.OE = new Object();
                             $scope.OE.idUsuario = $scope.idUsuario;
@@ -87,9 +89,17 @@ angular.module('actividad.controllers', ['ngSanitize'])
                             $scope.OE.actividad.a005idmtdcalcreduccbaseline = 1; // bloqueado por ahora
                             
                             $scope.OE.actividad.a005idtipactvdd = {"a022codigo": $scope.actividad.a005idtipactvdd.a022codigo}; //Sólo necesito el id (si envío el obj completo voy a tener problemas con el valor tipproyctmdl que se trae para mostrarse, pero no pertenece a la entidad como tal.                    
+                            
                             $scope.OE.geometria = $scope.geometria;
-                            $scope.OE.a042geometriasitio = $scope.a042geometriasitio;
-                            $scope.OE.a042geometriaintersec = $scope.a042geometriaintersec;
+                            if($scope.a042geometriasitio)
+                            {
+                                $scope.OE.a042geometriasitio = $scope.a042geometriasitio;
+                            }
+                            if($scope.a042geometriaintersec)
+                            {
+                                 $scope.OE.a042geometriaintersec = $scope.a042geometriaintersec;
+                            }
+                           
 
                             //Si ya existe lo actualiza, de lo contrario lo registra
                             if ($scope.actividad.a005codigo !== undefined && $scope.actividad.a005codigo !== null && $scope.actividad.a005codigo !== '') {
@@ -699,7 +709,8 @@ angular.module('actividad.controllers', ['ngSanitize'])
                                         }, 3000);
                                         //comunSrv.mensajeSalida(response);
                                     }, function (error) {
-                                        comunSrv.mensajeSalida(error);
+                                        //comunSrv.mensajeSalida(error);
+                                        console.log(error.data.respuesta);
                                     });
                         }
                     } catch (e) {

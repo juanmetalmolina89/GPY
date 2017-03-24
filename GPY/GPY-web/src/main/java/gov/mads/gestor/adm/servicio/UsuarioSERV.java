@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -116,24 +117,24 @@ public class UsuarioSERV {
      */
     @POST
     @Path("/redireccionarVital")
-    @Consumes({ MediaType.APPLICATION_XML,MediaType.TEXT_XML,MediaType.APPLICATION_XHTML_XML})
+    @Consumes({ MediaType.APPLICATION_FORM_URLENCODED})//MediaType.TEXT_PLAIN,MediaType.APPLICATION_XML,MediaType.TEXT_XML,MediaType.APPLICATION_XHTML_XML})
     @Produces({ MediaType.APPLICATION_JSON})
     @JWT
-    public Response redireccionarVital(UsuarioVitalOE OE) throws URISyntaxException, Exception {
+    public Response redireccionarVital(@FormParam("datos")String OE) throws URISyntaxException, Exception{//UsuarioVitalOE OE) throws URISyntaxException, Exception {
 
         UsuarioFAC fac = new UsuarioFAC();
-        ObjetoSalida objetoSalida = fac.validarUsuarioVital(OE);
-        if (objetoSalida.getRespuesta() == null || objetoSalida.getRespuesta().isEmpty()){
-            java.net.URI ubicacion = new java.net.URI("http://google.com");
-            return Response.seeOther(ubicacion).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
+        String objetoSalida = fac.validar(OE);
+        //if (objetoSalida.getRespuesta() == null || objetoSalida.getRespuesta().isEmpty()){
+          //  java.net.URI ubicacion = new java.net.URI("http://google.com");
+          //  return Response.seeOther(ubicacion).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
             //return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
-        }
-        else{
+        //}
+        //else{
             //return Response.status(Response.Status.OK).entity(objetoSalida).build();
             //return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(objetoSalida.getRespuesta().stream().findFirst().get().get("a041username").toString())).build();
-            java.net.URI ubicacion = new java.net.URI("http://132.255.20.182:8088/GPY-web/");
-            return Response.seeOther(ubicacion).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
-        }
+            java.net.URI ubicacion = new java.net.URI("http://132.255.20.182:8088/GPY-web/#/gpy");
+            return Response.seeOther(ubicacion).entity(objetoSalida).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
+        //}
         
     }
     
@@ -156,6 +157,28 @@ public class UsuarioSERV {
             return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.respuesta))).build();
             //return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
         }
+        
+    }
+    
+    @POST
+    @Path("/redireccionarVitalString")
+    @Consumes({ MediaType.APPLICATION_FORM_URLENCODED})
+    @Produces({ MediaType.APPLICATION_JSON})
+    @JWT
+    public Response redireccionarVitalE(@FormParam("datos")String OE) throws URISyntaxException, Exception {
+
+        UsuarioFAC fac = new UsuarioFAC();
+        String objetoSalida = fac.validar(OE);
+        java.net.URI ubicacion = new java.net.URI("http://google.com");
+        return Response.seeOther(ubicacion).entity(objetoSalida).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
+            //return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
+        /*}
+        else{
+            //return Response.status(Response.Status.OK).entity(objetoSalida).build();
+            //return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(objetoSalida.getRespuesta().stream().findFirst().get().get("a041username").toString())).build();
+            java.net.URI ubicacion = new java.net.URI("http://132.255.20.182:8088/GPY-web/");
+            return Response.seeOther(ubicacion).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
+        }*/
         
     }
 }

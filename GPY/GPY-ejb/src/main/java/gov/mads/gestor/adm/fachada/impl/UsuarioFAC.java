@@ -16,6 +16,13 @@ import gov.mads.gestor.adm.vista.ListarUsuarioOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOS;
 import gov.mads.gestor.comun.vista.UsuarioVitalOE;
+import java.io.StringReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.*;
+import org.xml.sax.*;
 /**
  *
  * @author juanmetalmolina
@@ -59,6 +66,10 @@ public class UsuarioFAC implements IUsuarioFAC {
         return AdmUsuarioDAO.validarUsuarioVital(OE);
     }
     
+    public ObjetoSalida ValidarCadena(String XML, UsuarioVitalOE OE){
+        System.out.println(XML);
+        return AdmUsuarioDAO.validarUsuarioVital(OE);
+    }
     /*public ObjetoSalida validarUsuarioVital(ValidarUsuarioVitalOE OE) {
         ValidarUsuarioOE OEE = new ValidarUsuarioOE();
         OEE.setUsername(OE.username);
@@ -79,5 +90,40 @@ public class UsuarioFAC implements IUsuarioFAC {
         OSS.msgError = OS.getMsgError();
         return OSS;
     }//*/
+    
+    public String validar(String xml){
+        
+        Node node;
+        try {
+            node = getAuthToken(xml);
+            System.out.println(node.getTextContent());
+        } catch (Exception ex) {
+            Logger.getLogger(UsuarioFAC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return xml;
+    }
+    
+    private Document generarXML(String xml){
+        
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
+        DocumentBuilder builder;  
+        Document document =  null; 
+        try  
+        {  
+            builder = factory.newDocumentBuilder();  
+            
+            document = builder.parse( new InputSource( new StringReader( xml ) ) );
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        } 
+        return document;
+    }
+    
+     private Node getAuthToken(String xml) throws Exception {
+        Document doc = generarXML(xml);
+        NodeList authTokenNodeList = doc.getElementsByTagName("Token");
+        return authTokenNodeList.item(0);
+    }
 }
 

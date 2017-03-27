@@ -9,6 +9,7 @@ import gov.mads.gestor.gpy.fachada.IPoliticaFAC;
 import gov.mads.gestor.gpy.modelo.impl.PoliticaDAO;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticasNuevasOE;
+import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPolOE;
 import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
@@ -26,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.MultivaluedMap;
@@ -71,6 +73,21 @@ public class PoliticaFAC implements IPoliticaFAC {
         
         public ObjetoSalida listarPoliticasProyecto(ListarPoliticasProyectoOE OE) {
                 return politicaDAO.listarPoliticasProyecto(OE);
+        }
+        
+        public File consultarAdjuntoPol(ConsultarAdjuntoPolOE OE){
+                ObjetoSalida objetoSalida = politicaDAO.consultarAdjuntoPol(OE);
+                File soporte = null;
+                if (objetoSalida.esRespuestaOperacionCorrecta()){
+                    String nombreAdjunto = "";
+                    String rutaAdjunto = obtenerRutaAdjuntoParametrica(1);
+                    for (HashMap<String, Object> item : objetoSalida.getRespuesta()) {
+                        nombreAdjunto = item.get("a026nomarchivo").toString();
+                        //rutaAdjunto = item.get("A014RUTAADJUNTO").toString();
+                    }
+                    soporte = new File(rutaAdjunto + File.separator + OE.getIdproyecto() + File.separator + nombreAdjunto);
+                }
+                return soporte;
         }
         
         public ObjetoSalida registrarAdjunto(MultipartFormDataInput OE){

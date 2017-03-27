@@ -2,6 +2,7 @@ package gov.mads.gestor.gpy.modelo;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticasNuevasOE;
+import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPolOE;
 import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
@@ -29,4 +30,5 @@ public interface IPoliticaDAO {
         ObjetoSalida actualizarPoliticaProy(ActualizarPoliticasNuevasOE OE);
         ObjetoSalida eliminarPoliticaProy(EliminarPoliticaNuevaOE OE);
         ObjetoSalida listarPoliticasProy(ListarPoliticasNuevasOE OE);
+        ObjetoSalida consultarAdjuntoPol(ConsultarAdjuntoPolOE OE);
 }

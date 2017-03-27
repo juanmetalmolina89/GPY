@@ -2,6 +2,7 @@ package gov.mads.gestor.gpy.fachada;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticasNuevasOE;
+import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPolOE;
 import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
@@ -9,6 +10,7 @@ import gov.mads.gestor.gpy.vista.ListarPoliticasNuevasOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasProyectoOE;
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaOE;
+import java.io.File;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 /**
@@ -28,4 +30,5 @@ public interface IPoliticaFAC {
         public ObjetoSalida actualizarPoliticaProy(ActualizarPoliticasNuevasOE OE);
         public ObjetoSalida eliminarPoliticaProy(EliminarPoliticaNuevaOE OE);
         public ObjetoSalida listarPoliticasProy(ListarPoliticasNuevasOE OE);
+        public File consultarAdjuntoPol(ConsultarAdjuntoPolOE  OE);
 }

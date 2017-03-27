@@ -45,7 +45,7 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                     $scope.OE = {};
                     $scope.OE.idUsuario = $scope.idUsuario;        
                     $scope.OE.a002codigo = $scope.pid;
-                    $scope.OE.estadoproyecto = nuevoEstado;
+                    $scope.OE.estadoproyecto = nuevoEstado; 
                     datosBasicosSrv.cambiarEstado($scope.OE)
                         .then(function (response) {
                             response.data.msgError = 'Se ha enviado la solicitud con éxito.';
@@ -61,7 +61,7 @@ angular.module('infoMDL.controllers', ['ngSanitize'])
                 $scope.registrarConsiderac = function () {
                     $scope.OE = {};
                     $scope.OE.idUsuario = $scope.idUsuario;
-                    $scope.OE.proyecto = {}; //$scope.proyecto;
+                    $scope.OE.proyecto = $scope.proyecto;
                     $scope.OE.proyecto.a002codigo = $scope.pid;
                     delete $scope.OE.proyecto.coddivipola; // para no tener que alterar todos los SP
                     infoMDLSrv.registrarConsiderac($scope.OE)

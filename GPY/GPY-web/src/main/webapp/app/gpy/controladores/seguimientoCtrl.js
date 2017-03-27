@@ -118,7 +118,7 @@ angular.module('seguimiento.controllers', ['ngSanitize'])
                 $scope.listarProcesosValidacion = function () {
                     $scope.OE = new Object();
                     $scope.OE.idUsuario = $scope.idUsuario;
-                    $scope.OE.categoria = TIPOINSTRUFINAN;
+                    $scope.OE.categoria = ESTADOPROCSVALIDA;
                     listadoSrv.listarParametros($scope.OE)
                             .then(function (response) {
                                 $scope.estadosPV = response.data.respuesta;

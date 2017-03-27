@@ -2,9 +2,9 @@
  * Autor: Yeimmy Lee
  */
 var ambiente = 'local';//local, desarrollo, pruebas, produccion
-//var ambiente = 'desarrollo';
+//var ambiente = 'desarrollo'; 
 
-var urlServidor = getUrlServidor();
+var urlServidor = getUrlServidor(); 
 var urlPuerto = urlServidor + ":8080/"; //  local
 //var urlPuerto = urlServidor + ":8088/"; // desarrollo
 var urlPrincipal = urlPuerto + "GPY-web/";
@@ -45,7 +45,7 @@ var NOMBREINDICADOR = 'NOMBREINDICADOR';
 var TIPOINDICADOR = 'TIPOINDICADOR';
 var NOMBREINDICADOR = 'NOMBREINDICADOR';
 var MTDCALCREDUCCBASELINE = 'MTDCALCREDUCCBASELINE';
-
+var ESTADOPROCSVALIDA = 'ESTADOPROCSVALIDA';
 
 /* TIPOS PERSONA */
 var NATURAL = 1;

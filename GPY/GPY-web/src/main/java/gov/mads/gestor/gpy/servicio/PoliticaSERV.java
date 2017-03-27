@@ -6,6 +6,7 @@ import gov.mads.gestor.comun.vista.ObjetoSalida;
 
 import gov.mads.gestor.comun.servicio.jwt.JWT;
 import gov.mads.gestor.comun.servicio.jwt.JWTFiltro;
+import gov.mads.gestor.gpy.fachada.impl.ActividadFAC;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -16,13 +17,16 @@ import javax.ws.rs.core.Response;
 import gov.mads.gestor.gpy.fachada.impl.PoliticaFAC;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ActualizarPoliticasNuevasOE;
+import gov.mads.gestor.gpy.vista.ConsultarAdjuntoPolOE;
 import gov.mads.gestor.gpy.vista.ConsultarPoliticaPorIdOE;
+import gov.mads.gestor.gpy.vista.ConsultarSoportePorIdOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.EliminarPoliticaOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasNuevasOE;
 import gov.mads.gestor.gpy.vista.ListarPoliticasProyectoOE;
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaNuevaOE;
 import gov.mads.gestor.gpy.vista.RegistrarPoliticaOE;
+import java.io.File;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 /**
  * REST Web Service
@@ -143,4 +147,31 @@ public class PoliticaSERV {
 		ObjetoSalida os = fac.listarPoliticasProy(objetoEntrada);
 		return API.retornarRespuesta(os);
 	}
+        
+        @POST
+	@Path("/consultarAdjunto")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces("application/pdf")
+	@JWT
+	public Response consultarAdjuntoPol(ConsultarAdjuntoPolOE objetoEntrada) {
+		/*ActividadFAC fac = new ActividadFAC();
+		ObjetoSalida os = fac.consultarSoportePorId(objetoEntrada);
+		return API.retornarRespuesta(os);*/
+                try {
+                    PoliticaFAC fac = new PoliticaFAC();
+                    File adjunto = fac.consultarAdjuntoPol(objetoEntrada);
+                    if (adjunto != null && adjunto.exists()) {
+                        Response.ResponseBuilder response = Response.ok(adjunto);
+                        response.header("Content-Disposition", "attachment; filename=" + adjunto.getName());
+                        return response.build();
+                    }
+                    else {
+                        return Response.status(Response.Status.FORBIDDEN).build();
+                    }
+                }catch(Exception ex){
+                        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                }
+
+	}
+
 }

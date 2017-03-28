@@ -56,10 +56,7 @@ angular.module('politica.services')
 	    };
             
             datos.consultarSoportePorFiltro = function (OE) {
-                    //return $http.post(urlBackEnd + 'representante' + '/consultarDocumento', OE, {responseType: 'arraybuffer'});
-                    //return $http.post(urlBackEnd + 'representante' + '/consultarDocumento', OE);
-                    //return $http.post(urlBackEnd + 'datosMdl' + '/consultarAdjuntoPorFiltro', OE);
-                    return $http.post(urlBase + '/consultarSoportePorFiltro', OE);
+                    return $http.post(urlBase + '/consultarAdjunto', OE);
                 };
                 
 	    return datos;

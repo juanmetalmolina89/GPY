@@ -81,6 +81,9 @@ public class AvanceProyecto implements Serializable {
     @Column(name = "A013FECHAVNCPROYCT")
     @Temporal(TemporalType.TIMESTAMP)
     private Date a013fechavncproyct;
+    @Size(max = 2)
+    @Column(name = "A013OPTAPAGORESULTADOS")
+    private String a013optapagoresultados;
     @Basic(optional = false)
     @NotNull
     @Column(name = "A013ESTADOREGISTRO")
@@ -96,7 +99,9 @@ public class AvanceProyecto implements Serializable {
     @Column(name = "A013USUARIOCREACION")
     private int a013usuariocreacion;
     @Column(name = "A013USUARIOMODIFICACION")
-    private Integer a013usuariomodificacion;
+    private Integer a013usuariomodificacion;    
+
+    
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "a014idavncproyct")
 //    private List<InstrmFinanAnio> instrmFinanAnioList;
     @JoinColumn(name = "A013IDPROYECTO", referencedColumnName = "A002CODIGO")
@@ -164,7 +169,15 @@ public class AvanceProyecto implements Serializable {
     public void setA013fechavncproyct(Date a013fechavncproyct) {
         this.a013fechavncproyct = a013fechavncproyct;
     }
+    
+    public String getA013optapagoresultados() {
+        return a013optapagoresultados;
+    }
 
+    public void setA013optapagoresultados(String a013optapagoresultados) {
+        this.a013optapagoresultados = a013optapagoresultados;
+    }
+    
     public Character getA013estadoregistro() {
         return a013estadoregistro;
     }

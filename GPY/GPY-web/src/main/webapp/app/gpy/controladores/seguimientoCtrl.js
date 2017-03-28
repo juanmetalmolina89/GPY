@@ -36,7 +36,12 @@ angular.module('seguimiento.controllers', ['ngSanitize'])
                         });
                 };
 
-                $scope.guardarInfoGeneral = function () {                    
+                $scope.guardarInfoGeneral = function () {
+                    if(!$scope.avance.a013fechavncproyct)
+                    {
+                        $scope.avance.a013fechavncproyct= new Date();
+                    }
+                    
                     if($scope.avance.a013codigo) // existe el id?
                     {
                         // si: es un update
@@ -65,6 +70,7 @@ angular.module('seguimiento.controllers', ['ngSanitize'])
                         $scope.OE.avanceproyecto = $scope.avance;
                         $scope.OE.avanceproyecto.a013idproyecto = {"a002codigo":$scope.pid};
                         $scope.OE.avanceproyecto.a013idarchv = {"a026codigo":1};
+                        
                         seguimientoSrv.registrarInfoGeneral($scope.OE)
                         .then(function (response) {
                            //$scope.mensaje = 'fuente actualizada con éxito.';
@@ -114,6 +120,19 @@ angular.module('seguimiento.controllers', ['ngSanitize'])
                             });
                 };
                 
+                
+                $scope.listarPeriodosAcreditacion = function () {
+                    $scope.OE = new Object();
+                    $scope.OE.idUsuario = $scope.idUsuario;
+                    $scope.OE.categoria = TIPOPERIODOACREDITA;
+                    listadoSrv.listarParametros($scope.OE)
+                            .then(function (response) {
+                                $scope.tiposPeriodo = response.data.respuesta;
+
+                            }, function (error) {
+                                comunSrv.mensajeSalida(error);
+                            });
+                };
                 
                 $scope.listarProcesosValidacion = function () {
                     $scope.OE = new Object();
@@ -258,7 +277,7 @@ angular.module('seguimiento.controllers', ['ngSanitize'])
                 $scope.consultarInfoGeneral();
                 $scope.listarTiposInstrumentos();
                 $scope.listarInstrumentosFinanciacion();
-                
+                $scope.listarPeriodosAcreditacion();
                 
                 //pegar este método para verificar cuándo se hayan subido correctamente los archivos.
                 $scope.$on('procesado', function(event, args) {

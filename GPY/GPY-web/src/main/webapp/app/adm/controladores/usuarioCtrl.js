@@ -27,6 +27,8 @@ angular.module('usuario.controllers', ['ngSanitize'])
                 $scope.NATURAL = NATURAL;
                 $scope.JURIDICA = JURIDICA;
                 
+                $scope.mostrarMensaje = false;
+                $scope.mensajeMostrado = "";
                 if($scope.sesion.perfil == ADMINAA)
                 {
                     $scope.perteneceAA = true;
@@ -91,8 +93,9 @@ angular.module('usuario.controllers', ['ngSanitize'])
                     $scope.OE.usuario = $scope.usuario;
 
                     usuarioSrv.registrarUsuario($scope.OE)
-                            .then(function (response) {
-                                response.data.msgError += ". Puede ingresar con el usuario " + $scope.usuario.a041username +" y la clave " + $scope.usuario.a041clave 
+                            .then(function (response) {                                
+                                $scope.mostrarMensaje = true;
+                                $scope.mensajeMostrado = "La nueva cuenta ha quedado activa con el usuario " + $scope.usuario.a041username +" y la clave " + $scope.usuario.a041clave + ". Se sugiere cambiar la clave cuando ingrese por primera vez.";
                                 comunSrv.mensajeSalida(response );
                                 $scope.usuario = new Object();
                                 $scope.persona = new Object();

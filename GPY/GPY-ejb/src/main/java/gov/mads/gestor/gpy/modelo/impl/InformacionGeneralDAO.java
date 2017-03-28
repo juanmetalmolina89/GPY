@@ -40,7 +40,8 @@ public class InformacionGeneralDAO extends GenericoDAO{
                         parametros.add(new SentenciaParametroDAO("p_A013COSTTONLD", objetoEntrada.getAvanceproyecto().getA013costtonld().longValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A013FINANCCN", objetoEntrada.getAvanceproyecto().getA013financcn(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                         java.sql.Date a013fechavncproyct = (objetoEntrada.getAvanceproyecto().getA013fechreprt() == null) ? null : new java.sql.Date(objetoEntrada.getAvanceproyecto().getA013fechavncproyct().getTime());
-                        parametros.add(new SentenciaParametroDAO("p_A013FECHAVNCPROYCT", a013fechavncproyct, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
+                        parametros.add(new SentenciaParametroDAO("p_A013FECHAVNCPROYCT", a013fechavncproyct, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));                        
+                        parametros.add(new SentenciaParametroDAO("p_A013OPTAPAGORESULTADOS", objetoEntrada.getAvanceproyecto().getA013optapagoresultados(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                         parametros.add(new SentenciaParametroDAO("p_A013IDPROYECTO", objetoEntrada.getAvanceproyecto().getA013idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A013EMISREDCXVERIFICAR", objetoEntrada.getAvanceproyecto().getA013emisredcxverificar(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A013EMISREDCVERIFICADAS", objetoEntrada.getAvanceproyecto().getA013emisredcverificadas(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
@@ -76,6 +77,7 @@ public class InformacionGeneralDAO extends GenericoDAO{
                         parametros.add(new SentenciaParametroDAO("p_A013FINANCCN", objetoEntrada.getAvanceproyecto().getA013financcn(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                         java.sql.Date a013fechavncproyct = (objetoEntrada.getAvanceproyecto().getA013fechreprt() == null) ? null : new java.sql.Date(objetoEntrada.getAvanceproyecto().getA013fechavncproyct().getTime());
                         parametros.add(new SentenciaParametroDAO("p_A013FECHAVNCPROYCT", a013fechavncproyct, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
+                        parametros.add(new SentenciaParametroDAO("p_A013OPTAPAGORESULTADOS", objetoEntrada.getAvanceproyecto().getA013optapagoresultados(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
                         parametros.add(new SentenciaParametroDAO("p_A013IDPROYECTO", objetoEntrada.getAvanceproyecto().getA013idproyecto().getA002codigo(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A013EMISREDCXVERIFICAR", objetoEntrada.getAvanceproyecto().getA013emisredcxverificar(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A013EMISREDCVERIFICADAS", objetoEntrada.getAvanceproyecto().getA013emisredcverificadas(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));

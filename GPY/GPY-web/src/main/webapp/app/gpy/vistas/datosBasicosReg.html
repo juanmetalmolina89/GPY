@@ -81,21 +81,27 @@
                                 <span class="control-label" ng-show="form.municipio.$error.required"><strong>Requerido</strong></span>
                             </div>
 
-                            <!-- Admite socios extrangeros -->
+                            <!-- Admite socios extranjeros -->
                             <div class="form-group">
                                 <label class="col-md-12">¿Alguna de las actividades del proyecto distinta a la de conservación del sistema de parques nacionales naturales, admite a socios o accionistas a gobiernos extranjeros, o constituye algún derecho al respecto? (artículo 2.2.2.1.10.3. del decreto 1076 de 2015)? </label>
                                 <div class="col-md-12"> 
                                     <label class="radio-inline">
-                                        <input type="radio" value="SI" ng-model="proyecto.a002socextrnjr">
+                                        <input type="radio" value="SI" id="a002socextrnjr" name="a002socextrnjr" ng-model="proyecto.a002socextrnjr">
                                         SI
                                     </label> 
                                     <label class="radio-inline">
-                                        <input type="radio" value="NO" ng-model="proyecto.a002socextrnjr">
+                                        <input type="radio" value="NO" id="a002socextrnjr" name="a002socextrnjr"  ng-model="proyecto.a002socextrnjr">
                                         NO
                                     </label>
                                 </div>
                             </div>
-
+                            
+                            <div class="form-group alert alert-warning" ng-show="proyecto.a002socextrnjr =='SI' " >
+                                <label class="col-md-12"><b> Atención: </b> NO es posible continuar  si alguna de las actividades del proyecto distinta a la de conservación del sistema de parques nacionales naturales, admite a socios o accionistas a gobiernos extranjeros, o constituye algún derecho al respecto (artículo 2.2.2.1.10.3. del decreto 1076 de 2015) </label>                                
+                            </div>
+                            
+                            
+                            
                             <!-- Descripción del proyecto / Iniciativa -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="descrpcinproyct">Descripción del proyecto / Iniciativa </label>
@@ -290,7 +296,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-8">
-                                    <button id="guardar" name="guardar" class="btn btn-primary" ng-click="guardarProyecto()" ng-disabled="form.$invalid">Guardar Proyecto</button>
+                                    <button id="guardar" name="guardar" class="btn btn-primary" ng-click="guardarProyecto()" ng-disabled="form.$invalid || proyecto.a002socextrnjr =='SI' ">Guardar Proyecto</button>
                                     <a ng-click="cancelar()" class="btn btn-primary" role="button">Cancelar</a>
                                 </div>
                             </div>

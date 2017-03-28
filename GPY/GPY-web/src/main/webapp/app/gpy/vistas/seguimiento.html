@@ -37,6 +37,18 @@
                                 <span class="control-label"
                                       ng-show="frmAvance.a013fechreprt.$error.required">{{campoObligatorio}}</span>
                             </div>
+                            
+                            <!-- MDL - tipo de periodo de acreditación  -->
+                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA" ng-class="{'has-error': !frmAvance.proyTipoPeriodoAcreditacion.$valid,'has-success': frmAvance.proyTipoPeriodoAcreditacion.$valid}">
+                                <label class="col-md-4 control-label" for="proyTipoPeriodoAcreditacion">Tipo de periodo de acreditación</label>
+                                <div class="col-md-4">
+                                    <select id="proyTipoPeriodoAcreditacion" name="proyTipoPeriodoAcreditacion" class="form-control" ng-model="proyecto.a002idtipperdacrdtcn" ng-required='tpid == MDL || tpid == MDL_POA'
+                                        ng-options="tipoPeriodo.a102codigo  as tipoPeriodo.a102valor for tipoPeriodo in tiposPeriodo track by tipoPeriodo.a102codigo" > 
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                                <span class="control-label" ng-show="frmAvance.proyTipoPeriodoAcreditacion.$error.required"><strong>Requerido</strong></span>
+                            </div>
 
                             <!-- El proyecto ha presentado cambios significativos? cuáles? -->
                             <!-- textarea opcional  -->
@@ -179,21 +191,16 @@
                                                         
                             <!-- Fecha de registro del proyecto ante la Junta Ejecutiva del MDL -->
                             <!--  solo para MDL y MDL-POA -->
-                            <!--  Según Julio, este campo debe desaparecer de aqui y ponerse en información general del proyecto -->
                             <div class="form-group" ng-class="{'has-error': !frmProyecto.a013fechavncproyct.$valid, 'has-success': frmProyecto.a013fechavncproyct.$valid}" ng-show="tpid == MDL || tpid == MDL_POA">
                                 <label class="col-md-4 control-label" for="a013fechavncproyct">Fecha de registro del proyecto ante la Junta Ejecutiva del MDL</label>
                                 <div class="col-md-5">
-                                    <input type="date" class="form-control" id="a013fechavncproyct" name="a013fechavncproyct" placeholder="aaaa-mm-dd" maxlength="10" required ng-model="avance.a013fechavncproyct">
+                                    <input type="date" class="form-control" id="a013fechavncproyct" name="a013fechavncproyct" placeholder="aaaa-mm-dd" maxlength="10"  ng-required='tpid == MDL || tpid == MDL_POA'  ng-model="avance.a013fechavncproyct">
                                 </div> 
                                 <span class="control-label"
                                       ng-show="frmProyecto.a013fechavncproyct.$error.required">{{campoObligatorio}}</span>
                             </div>
                             
-                            
-                            <!-- Tipo de periodo de acreditación del proyecto MDL -->
-                            <!--  solo para MDL y MDL-POA -->
-                            <!-- Informativo, se trae del Proyect0 Tabla GPYT_T002_PROYECTO , atributo A002IDTIPPERDACRDTCN y valor de la tabla PART_T102_LISTA-->
-                            {{traeTipoPeriodoAcreditacion()}}
+                           
                             
                             
                             <!-- Emisiones reducidas a espera de ser verificadas (ton CO2 eq) -->
@@ -208,22 +215,7 @@
                                 <span class="control-label"
                                       ng-show="frmProyecto.a013emisredcxverificar.$error.required">{{campoObligatorio}}</span>
                             </div>
-                            
-                            
-                            <!-- Ton reducidas disponibles para transar (ton CO2 eq) -->
-                            <!-- numérico -->
-                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013emisredcdispntransar.$valid, 'has-success': frmProyecto.a013emisredcdispntransar.$valid}">
-                                <label class="col-md-4 control-label" for="a013emisredcdispntransar"><font style="color: #a94442">*</font>Ton reducidas disponibles para transar (ton CO2 eq)</label>  
-                                <div class="col-md-4">
-                                    <input id="a013emisredcdispntransar" name="a013emisredcdispntransar" required
-                                           placeholder=""  ng-model="avance.a013emisredcdispntransar" maxlength="15" format="number"
-                                           class="form-control input-md" type="text">
-                                </div>
-                                <span class="control-label"
-                                      ng-show="frmProyecto.a013emisredcdispntransar.$error.required">{{campoObligatorio}}</span>
-                            </div>
-                            
-                            
+                             
                             <!-- Emisiones reducidas verificadas (ton CO2 eq) -->
                             <!-- numérico -->
                             <div class="form-group" ng-class="{'has-error': !frmProyecto.a013emisredcverificadas.$valid, 'has-success': frmProyecto.a013emisredcverificadas.$valid}">
@@ -237,6 +229,19 @@
                                       ng-show="frmProyecto.a013emisredcverificadas.$error.required">{{campoObligatorio}}</span>
                             </div>
                             
+                                                        
+                            <!-- Ton reducidas disponibles para transar (ton CO2 eq) -->
+                            <!-- numérico -->
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013emisredcdispntransar.$valid, 'has-success': frmProyecto.a013emisredcdispntransar.$valid}">
+                                <label class="col-md-4 control-label" for="a013emisredcdispntransar"><font style="color: #a94442">*</font>Ton reducidas disponibles para transar (ton CO2 eq)</label>  
+                                <div class="col-md-4">
+                                    <input id="a013emisredcdispntransar" name="a013emisredcdispntransar" required
+                                           placeholder=""  ng-model="avance.a013emisredcdispntransar" maxlength="15" format="number"
+                                           class="form-control input-md" type="text">
+                                </div>
+                                <span class="control-label"
+                                      ng-show="frmProyecto.a013emisredcdispntransar.$error.required">{{campoObligatorio}}</span>
+                            </div>                                                     
                             
                             <!-- Emisiones transadas / vendidas (ton CO2 eq) -->
                             <!-- numérico -->
@@ -260,7 +265,24 @@
                             <!---------------------------- CAMPOS DEL PROYECTO  -------------------------------->
                             <!---------------------------------------------------------------------------------->
                              
-                             
+                            <!-- Está optando a pagos por resultados?  -->
+                            <!-- SI / NO con radio -->
+                            <div class="form-group"  ng-class="{'has-error': !frmProyecto.a013optapagoresultados.$valid, 'has-success': frmProyecto.a013optapagoresultados.$valid}">
+                                <label class="col-md-4 control-label">Está optando a pagos por resultados?</label>
+                                <div class="col-md-4">
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="avance.a013optapagoresultados"
+                                               required value="SI" name="a013optapagoresultados" id="a013optapagoresultados">
+                                        Si
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="radio" ng-model="avance.a013optapagoresultados"
+                                               required value="NO" name="a013optapagoresultados" id="a013optapagoresultados">
+                                        No
+                                    </label>
+                                </div>
+                                <span class="control-label" ng-show="frmProyecto.a013optapagoresultados.$error.required"><strong>Requerido</strong></span>
+                            </div> 
                             
                             <!-- Está optando para venta de las emisiones reducidas en un mercado de carbono voluntario?  -->
                             <!-- SI / NO con radio -->
@@ -288,7 +310,7 @@
                                 <label class="col-md-4 control-label" for="proyEstandaresMVC">Estándar del mercado voluntario del carbono al que está optando</label>
                                 <div class="col-md-4">
                                     <select id="proyEstandaresMVC" name="proyEstandaresMVC" class="form-control" ng-model="proyecto.a002idestndrmercdvolntr" ng-required='tpid == MDL || tpid == MDL_POA'
-                                            ng-options="tipoEstandarMVC.a102codigo as tipoEstandarMVC.a102valor for tipoEstandarMVC in tiposEstandarMVC track by tipoEstandarMVC.a102codigo" required> 
+                                            ng-options="tipoEstandarMVC.a102codigo as tipoEstandarMVC.a102valor for tipoEstandarMVC in tiposEstandarMVC track by tipoEstandarMVC.a102codigo" > 
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>
@@ -334,7 +356,7 @@
                             <!-- Estado del proceso de validación ante el estándar al que aplica -->
                             <!-- Drop down -->
                             <!-- estado de proceso de Validación -->
-                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a002procsvaldcnec.$valid, 'has-success': frmProyecto.a002procsvaldcnec.$valid}">
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.proyEstadoProcesoValidacion.$valid, 'has-success': frmProyecto.proyEstadoProcesoValidacion.$valid}">
                                 <label class="col-md-4 control-label" for="proyEstadoProcesoValidacion">Estado del proceso de validación ante el estándar al que aplica</label>
                                 <div class="col-md-4">                  
                                     <select id="proyEstadoProcesoValidacion" name="proyEstadoProcesoValidacion" class="form-control" ng-model="proyecto.a002idestdprocsvaldcn"
@@ -356,7 +378,7 @@
                             <div class="form-group" ng-class="{'has-error': !frmProyecto.a013nrocpas.$valid, 'has-success': frmProyecto.a013nrocpas.$valid}" ng-show="tpid == MDL || tpid == MDL_POA">
                                 <label class="col-md-4 control-label" for="a013nrocpas"><font style="color: #a94442">*</font>Número de CPAs que se proyecta involucrar</label>  
                                 <div class="col-md-4">
-                                    <input id="a013emisredcxverificar" name="a013nrocpas" required
+                                    <input id="a013emisredcxverificar" name="a013nrocpas"  ng-required='tpid == MDL || tpid == MDL_POA' 
                                            placeholder=""  ng-model="avance.a013nrocpas" maxlength="2" format="number"
                                            class="form-control input-md" type="text">
                                 </div>
@@ -366,15 +388,15 @@
                             
                             <!-- Ha involucrado un nuevo CPA? -->
                             <!-- SI / NO con radio  -->
-                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013haynuevocpa.$valid, 'has-success': frmProyecto.a013haynuevocpa.$valid}">
+                            <div class="form-group" ng-class="{'has-error': !frmProyecto.a013haynuevocpa.$valid, 'has-success': frmProyecto.a013haynuevocpa.$valid}" ng-show="tpid == MDL || tpid == MDL_POA" >
                                 <label class="col-md-4 control-label" for="radios"><font style="color: #a94442">*</font> ¿Ha involucrado un nuevo CPA?</label>
                                 <div class="col-md-4"> 
                                     <label class="radio-inline" for="radios">
-                                        <input name="a013haynuevocpa" id="radios-0" value="SI"  type="radio" ng-model="avance.a013haynuevocpa" required>
+                                        <input name="a013haynuevocpa" id="radios-0" value="SI"  type="radio" ng-model="avance.a013haynuevocpa"  ng-required='tpid == MDL || tpid == MDL_POA'>
                                         SI
                                     </label> 
                                     <label class="radio-inline" for="radios2">
-                                        <input name="a013haynuevocpa" id="radios-1" value="NO" type="radio" checked="checked" ng-model="avance.a013haynuevocpa" required>
+                                        <input name="a013haynuevocpa" id="radios-1" value="NO" type="radio" ng-model="avance.a013haynuevocpa"   ng-required='tpid == MDL || tpid == MDL_POA'>
                                         NO
                                     </label>
                                 </div>
@@ -386,7 +408,7 @@
                             <!-- CPA asociados -->
                             <!-- solo MDL-POA, listar CPA asociados  -->
                             <div class="form-group" ng-show="avance.a013haynuevocpa == 'SI' " >
-                                <label class="col-md-4 control-label" for="proyEstadoProcesoValidacion"></label>                                
+                                <label class="col-md-4 control-label" ></label>                                
                                 <div class="col-md-4">
                                     <b>No olvide registrar su nuevo CPA en la fase de registro</b>
                                 </div>

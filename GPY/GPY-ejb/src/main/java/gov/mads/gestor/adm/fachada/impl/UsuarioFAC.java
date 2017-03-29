@@ -13,18 +13,18 @@ import gov.mads.gestor.adm.vista.CambiarContrasenaOE;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.adm.fachada.IUsuarioFAC;
 import gov.mads.gestor.adm.vista.ListarUsuarioOE;
+import gov.mads.gestor.adm.vista.OE_Autenticar;
+import gov.mads.gestor.adm.vista.OE_ConsultarFuncionarios;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOS;
 import gov.mads.gestor.comun.vista.UsuarioVitalOE;
 import java.io.StringReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.*;
-import org.xml.sax.*;
-/**
- *
+import java.io.StringWriter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
+/* *
  * @author juanmetalmolina
  */
 public class UsuarioFAC implements IUsuarioFAC {
@@ -91,39 +91,36 @@ public class UsuarioFAC implements IUsuarioFAC {
         return OSS;
     }//*/
     
-    public String validar(String xml){
-        
-        Node node;
-        try {
-            node = getAuthToken(xml);
-            System.out.println(node.getTextContent());
-        } catch (Exception ex) {
-            Logger.getLogger(UsuarioFAC.class.getName()).log(Level.SEVERE, null, ex);
+    public ObjetoSalida validar(String xml) throws JAXBException{
+        JAXBContext jc = JAXBContext.newInstance(UsuarioVitalOE.class);
+
+        StringReader reader = new StringReader(xml.replaceAll("&", ""));
+
+        Unmarshaller unmarshaller = jc.createUnmarshaller();
+        Object result = unmarshaller.unmarshal(reader);
+        UsuarioVitalOE user = null;
+        if(result instanceof UsuarioVitalOE) {
+            user = (UsuarioVitalOE) result;
         }
-        
-        return xml;
+        ValidarUsuarioOE OE = new ValidarUsuarioOE();
+        OE.setIdUsuario(0);
+        OE.setUsername(user.datosConexion.aliasUsuarioOrigen);
+        OE.setClave(user.datosConexion.aliasUsuarioDestino);
+        return AdmUsuarioDAO.validarUsuario(OE);
     }
     
-    private Document generarXML(String xml){
-        
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
-        DocumentBuilder builder;  
-        Document document =  null; 
-        try  
-        {  
-            builder = factory.newDocumentBuilder();  
-            
-            document = builder.parse( new InputSource( new StringReader( xml ) ) );
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        } 
-        return document;
+    public ObjetoSalida registrarUsuarioVital(OE_Autenticar OE){
+        ValidarUsuarioOE OEE = new ValidarUsuarioOE();
+        OEE.setIdUsuario(0);
+        OEE.setUsername(OE.aliasUsuario);
+        OEE.setClave(OE.clave);
+        return AdmUsuarioDAO.validarUsuario(OEE);
     }
     
-     private Node getAuthToken(String xml) throws Exception {
-        Document doc = generarXML(xml);
-        NodeList authTokenNodeList = doc.getElementsByTagName("Token");
-        return authTokenNodeList.item(0);
+    public ObjetoSalida listarUsuarioVital(OE_ConsultarFuncionarios OE){
+        ListarUsuarioOE OEE = new ListarUsuarioOE();
+        OEE.setIdUsuario(0);
+        return AdmUsuarioDAO.listarUsuario(OEE);
     }
 }
 

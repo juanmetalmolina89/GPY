@@ -12,6 +12,8 @@ import gov.mads.gestor.adm.vista.EliminarUsuarioOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioOE;
 import gov.mads.gestor.adm.vista.CambiarContrasenaOE;
 import gov.mads.gestor.adm.vista.ListarUsuarioOE;
+import gov.mads.gestor.adm.vista.OE_Autenticar;
+import gov.mads.gestor.adm.vista.OE_ConsultarFuncionarios;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOS;
 import gov.mads.gestor.comun.servicio.API;
@@ -23,6 +25,9 @@ import gov.mads.gestor.comun.vista.UsuarioVitalOE;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
 
 
 import javax.ws.rs.Consumes;
@@ -119,22 +124,19 @@ public class UsuarioSERV {
     @Path("/redireccionarVital")
     @Consumes({ MediaType.APPLICATION_FORM_URLENCODED})//MediaType.TEXT_PLAIN,MediaType.APPLICATION_XML,MediaType.TEXT_XML,MediaType.APPLICATION_XHTML_XML})
     @Produces({ MediaType.APPLICATION_JSON})
-    @JWT
     public Response redireccionarVital(@FormParam("datos")String OE) throws URISyntaxException, Exception{//UsuarioVitalOE OE) throws URISyntaxException, Exception {
 
         UsuarioFAC fac = new UsuarioFAC();
-        String objetoSalida = fac.validar(OE);
-        //if (objetoSalida.getRespuesta() == null || objetoSalida.getRespuesta().isEmpty()){
-          //  java.net.URI ubicacion = new java.net.URI("http://google.com");
-          //  return Response.seeOther(ubicacion).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
-            //return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
-        //}
-        //else{
-            //return Response.status(Response.Status.OK).entity(objetoSalida).build();
-            //return Response.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(objetoSalida.getRespuesta().stream().findFirst().get().get("a041username").toString())).build();
-            java.net.URI ubicacion = new java.net.URI("http://132.255.20.182:8088/GPY-web/#/gpy");
+        ObjetoSalida objetoSalida = fac.validar(OE);
+        if (objetoSalida.getRespuesta() == null || objetoSalida.getRespuesta().isEmpty()){
+           java.net.URI ubicacion = new java.net.URI("http://132.255.20.182:8088/GPY-web/#/gpy");
             return Response.seeOther(ubicacion).entity(objetoSalida).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
-        //}
+            //return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
+        }
+        else{
+            java.net.URI ubicacion = new java.net.URI("http://132.255.20.182:8088/GPY-web/#/gpy");
+            return Response.seeOther(ubicacion).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
+        }
         
     }
     
@@ -168,7 +170,7 @@ public class UsuarioSERV {
     public Response redireccionarVitalE(@FormParam("datos")String OE) throws URISyntaxException, Exception {
 
         UsuarioFAC fac = new UsuarioFAC();
-        String objetoSalida = fac.validar(OE);
+        ObjetoSalida objetoSalida = fac.validar(OE);
         java.net.URI ubicacion = new java.net.URI("http://google.com");
         return Response.seeOther(ubicacion).entity(objetoSalida).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
             //return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
@@ -180,5 +182,31 @@ public class UsuarioSERV {
             return Response.seeOther(ubicacion).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
         }*/
         
+    }
+    
+    @POST
+    @Path("/validarUsuarioVital")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces("application/json")
+    @WebMethod(operationName = "Autenticar")
+    @WebResult(name = "autenticar")
+    public Response autenticarVital(OE_Autenticar OE) {
+        
+        UsuarioFAC fac = new UsuarioFAC();
+        ObjetoSalida objetoSalida = fac.registrarUsuarioVital(OE);
+        return API.retornarRespuesta(objetoSalida);
+    }
+    
+    @POST
+    @Path("/consultarUsuarioVital")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces("application/json")
+    @WebMethod(operationName = "Autenticar")
+    @WebResult(name = "autenticar")
+    public Response consultarVital(OE_ConsultarFuncionarios OE) {
+        
+        UsuarioFAC fac = new UsuarioFAC();
+        ObjetoSalida objetoSalida = fac.listarUsuarioVital(OE);
+        return API.retornarRespuesta(objetoSalida);
     }
 }

@@ -40,4 +40,8 @@ public class OS_ConsultarFuncionarios {
     public void setCodigoError(Integer codigoError) {
         this.codigoError = codigoError;
     }
+
+    public Integer getCodigoError() {
+        return codigoError;
+    }
 }

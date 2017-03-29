@@ -14,6 +14,7 @@ import gov.mads.gestor.adm.vista.CambiarContrasenaOE;
 import gov.mads.gestor.adm.vista.ListarUsuarioOE;
 import gov.mads.gestor.adm.vista.OE_Autenticar;
 import gov.mads.gestor.adm.vista.OE_ConsultarFuncionarios;
+import gov.mads.gestor.adm.vista.OS_ConsultarFuncionarios;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOS;
 import gov.mads.gestor.comun.servicio.API;
@@ -201,12 +202,12 @@ public class UsuarioSERV {
     @Path("/consultarUsuarioVital")
     @Consumes(MediaType.TEXT_XML)
     @Produces("application/json")
-    @WebMethod(operationName = "Autenticar")
-    @WebResult(name = "autenticar")
+    @WebMethod(operationName = "consultarFuncionarios")
+    @WebResult(name = "consultarFuncionarios")
     public Response consultarVital(OE_ConsultarFuncionarios OE) {
         
         UsuarioFAC fac = new UsuarioFAC();
-        ObjetoSalida objetoSalida = fac.listarUsuarioVital(OE);
-        return API.retornarRespuesta(objetoSalida);
+        OS_ConsultarFuncionarios objetoSalida = fac.listarUsuarioVital(OE);
+        return API.retornarRespuestaVital(objetoSalida);
     }
 }

@@ -12,14 +12,19 @@ import gov.mads.gestor.adm.vista.ValidarUsuarioOE;
 import gov.mads.gestor.adm.vista.CambiarContrasenaOE;
 import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.adm.fachada.IUsuarioFAC;
+import gov.mads.gestor.adm.vista.Funcionario;
 import gov.mads.gestor.adm.vista.ListarUsuarioOE;
 import gov.mads.gestor.adm.vista.OE_Autenticar;
 import gov.mads.gestor.adm.vista.OE_ConsultarFuncionarios;
+import gov.mads.gestor.adm.vista.OS_ConsultarFuncionarios;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOS;
 import gov.mads.gestor.comun.vista.UsuarioVitalOE;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -117,10 +122,25 @@ public class UsuarioFAC implements IUsuarioFAC {
         return AdmUsuarioDAO.validarUsuario(OEE);
     }
     
-    public ObjetoSalida listarUsuarioVital(OE_ConsultarFuncionarios OE){
+    public OS_ConsultarFuncionarios listarUsuarioVital(OE_ConsultarFuncionarios OE){
         ListarUsuarioOE OEE = new ListarUsuarioOE();
         OEE.setIdUsuario(0);
-        return AdmUsuarioDAO.listarUsuario(OEE);
+        OS_ConsultarFuncionarios OS = new OS_ConsultarFuncionarios();
+        ObjetoSalida objetoSalida = AdmUsuarioDAO.listarUsuario(OEE); 
+        List<Funcionario> lista =  new ArrayList<Funcionario>();       
+        for (HashMap<String, Object> item : objetoSalida.getRespuesta()) {
+            Funcionario func = new Funcionario();
+            func.setAliasUsuario(item.get("a041username").toString());
+            func.setCodigoTipoIdentificacion(Integer.parseInt(item.get("a052tipdocmnt").toString()));
+            func.setDireccionCorreoElectronico("");
+            func.setIdentificacionPersona(item.get("a052numrdocmnt").toString());
+            func.setNombreFuncionario(item.get("a052nombre").toString() + " " + item.get("a052apellido").toString() );
+            lista.add(func);
+        }
+        OS.setFuncionarios(lista);
+        OS.setCodigoError(objetoSalida.getCodError().getValor());
+        OS.setMensajeError(objetoSalida.getMsgError());
+        return OS;
     }
 }
 

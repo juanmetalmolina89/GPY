@@ -11,6 +11,7 @@ import gov.mads.gestor.adm.vista.RegistrarUsuarioOE;
 import gov.mads.gestor.adm.vista.EliminarUsuarioOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioOE;
 import gov.mads.gestor.adm.vista. CambiarContrasenaOE;
+import gov.mads.gestor.adm.vista.ConsultarUsuarioEntidadOE;
 import gov.mads.gestor.adm.vista.ListarUsuarioOE;
 import gov.mads.gestor.comun.modelo.GenericoDAO;
 import gov.mads.gestor.comun.modelo.SentenciaDAO;
@@ -205,16 +206,16 @@ public class UsuarioDAO extends GenericoDAO {
         return objetoSalida;
     }
     
-    public ObjetoSalida validarUsuarioVital(UsuarioVitalOE objetoEntrada) {
+    public ObjetoSalida validarUsuarioSinPassword(ValidarUsuarioOE objetoEntrada) {
 
         ObjetoSalida objetoSalida = new ObjetoSalida();
 
         try {
 
-            SentenciaDAO sentencia = new SentenciaDAO("PK_ADM_USUARIO.Pr_ValidarUsuario", 1);
+            SentenciaDAO sentencia = new SentenciaDAO("PK_ADM_USUARIO.Pr_ConsultarUsrPrUsname", objetoEntrada.getIdUsuario());
             List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
-            parametros.add(new SentenciaParametroDAO("p_A041USERNAME", objetoEntrada.datosConexion.aliasUsuarioDestino, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
-            parametros.add(new SentenciaParametroDAO("p_A041CLAVE", objetoEntrada.datosConexion.aliasUsuarioOrigen, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+            parametros.add(new SentenciaParametroDAO("p_A041USERNAME", objetoEntrada.getUsername(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+            //parametros.add(new SentenciaParametroDAO("p_A041CLAVE", objetoEntrada.getClave(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             sentencia.setParametros(parametros);
             objetoSalida = this.ejecutar(sentencia, objetoSalida);
             ErrorClass.getMessage(objetoSalida,UsuarioDAO.class);
@@ -227,6 +228,28 @@ public class UsuarioDAO extends GenericoDAO {
 
         return objetoSalida;
     }
-    
+
+    public ObjetoSalida consultarUsuarioEntidad(ConsultarUsuarioEntidadOE objetoEntrada) {
+
+        ObjetoSalida objetoSalida = new ObjetoSalida();
+
+        try {
+
+            SentenciaDAO sentencia = new SentenciaDAO("PK_ADM_USUARIO.Pr_ConsultarUsrsEntidad", objetoEntrada.getIdUsuario());
+            List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+            parametros.add(new SentenciaParametroDAO("p_A041SIGLA", objetoEntrada.getFiltro(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+            //parametros.add(new SentenciaParametroDAO("p_A041CLAVE", objetoEntrada.getClave(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+            sentencia.setParametros(parametros);
+            objetoSalida = this.ejecutar(sentencia, objetoSalida);
+            ErrorClass.getMessage(objetoSalida,UsuarioDAO.class);
+        } catch (Exception e) {
+
+            objetoSalida.setCodError(CodError.ERROR_INTERNO);
+            objetoSalida.setMsgError(e.getMessage());
+            ErrorClass.getMessage(objetoSalida,UsuarioDAO.class);
+        }
+
+        return objetoSalida;
+    }
 } 
 

@@ -14,6 +14,7 @@ import gov.mads.gestor.adm.vista.CambiarContrasenaOE;
 import gov.mads.gestor.adm.vista.ListarUsuarioOE;
 import gov.mads.gestor.adm.vista.OE_Autenticar;
 import gov.mads.gestor.adm.vista.OE_ConsultarFuncionarios;
+import gov.mads.gestor.adm.vista.OS_Autenticar;
 import gov.mads.gestor.adm.vista.OS_ConsultarFuncionarios;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOE;
 import gov.mads.gestor.adm.vista.ValidarUsuarioVitalOS;
@@ -194,8 +195,8 @@ public class UsuarioSERV {
     public Response autenticarVital(OE_Autenticar OE) {
         
         UsuarioFAC fac = new UsuarioFAC();
-        ObjetoSalida objetoSalida = fac.registrarUsuarioVital(OE);
-        return API.retornarRespuesta(objetoSalida);
+        OS_Autenticar objetoSalida = fac.registrarUsuarioVital(OE);
+        return API.retornarRespuestaVital(objetoSalida);
     }
     
     @POST

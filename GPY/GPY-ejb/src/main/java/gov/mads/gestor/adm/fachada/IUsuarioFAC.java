@@ -25,7 +25,4 @@ public interface IUsuarioFAC {
     public ObjetoSalida listarUsuario(ListarUsuarioOE OE);
     public ObjetoSalida validarUsuario(ValidarUsuarioOE OE);
     public ObjetoSalida cambiarContrasena(CambiarContrasenaOE OE);
-    public ObjetoSalida validarUsuarioVital(UsuarioVitalOE OE);
-    //public ObjetoSalida validarUsuarioVital(ValidarUsuarioVitalOE OE);
-    public ValidarUsuarioVitalOS validarUsuarioVital(ValidarUsuarioVitalOE OE);
 }

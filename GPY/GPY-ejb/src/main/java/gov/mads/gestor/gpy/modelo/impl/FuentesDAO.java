@@ -36,6 +36,7 @@ public class FuentesDAO extends GenericoDAO {
                         Integer a038iddesgrcatipcc = (objetoEntrada.getFuente().getA038iddesgrcatipcc() == null) ? null : objetoEntrada.getFuente().getA038iddesgrcatipcc().getA048codigo();
                         parametros.add(new SentenciaParametroDAO("p_A038IDDESGRCATIPCC", a038iddesgrcatipcc, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			parametros.add(new SentenciaParametroDAO("p_A038FACTOREMISION", objetoEntrada.getFuente().getA038factoremision().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A038IDUNIDAD", objetoEntrada.getFuente().getA038idunidad(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,FuentesDAO.class);
@@ -61,6 +62,7 @@ public class FuentesDAO extends GenericoDAO {
 			Integer a038iddesgrcatipcc = (objetoEntrada.getFuente().getA038iddesgrcatipcc() == null) ? null : objetoEntrada.getFuente().getA038iddesgrcatipcc().getA048codigo();
                         parametros.add(new SentenciaParametroDAO("p_A038IDDESGRCATIPCC", a038iddesgrcatipcc, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
                         parametros.add(new SentenciaParametroDAO("p_A038FACTOREMISION", objetoEntrada.getFuente().getA038factoremision().floatValue(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
+                        parametros.add(new SentenciaParametroDAO("p_A038IDUNIDAD", objetoEntrada.getFuente().getA038idunidad(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.NUMBER));
 			sentencia.setParametros(parametros);
 			objetoSalida = this.ejecutarX(sentencia, objetoSalida);
                         ErrorClass.getMessage(objetoSalida,FuentesDAO.class);

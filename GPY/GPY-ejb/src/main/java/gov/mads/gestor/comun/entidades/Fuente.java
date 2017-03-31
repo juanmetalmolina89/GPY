@@ -65,6 +65,8 @@ public class Fuente implements Serializable {
     @NotNull
     @Column(name = "A038FACTOREMISION")
     private BigDecimal a038factoremision;
+    @Column(name = "A038IDUNIDAD")
+    private Integer a038idunidad;
     @Basic(optional = false)
     @NotNull
     @Column(name = "A038ESTADOREGISTRO")
@@ -92,12 +94,13 @@ public class Fuente implements Serializable {
         this.a038codigo = a038codigo;
     }
 
-    public Fuente(Integer a038codigo, String a038nombrfunt, BigDecimal a038factoremision, Character a038estadoregistro, int a038usuariocreacion) {
+    public Fuente(Integer a038codigo, String a038nombrfunt, BigDecimal a038factoremision, int a038idunidad, Character a038estadoregistro, int a038usuariocreacion) {
         this.a038codigo = a038codigo;
         this.a038nombrfunt = a038nombrfunt;
         this.a038factoremision = a038factoremision;
+        this.a038idunidad = a038idunidad;
         this.a038estadoregistro = a038estadoregistro;
-        this.a038usuariocreacion = a038usuariocreacion;
+        this.a038usuariocreacion = a038usuariocreacion;        
     }
 
     public Integer getA038codigo() {
@@ -108,6 +111,14 @@ public class Fuente implements Serializable {
         this.a038codigo = a038codigo;
     }
 
+    public Integer getA038idunidad() {
+        return a038idunidad;
+    }
+
+    public void setA038idunidad(Integer a038idunidad) {
+        this.a038idunidad = a038idunidad;
+    }
+    
     public String getA038nombrfunt() {
         return a038nombrfunt;
     }

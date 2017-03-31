@@ -1,12 +1,12 @@
 /* 
  * Autor: Yeimmy Lee
  */
-var ambiente = 'local';//local, desarrollo, pruebas, produccion
-//var ambiente = 'desarrollo'; 
+//var ambiente = 'local';//local, desarrollo, pruebas, produccion
+var ambiente = 'desarrollo'; 
 
 var urlServidor = getUrlServidor(); 
-var urlPuerto = urlServidor + ":8080/"; //  local
-//var urlPuerto = urlServidor + ":8088/"; // desarrollo
+//var urlPuerto = urlServidor + ":8080/"; //  local
+var urlPuerto = urlServidor + ":8088/"; // desarrollo
 var urlPrincipal = urlPuerto + "GPY-web/";
 var urlBackEnd = urlPrincipal + "servicios/"; 
 
@@ -46,6 +46,7 @@ var TIPOINDICADOR = 'TIPOINDICADOR';
 var NOMBREINDICADOR = 'NOMBREINDICADOR';
 var MTDCALCREDUCCBASELINE = 'MTDCALCREDUCCBASELINE';
 var ESTADOPROCSVALIDA = 'ESTADOPROCSVALIDA';
+var UNIDADFUENTE = 'UNIDADFUENTE';
 
 /* TIPOS PERSONA */
 var NATURAL = 1;

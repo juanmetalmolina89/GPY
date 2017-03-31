@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('fuente.controllers', ['ngSanitize'])
-    .controller('fuenteCtrl', ['$scope', 'fuenteSrv', '$routeParams', 'listadoSrv', '$q', '$filter' , '$http' , function ($scope, fuenteSrv, $routeParams, listadoSrv, $q, $filter, $http) {
+    .controller('fuenteCtrl', ['$scope', 'fuenteSrv', '$routeParams', 'listadoSrv', '$q', '$filter' , '$http','comunSrv' , function ($scope, fuenteSrv, $routeParams, listadoSrv, $q, $filter, $http, comunSrv) {
 
         $scope.mensaje;
         $scope.fuentes = [];
@@ -15,6 +15,7 @@ angular.module('fuente.controllers', ['ngSanitize'])
         $scope.categorias = [];
         $scope.subcategorias = [];
         $scope.desagregaciones = []; 
+        $scope.unidades = []; 
 
         $scope.fuente = new Object();
         $scope.fuente.a038idproyecto = $scope.pid;
@@ -24,7 +25,7 @@ angular.module('fuente.controllers', ['ngSanitize'])
         $scope.fuente.a046codigo = ""; // categoría
         $scope.fuente.a047codigo = ""; // subCategoría
         $scope.fuente.a048codigo = ""; // desagregación, aunque también debe venir el en objeto de la lista como a038iddesgrcatipcc			
-
+        $scope.fuente.a038idunidad = "";
 
         $scope.muestraForm = true;
         $scope.muestraFormFuentes = false;           
@@ -61,6 +62,8 @@ angular.module('fuente.controllers', ['ngSanitize'])
             fuenteSrv.borrar($scope.OE)
                     .then(function (response) {
                         $scope.mensaje = 'Borrado con éxito.';
+                        comunSrv.mensajeSalida(response);
+                        $scope.fuente=[];
                         console.log($scope.mensaje);
                         $scope.listar();
                         $scope.listarSectorIPCC();
@@ -87,7 +90,7 @@ angular.module('fuente.controllers', ['ngSanitize'])
                     $scope.fuente.a038nombrfunt = estaFuente.a038nombrfunt;
                     $scope.fuente.a038iddesgrcatipcc = estaFuente.a038iddesgrcatipcc;
                     $scope.fuente.a038factoremision = estaFuente.a038factoremision;
-                    
+                    $scope.fuente.a038idunidad = estaFuente.a038idunidad;
                     // puebla automaticamente los sectores y posiciona el que estaba almacenado
                     $scope.listarSectorIPCC()
                         .then(function () {
@@ -132,6 +135,7 @@ angular.module('fuente.controllers', ['ngSanitize'])
                  $scope.fuente.a038nombrfunt = "";
                  $scope.fuente.a038iddesgrcatipcc = "";
                  $scope.fuente.a038factoremision = "";						
+                 $scope.fuente.a038idunidad = "";	
             }
 
         };
@@ -147,6 +151,7 @@ angular.module('fuente.controllers', ['ngSanitize'])
                     $scope.OE.fuente.a038nombrfunt = $scope.fuente.a038nombrfunt;
                     $scope.OE.fuente.a038iddesgrcatipcc = {"a048codigo":$scope.fuente.a048codigo};
                     $scope.OE.fuente.a038factoremision = parseFloat($scope.fuente.a038factoremision);
+                    $scope.OE.fuente.a038idunidad = $scope.fuente.a038idunidad;
                     
                     if($scope.fuente.a038codigo !== undefined && $scope.fuente.a038codigo !== null)
                     {
@@ -155,6 +160,7 @@ angular.module('fuente.controllers', ['ngSanitize'])
                         fuenteSrv.actualizar($scope.OE)
                             .then(function (response) {
                                     $scope.mensaje = 'fuente actualizada con éxito.';
+                                    comunSrv.mensajeSalida(response);
                                     $scope.fuente=[];
                                     $scope.listar();
                                     console.log($scope.mensaje);
@@ -169,6 +175,7 @@ angular.module('fuente.controllers', ['ngSanitize'])
                         fuenteSrv.insertar($scope.OE)
                                 .then(function (response) {
                                         $scope.mensaje = 'fuente insertada con éxito.';
+                                        comunSrv.mensajeSalida(response);
                                         $scope.fuente=[];
                                         $scope.listar();
                                         console.log($scope.mensaje);
@@ -388,9 +395,22 @@ angular.module('fuente.controllers', ['ngSanitize'])
             return def.promise;                    
         };
 
+                       
+        $scope.listarUnidades = function () {
+            $scope.OE = new Object();
+            $scope.OE.idUsuario = $scope.idUsuario;
+            $scope.OE.categoria = UNIDADFUENTE;
+            listadoSrv.listarParametros($scope.OE)
+                    .then(function (response) {
+                        $scope.unidades = response.data.respuesta;
+                    }, function (error) {
+                        comunSrv.mensajeSalida(error);
+                    });
+        };
 
         $scope.listar();
         $scope.listarSectorIPCC();
+        $scope.listarUnidades();
 
     }]);
 

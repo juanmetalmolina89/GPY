@@ -109,7 +109,16 @@
                                 </div>
 				<span class="control-label" ng-show="frmFuentes.a038factoremision.$error.pattern"><strong>Formato incorrecto</strong></span>
                             </div>
-							
+			
+                              <!-- unidad de medida -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="a038idunidad">Unidad</label>
+                                <div class="col-md-4">
+                                    <select id="a038idunidad" name="a038idunidad" class="form-control" ng-model="fuente.a038idunidad"  ng-options="unidad.a102codigo as unidad.a102valor for unidad in unidades">
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <!-- Guardar -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="button1id"></label>

@@ -11,7 +11,7 @@ angular.module('usuario.controllers', ['ngSanitize'])
                 $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();
                 $scope.idUsuario = $scope.sesion.sub;
 
-                if ($scope.sesion.perfil == INVITADO || $scope.sesion.perfil == PUBLICADOR || $scope.sesion.perfil == GESTPROY ) {
+                if ($scope.sesion.perfil == INVITADO || $scope.sesion.perfil == PUBLICADOR ) {
                     comunSrv.mensaje("Está intentando ingresar a una opción no permitida", "info");
                     $location.path('/gpy');
                 }
@@ -29,16 +29,18 @@ angular.module('usuario.controllers', ['ngSanitize'])
                 
                 $scope.mostrarMensaje = false;
                 $scope.mensajeMostrado = "";
-                if($scope.sesion.perfil == ADMINAA)
+                
+                $scope.persona.a052identidad = {};
+                if($scope.sesion.perfil !== FUNCMADS)
                 {
-                    $scope.perteneceAA = true;
-                    $scope.terminos = true;                    
-                    $scope.bloqueado = true;
+                    $scope.perteneceAA = false;
+                    $scope.terminos = false;                    
+                    $scope.bloqueado = true;                    
                 }
                 else
                 {
-                    $scope.perteneceAA = false;
-                    $scope.terminos = false;  
+                    $scope.perteneceAA = true;
+                    $scope.terminos = true;  
                     $scope.bloqueado = false;
                 }
                 
@@ -52,7 +54,7 @@ angular.module('usuario.controllers', ['ngSanitize'])
                     }
                     else
                     {
-                        if(($scope.sesion.perfil == ADMINAA) || ($scope.sesion.perfil == FUNCMADS))
+                        if($scope.sesion.perfil == FUNCMADS)
                         {                 
                             $scope.bloqueado = false;
                         }

@@ -131,12 +131,12 @@ public class UsuarioSERV {
         UsuarioFAC fac = new UsuarioFAC();
         ObjetoSalida objetoSalida = fac.validar(OE);
         if (objetoSalida.getRespuesta() == null || objetoSalida.getRespuesta().isEmpty()){
-           java.net.URI ubicacion = new java.net.URI("http://132.255.20.182:8088/GPY-web/#/gpy");
+           java.net.URI ubicacion = new java.net.URI("../#/gpy");
             return Response.seeOther(ubicacion).entity(objetoSalida).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
             //return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
         }
         else{
-            java.net.URI ubicacion = new java.net.URI("http://132.255.20.182:8088/GPY-web/#/gpy");
+            java.net.URI ubicacion = new java.net.URI("../#/gpy");
             return Response.seeOther(ubicacion).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
         }
         

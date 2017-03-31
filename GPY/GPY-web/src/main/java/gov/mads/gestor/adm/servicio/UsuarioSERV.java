@@ -23,6 +23,8 @@ import gov.mads.gestor.comun.vista.ObjetoSalida;
 import gov.mads.gestor.comun.servicio.jwt.JWT;
 import gov.mads.gestor.comun.servicio.jwt.JWTFiltro;
 import static gov.mads.gestor.comun.servicio.jwt.JWTFiltro.JWT_HEADER_TOKEN;
+import gov.mads.gestor.comun.vista.CodError;
+import gov.mads.gestor.comun.vista.ObjetoEntrada;
 import gov.mads.gestor.comun.vista.UsuarioVitalOE;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
@@ -192,15 +194,23 @@ public class UsuarioSERV {
     @Produces("application/json")
     @WebMethod(operationName = "Autenticar")
     @WebResult(name = "autenticar")
-    public Response autenticarVital(OE_Autenticar OE) {
+    public Response autenticarVital(OE_Autenticar OE) throws Exception {
         
         UsuarioFAC fac = new UsuarioFAC();
-        OS_Autenticar objetoSalida = fac.registrarUsuarioVital(OE);
-        return API.retornarRespuestaVital(objetoSalida);
+        ObjetoSalida objetoSalida = fac.registrarUsuarioVital(OE);
+        OS_Autenticar OS = new OS_Autenticar();
+        OS.setCodigoError(objetoSalida.getCodError().getValor());
+        OS.setMensajeError(objetoSalida.getMsgError());
+        
+        if (objetoSalida.getRespuesta() == null || objetoSalida.getRespuesta().isEmpty()){
+            return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
+        }else{
+            return Response.status(Response.Status.OK).entity(OS).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
+        }
     }
     
     @POST
-    @Path("/consultarUsuarioVital")
+    @Path("/consultarUsuariosxentidad")
     @Consumes(MediaType.TEXT_XML)
     @Produces("application/json")
     @WebMethod(operationName = "consultarFuncionarios")

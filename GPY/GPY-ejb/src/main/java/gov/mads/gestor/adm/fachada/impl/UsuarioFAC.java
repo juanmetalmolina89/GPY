@@ -127,27 +127,26 @@ public class UsuarioFAC implements IUsuarioFAC {
         return AdmUsuarioDAO.validarUsuarioSinPassword(OE);
     }
     
-    public OS_Autenticar registrarUsuarioVital(OE_Autenticar OE){
+    public ObjetoSalida registrarUsuarioVital(OE_Autenticar OE){
         ValidarUsuarioOE OEE = new ValidarUsuarioOE();
         OEE.setIdUsuario(0);
         OEE.setUsername(OE.aliasUsuario);
         OEE.setClave(OE.clave);
-        OS_Autenticar OS = new OS_Autenticar();
-        ObjetoSalida objetoSalida = AdmUsuarioDAO.validarUsuario(OEE); 
-        OS.setCodigoError(objetoSalida.getCodError().getValor());
-        OS.setMensajeError(objetoSalida.getMsgError());
         
-        return OS;
+        ObjetoSalida objetoSalida = AdmUsuarioDAO.validarUsuario(OEE); 
+        
+        return objetoSalida;
     }
     
     public OS_ConsultarFuncionarios listarUsuarioVital(OE_ConsultarFuncionarios OE){
-        ListarUsuarioOE OEE = new ListarUsuarioOE();
+        //ListarUsuarioOE OEE = new ListarUsuarioOE();
         ConsultarUsuarioEntidadOE OEES = new ConsultarUsuarioEntidadOE();
-        OEE.setIdUsuario(0);
+        //OEE.setIdUsuario(0);
         OS_ConsultarFuncionarios OS = new OS_ConsultarFuncionarios();
-        ObjetoSalida objetoSalida = AdmUsuarioDAO.listarUsuario(OEE); 
-     //   OEES.setFiltro(OE.codAutoridadAmbiental);
-     //   ObjetoSalida objetoSalidaEntidad = AdmUsuarioDAO.consultarUsuarioEntidad(OEES); 
+        //ObjetoSalida objetoSalida = AdmUsuarioDAO.listarUsuario(OEE); 
+        OEES.setIdUsuario(0);
+        OEES.setFiltro(OE.codAutoridadAmbiental);
+        ObjetoSalida objetoSalida = AdmUsuarioDAO.consultarUsuarioEntidad(OEES); 
         List<Funcionario> lista =  new ArrayList<Funcionario>();       
         for (HashMap<String, Object> item : objetoSalida.getRespuesta()) {
             Funcionario func = new Funcionario();

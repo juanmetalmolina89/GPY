@@ -237,7 +237,7 @@ public class UsuarioDAO extends GenericoDAO {
 
             SentenciaDAO sentencia = new SentenciaDAO("PK_ADM_USUARIO.Pr_ConsultarUsrsEntidad", objetoEntrada.getIdUsuario());
             List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
-            parametros.add(new SentenciaParametroDAO("p_A041SIGLA", objetoEntrada.getFiltro(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+            parametros.add(new SentenciaParametroDAO("p_A001SIGLA", objetoEntrada.getFiltro(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             //parametros.add(new SentenciaParametroDAO("p_A041CLAVE", objetoEntrada.getClave(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
             sentencia.setParametros(parametros);
             objetoSalida = this.ejecutar(sentencia, objetoSalida);

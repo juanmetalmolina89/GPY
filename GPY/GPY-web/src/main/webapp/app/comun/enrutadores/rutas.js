@@ -17,6 +17,10 @@ angular.module('GPYApp').config(['$routeProvider', '$httpProvider', '$locationPr
 			templateUrl	: 'app/gpy/vistas/listaProyectos.html',
 			controller 	: 'gestionProyectosCtrl'
 		})
+                .when('/gpy/token/:tkn', {
+			templateUrl	: 'app/gpy/vistas/listaProyectos.html',
+			controller 	: 'gestionProyectosCtrl'
+		})
 		.when('/gpy/adm', {
 			templateUrl	: 'app/gpy/vistas/gestionProyectos.html',
 			controller 	: 'gestionProyectosCtrl'

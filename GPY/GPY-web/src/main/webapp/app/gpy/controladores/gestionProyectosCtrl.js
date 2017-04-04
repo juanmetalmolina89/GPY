@@ -1,7 +1,16 @@
 var app = angular.module('GPYApp');
 
-app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams, $uibModal, $rootScope, $filter, comunSrv, listadoSrv, datosBasicosSrv, infoProyecto, $q) {
+app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams, $uibModal, $rootScope, $filter, comunSrv, listadoSrv, datosBasicosSrv, infoProyecto, $q, store) {
 
+    /**************************************************************/
+    /* Si llega desde vital */
+    var token = $routeParams.tkn;
+    if (token) 
+    {
+        store.set('token', token);
+        $location.path('/gpy');
+    }
+        
     /**************************************************************/
     /* Manejo sesión */
     $scope.sesion = comunSrv.obtenerSesion() === null ? 0 : comunSrv.obtenerSesion();

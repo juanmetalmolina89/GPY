@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('comun.controllers', ['ngSanitize'])
-        .controller('comunCtrl', ['$scope', 'comunSrv', function ($scope, comunSrv) {
+        .controller('comunCtrl', ['$scope', 'comunSrv','$location', function ($scope, comunSrv,$location) {
 
                 /**************************************************************/
                 /* Variables */

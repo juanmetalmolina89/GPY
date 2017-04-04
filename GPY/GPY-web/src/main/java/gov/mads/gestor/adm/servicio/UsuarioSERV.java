@@ -140,18 +140,16 @@ public class UsuarioSERV {
             //return Response.status(Response.Status.UNAUTHORIZED).entity(objetoSalida).build();
         }
         else{
-            //java.net.URI ubicacion = new java.net.URI("../#/gpy");
+            java.net.URI ubicacion = new java.net.URI("../#/gpy/token/"+ JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta())));
             //java.net.URI ubicacion = new java.net.URI("http://132.255.20.182:8088/GPY-web/#/gpy");
-            String url = "http://132.255.20.182:8088/GPY-web/#/gpy";
-            java.net.URI ubicacion = UriBuilder.fromUri(java.net.URLDecoder.decode(url, "ASCII")).queryParam(JWT_HEADER_TOKEN,JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();//
+            //String url = "../#/gpy";
+            //java.net.URI ubicacion = UriBuilder.fromUri(java.net.URLDecoder.decode(url, "ASCII")).queryParam(JWT_HEADER_TOKEN,JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();//
             
             // return Response.seeOther(ubicacion).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
-            return Response.seeOther(ubicacion).build();//entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
+            return Response.seeOther(ubicacion).build();//.entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();//.status(Response.Status.OK).entity(objetoSalida).header(JWT_HEADER_TOKEN, JWTFiltro.contruirToken(JWTFiltro.obtenerUsuario(objetoSalida.getRespuesta()))).build();
         }
         
     }
-    
-    
     
     @POST
     @Path("/validarUsuarioVital")

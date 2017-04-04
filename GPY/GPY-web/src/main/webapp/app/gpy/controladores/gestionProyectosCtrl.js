@@ -121,9 +121,7 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
                     };
                     $scope.proyecto.a002idalcance = {
                         "a102codigo": response.data.respuesta[0].a002idalcance
-                    };
-
-                    //@todo faltan los sectores implementadores
+                    };                                       
 
                     //info MDL etp1 pre
                     $scope.proyecto.a002nombrproyctingls = response.data.respuesta[0].a002nombrproyctingls;
@@ -168,6 +166,7 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
                     //para el manejo del proyecto a lo largo de las pantallas
                     $scope.estadoProy = $scope.proyecto.a002estadoproyecto;
                     infoProyecto.proyecto = $scope.proyecto;
+                    
                     def.resolve( true );
                 }                
             }
@@ -246,6 +245,19 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
                     comunSrv.mensajeSalida(error);
                 });
     };
+    
+    $scope.listarEntidades = function () {
+        $scope.OE = new Object();
+        $scope.OE.idUsuario = $scope.idUsuario;
+        $scope.OE.categoria = "ESTADOPROYECTO";
+        listadoSrv.listarParametros($scope.OE)
+                .then(function (response) {
+                    $scope.listEstadosProyecto = response.data.respuesta;
+                }, function (error) {
+                    comunSrv.mensajeSalida(error);
+                });
+    };
+    
     $scope.listarAutoridadAmbiental = function () {
         $scope.OE = new Object();
         $scope.OE.idUsuario = $scope.idUsuario;
@@ -292,6 +304,10 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
                     $scope.listaproyectos = response.data.respuesta;
                     $scope.proyectos = response.data.respuesta;
                     $scope.totalItems = $scope.proyectos.length;
+                    
+                    // el filtro de entidades depende de los resultados directamente
+                    $scope.entidades = $filter('groupBy')(response.data.respuesta, 'a052nombreentidad');
+                    
                 }, function (error) {
                     comunSrv.mensajeSalida(error);
                 });
@@ -454,6 +470,11 @@ app.controller('gestionProyectosCtrl', function ($scope, $location, $routeParams
         if ($scope.filtroproyecto.autoridad) {
             //$scope.filtroproyecto.filtro = $scope.filtroproyecto.autoridad.a001nombre;
             $scope.filtroproyecto.resultados = $filter('filter')($scope.filtroproyecto.resultados , {'a001sigla':$scope.filtroproyecto.autoridad.a001sigla}, true);
+             $numFiltros++;
+        }
+        if ($scope.filtroproyecto.entidad) {
+            //$scope.filtroproyecto.filtro = $scope.filtroproyecto.autoridad.a001nombre;
+            $scope.filtroproyecto.resultados = $filter('filter')($scope.filtroproyecto.resultados , {'a052nombreentidad':$scope.filtroproyecto.entidad[0].a052nombreentidad}, true); // es un groupBy. siempre vendrá una posición cero de cada grupo
              $numFiltros++;
         }
         if ($scope.filtroproyecto.tipoproy) {

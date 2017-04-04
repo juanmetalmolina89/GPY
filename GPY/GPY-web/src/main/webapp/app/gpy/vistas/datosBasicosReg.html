@@ -115,7 +115,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="durcnprevst">Duración prevista total (años)</label>  
                                 <div class="col-md-2">
-                                    <input id="durcnprevst" name="durcnprevst" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002durcnprevst" required>
+                                    <input id="durcnprevst" name="durcnprevst" type="text" maxlength="2" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002durcnprevst" required>
                                 </div>
                                 <span class="control-label" ng-show="form.durcnprevst.$error.required"><strong>Requerido</strong></span>
                                 <span class="control-label" ng-show="form.durcnprevst.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
@@ -125,7 +125,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="vidautl">Vida útil del proyecto (años)</label>  
                                 <div class="col-md-2">
-                                    <input id="vidautl" name="vidautl" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002vidautl" required>
+                                    <input id="vidautl" name="vidautl" type="text" maxlength="2" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002vidautl" required>
                                 </div>
                                 <span class="control-label" ng-show="form.vidautl.$error.required"><strong>Requerido</strong></span>
                                 <span class="control-label" ng-show="form.vidautl.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
@@ -135,7 +135,7 @@
                             <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA">
                                 <label class="col-md-4 control-label" for="nrocpas">numero de CPAs que se proyecta involucrar</label>  
                                 <div class="col-md-2">
-                                    <input id="nrocpas" name="nrocpas" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002nrocpas" >
+                                    <input id="nrocpas" name="nrocpas" type="text" maxlength="2" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002nrocpas" >
                                 </div>
                                 <span class="control-label" ng-show="form.nrocpas.$error.required"><strong>Requerido</strong></span>
                                 <span class="control-label" ng-show="form.nrocpas.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
@@ -172,18 +172,18 @@
                                 <span class="control-label" ng-show="form.idalcance.$error.required"><strong>Requerido</strong></span>
                             </div>
 
+                            
                             <!-- Sector Implementador -->
                             <div class="form-group" ng-show="tpid == NAMA || tpid == PBDBCRC">
-                                <label class="col-md-4 control-label" for="proySectrImplmntdrList">Sector Implementador</label>
+                                <label class="col-md-4 control-label" for="sProySectrImplmntdrList">Sector Implementador</label>
                                 <div class="col-md-4">
-                                    <select id="proySectrImplmntdrList" name="proySectrImplmntdrList" class="form-control" ng-model="multipleList.proySectrImplmntdrList" multiple ng-required='tpid == NAMA || tpid == PBDBCRC'>
-                                        <option ng-repeat="sector in sectores" value="{{sector.a023codigo}}">
-                                            {{sector.a023descsectrimplmntdr}}
-                                        </option>
+                                    <select id="sProySectrImplmntdrList" class="form-control" ng-model="proySectrImplmntdrList" 
+                                             ng-options="sector.a023descsectrimplmntdr for sector in sectores track by sector.a023codigo" multiple="multiple" >                                        
                                     </select>
                                 </div>
-                                <span class="control-label" ng-show="form.proySectrImplmntdrList.$error.required"><strong>Requerido</strong></span>
+                                
                             </div>
+                            
 
                             <!------------------------------------------------------------------------->
                             <!---------------           CAMPOS ETAPA REGISTRO        ------------------>
@@ -213,7 +213,7 @@
                                 <label class="col-md-4 control-label" for="proyEstadoProcesoValidacion">Estado de proceso de Validación</label>
                                 <div class="col-md-4">                  
                                     <select id="proyEstadoProcesoValidacion" name="proyEstadoProcesoValidacion" class="form-control" ng-model="proyecto.a002idestdprocsvaldcn"
-                                            ng-options="estadoPV.a102codigo as estadoPV.a102valor for estadoPV in estadosPV track by estadoPV.a102codigo" required>                                       
+                                            ng-options="estadoPV as estadoPV.a102valor for estadoPV in estadosPV track by estadoPV.a102codigo " required>                                       
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>
@@ -261,7 +261,7 @@
                                 <label class="col-md-4 control-label" for="proyEstandaresMVC">Estándar del mercado voluntario del carbono</label>
                                 <div class="col-md-4">
                                     <select id="proyEstandaresMVC" name="proyEstandaresMVC" class="form-control" ng-model="proyecto.a002idestndrmercdvolntr" ng-required='tpid == MDL || tpid == MDL_POA'
-                                            ng-options="tipoEstandarMVC.a102codigo as tipoEstandarMVC.a102valor for tipoEstandarMVC in tiposEstandarMVC track by tipoEstandarMVC.a102codigo" required> 
+                                            ng-options="tipoEstandarMVC as tipoEstandarMVC.a102valor for tipoEstandarMVC in tiposEstandarMVC track by tipoEstandarMVC.a102codigo" required> 
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>
@@ -273,7 +273,7 @@
                                 <label class="col-md-4 control-label" for="proyTipoProyectoMDL">Tipo de Proyecto MDL</label>
                                 <div class="col-md-4">
                                     <select id="proyTipoProyectoMDL" name="proyTipoProyectoMDL" class="form-control" ng-model="proyecto.a002idproyctmdl" ng-required='tpid == MDL || tpid == MDL_POA'
-                                        ng-options="tipoProyectoMDL.a102codigo as tipoProyectoMDL.a102valor for tipoProyectoMDL in tiposProyectoMDL track by tipoProyectoMDL.a102codigo" required> 
+                                        ng-options="tipoProyectoMDL as tipoProyectoMDL.a102valor for tipoProyectoMDL in tiposProyectoMDL track by tipoProyectoMDL.a102codigo" required> 
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>
@@ -282,10 +282,10 @@
                             
                             <!-- MDL - tipo de periodo de acreditación  -->
                             <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA">
-                                <label class="col-md-4 control-label" for="proySectrImplmntdrList">Tipo de periodo de acreditación</label>
+                                <label class="col-md-4 control-label" for="proyTipoPeriodoAcreditacion">Tipo de periodo de acreditación</label>
                                 <div class="col-md-4">
                                     <select id="proyTipoPeriodoAcreditacion" name="proyTipoPeriodoAcreditacion" class="form-control" ng-model="proyecto.a002idtipperdacrdtcn" ng-required='tpid == MDL || tpid == MDL_POA'
-                                        ng-options="tipoPeriodo.a102codigo  as tipoPeriodo.a102valor for tipoPeriodo in tiposPeriodo track by tipoPeriodo.a102codigo" required> 
+                                        ng-options="tipoPeriodo as tipoPeriodo.a102valor for tipoPeriodo in tiposPeriodo track by tipoPeriodo.a102codigo" required> 
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>

@@ -19,15 +19,27 @@
                                 <label for="search">Palabra clave</label>
                                 <input ng-model="filtroproyecto.palabra" id="search" class="form-control" />
                             </div>
-                            <div class="col-xs-3 col-sm-3">
-                                <label for="search">Autoridad ambiental</label>
+                            
+                            <div class="col-xs-3 col-sm-3" ng-show="!(sesion.perfil == ADMINAA)">
+                                <label>Autoridad ambiental</label> 
                                 <select class="form-control campotextable control-label"
                                         id="seltipoproy" name="seltipoproy" style="width: 240px"
                                         ng-model="filtroproyecto.autoridad"
                                         ng-options="item as item.a001sigla for item in listaAutoridadAmb track by item.a001sigla">
                                     <option value="" selected>Todas</option>
                                 </select>
+                            </div>                            
+                                                        
+                            <div class="col-xs-3 col-sm-3" ng-show="sesion.perfil == ADMINAA">
+                                <label>Entidad</label>
+                                <select class="form-control campotextable control-label"
+                                        id="selEntidad" name="selEntidad" style="width: 240px;"
+                                        ng-model="filtroproyecto.entidad"
+                                        ng-options="entidad[0].a052nombreentidad for entidad in entidades track by entidad[0].a052nombreentidad">
+                                    <option value="" selected>Todas</option>
+                                </select>
                             </div>
+                            
                             <div class="col-xs-3 col-sm-3">
                                 <label for="search">Tipo del Proyecto</label>
                                 <select class="form-control campotextable control-label"
@@ -37,6 +49,7 @@
                                     <option value="" selected>Todos</option>
                                 </select>
                             </div>
+                            
                             <div class="col-xs-3 col-sm-3">
                                 <label for="search">Estado</label>
                                 <select class="form-control campotextable control-label"
@@ -66,7 +79,8 @@
                                     </tr>
                                     <tr>
                                         <th>No.</th> 
-                                        <th>Autoridad Ambiental</th> 
+                                        <th ng-if="!(sesion.perfil == ADMINAA)">Autoridad Ambiental</th> 
+                                        <th ng-if="sesion.perfil == ADMINAA">Entidad</th> 
                                         <th>Tipo Proyecto</th> 
                                         <th>Proyecto</th> 
                                         <th>Estado</th> 
@@ -76,7 +90,8 @@
                                 <tbody>
                                     <tr ng-repeat="proyecto in listaproyectos.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))"> 
                                         <th scope="row">{{$index + 1}}</th>
-                                        <td>{{proyecto.a001sigla}}</td>
+                                        <td ng-if="!(sesion.perfil == ADMINAA)">{{proyecto.a001sigla}}</td>
+                                        <td ng-if="sesion.perfil == ADMINAA">{{proyecto.a052nombreentidad}}</td>
                                         <td>{{proyecto.tipoproyecto}}</td>
                                         <td>{{proyecto.a002nombrproyct}}</td>
                                         <td>{{proyecto.estadoproyecto}}</td>

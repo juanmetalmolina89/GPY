@@ -336,22 +336,7 @@
                                 </div>
                                 <span class="control-label" ng-show="frmProyecto.a002procsvaldcnec.$error.required"><strong>Requerido</strong></span>
                             </div>
-                            
-                            
-                            
-                            <!-- Estandar del mercado voluntario del carbono bajo el cual se buscará la certificación  -->
-                            <!-- repetido? 
-                            <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA"  ng-class="{'has-error': !frmProyecto.proyEstandaresMVC.$valid, 'has-success': frmProyecto.proyEstandaresMVC.$valid}">
-                                <label class="col-md-4 control-label" for="proyEstandaresMVC">Estandar del mercado voluntario del carbono bajo el cual se buscará la certificación</label>
-                                <div class="col-md-4">
-                                    <select id="proyEstandaresMVC" name="proyEstandaresMVC" class="form-control" ng-model="proyecto.a002idestndrmercdvolntr" ng-required='tpid == MDL || tpid == MDL_POA'
-                                            ng-options="tipoEstandarMVC.a102codigo as tipoEstandarMVC.a102valor for tipoEstandarMVC in tiposEstandarMVC track by tipoEstandarMVC.a102codigo" required> 
-                                        <option value="">Seleccione</option>
-                                    </select>
-                                </div>
-                                <span class="control-label" ng-show="frmProyecto.proyEstandaresMVC.$error.required"><strong>Requerido</strong></span>
-                            </div> 
-                            -->
+                                                        
                             
                             <!-- Estado del proceso de validación ante el estándar al que aplica -->
                             <!-- Drop down -->
@@ -360,7 +345,7 @@
                                 <label class="col-md-4 control-label" for="proyEstadoProcesoValidacion">Estado del proceso de validación ante el estándar al que aplica</label>
                                 <div class="col-md-4">                  
                                     <select id="proyEstadoProcesoValidacion" name="proyEstadoProcesoValidacion" class="form-control" ng-model="proyecto.a002idestdprocsvaldcn"
-                                            ng-options="estadoPV.a102codigo as estadoPV.a102valor for estadoPV in estadosPV track by estadoPV.a102codigo" required>                                       
+                                            ng-options="estadoPV as estadoPV.a102valor for estadoPV in estadosPV track by estadoPV.a102codigo" required>                                       
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>

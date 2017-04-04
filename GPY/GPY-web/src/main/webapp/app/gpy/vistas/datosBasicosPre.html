@@ -74,7 +74,7 @@
                                 <label class="col-md-4 control-label" for="municipio">Municipio</label>
                                 <div class="col-md-4">
                                     <select id="municipio" name="municipio" class="form-control" ng-model="proyecto.a002loclzcn" required
-                                            ng-disabled="!departamentoProySel" ng-options="municipio as municipio.a020nommunicipio for municipio in municipios | orderBy:'a020nommunicipio'">
+                                            ng-disabled="!departamentoProySel" ng-options="municipio as municipio.a020nommunicipio for municipio in municipios | orderBy:'a020nommunicipio' track by municipio.a020codmunicipio">
                                         <option value="">Seleccione</option>
                                     </select>
                                 </div>
@@ -113,7 +113,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="durcnprevst">Duración prevista total (años)</label>  
                                 <div class="col-md-2">
-                                    <input id="durcnprevst" name="durcnprevst" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002durcnprevst" required>
+                                    <input id="durcnprevst" name="durcnprevst" type="text" maxlength="2"  placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002durcnprevst" required>
                                 </div>
                                 <span class="control-label" ng-show="form.durcnprevst.$error.required"><strong>Requerido</strong></span>
                                 <span class="control-label" ng-show="form.durcnprevst.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
@@ -123,7 +123,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="vidautl">Vida útil del proyecto (años)</label>  
                                 <div class="col-md-2">
-                                    <input id="vidautl" name="vidautl" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002vidautl" required>
+                                    <input id="vidautl" name="vidautl" type="text"  maxlength="2"  placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002vidautl" required>
                                 </div>
                                 <span class="control-label" ng-show="form.vidautl.$error.required"><strong>Requerido</strong></span>
                                 <span class="control-label" ng-show="form.vidautl.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
@@ -133,7 +133,7 @@
                             <div class="form-group" ng-show="tpid == MDL || tpid == MDL_POA">
                                 <label class="col-md-4 control-label" for="nrocpas">numero de CPAs que se proyecta involucra</label>  
                                 <div class="col-md-2">
-                                    <input id="nrocpas" name="nrocpas" type="text" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002nrocpas" >
+                                    <input id="nrocpas" name="nrocpas" type="text" maxlength="2" placeholder="" class="form-control input-md" ng-pattern="/^[0-9]+$/" ng-model="proyecto.a002nrocpas" >
                                 </div>
                                 <span class="control-label" ng-show="form.nrocpas.$error.required"><strong>Requerido</strong></span>
                                 <span class="control-label" ng-show="form.nrocpas.$error.pattern"><strong>Se requiere un valor numérico</strong></span>
@@ -169,20 +169,20 @@
                                 </div>
                                 <span class="control-label" ng-show="form.idalcance.$error.required"><strong>Requerido</strong></span>
                             </div>
-
+                            
                             <!-- Sector Implementador -->
                             <div class="form-group" ng-show="tpid == NAMA || tpid == PBDBCRC">
-                                <label class="col-md-4 control-label" for="proySectrImplmntdrList">Sector Implementador</label>
+                                <label class="col-md-4 control-label" for="sProySectrImplmntdrList">Sector Implementador</label>
                                 <div class="col-md-4">
-                                    <select id="proySectrImplmntdrList" name="proySectrImplmntdrList" class="form-control" ng-model="multipleList.proySectrImplmntdrList" multiple ng-required='tpid == NAMA || tpid == PBDBCRC'>
-                                        <option ng-repeat="sector in sectores" value="{{sector.a023codigo}}">
-                                            {{sector.a023descsectrimplmntdr}}
-                                        </option>
+                                    <select id="sProySectrImplmntdrList" class="form-control" ng-model="proySectrImplmntdrList" 
+                                             ng-options="sector.a023descsectrimplmntdr for sector in sectores track by sector.a023codigo" multiple="multiple" >                                        
                                     </select>
                                 </div>
-                                <span class="control-label" ng-show="form.proySectrImplmntdrList.$error.required"><strong>Requerido</strong></span>
+                                
                             </div>
-
+                            
+                            
+                            
                             <!-- Guardar -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label"></label>

@@ -167,15 +167,6 @@ angular.module('usuario.controllers', ['ngSanitize'])
             }])
 
         .controller('ingresoUsuarioCtrl', ['$scope', '$location', '$uibModal', 'usuarioSrv', 'comunSrv', 'store', function ($scope, $location, $uibModal, usuarioSrv, comunSrv, store) {
-
-                /**************************************************************/
-                /* Si llega desde vital */
-                var busqueda = $location.search();
-                if (busqueda.token) 
-                {
-                    store.set('token', busqueda.token);
-                    $location.path('/gpy');
-                }
                 
                 /**************************************************************/
                 /* Variables */

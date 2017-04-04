@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('comun.controllers', ['ngSanitize'])
-        .controller('comunCtrl', ['$scope', 'comunSrv','$location', function ($scope, comunSrv,$location) {
+        .controller('comunCtrl', ['$scope', 'comunSrv','$location','store', function ($scope, comunSrv,$location,store) {
 
                 /**************************************************************/
                 /* Variables */
@@ -14,7 +14,14 @@ angular.module('comun.controllers', ['ngSanitize'])
                 $scope.PUBLICADOR = PUBLICADOR;
                 $scope.INVITADO = INVITADO;
 
-
+                /**************************************************************/
+                /* Si llega desde vital */
+                if($location.path().substr(5,5)=='token')
+                {
+                    store.set('token', $location.path().substr(11));
+                    $location.path('/gpy');
+                }
+               
                 /**************************************************************/
                 /* Métodos */
                 $scope.obtenerSesion = function () {

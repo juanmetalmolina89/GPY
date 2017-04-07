@@ -47,6 +47,7 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 $scope.geometria = '';
                 $scope.a042geometriasitio = '';
                 $scope.a042geometriaintersec = '';
+                $scope.areasIntersectadas = [];
 
                 //grilla
                 $scope.busquedaOE = {'palabraClave': ''};
@@ -67,98 +68,113 @@ angular.module('actividad.controllers', ['ngSanitize'])
                 $scope.guardarActividad = function () {
                     console.log("geometria: " + $scope.a042geometriasitio);
                     //valida que exista o haya elegido un adjunto                   
+                    if ($scope.areasIntersectadas.length == 0)
+                    {
+                        
                     
-                     
-                    if ($scope.actividad.a005idsoporte.a026codigo != '' || $scope.soporte.adjunto != '') {
-                        //Valida que haya elegido geometria
-                        //if ($scope.a042geometriasitio != '' || $scope.pantalla == ACTIVIDADESPRE) { // ojo: en pre es opcional la geometria
-                        if ($scope.a042geometriasitio != '') {
-                            //Empieza a armar el objeto de entrada
-                            $scope.OE = new Object();
-                            $scope.OE.idUsuario = $scope.idUsuario;
-                            $scope.OE.actividad = $scope.actividad;
-                            
-                            /* los campos de la fase de registro se pasan vacíos o en ceros */
-                            if ($location.path().substr(0, '/gpy/actividadesreg/'.length) === '/gpy/actividadespre/') 
-                            {
-                                $scope.OE.actividad.a005costototal = 0;
-                                $scope.OE.actividad.a005contrbcnprop = 0;
-                                $scope.OE.actividad.a005contrbcnextrn = 0;
-                            }
-                            $scope.OE.actividad.a005idsectoripcc = 1; // bloqueado por ahora
-                            $scope.OE.actividad.a005idmtdcalcreduccbaseline = 1; // bloqueado por ahora
-                            
-                            $scope.OE.actividad.a005idtipactvdd = {"a022codigo": $scope.actividad.a005idtipactvdd.a022codigo}; //Sólo necesito el id (si envío el obj completo voy a tener problemas con el valor tipproyctmdl que se trae para mostrarse, pero no pertenece a la entidad como tal.                    
-                            
-                            $scope.OE.geometria = $scope.geometria;
-                            if($scope.a042geometriasitio)
-                            {
-                                $scope.OE.a042geometriasitio = $scope.a042geometriasitio;
-                            }
-                            if($scope.a042geometriaintersec)
-                            {
-                                 $scope.OE.a042geometriaintersec = $scope.a042geometriaintersec;
-                            }
-                           
+                        if ($scope.actividad.a005idsoporte.a026codigo != '' || $scope.soporte.adjunto != '') {
+                            //Valida que haya elegido geometria
+                            if ($scope.a042geometriasitio != '' || $scope.pantalla == ACTIVIDADESPRE) { // ojo: en pre es opcional la geometria
+                            //if ($scope.a042geometriasitio != '') {
+                                //Empieza a armar el objeto de entrada
+                                $scope.OE = new Object();
+                                $scope.OE.idUsuario = $scope.idUsuario;
+                                $scope.OE.actividad = $scope.actividad;
 
-                            //Si ya existe lo actualiza, de lo contrario lo registra
-                            if ($scope.actividad.a005codigo !== undefined && $scope.actividad.a005codigo !== null && $scope.actividad.a005codigo !== '') {
+                                /* los campos de la fase de registro se pasan vacíos o en ceros */
+                                if ($location.path().substr(0, '/gpy/actividadesreg/'.length) === '/gpy/actividadespre/') 
+                                {
+                                    $scope.OE.actividad.a005costototal = 0;
+                                    $scope.OE.actividad.a005contrbcnprop = 0;
+                                    $scope.OE.actividad.a005contrbcnextrn = 0;
+                                }
+                                $scope.OE.actividad.a005idsectoripcc = 1; // bloqueado por ahora
+                                $scope.OE.actividad.a005idmtdcalcreduccbaseline = 1; // bloqueado por ahora
 
-                                actividadSrv.actualizarActividad($scope.OE).then(function (response) {
-                                    //Oculta formulario
-                                    $scope.muestraForm = false;
-                                    //Si el usuario actualizó el archivo se llama el método para actualizarlo
-                                    if ($scope.muestraCampoSoporte == true && $scope.soporte.adjunto != '') {
-                                        $scope.actualizarSoporte();
-                                        $scope.muestraCampoSoporte = false;
-                                    }
-                                    comunSrv.mensajeSalida(response);
-                                    //Registra avance
-                                    /*
-                                    avanceSrv.registrarAvance({"idUsuario": $scope.idUsuario, "a002codigo": $scope.proyecto.a002codigo, "a057idpantalla": $scope.pantalla})
-                                            .then(function (response) {
-                                                //comunSrv.mensajeSalida(response);
-                                            }, function (error) {
-                                                comunSrv.mensajeSalida(error);
-                                            });
-                                    */
-                                    //recarga la lista de actividades
-                                    $scope.listarActividadPorClave();
-                                }, function (error) {
-                                    comunSrv.mensajeSalida(error);
-                                });
-                            } else {
-                                //Si el registro es nuevo, llama al método para registrarlo                                
-                                actividadSrv.registrarActividad($scope.OE).then(function (response) {
-                                    //Oculta formulario
-                                    $scope.muestraForm = false;
-                                    //actualiza el id actividad y el id de la geometría con el valor devuelto
-                                    $scope.actividad.a005codigo = response.data.respuesta[0].a005codigo;
-                                    $scope.geometria.a042codigo = response.data.respuesta[1].a042codigo;
-                                    //guarda el archivo adjunto
-                                    $scope.registrarSoporte();
-                                    comunSrv.mensajeSalida(response);
-                                    //Registra avance
-                                    avanceSrv.registrarAvance({"idUsuario": $scope.idUsuario, "a002codigo": $scope.proyecto.a002codigo, "a057idpantalla": $scope.pantalla})
-                                            .then(function (response) {
-                                                //comunSrv.mensajeSalida(response);
-                                            }, function (error) {
-                                                comunSrv.mensajeSalida(error);
-                                            });
-                                    //recarga la lista de actividades
-                                    $scope.listarActividadPorClave();
-                                }, function (error) {
-                                    comunSrv.mensajeSalida(error);
-                                });
+                                $scope.OE.actividad.a005idtipactvdd = {"a022codigo": $scope.actividad.a005idtipactvdd.a022codigo}; //Sólo necesito el id (si envío el obj completo voy a tener problemas con el valor tipproyctmdl que se trae para mostrarse, pero no pertenece a la entidad como tal.                    
+
+                                $scope.OE.geometria = $scope.geometria;
+                                if($scope.a042geometriasitio)
+                                {
+                                    $scope.OE.a042geometriasitio = $scope.a042geometriasitio;
+                                }
+                                else
+                                {
+                                    $scope.OE.a042geometriasitio = {"type":"Feature","properties":{},"geometry":{"type":"Polygon","coordinates":[[]]}};
+                                }
+                                
+                                if($scope.a042geometriaintersec)
+                                {
+                                     $scope.OE.a042geometriaintersec = $scope.a042geometriaintersec;
+                                }
+
+
+                                //Si ya existe lo actualiza, de lo contrario lo registra
+                                if ($scope.actividad.a005codigo !== undefined && $scope.actividad.a005codigo !== null && $scope.actividad.a005codigo !== '') {
+                                   
+                                    actividadSrv.actualizarActividad($scope.OE).then(function (response) {
+                                        //Oculta formulario
+                                        $scope.muestraForm = false;
+                                        //Si el usuario actualizó el archivo se llama el método para actualizarlo
+                                        if ($scope.muestraCampoSoporte == true && $scope.soporte.adjunto != '') {
+                                            $scope.actualizarSoporte();
+                                            $scope.muestraCampoSoporte = false;
+                                        }
+                                        comunSrv.mensajeSalida(response);
+                                        //Registra avance
+                                        /*
+                                        avanceSrv.registrarAvance({"idUsuario": $scope.idUsuario, "a002codigo": $scope.proyecto.a002codigo, "a057idpantalla": $scope.pantalla})
+                                                .then(function (response) {
+                                                    //comunSrv.mensajeSalida(response);
+                                                }, function (error) {
+                                                    comunSrv.mensajeSalida(error);
+                                                });
+                                        */
+                                        //recarga la lista de actividades
+                                        $scope.listarActividadPorClave();
+                                    }, function (error) {
+                                        comunSrv.mensajeSalida(error);
+                                    });
+                                } else {
+                                    //Si el registro es nuevo, llama al método para registrarlo     
+
+                                    actividadSrv.registrarActividad($scope.OE).then(function (response) {
+                                        //Oculta formulario
+                                        $scope.muestraForm = false;
+                                        //actualiza el id actividad y el id de la geometría con el valor devuelto
+                                        $scope.actividad.a005codigo = response.data.respuesta[0].a005codigo;
+                                        $scope.geometria.a042codigo = response.data.respuesta[1].a042codigo;
+                                        //guarda el archivo adjunto
+                                        $scope.registrarSoporte();
+                                        comunSrv.mensajeSalida(response);
+                                        //Registra avance
+                                        avanceSrv.registrarAvance({"idUsuario": $scope.idUsuario, "a002codigo": $scope.proyecto.a002codigo, "a057idpantalla": $scope.pantalla})
+                                                .then(function (response) {
+                                                    //comunSrv.mensajeSalida(response);
+                                                }, function (error) {
+                                                    comunSrv.mensajeSalida(error);
+                                                });
+                                        //recarga la lista de actividades
+                                        $scope.listarActividadPorClave();
+                                    }, function (error) {
+                                        comunSrv.mensajeSalida(error);
+                                    });
+                                }
+
+                            } else { //else validación geometría
+                                comunSrv.mensaje("Debe seleccionar una geometría.", "error");
                             }
 
-                        } else { //else validación geometría
-                            comunSrv.mensaje("Debe seleccionar una geometría.", "error");
+                        } else { //else validación adjunto
+                            comunSrv.mensaje("Debe adjuntar un soporte de la actividad a realizar.", "error");
                         }
-
-                    } else { //else validación adjunto
-                        comunSrv.mensaje("Debe adjuntar un soporte de la actividad a realizar.", "error");
-                    }
+                        
+                    } // sin areas intersectadas
+                    else
+                    {
+                        comunSrv.mensaje("No puede continuar debido a que el área seleccionada en el mapa contiene intersecciones.", "error");
+                    }    
+                    
                 };
 
                 $scope.registrarSoporte = function () {
@@ -686,26 +702,21 @@ angular.module('actividad.controllers', ['ngSanitize'])
                             actividadSrv.consultarGeografia($scope.OE)
                                     .then(function (response) {
 
-                                        var geometria = {};
-                                        if (response.data.respuesta.length === 0) {
-
-                                            geometria = {
-                                                'type': 'Feature',
-                                                'properties': {
-                                                    'name': 'Feature de prueba'
-                                                },
-                                                'geometry': {
-                                                    'type': 'Point',
-                                                    'coordinates': [-74.2478957, 4.6482837]
-                                                }
-                                            };
-                                        } else {
-
+                                        var geometria = {};                                        
+                                       
+                                        if (response.data.respuesta.length !== 0) 
+                                        {
                                             geometria = JSON.parse(response.data.respuesta[0].a042geometria_sitio);
                                         }
 
                                         setTimeout(function () {
-                                            (ctrlGeo.contentWindow || ctrlGeo.contentDocument).establecerGeometria(geometria);
+                                            if(geometria.geometry)
+                                            {
+                                                if(geometria.geometry.coordinates[0].length>0)
+                                                {
+                                                    (ctrlGeo.contentWindow || ctrlGeo.contentDocument).establecerGeometria(geometria);
+                                                }                                                
+                                            }
                                         }, 3000);
                                         //comunSrv.mensajeSalida(response);
                                     }, function (error) {
@@ -726,6 +737,7 @@ angular.module('actividad.controllers', ['ngSanitize'])
                         var ctrlGeo = document.getElementById('ctrlGeo');
                         if (ctrlGeo) {
                             $scope.a042geometriasitio = (ctrlGeo.contentWindow || ctrlGeo.contentDocument).obtenerGeometria();
+                            $scope.areasIntersectadas = (ctrlGeo.contentWindow || ctrlGeo.contentDocument).obtenerAreasIntersectadas();
                             $('#geometria').modal('hide');
                         }
                     } catch (e) {

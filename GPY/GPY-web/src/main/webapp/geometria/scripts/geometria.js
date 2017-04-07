@@ -28,6 +28,12 @@ var obtenerGeometria = function () {
     return geometria;
 }
 
+var obtenerAreasIntersectadas = function () {
+
+    var geometria = ctrlGeo.obtenerAreasIntersecciones();
+    return geometria;
+}
+
 var establecerGeometria = function (geometria) {
 
     console.log(geometria);

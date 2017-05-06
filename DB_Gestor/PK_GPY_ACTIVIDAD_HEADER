@@ -1,11 +1,4 @@
---------------------------------------------------------
--- Archivo creado  - jueves-marzo-02-2017   
---------------------------------------------------------
---------------------------------------------------------
---  DDL for Package PK_GPY_ACTIVIDAD
---------------------------------------------------------
-
-  CREATE OR REPLACE PACKAGE "GESTOR"."PK_GPY_ACTIVIDAD" 
+create or replace PACKAGE          "PK_GPY_ACTIVIDAD" 
 IS
   /********************************************************************************
   DESCRIPCION       : Paquete utilizado para agrupar todos los procedimientos y funciones
@@ -93,6 +86,12 @@ IS
         p_Respuesta OUT CURSOR_SALIDA,
         p_codError OUT NUMBER,
         p_msjError OUT VARCHAR2);
+    PROCEDURE Pr_ConsultarActividadPorFecha(
+        p_OPERACION IN VARCHAR2,
+        p_FECHA IN DATE,
+        p_Respuesta OUT CURSOR_SALIDA,
+        p_codError OUT NUMBER,
+        p_msjError OUT VARCHAR2);               
     PROCEDURE Pr_ConsultarSoportePorId(
         p_A005CODIGO     IN GPYT_T005_ACTIVIDAD.A005CODIGO%TYPE,
         p_A026CODIGO     IN GPYT_T026_ARCHIVO.A026CODIGO%TYPE,
@@ -126,6 +125,7 @@ IS
         p_A011IDTIPINDCDR IN GPYT_T011_Indicador.A011IDTIPINDCDR%TYPE,
         p_A011IDACTVDD    IN GPYT_T011_Indicador.A011IDACTVDD%TYPE,
         p_A011IDTIPACCION IN GPYT_T011_Indicador.A011IDTIPACCION%TYPE,
+        p_A011IDFUENTE    IN GPYT_T011_Indicador.A011IDFUENTE%TYPE,
         p_idUsuario       IN NUMBER,
         p_resultado OUT CURSOR_SALIDA,
         p_codError OUT NUMBER,
@@ -144,6 +144,7 @@ IS
         p_A011IDTIPINDCDR IN GPYT_T011_Indicador.A011IDTIPINDCDR%TYPE,
         p_A011IDACTVDD    IN GPYT_T011_Indicador.A011IDACTVDD%TYPE,
         p_A011IDTIPACCION IN GPYT_T011_Indicador.A011IDTIPACCION%TYPE,
+        p_A011IDFUENTE    IN GPYT_T011_Indicador.A011IDFUENTE%TYPE,
         p_idUsuario       IN NUMBER,
         p_resultado OUT CURSOR_SALIDA,
         p_codError OUT NUMBER,
@@ -201,5 +202,3 @@ IS
         p_codError OUT NUMBER,
         p_msjError OUT VARCHAR2);
   END PK_GPY_ACTIVIDAD;
-
-/

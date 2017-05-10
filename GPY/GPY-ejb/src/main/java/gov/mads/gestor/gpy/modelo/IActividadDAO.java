@@ -6,6 +6,7 @@ import gov.mads.gestor.gpy.vista.ActualizarGeometriaOE;
 import gov.mads.gestor.gpy.vista.ActualizarIndicadorOE;
 import gov.mads.gestor.gpy.vista.ActualizarMetaOE;
 import gov.mads.gestor.gpy.vista.ActualizarSoporteOE;
+import gov.mads.gestor.gpy.vista.ConsultarActividadFechaOE;
 import gov.mads.gestor.gpy.vista.ConsultarActividadPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarGeometriaPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarIndicadorOE;
@@ -48,4 +49,6 @@ public interface IActividadDAO {
         ObjetoSalida eliminarMeta(EliminarMetaOE OE);
         ObjetoSalida actualizarMeta(ActualizarMetaOE OE);
         ObjetoSalida consultarMeta(ConsultarMetaOE OE);
+        
+        ObjetoSalida consultarActividadFechaOE(ConsultarActividadFechaOE OE);
 }

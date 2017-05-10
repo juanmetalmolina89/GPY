@@ -17,6 +17,7 @@ import gov.mads.gestor.gpy.vista.ActualizarGeometriaOE;
 import gov.mads.gestor.gpy.vista.ActualizarIndicadorOE;
 import gov.mads.gestor.gpy.vista.ActualizarMetaOE;
 import gov.mads.gestor.gpy.vista.ActualizarSoporteOE;
+import gov.mads.gestor.gpy.vista.ConsultarActividadFechaOE;
 import gov.mads.gestor.gpy.vista.ConsultarActividadPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarGeometriaPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarIndicadorOE;
@@ -523,5 +524,26 @@ public class ActividadDAO extends GenericoDAO {
 		return objetoSalida;
 
 	}
+        
+        public ObjetoSalida consultarActividadFechaOE(ConsultarActividadFechaOE objetoEntrada) {
 
+		ObjetoSalida objetoSalida = new ObjetoSalida();
+		try {
+			SentenciaDAO sentencia = new SentenciaDAO("PK_GPY_ACTIVIDAD.Pr_ConsultarActividadPorFecha", objetoEntrada.getIdUsuario());
+			List<SentenciaParametroDAO> parametros = new ArrayList<SentenciaParametroDAO>();
+			parametros.add(new SentenciaParametroDAO("p_OPERACION", objetoEntrada.getOperacion(), SentenciaTipoParametroDAO.ENTRADA, OracleTypes.VARCHAR));
+                        java.sql.Date fecha = (objetoEntrada.getFecha() == null) ? null : new java.sql.Date(objetoEntrada.getFecha().getTime());
+                        parametros.add(new SentenciaParametroDAO("p_FECHA", fecha, SentenciaTipoParametroDAO.ENTRADA, OracleTypes.DATE));
+                        
+                        
+			sentencia.setParametros(parametros);
+			objetoSalida = this.ejecutar(sentencia, objetoSalida);
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);
+		} catch (Exception e) {
+			objetoSalida.setCodError(CodError.ERROR_INTERNO);
+			objetoSalida.setMsgError(e.getMessage());
+                        ErrorClass.getMessage(objetoSalida,ActividadDAO.class);		}
+
+		return objetoSalida;
+	}
 }

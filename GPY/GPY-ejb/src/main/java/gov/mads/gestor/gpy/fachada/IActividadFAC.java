@@ -5,6 +5,7 @@ import gov.mads.gestor.gpy.vista.ActualizarActividadOE;
 import gov.mads.gestor.gpy.vista.ActualizarGeometriaOE;
 import gov.mads.gestor.gpy.vista.ActualizarIndicadorOE;
 import gov.mads.gestor.gpy.vista.ActualizarMetaOE;
+import gov.mads.gestor.gpy.vista.ConsultarActividadFechaOE;
 import gov.mads.gestor.gpy.vista.ConsultarActividadPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarGeometriaPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarIndicadorOE;
@@ -49,5 +50,7 @@ public interface IActividadFAC {
         public ObjetoSalida eliminarMeta(EliminarMetaOE OE);
         public ObjetoSalida actualizarMeta(ActualizarMetaOE OE);
         public ObjetoSalida consultarMeta(ConsultarMetaOE OE);
+        
+        public ObjetoSalida consultarActividadFechaOE(ConsultarActividadFechaOE OE) throws Exception;
 
 }

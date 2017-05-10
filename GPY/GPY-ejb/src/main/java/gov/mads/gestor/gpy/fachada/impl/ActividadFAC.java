@@ -12,6 +12,7 @@ import gov.mads.gestor.gpy.vista.ActualizarGeometriaOE;
 import gov.mads.gestor.gpy.vista.ActualizarIndicadorOE;
 import gov.mads.gestor.gpy.vista.ActualizarMetaOE;
 import gov.mads.gestor.gpy.vista.ActualizarSoporteOE;
+import gov.mads.gestor.gpy.vista.ConsultarActividadFechaOE;
 import gov.mads.gestor.gpy.vista.ConsultarActividadPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarGeometriaPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarIndicadorOE;
@@ -28,18 +29,32 @@ import gov.mads.gestor.gpy.vista.RegistrarSoporteOE;
 import gov.mads.gestor.utl.fachada.IListadosFAC;
 import gov.mads.gestor.utl.fachada.impl.ListadosFAC;
 import gov.mads.gestor.utl.vista.ListarParametricoOE;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.core.MultivaluedMap;
 import org.apache.commons.io.IOUtils;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.jose4j.json.internal.json_simple.JSONObject;
+
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -326,5 +341,96 @@ public class ActividadFAC implements IActividadFAC {
         @Override
         public ObjetoSalida consultarMeta(ConsultarMetaOE OE) {
             return actividadDAO.consultarMeta(OE);
+        }
+
+        @Override
+        public ObjetoSalida consultarActividadFechaOE(ConsultarActividadFechaOE OE) throws Exception{
+            ObjetoSalida obj = actividadDAO.consultarActividadFechaOE(OE);
+            ObjetoSalida OS = new ObjetoSalida();
+        
+            if (obj.esRespuestaOperacionCorrecta()){
+                List<HashMap<String, Object>> respuesta = new ArrayList<>();
+                for (HashMap<String, Object> item : obj.getRespuesta()) {
+                    String subgrupo_ipcc = (item.get("subgrupo_ipcc") == null)? null : item.get("subgrupo_ipcc").toString();
+                    String potencial_de_reduccion = (item.get("potencial_de_reduccion") == null)? null:item.get("potencial_de_reduccion").toString();
+                    String fuente = (item.get("fuente") == null) ? null : item.get("fuente").toString();                    
+                    String a002proytascd = (item.get("a002proytascd") == null) ? null : item.get("a002proytascd").toString();
+                    String nombre_subcategoria_ipcc = (item.get("nombre_subcategoria_ipcc") == null) ? null : item.get("nombre_subcategoria_ipcc").toString();
+                    String nomb_proy = (item.get("nomb_proy") == null) ? null : item.get("nomb_proy").toString();                    
+                    String actividad = (item.get("actividad") == null) ? null : item.get("actividad").toString();
+                    String categoria_ipcc = (item.get("categoria_ipcc") == null) ? null : item.get("categoria_ipcc").toString();
+                    String estado_act = (item.get("estado_act") == null) ? null : item.get("estado_act").toString();                    
+                    Object fecha_ini_act = (item.get("fecha_ini_act") == null) ? null : (Object)item.get("fecha_ini_act");
+                    String estado_act_nombre = (item.get("estado_act_nombre") == null) ? null : item.get("estado_act_nombre").toString();
+                    String nombre_subgrupo_ipcc = (item.get("nombre_subgrupo_ipcc") == null) ? null : item.get("nombre_subgrupo_ipcc").toString();                    
+                    String tipo_proy_nombre = (item.get("tipo_proy_nombre") == null )? null : item.get("tipo_proy_nombre").toString();
+                    String tipo_actividad = (item.get("tipo_actividad") == null)? null : item.get("tipo_actividad").toString();
+                    String nombre_categoria_ipcc = (item.get("nombre_categoria_ipcc") == null)? null : item.get("nombre_categoria_ipcc").toString();                    
+                    String sector_implementador = (item.get("sector_implementador") ==null ) ? null : item.get("sector_implementador").toString();
+                    String tipo_proy = (item.get("tipo_proy") == null) ? null : item.get("tipo_proy").toString();
+                    String subcategoria_ipcc = (item.get("subcategoria_ipcc") == null) ? null :item.get("subcategoria_ipcc").toString();                    
+                    Object fecha_fin_act = (item.get("fecha_fin_act")== null) ? null : (Object)item.get("fecha_fin_act");
+                    String geojson = (item.get("geojson") == null) ? null : item.get("geojson").toString();                    
+                    String nombre_desagregacion_ipcc = (item.get("nombre_desagregacion_ipcc") == null) ? null: item.get("nombre_desagregacion_ipcc").toString();
+                    String id_actividad = (item.get("id_actividad") == null) ? null : item.get("id_actividad").toString();                    
+                    String sector_ipcc = (item.get("sector_ipcc") == null) ? null : item.get("sector_ipcc").toString();                    
+                    String desagregacion_ipcc = (item.get("desagregacion_ipcc") == null) ? null : item.get("desagregacion_ipcc").toString();                        
+                    String categoria_de_mitigacion = (item.get("categoria_de_mitigacion") == null) ? null : item.get("categoria_de_mitigacion").toString();                        
+                    //rutaAdjunto = item.get("A014RUTAADJUNTO").toString();
+                    JSONObject salida = new JSONObject();
+                    
+                    salida.put("idUsuario", OE.getIdUsuario());
+                    salida.put("idModulo", OE.getIdModulo());
+                    salida.put("idSistema", OE.getIdSistema());
+                    salida.put("geoJson", geojson);
+                    String objt = "{\"POTENCIAL_DE_REDUCCION_DE_EMISI\":\""+potencial_de_reduccion+
+                            "\",\"FUENTE\":\""+fuente+"\",\"ID_ACTIVIDAD\":\""+id_actividad+
+                            "\",\"ACTIVIDAD\":\""+actividad+"\",\"FECHA_INI_ACT\":\""+fecha_ini_act+
+                            "\",\"FECHA_FIN_ACT\":\""+fecha_fin_act+"\",\"SECTOR_IPCC\":\""+sector_ipcc+
+                            "\",\"CATEGORIA_IPCC\":\""+categoria_ipcc+"\",\"SUBCATEGORIA_IPCC\":\""+subcategoria_ipcc+
+                            "\",\"DESAGREGACION_IPCC\":\""+desagregacion_ipcc+"\",\"TIPO_ACTIVIDAD\":\""+tipo_actividad+
+                            "\",\"CATEGORIA_DE_MITIGACION\":\""+categoria_de_mitigacion+"\",\"ESTADO_ACT\":\""+estado_act+
+                            "\",\"TIPO_PROY\":\""+tipo_proy+"\",\"NOMB_PROY\":\""+nomb_proy+
+                            "\",\"PROYECTO_ASOCIADO\":\""+a002proytascd+"\",\"SECTOR_IMPLEMENTADOR\":\""+sector_implementador+"\"}";
+                    
+                    salida.put("Campos", objt);
+                    salida.put("operacion", OE.getOperacionComponente());
+                    salida.put("tipoGeometria",OE.getTipoGeometria());
+                        System.out.println(salida.toJSONString());
+                    StringEntity params =new StringEntity(salida.toJSONString());
+                    HttpClient client = new DefaultHttpClient();
+                    System.out.println("request");
+                    HttpPost request = new HttpPost(OE.getUrl());                
+                    System.out.println(OE.getUrl());
+        //Set Headers
+                    System.out.println("Set Headers");  
+                    request.setHeader("Accept", "application/json");
+                    request.setHeader("Content-Type","application/json" );
+                    request.setEntity(params);
+                    HttpResponse response = client.execute(request);
+                    StringBuilder result = new StringBuilder();
+                    BufferedReader reader;
+                    InputStream inputStream = response.getEntity().getContent();
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    String inputLine;
+                    while ((inputLine = reader.readLine()) != null) {
+                        result.append(inputLine);
+                    }
+                    //se crea la nueva respuesta y se retorna
+                    System.out.println(result);
+                    
+                    HashMap<String, Object> a = new HashMap<>();
+                    a.put("respuesta", result);
+                    respuesta.add(a);    
+                    
+                    
+                }
+                OS.setRespuesta(respuesta);
+                OS.setCodError(obj.getCodError());
+                return OS;
+            }else{
+                return obj;
+            }
+            
         }
 }

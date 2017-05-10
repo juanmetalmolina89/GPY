@@ -18,6 +18,7 @@ import gov.mads.gestor.gpy.vista.RegistrarActividadOE;
 import gov.mads.gestor.gpy.vista.ActualizarActividadOE;
 import gov.mads.gestor.gpy.vista.ActualizarIndicadorOE;
 import gov.mads.gestor.gpy.vista.ActualizarMetaOE;
+import gov.mads.gestor.gpy.vista.ConsultarActividadFechaOE;
 import gov.mads.gestor.gpy.vista.ConsultarActividadPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarGeometriaPorIdOE;
 import gov.mads.gestor.gpy.vista.ConsultarIndicadorOE;
@@ -241,6 +242,17 @@ public class ActividadSERV {
 	public Response consultarMeta(ConsultarMetaOE objetoEntrada) {
 		ActividadFAC fac = new ActividadFAC();
 		ObjetoSalida os = fac.consultarMeta(objetoEntrada);
+		return API.retornarRespuesta(os);
+	}
+        
+        @POST
+	@Path("/consultarActividadFecha")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@JWT
+	public Response consultarActividadFecha(ConsultarActividadFechaOE objetoEntrada) throws Exception{
+		ActividadFAC fac = new ActividadFAC();
+		ObjetoSalida os = fac.consultarActividadFechaOE(objetoEntrada);
 		return API.retornarRespuesta(os);
 	}
 }

@@ -392,12 +392,13 @@ public class ActividadFAC implements IActividadFAC {
                             "\",\"CATEGORIA_DE_MITIGACION\":\""+categoria_de_mitigacion+"\",\"ESTADO_ACT\":\""+estado_act+
                             "\",\"TIPO_PROY\":\""+tipo_proy+"\",\"NOMB_PROY\":\""+nomb_proy+
                             "\",\"PROYECTO_ASOCIADO\":\""+a002proytascd+"\",\"SECTOR_IMPLEMENTADOR\":\""+sector_implementador+"\"}";
+                    System.out.println(objt); 
                     
                     salida.put("Campos", objt);
                     salida.put("operacion", OE.getOperacionComponente());
                     salida.put("tipoGeometria",OE.getTipoGeometria());
-                        System.out.println(salida.toJSONString());
-                    StringEntity params =new StringEntity(salida.toJSONString());
+                    System.out.println(salida.toJSONString());
+                    StringEntity params =new StringEntity(salida.toJSONString(),"UTF-8");
                     HttpClient client = new DefaultHttpClient();
                     System.out.println("request");
                     HttpPost request = new HttpPost(OE.getUrl());                
@@ -405,7 +406,7 @@ public class ActividadFAC implements IActividadFAC {
         //Set Headers
                     System.out.println("Set Headers");  
                     request.setHeader("Accept", "application/json");
-                    request.setHeader("Content-Type","application/json" );
+                    request.setHeader("Content-Type","application/json;charset=UTF-8" );
                     request.setEntity(params);
                     HttpResponse response = client.execute(request);
                     StringBuilder result = new StringBuilder();
